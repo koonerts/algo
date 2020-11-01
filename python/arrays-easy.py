@@ -1,5 +1,6 @@
 from typing import List
 
+
 class ArraysEasy:
     def removeDuplicates(self, nums: List[int]) -> int:
         for i in reversed(range(len(nums))):
@@ -61,16 +62,58 @@ class ArraysEasy:
         Input: [-4,-1,0,3,10]
         Output: [0,1,9,16,100]
         """
-        p_pos = 0
-        for i, v in enumerate(A):
-            if v >= 0:
-                break
 
-            squared = v*v
-            for j in range(p_pos, len(A)):
-                if A[j] > 0:
+        ret = []
+        l, r = 0, 0
+        while r < len(A) and A[r] < 0:
+            r += 1
+        l = r - 1
 
+        while len(ret) != len(A):
+            if l < 0 or l >= len(A):
+                ret.append(A[r] ** 2)
+                r += 1
+            elif r < 0 or r >= len(A):
+                ret.append(A[l] ** 2)
+                l -= 1
+            else:
+                if abs(A[l]) <= abs(A[r]):
+                    ret.append(A[l] ** 2)
+                    l -= 1
+                else:
+                    ret.append(A[r] ** 2)
+                    r += 1
 
+        return ret
 
-arr = [3, 1, 2, 4]
-print(ArraysEasy().sortArrayByParity(arr))
+    def heightChecker(self, heights: List[int]) -> int:
+        """
+        Students are asked to stand in non-decreasing order of heights for an annual photo.
+        Return the minimum number of students that must move in order for all students to be standing in non-decreasing order of height.
+        Notice that when a group of students is selected they can reorder in any possible way between themselves
+        and the non selected students remain on their seats.
+
+        Input: heights = [1,1,4,2,1,3]
+        Output: 3
+
+        Input: heights = [5,1,2,3,4]
+        Output: 5
+        """
+
+        heights_sorted = sorted(heights)
+        cnt = 0
+        for i in range(len(heights)):
+            if heights[i] != heights_sorted[i]:
+                cnt += 1
+        return cnt
+
+    def findMaxConsecutiveOnes(self, nums: List[int]) -> int:
+        """
+        Given a binary array, find the maximum number of consecutive 1s in this array if you can flip at most one 0.
+
+        Input: [1,0,1,1,0]
+        Output: 4
+        Explanation: Flip the first zero will get the the maximum number of consecutive 1s.
+        After flipping, the maximum number of consecutive 1s is 4.
+        """
+        
