@@ -116,4 +116,55 @@ class ArraysEasy:
         Explanation: Flip the first zero will get the the maximum number of consecutive 1s.
         After flipping, the maximum number of consecutive 1s is 4.
         """
-        
+        if not nums or len(nums) == 0:
+            return 0
+
+        zero_val_indexes = []
+        for i, v in enumerate(nums):
+            if v == 0:
+                zero_val_indexes.append(i)
+
+        curr_max = len(nums) if len(zero_val_indexes) == 0 else 0
+        print(zero_val_indexes)
+        for i, v in enumerate(zero_val_indexes):
+            start = 0 if i == 0 else zero_val_indexes[i - 1] + 1
+            end = len(nums) if i + 1 >= len(zero_val_indexes) else zero_val_indexes[i + 1]
+            length = len(range(start, end))
+            print(start, end, length)
+            if length > curr_max:
+                curr_max = length
+        return curr_max
+
+    def thirdMax(self, nums: List[int]) -> int:
+        """
+        Given a non-empty array of integers, return the third maximum number in this array. If it does not exist, return the maximum number.
+        The time complexity must be in O(n).
+
+        Input: [3, 2, 1]
+        Output: 1
+        Explanation: The third maximum is 1.
+
+        Input: [2, 2, 3, 1]
+        Output: 1
+        Explanation: Note that the third maximum here means the third maximum distinct number.
+                     Both numbers with value 2 are both considered as second maximum.
+        """
+
+        curr_max = nums[0]
+        curr_third = nums[0]
+        prev_third = nums[0]
+        rank = 1
+
+        for i, v in enumerate(nums):
+            if rank < 3:
+                if v > curr_max:
+                    curr_max = v
+                    rank += 1
+            else
+                if
+
+
+
+
+arr = [2, 2, 3, 1]
+print(ArraysEasy().thirdMax(arr))
