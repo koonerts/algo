@@ -150,21 +150,38 @@ class ArraysEasy:
                      Both numbers with value 2 are both considered as second maximum.
         """
 
+        max_set = set()
+        max_set.add(nums[0])
         curr_max = nums[0]
-        curr_third = nums[0]
-        prev_third = nums[0]
-        rank = 1
+        for n in nums:
+            if n > curr_max or len(max_set) < 3:
+                max_set.add(n)
 
-        for i, v in enumerate(nums):
-            if rank < 3:
-                if v > curr_max:
-                    curr_max = v
-                    rank += 1
-            else
-                if
+            if len(max_set) > 3:
+                max_set.remove(min(max_set))
+
+        if len(max_set) == 3:
+            return min(max_set)
+        else:
+            return max(max_set)
+
+    def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
+        """
+        Given an array of integers where 1 ≤ a[i] ≤ n (n = size of array), some elements appear twice and others appear once.
+        Find all the elements of [1, n] inclusive that do not appear in this array.
+        Could you do it without extra space and in O(n) runtime? You may assume the returned list does not count as extra space.
+
+        Input: [4,3,2,7,8,2,3,1]
+        Output: [5,6]
+        """
+        for i in range(len(nums)):
+
+            new_index = abs(nums[i]) - 1
+            if nums[new_index] > 0:
+                nums[new_index] *= -1
+
+        return [i + 1 for i in range(len(nums)) if nums[i] > 0]
 
 
-
-
-arr = [2, 2, 3, 1]
-print(ArraysEasy().thirdMax(arr))
+arr = [4, 3, 2, 7, 8, 2, 3, 1]
+print(ArraysEasy().findDisappearedNumbers(arr))
