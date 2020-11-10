@@ -177,8 +177,53 @@ class QueueEasy:
         ]
         Output: 3
         """
-        LAND = 1
-        WATER = 0
+        if not grid:
+            return 0
+
+        q = collections.deque()
+        directions = [(-1, 0), (1,0), (0, -1), (0,1)]
+        count = 0
+        rows = len(grid)
+        cols = len(grid[0])
+
+        for row in range(rows):
+            for col in range(cols):
+                if grid[row][col] == "1":
+                    count += 1
+                    q.append((row, col))
+                    while len(q) > 0:
+                        r, c = q.popleft()
+                        for x, y in directions:
+                            r_next, c_next = r+x, c+y
+                            if 0 <= r_next < rows and 0 <= c_next < cols and grid[r_next][c_next] == "1":
+                                grid[r_next][c_next] = "0"
+                                q.append((r_next,c_next))
+        return count
+
+    def openLock(self, deadends: List[str], target: str) -> int:
+        """
+        You have a lock in front of you with 4 circular wheels. Each wheel has 10 slots: '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'.
+        The wheels can rotate freely and wrap around: for example we can turn '9' to be '0', or '0' to be '9'.
+        Each move consists of turning one wheel one slot. The lock initially starts at '0000', a string representing the state of the 4 wheels.
+
+        You are given a list of deadends dead ends, meaning if the lock displays any of these codes,
+        the wheels of the lock will stop turning and you will be unable to open it.
+
+        Given a target representing the value of the wheels that will unlock the lock,
+        return the minimum total number of turns required to open the lock, or -1 if it is impossible.
+
+        Ex1:
+        Input: deadends = ["0201","0101","0102","1212","2002"], target = "0202"
+        Output: 6
+        Explanation: A sequence of valid moves would be "0000" -> "1000" -> "1100" -> "1200" -> "1201" -> "1202" -> "0202".
+                     Note that a sequence like "0000" -> "0001" -> "0002" -> "0102" -> "0202" would be invalid,
+                     because the wheels of the lock become stuck after the display becomes the dead end "0102".
+
+        Ex2:
+        Input: deadends = ["8888"], target = "0009"
+        Output: 1
+        Explanation: We can turn the last wheel in reverse to move from "0000" -> "0009"
+        """
 
 
-print(QueueEasy.ROOM)
+
