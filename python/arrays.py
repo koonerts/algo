@@ -1,7 +1,7 @@
 from typing import List
 
 
-class ArraysEasy:
+class Arrays:
     def removeDuplicates(self, nums: List[int]) -> int:
         for i in reversed(range(len(nums))):
             if i == 0:
@@ -184,4 +184,4 @@ class ArraysEasy:
 
 
 arr = [4, 3, 2, 7, 8, 2, 3, 1]
-print(ArraysEasy().findDisappearedNumbers(arr))
+print(Arrays().findDisappearedNumbers(arr))

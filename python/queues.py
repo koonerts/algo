@@ -1,5 +1,7 @@
+import math
 import collections
 from typing import List
+
 
 class MyCircularQueue:
 
@@ -84,13 +86,13 @@ class MyCircularQueue:
         """
         return self.__size == len(self.__queue)
 
+
 class MovingAverage:
     def __init__(self, size: int):
         """
         Initialize your data structure here.
         """
         self.__que = collections.deque(maxlen=size)
-
 
     def next(self, val: int) -> float:
         """
@@ -102,10 +104,11 @@ class MovingAverage:
             m.next(5) = (10 + 3 + 5) / 3
         """
         self.__que.append(val)
-        return sum(self.__que)/len(self.__que)
+        return sum(self.__que) / len(self.__que)
 
-class QueueEasy:
-    ROOM = 2**31 - 1
+
+class Queues:
+    ROOM = 2 ** 31 - 1
     GATE = 0
     WALL = -1
 
@@ -138,7 +141,7 @@ class QueueEasy:
         q = collections.deque()
         rows = len(rooms)
         cols = len(rooms[0])
-        directions = [(-1, 0), (1,0), (0, -1), (0,1)]
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
         for row in range(rows):
             for col in range(cols):
@@ -148,10 +151,10 @@ class QueueEasy:
         while len(q) > 0:
             row, col = q.popleft()
             for x, y in directions:
-                if row+x < 0 or row+x >= rows or col+y < 0 or col+y >= cols or rooms[row+x][col+y] != self.ROOM:
+                if row + x < 0 or row + x >= rows or col + y < 0 or col + y >= cols or rooms[row + x][col + y] != self.ROOM:
                     continue
-                rooms[row+x][col+y] = rooms[row+x][col+y] + 1
-                q.append((row+x, col+y))
+                rooms[row + x][col + y] = rooms[row + x][col + y] + 1
+                q.append((row + x, col + y))
 
     def numIslands(self, grid: List[List[str]]) -> int:
         """
@@ -181,7 +184,7 @@ class QueueEasy:
             return 0
 
         q = collections.deque()
-        directions = [(-1, 0), (1,0), (0, -1), (0,1)]
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         count = 0
         rows = len(grid)
         cols = len(grid[0])
@@ -194,10 +197,10 @@ class QueueEasy:
                     while len(q) > 0:
                         r, c = q.popleft()
                         for x, y in directions:
-                            r_next, c_next = r+x, c+y
+                            r_next, c_next = r + x, c + y
                             if 0 <= r_next < rows and 0 <= c_next < cols and grid[r_next][c_next] == "1":
                                 grid[r_next][c_next] = "0"
-                                q.append((r_next,c_next))
+                                q.append((r_next, c_next))
         return count
 
     def openLock(self, deadends: List[str], target: str) -> int:
@@ -224,6 +227,26 @@ class QueueEasy:
         Output: 1
         Explanation: We can turn the last wheel in reverse to move from "0000" -> "0009"
         """
+        def neighbors(node):
+            for i in range(4):
+                x = int(node[i])
+                for d in [-1, 1]:
+                    y = (x + d) % 10
+                    yield node[:i] + str(y) + node[i+1:]
+
+    def numSquares(self, n: int) -> int:
+        """
+        Given a positive integer n, find the least number of perfect square numbers (for example, 1, 4, 9, 16, ...) which sum to n.
+
+        Example 1:
+        Input: n = 12
+        Output: 3
+        Explanation: 12 = 4 + 4 + 4.
+
+        Input: n = 13
+        Output: 2
+        Explanation: 13 = 4 + 9.
+        """
 
 
-
+print(Queues().numSquares(12))

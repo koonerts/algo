@@ -1,0 +1,6 @@
+Queue:
+    https://leetcode.com/explore/learn/card/queue-stack/231/practical-application-queue/1375/
+    https://leetcode.com/explore/learn/card/queue-stack/231/practical-application-queue/1371/
+
+Stack:
+    https://leetcode.com/explore/learn/card/queue-stack/230/usage-stack/1363/

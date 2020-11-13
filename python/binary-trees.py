@@ -29,7 +29,7 @@ class Node:
         self.next = next
 
 
-class BinaryTreesEasy:
+class BinaryTrees:
     def preorderTraversal(self, root: TreeNode) -> List[int]:
         out = []
         self.recurse(root, out, TraversalType.PREORDER)
