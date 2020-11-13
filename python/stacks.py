@@ -1,5 +1,72 @@
 from typing import List
+import collections
 
+class MyQueueStack:
+    """
+    Implement a last in first out (LIFO) stack using only two queues. The implemented stack should support all the functions of a normal queue (push, top, pop, and empty).
+
+    Implement the MyStack class:
+    void push(int x) Pushes element x to the top of the stack.
+    int pop() Removes the element on the top of the stack and returns it.
+    int top() Returns the element on the top of the stack.
+    boolean empty() Returns true if the stack is empty, false otherwise.
+
+    Notes:
+    You must use only standard operations of a queue, which means only push to back, peek/pop from front, size, and is empty operations are valid.
+    Depending on your language, the queue may not be supported natively. You may simulate a queue using a list or deque (double-ended queue),
+    as long as you use only a queue's standard operations.
+
+    Follow-up:
+    Can you implement the stack such that each operation is amortized O(1) time complexity?
+    In other words, performing n operations will take overall O(n) time even if one of those operations may take longer.
+    """
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.q1 = collections.deque()
+        self.q2 = collections.deque()
+
+
+    def push(self, x: int) -> None:
+        """
+        Push element x onto stack.
+        """
+        self.q1.append(x)
+
+
+    def pop(self) -> int:
+        """
+        Removes the element on top of the stack and returns that element.
+        """
+        if not self.q2:
+            self.q2.append(self.q1.popleft())
+        return self.q2.popleft()
+
+
+    def top(self) -> int:
+        """
+        Get the top element.
+        """
+        if not self.q2:
+            self.q2.append(self.q1.popleft())
+        return self.q2[0]
+
+
+    def empty(self) -> bool:
+        """
+        Returns whether the stack is empty.
+        """
+        return not (self.q1 and self.q2)
+
+
+# Your MyStack object will be instantiated and called as such:
+# obj = MyStack()
+# obj.push(x)
+# param_2 = obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.empty()
 
 class MinStack:
     def __init__(self):
@@ -202,16 +269,70 @@ class Stacks:
         """
         if not node: return node
 
-        root = Node(node.val)
-        seen = {f'{str(root.val)}':root}
+        seen = {}
 
-        def dfs(node: Node):
-            if str(node.val) not in seen:
-                
-                seen[str(node.val)] =
+        def dfs(node: Node) -> Node:
+            if node.val not in seen:
+                clone = Node(node.val)
+                seen[node.val] = clone
+                for neighbor in node.neighbors:
+                    clone.neighbors.append(dfs(neighbor))
+                return clone
+            else:
+                return seen[node.val]
+
+        return dfs(node)
+
+    def findTargetSumWays(self, nums: List[int], S: int) -> int:
+        """
+        You are given a list of non-negative integers, a1, a2, ..., an, and a target S.
+        For each integer, you should choose either + or - as its new symbol.
+        Find out how many ways to assign symbols to make sum of integers equal to target S.
+
+        Example 1:
+        Input: nums is [1, 1, 1, 1, 1], S is 3.
+        Output: 5
+
+        Explanation:
+        -1+1+1+1+1 = 3
+        +1-1+1+1+1 = 3
+        +1+1-1+1+1 = 3
+        +1+1+1-1+1 = 3
+        +1+1+1+1-1 = 3
+        There are 5 ways to assign symbols to make the sum of nums be target 3.
+        """
+        pass
+
+    def decodeString(self, s: str) -> str:
+        """
+        Given an encoded string, return its decoded string.
+        The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times.
+        Note that k is guaranteed to be a positive integer. You may assume that the input string is always valid; No extra white spaces, square brackets are well-formed, etc.
+        Furthermore, you may assume that the original data does not contain any digits and that digits are only for those repeat numbers, k.
+        For example, there won't be input like 3a or 2[4].
+
+        Example 1:
+        Input: s = "3[a]2[bc]"
+        Output: "aaabcbc"
+
+        Example 2:
+        Input: s = "3[a2[c]]"
+        Output: "accaccacc"
+
+        Example 3:
+        Input: s = "2[abc]3[cd]ef"
+        Output: "abcabccdcdcdef"
+
+        Example 4:
+        Input: s = "abc3[cd]xyz"
+        Output: "abccdcdcdxyz"
+        """
+        rstr = ''
+        stack = []
+        for c in s:
+            if
 
 
-
-
-g = [["1", "1", "0", "0", "0"], ["1", "1", "0", "0", "0"], ["0", "0", "1", "0", "0"], ["0", "0", "0", "1", "1"]]
-print(Stacks().numIslands(g))
+mqs = MyQueueStack()
+mqs.push(1)
+mqs.push(2)
