@@ -327,12 +327,25 @@ class Stacks:
         Input: s = "abc3[cd]xyz"
         Output: "abccdcdcdxyz"
         """
-        rstr = ''
+
         stack = []
         for c in s:
-            if
+            if c != ']':
+                stack.append(c)
+            else:
+                str_ = ''
+                while not stack[-1].isnumeric():
+                    stack_char = stack.pop()
+                    if stack_char != '[':
+                        str_ = stack_char + str_
+
+                n = ''
+                while stack and stack[-1].isnumeric():
+                    n = stack.pop() + n
+
+                for ch in str_*int(n):
+                    stack.append(ch)
+        return ''.join(stack)
 
 
-mqs = MyQueueStack()
-mqs.push(1)
-mqs.push(2)
+print(Stacks().decodeString("3[a2[c]]"))
