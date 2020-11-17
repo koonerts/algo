@@ -61,7 +61,7 @@ def smallest_subarray_with_given_sum(s: int, arr: list[int]) -> int:
     return min_length
 
 
-def longest_substring_with_k_distinct(str: str, k: int) -> int:
+def longest_substring_with_k_distinct(str_: str, k: int) -> int:
     """
     Given a string, find the length of the longest substring in it with no more than K distinct characters.
 
@@ -83,17 +83,17 @@ def longest_substring_with_k_distinct(str: str, k: int) -> int:
     distinct_map = {}
     start = 0
     max_len = 0
-    for i, c in enumerate(str):
+    for i, c in enumerate(str_):
         if c not in distinct_map:
             distinct_map[c] = 1
         else:
             distinct_map[c] += 1
 
         while len(distinct_map) > k:
-            if distinct_map[str[start]] - 1 == 0:
-                distinct_map.pop(str[start])
+            if distinct_map[str_[start]] - 1 == 0:
+                distinct_map.pop(str_[start])
             else:
-                distinct_map[str[start]] -= 1
+                distinct_map[str_[start]] -= 1
 
             start += 1
 
@@ -146,7 +146,7 @@ def fruits_into_baskets(fruits: list[str]) -> int:
     return max_
 
 
-def non_repeat_substring(str: str) -> int:
+def non_repeat_substring(str_: str) -> int:
     """
     Given a string, find the length of the longest substring, which has no repeating characters.
 
@@ -168,14 +168,14 @@ def non_repeat_substring(str: str) -> int:
     char_map = {}
     start, max_ = 0, 0
 
-    for i, c in enumerate(str):
-        char_map[c] = (char_map.get(c) or 0) + 1
+    for i, c in enumerate(str_):
+        char_map[c] = char_map.get(c, 0) + 1
 
         while char_map[c] > 1:
-            if char_map[str[start]] == 1:
-                del char_map[str[start]]
+            if char_map[str_[start]] == 1:
+                del char_map[str_[start]]
             else:
-                char_map[str[start]] -= 1
+                char_map[str_[start]] -= 1
 
             start += 1
 
@@ -184,7 +184,7 @@ def non_repeat_substring(str: str) -> int:
     return max_
 
 
-def length_of_longest_substring(str: str, k: int):
+def length_of_longest_substring(str_: str, k: int) -> int:
     """
     Given a string with lowercase letters only, if you are allowed to replace no more than ‘k’ letters with any letter,
     find the length of the longest substring having the same letters after replacement.
@@ -205,13 +205,181 @@ def length_of_longest_substring(str: str, k: int):
     Explanation: Replace the 'b' or 'd' with 'c' to have the longest repeating substring "ccc".
     """
 
-    start, next, max_ = 0, 0, 0
-    start_char = str[start]
+    start, max_substring_len, max_repeat_cntr = 0, 0, 0
     char_map = {}
 
-    for i, c in enumerate(str):
-        if c != start_char:
-            char_map[c] = (char_map.get(c) or 0) + 1
+    for i, c in enumerate(str_):
+        char_map[c] = char_map.get(c, 0) + 1
+        max_repeat_cntr = max(max_repeat_cntr, char_map[c])
+
+        window_len = i - start + 1
+        if window_len - max_repeat_cntr > k:
+            if char_map[str_[start]] == 1:
+                del char_map[str_[start]]
+            else:
+                char_map[str_[start]] -= 1
+
+            start += 1
+            window_len -= 1
+
+        max_substring_len = max(max_substring_len, window_len)
+    return max_substring_len
 
 
-print(non_repeat_substring('abccde'))
+def length_of_longest_subarray(arr: list[int], k: int) -> int:
+    """
+    Given an array containing 0s and 1s, if you are allowed to replace no more than ‘k’ 0s with 1s, find the length of the longest contiguous subarray having all 1s.
+
+    Example 1:
+    Input: Array=[0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1], k=2
+    Output: 6
+    Explanation: Replace the '0' at index 5 and 8 to have the longest contiguous subarray of 1s having length 6.
+
+    Example 2:
+    Input: Array=[0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1], k=3
+    Output: 9
+    Explanation: Replace the '0' at index 6, 9, and 10 to have the longest contiguous subarray of 1s having length 9.
+    """
+    start, max_subarray_len, max_repeat_cntr = 0, 0, 0
+    bit_map = {}
+
+    for i, v in enumerate(arr):
+        bit_map[v] = bit_map.get(v, 0) + 1
+        max_repeat_cntr = max(max_repeat_cntr, bit_map[v])
+        window_len = i - start + 1
+
+        if window_len - max_repeat_cntr > k:
+            if bit_map[arr[start]] == 1:
+                del bit_map[arr[start]]
+            else:
+                bit_map[arr[start]] -= 1
+
+            start += 1
+            window_len -= 1
+
+        max_subarray_len = max(max_subarray_len, window_len)
+    return max_subarray_len
+
+
+def find_permutation(str_: str, pattern: str):
+    """
+    Given a string and a pattern, find out if the string contains any permutation of the pattern.
+    Permutation is defined as the re-arranging of the characters of the string. For example, “abc” has the following six permutations:
+
+    abc, acb, bac, bca, cab, cba
+    If a string has ‘n’ distinct characters, it will have n! permutations.
+
+    Example 1:
+    Input: String="oidbcaf", Pattern="abc"
+    Output: true
+    Explanation: The string contains "bca" which is a permutation of the given pattern.
+
+    Example 2:
+    Input: String="odicf", Pattern="dc"
+    Output: false
+    Explanation: No permutation of the pattern is present in the given string as a substring.
+
+    Example 3:
+    Input: String="bcdxabcdy", Pattern="bcdyabcdx"
+    Output: true
+    Explanation: Both the string and the pattern are a permutation of each other.
+
+    Example 4:
+    Input: String="aaacb", Pattern="abc"
+    Output: true
+    Explanation: The string contains "acb" which is a permutation of the given pattern.
+    """
+    start, pattern_map = 0, {}
+
+    for c in pattern:
+        pattern_map[c] = pattern_map.get(c, 0) + 1
+
+    for i, c in enumerate(str_):
+        if c in pattern_map:
+            pattern_map[c] -= 1
+            while pattern_map[c] < 0:
+                if str_[start] in pattern_map:
+                    pattern_map[str_[start]] += 1
+                start += 1
+        else:
+            while start <= i:
+                if str_[start] in pattern_map:
+                    pattern_map[str_[start]] += 1
+                start += 1
+
+        if i - start + 1 == len(pattern):
+            return True
+    return False
+
+
+def find_string_anagrams(str_: str, pattern: str) -> list[int]:
+    """
+    Given a string and a pattern, find all anagrams of the pattern in the given string.
+    Anagram is actually a Permutation of a string. For example, “abc” has the following six anagrams:
+    abc, acb, bac, bca, cab, cba
+
+    Write a function to return a list of starting indices of the anagrams of the pattern in the given string.
+
+    Example 1:
+    Input: String="ppqp", Pattern="pq"
+    Output: [1, 2]
+    Explanation: The two anagrams of the pattern in the given string are "pq" and "qp".
+
+    Example 2:
+    Input: String="abbcabc", Pattern="abc"
+    Output: [2, 3, 4]
+    Explanation: The three anagrams of the pattern in the given string are "bca", "cab", and "abc".
+    """
+
+    result_indexes = []
+    start, pattern_map = 0, {}
+
+    for c in pattern:
+        pattern_map[c] = pattern_map.get(c, 0) + 1
+
+    for i, c in enumerate(str_):
+        if c not in pattern_map:
+            while start <= i:
+                if str_[start] in pattern_map:
+                    pattern_map[str_[start]] += 1
+                start += 1
+        else:
+            while pattern_map[c] <= 0:
+                pattern_map[str_[start]] += 1
+                start += 1
+            pattern_map[c] -= 1
+
+        if i - start + 1 == len(pattern):
+            result_indexes.append(start)
+            pattern_map[str_[start]] += 1
+            start += 1
+
+    return result_indexes
+
+def find_substring(str_: str, pattern: str) -> str:
+    """
+    Given a string and a pattern, find the smallest substring in the given string which has all the characters of the given pattern.
+
+    Example 1:
+    Input: String="aabdec", Pattern="abc"
+    Output: "abdec"
+    Explanation: The smallest substring having all characters of the pattern is "abdec"
+
+    Example 2:
+    Input: String="abdbca", Pattern="abc"
+    Output: "bca"
+    Explanation: The smallest substring having all characters of the pattern is "bca".
+
+    Example 3:
+    Input: String="adcad", Pattern="abc"
+    Output: ""
+    Explanation: No substring in the given string has all characters of the pattern.
+    """
+    start, pattern_map = 0, {}
+    for c in pattern: pattern_map[c] = pattern_map.get(c, 0) + 1
+
+    for i, c in enumerate(str_):
+        if c in pattern_map
+
+
+print(find_string_anagrams('abbcabc', 'abc'))
