@@ -356,6 +356,7 @@ def find_string_anagrams(str_: str, pattern: str) -> list[int]:
 
     return result_indexes
 
+
 def find_substring(str_: str, pattern: str) -> str:
     """
     Given a string and a pattern, find the smallest substring in the given string which has all the characters of the given pattern.
@@ -375,11 +376,48 @@ def find_substring(str_: str, pattern: str) -> str:
     Output: ""
     Explanation: No substring in the given string has all characters of the pattern.
     """
-    start, pattern_map = 0, {}
-    for c in pattern: pattern_map[c] = pattern_map.get(c, 0) + 1
+    start, solved, pattern_map = 0, 0, {}
+    min_substr = ""
+
+    for c in pattern:
+        pattern_map[c] = pattern_map.get(c, 0) + 1
 
     for i, c in enumerate(str_):
-        if c in pattern_map
+        if c in pattern_map:
+            pattern_map[c] -= 1
+
+            if pattern_map[c] == 0:
+                solved += 1
+            elif pattern_map[c] < 0:
+                while str_[start] not in pattern_map or pattern_map[str_[start]] < 0:
+                    if str_[start] in pattern_map:
+                        pattern_map[str_[start]] += 1
+                    start += 1
+
+        if solved == len(pattern_map):
+            if min_substr == "" or i - start + 1 < len(min_substr):
+                min_substr = str_[start:i+1]
+
+    return min_substr
 
 
-print(find_string_anagrams('abbcabc', 'abc'))
+def find_word_concatenation(str, words):
+    """
+    Given a string and a list of words, find all the starting indices of substrings in the given string that are a
+    concatenation of all the given words exactly once without any overlapping of words.
+    It is given that all words are of the same length.
+
+    Example 1:
+    Input: String="catfoxcat", Words=["cat", "fox"]
+    Output: [0, 3]
+    Explanation: The two substring containing both the words are "catfox" & "foxcat".
+
+    Example 2:
+    Input: String="catcatfoxfox", Words=["cat", "fox"]
+    Output: [3]
+    Explanation: The only substring containing both the words is "catfox".
+    """
+    result_indices = []
+    return result_indices
+
+print(find_substring('abdbca', 'abc'))
