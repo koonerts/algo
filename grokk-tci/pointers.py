@@ -207,9 +207,55 @@ def triplet_with_smaller_sum(arr: list[int], target: int) -> int:
     Output: 4
     Explanation: There are four triplets whose sum is less than the target: [-1, 1, 4], [-1, 1, 3], [-1, 1, 2], [-1, 2, 3]
     """
+    count = 0
+    arr.sort()
 
-    count = -1
+    for i, v in enumerate(arr):
+        start = i + 1
+        end = len(arr) - 1
+
+        while start < end:
+            sum_ = v + arr[start] + arr[end]
+            if sum_ < target:
+                count += end - start
+                start += 1
+            else:
+                end -= 1
+
     return count
 
 
-print(triplet_sum_close_to_target([1, 0, 1, 1], 100))
+def find_subarrays(arr: list[int], target: int) -> list[list[int]]:
+    """
+    Given an array with positive numbers and a target number, find all of its contiguous subarrays whose product is less than the target number.
+
+    Example 1:
+    Input: [2, 5, 3, 10], target=30
+    Output: [2], [5], [2, 5], [3], [5, 3], [10]
+    Explanation: There are six contiguous subarrays whose product is less than the target.
+
+    Example 2:
+    Input: [8, 2, 6, 5], target=50
+    Output: [8], [2], [8, 2], [6], [2, 6], [5], [6, 5]
+    Explanation: There are seven contiguous subarrays whose product is less than the target.
+    """
+
+    result = []
+    start = 0
+    product = None
+    for i, v in enumerate(arr):
+        if v < target:
+            result.append([v])
+
+        if product is None:
+            product = v
+        else:
+            product *= v
+            if product < target:
+                result.append(arr[start:])
+
+
+    return result
+
+
+print(find_subarrays([-1, 4, 2, 1, 3], 5))
