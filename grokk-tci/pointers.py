@@ -1,3 +1,4 @@
+from collections import deque
 
 
 def pair_with_targetsum(arr: list[int], target_sum: int) -> list[int]:
@@ -75,17 +76,17 @@ def make_squares(arr: list[int]) -> list[int]:
 
     while len(squares) != len(arr):
         if desc < 0:
-            squares.append(arr[asc]**2)
+            squares.append(arr[asc] ** 2)
             asc += 1
         elif asc >= len(arr):
-            squares.append(arr[desc]**2)
+            squares.append(arr[desc] ** 2)
             desc -= 1
         else:
             if abs(arr[desc]) <= abs(arr[asc]):
-                squares.append(arr[desc]**2)
+                squares.append(arr[desc] ** 2)
                 desc -= 1
             else:
-                squares.append(arr[asc]**2)
+                squares.append(arr[asc] ** 2)
                 asc += 1
 
     return squares
@@ -120,12 +121,12 @@ def search_triplets(arr: list[int]) -> list[list[int]]:
             sum_ = arr[start] + arr[end] + val
             if sum_ == 0:
                 triplets.append([val, arr[start], arr[end]])
-                end = len(arr) - 1
+                # end = len(arr) - 1
 
                 # handle duplicates in the array by incrementing start by 1 until we get a non-duplicate start
                 while True:
                     start += 1
-                    if start > len(arr) or arr[start] != arr[start -1]:
+                    if start > len(arr) or arr[start] != arr[start - 1]:
                         break
 
             elif sum_ > 0:
@@ -167,7 +168,7 @@ def triplet_sum_close_to_target(arr: list[int], target_sum: int):
     # time: O(n^2)
     # space: O(1)
     for i, val in enumerate(arr):
-        start = i+1
+        start = i + 1
         end = len(arr) - 1
         while start < end:
             sum_ = val + arr[start] + arr[end]
@@ -240,22 +241,183 @@ def find_subarrays(arr: list[int], target: int) -> list[list[int]]:
     Explanation: There are seven contiguous subarrays whose product is less than the target.
     """
 
+    # space:
     result = []
+    product = 1
     start = 0
-    product = None
-    for i, v in enumerate(arr):
-        if v < target:
-            result.append([v])
+    for end in range(len(arr)):
+        product *= arr[end]
 
-        if product is None:
-            product = v
-        else:
-            product *= v
-            if product < target:
-                result.append(arr[start:])
+        while product >= target and start < len(arr):
+            product /= arr[start]
+            start += 1
 
-
+        # since the product of all numbers from left to right is less than the target therefore,
+        # all subarrays from left to right will have a product less than the target too; to avoid
+        # duplicates, we will start with a subarray containing only arr[right] and then extend it
+        temp_list = deque()
+        for i in range(end, start - 1, -1):
+            temp_list.appendleft(arr[i])
+            result.append(list(temp_list))
     return result
 
 
-print(find_subarrays([-1, 4, 2, 1, 3], 5))
+def dutch_flag_sort(arr: list[int]) -> list[int]:
+    """
+    Given an array containing 0s, 1s and 2s, sort the array in-place.
+    You should treat numbers of the array as objects, hence, we can’t count 0s, 1s, and 2s to recreate the array.
+
+    The flag of the Netherlands consists of three colors: red, white and blue;
+    And since our input array also consists of three different numbers, it is called Dutch National Flag problem.
+
+    Example 1:
+    Input: [1, 0, 2, 1, 0]
+    Output: [0 0 1 1 2]
+
+    Example 2:
+    Input: [2, 2, 0, 1, 2, 0]
+    Output: [0 0 1 2 2 2 ]
+    """
+    low, high = 0, len(arr) - 1
+    i = 0
+    while i <= high:
+        if arr[i] == 0:
+            arr[i], arr[low] = arr[low], arr[i]
+            # increment 'i' and 'low'
+            i += 1
+            low += 1
+        elif arr[i] == 1:
+            i += 1
+        else:  # the case for arr[i] == 2
+            arr[i], arr[high] = arr[high], arr[i]
+            # decrement 'high' only, after the swap the number at index 'i' could be 0, 1 or 2
+            high -= 1
+    return arr
+
+
+def search_quadruplets(arr: list[int], target: int) -> list[list[int]]:
+    """
+    Given an array of unsorted numbers and a target number, find all unique quadruplets in it, whose sum is equal to the target number.
+
+    Example 1:
+    Input: [4, 1, 2, -1, 1, -3], target=1
+    Output: [-3, -1, 1, 4], [-3, 1, 1, 2]
+    Explanation: Both the quadruplets add up to the target.
+
+    Example 2:
+    Input: [2, 0, -1, 1, -2, 2], target=2
+    Output: [-2, 0, 2, 2], [-1, 0, 1, 2]
+    Explanation: Both the quadruplets add up to the target.
+    """
+    arr.sort()
+    quadruplets = []
+
+    for i in range(len(arr)):
+        for j in range(i + 1, len(arr)):
+            k, l = j + 1, len(arr) - 1
+            while k < l:
+                ival, jval, kval, lval = arr[i], arr[j], arr[k], arr[l]
+                sum_ = ival + jval + kval + lval
+                if sum_ == target:
+                    quadruplets.append([ival, jval, kval, lval])
+                    while k < l and arr[k] == kval: k += 1
+                    while l > k and arr[l] == lval: l -= 1
+                elif sum_ > target:
+                    l -= 1
+                else:
+                    k += 1
+
+    return quadruplets
+
+
+def backspace_compare(str1: str, str2: str) -> bool:
+    """
+    Given two strings containing backspaces (identified by the character ‘#’), check if the two strings are equal.
+
+    Example 1:
+    Input: str1="xy#z", str2="xzz#"
+    Output: true
+    Explanation: After applying backspaces the strings become "xz" and "xz" respectively.
+
+    Example 2:
+    Input: str1="xy#z", str2="xyz#"
+    Output: false
+    Explanation: After applying backspaces the strings become "xz" and "xy" respectively.
+
+    Example 3:
+    Input: str1="xp#", str2="xyz##"
+    Output: true
+    Explanation: After applying backspaces the strings become "x" and "x" respectively.
+    In "xyz##", the first '#' removes the character 'z' and the second '#' removes the character 'y'.
+
+    Example 4:
+    Input: str1="xywrrmp", str2="xywrrmu#p"
+    Output: true
+    Explanation: After applying backspaces the strings become "xywrrmp" and "xywrrmp" respectively.
+    """
+    q1, q2 = [], []
+
+    def add_or_delete(queue, index, str_):
+        if index < len(str_):
+            if str_[index] == "#" and queue:
+                queue.pop()
+            else:
+                queue.append(str_[index])
+
+    for i in range(max(len(str1), len(str2))):
+        add_or_delete(q1, i, str1)
+        add_or_delete(q2, i, str2)
+
+    return q1 == q2
+
+
+def shortest_window_sort(arr: list[int]) -> int:
+    """
+    Minimum Window Sort (medium) #
+    Given an array, find the length of the smallest subarray in it which when sorted will sort the whole array.
+
+    Example 1:
+    Input: [1, 2, 5, 3, 7, 10, 9, 12]
+    Output: 5
+    Explanation: We need to sort only the subarray [5, 3, 7, 10, 9] to make the whole array sorted
+
+    Example 2:
+    Input: [1, 3, 2, 0, -1, 7, 10]
+    Output: 5
+    Explanation: We need to sort only the subarray [1, 3, 2, 0, -1] to make the whole array sorted
+
+    Example 3:
+    Input: [1, 2, 3]
+    Output: 0
+    Explanation: The array is already sorted
+
+    Example 4:
+    Input: [3, 2, 1]
+    Output: 3
+    Explanation: The whole array needs to be sorted.
+    """
+    start, end = 0, len(arr) - 1
+    while start < end:
+        if arr[start] > arr[start + 1] and arr[end] < arr[end - 1]:
+            break
+
+        if arr[start] <= arr[start + 1]:
+            start += 1
+
+        if arr[end] >= arr[end - 1]:
+            end -= 1
+
+    if start >= end: return 0
+
+    min_, max_ = float('inf'), float('-inf')
+    for i in range(start, end + 1):
+        min_ = min(min_, arr[i])
+        max_ = max(max_, arr[i])
+
+    while start > 0 and arr[start-1] > min_: start -= 1
+    while end < len(arr) - 1 and arr[end + 1] < max_: end += 1
+
+    return end - start + 1
+
+
+print(backspace_compare('xy#z', 'xzz#'))
