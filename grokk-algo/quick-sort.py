@@ -21,3 +21,8 @@ def quick_sort(arr: list[int]) -> list[int]:
 
 
 print(quick_sort([10, 2, -1, -1, 12, 3, -1]))
+
+"""
+Average Time Complexity: O(nlogn)
+Worst Case Time Complexity: O(n^2)
+"""
