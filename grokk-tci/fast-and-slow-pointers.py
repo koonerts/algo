@@ -67,19 +67,100 @@ def find_happy_number(num: int) -> bool:
     All other (not-happy) numbers will never reach ‘1’.
     Instead, they will be stuck in a cycle of numbers which does not include ‘1’.
     """
-    vals = {num: 1}
+    slow, fast = num, num
+
+    def find_squared_digit_sum(val) -> int:
+        new_val = 0
+        for n in map(int, str(val)):
+            new_val += n**2
+        return new_val
+
     while True:
-        newVal = 0
-        for n in map(int, str(num)):
-            newVal += n**2
+        slow = find_squared_digit_sum(slow)
+        fast = find_squared_digit_sum(find_squared_digit_sum(fast))
 
-        if newVal == 1:
+        if slow == 1 or fast == 1:
             return True
-        elif vals.get(newVal):
+        elif slow == fast:
             return False
-        else:
-            vals[newVal] = 1
-            num = newVal
 
 
-print(find_happy_number(23))
+def find_middle_of_linked_list(head: Node) -> Node:
+    """
+    Input: 1 -> 2 -> 3 -> 4 -> 5 -> null
+    Output: 3
+
+    Example 2:
+    Input: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> null
+    Output: 4
+
+    Example 3:
+    Input: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> null
+    Output: 4
+    """
+    slow, fast = head, head
+
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+    return slow
+
+
+def is_palindromic_linked_list(head: Node) -> bool:
+    """
+    Given the head of a Singly LinkedList, write a method to check if the LinkedList is a palindrome or not.
+    Your algorithm should use constant space and the input LinkedList should be in the original form once the algorithm is finished.
+    The algorithm should have O(N) time complexity where ‘N’ is the number of nodes in the LinkedList.
+
+    Example 1:
+    Input: 2 -> 4 -> 6 -> 4 -> 2 -> null
+    Output: true
+
+    Example 2:
+    Input: 2 -> 4 -> 6 -> 4 -> 2 -> 2 -> null
+    Output: false
+    """
+    slow, fast = head, head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+
+    def reverse_ll(head):
+        prev = None
+        while head is not None:
+            next = head.next
+            head.next = prev
+            prev = head
+            head = next
+        return prev
+
+    reverse_second_half = reverse_ll(slow)
+    copy_reverse_second_half = reverse_second_half
+
+    is_palindrome = True
+    while head and reverse_second_half:
+        if head.value != reverse_second_half.value and reverse_second_half.value is not None:
+            is_palindrome = False
+            break
+
+        head = head.next
+        reverse_second_half = reverse_second_half.next
+
+    reverse_ll(copy_reverse_second_half)
+    return is_palindrome
+
+
+def main():
+    head = Node(2)
+    head.next = Node(4)
+    head.next.next = Node(6)
+    head.next.next.next = Node(4)
+    head.next.next.next.next = Node(2)
+
+    print("Is palindrome: " + str(is_palindromic_linked_listv2(head)))
+
+    head.next.next.next.next.next = Node(2)
+    print("Is palindrome: " + str(is_palindromic_linked_listv2(head)))
+
+
+main()
