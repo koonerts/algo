@@ -6,7 +6,7 @@ class Node:
     def print_list(self):
         temp = self
         while temp is not None:
-            print(temp.value, end='')
+            print(str(temp.value) + " ", end='')
             temp = temp.next
         print()
 
@@ -125,15 +125,6 @@ def is_palindromic_linked_list(head: Node) -> bool:
         slow = slow.next
         fast = fast.next.next
 
-    def reverse_ll(head):
-        prev = None
-        while head is not None:
-            next = head.next
-            head.next = prev
-            prev = head
-            head = next
-        return prev
-
     reverse_second_half = reverse_ll(slow)
     copy_reverse_second_half = reverse_second_half
 
@@ -150,17 +141,121 @@ def is_palindromic_linked_list(head: Node) -> bool:
     return is_palindrome
 
 
+def reverse_ll(head: Node):
+    prev = None
+    while head is not None:
+        next_ = head.next
+        head.next = prev
+        prev = head
+        head = next_
+    return prev
+
+
+def reorder(head: Node):
+    """
+    Given the head of a Singly LinkedList, write a method to modify the LinkedList such that the
+    nodes from the second half of the LinkedList are inserted alternately to the nodes from the first half in reverse order.
+    So if the LinkedList has nodes 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> null, your method should return 1 -> 6 -> 2 -> 5 -> 3 -> 4 -> null.
+    Your algorithm should not use any extra space and the input LinkedList should be modified in-place.
+
+    Example 1:
+    Input: 2 -> 4 -> 6 -> 8 -> 10 -> 12 -> null
+    Output: 2 -> 12 -> 4 -> 10 -> 6 -> 8 -> null
+
+    Example 2:
+    Input: 2 -> 4 -> 6 -> 8 -> 10 -> null
+    Output: 2 -> 10 -> 4 -> 8 -> 6 -> null
+    """
+    slow, fast = head, head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+
+    end_to_mid = reverse_ll(slow)
+
+    cntr = 0
+    start = head
+    while start.next:
+        if cntr % 2 == 0:
+            if start:
+                next_start = start.next
+                start.next = end_to_mid
+                start = next_start
+        else:
+            if start:
+                next_end_to_mid = end_to_mid.next
+                end_to_mid.next = start
+                end_to_mid = next_end_to_mid
+            else:
+                break
+        cntr += 1
+
+    return
+
+
+def circular_array_loop_exists(arr: list[int]) -> bool:
+    """
+    We are given an array containing positive and negative numbers. Suppose the array contains a number ‘M’ at a particular index.
+    Now, if ‘M’ is positive we will move forward ‘M’ indices and if ‘M’ is negative move backwards ‘M’ indices.
+    You should assume that the array is circular which means two things:
+        - If, while moving forward, we reach the end of the array, we will jump to the first element to continue the movement.
+        - If, while moving backward, we reach the beginning of the array, we will jump to the last element to continue the movement.
+
+    Write a method to determine if the array has a cycle. The cycle should have more than one element and
+    should follow one direction which means the cycle should not contain both forward and backward movements.
+
+    Example 1:
+
+    Input: [1, 2, -1, 2, 2]
+    Output: true
+    Explanation: The array has a cycle among indices: 0 -> 1 -> 3 -> 0
+
+    Example 2:
+    Input: [2, 2, -1, 2]
+    Output: true
+    Explanation: The array has a cycle among indices: 1 -> 3 -> 1
+
+    Example 3:
+    Input: [2, 1, -1, -2]
+    Output: false
+    Explanation: The array does not have any cycle.
+    """
+    def get_index(curr_index: int, curr_direction: int) -> int:
+        new_direction = 1 if arr[curr_index] > 0 else -1
+        if new_direction != direction:
+            return -1
+
+        new_index = (curr_index + arr[curr_index]) % len(arr)
+
+        if new_index == curr_index:
+            return -1
+        return new_index
+
+    for i in range(len(arr)):
+        slow, fast = i, i
+        direction = 1 if arr[i] > 0 else -1
+
+        while True:
+            slow = get_index(slow, direction)
+            fast = get_index(fast, direction)
+            if fast == -1:
+                break
+
+            fast = get_index(fast, direction)
+            if fast == -1 or slow == -1 or slow == fast:
+                break
+
+        if slow == -1 and slow == fast:
+            return False
+        elif slow == fast:
+            return True
+    return False
+
+
 def main():
-    head = Node(2)
-    head.next = Node(4)
-    head.next.next = Node(6)
-    head.next.next.next = Node(4)
-    head.next.next.next.next = Node(2)
-
-    print("Is palindrome: " + str(is_palindromic_linked_listv2(head)))
-
-    head.next.next.next.next.next = Node(2)
-    print("Is palindrome: " + str(is_palindromic_linked_listv2(head)))
+    print(circular_array_loop_exists([1, 2, -1, 2, 2]))
+    print(circular_array_loop_exists([2, 2, -1, 2]))
+    print(circular_array_loop_exists([2, 1, -1, -2]))
 
 
 main()
