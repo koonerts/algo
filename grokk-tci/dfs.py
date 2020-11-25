@@ -81,19 +81,20 @@ def count_paths(root: TreeNode, S: int):
     Given a binary tree and a number ‘S’, find all paths in the tree such that the sum of all the node values of each path equals ‘S’.
     Please note that the paths can start or end at any node but all paths must follow direction from parent to child (top to bottom).
     """
-    def dfs(node: TreeNode, path_count: int) -> int:
-        pass
-    return dfs(root, 0)
+    # TODO: Come back to
 
 
-def main():
-    root = TreeNode(12)
-    root.left = TreeNode(7)
-    root.right = TreeNode(1)
-    root.left.left = TreeNode(4)
-    root.right.left = TreeNode(10)
-    root.right.right = TreeNode(5)
-    print("Tree has paths: " + str(count_paths(root, 11)))
+class TreeDiameter:
+    def __init__(self):
+        self.treeDiameter = 0
+
+    def find_diameter(self, root):
+        # TODO: Come back to
+        return -1
 
 
-main()
+def find_maximum_path_sum(root):
+    # TODO: Come back to
+    return -1
+
+
