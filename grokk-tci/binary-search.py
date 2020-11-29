@@ -352,13 +352,51 @@ def search_rotated_array(arr, key) -> int:
     Input: [10, 15, 1, 3, 8], key = 15
     Output: 1
     Explanation: '15' is present in the array at index '1'.
+
+    Example 2:
+    Input: [4, 5, 7, 9, 10, -1, 2], key = 10
+    Output: 4
+    Explanation: '10' is present in the array at index '4'.
     """
+    # TODO: Come back to
+    return -1
+
+
+def search_rotated_with_duplicates(arr, key):
+    """
+    How do we search in a sorted and rotated array that also has duplicates?
+    The code above will fail in the following example!
+
+    Example 1:
+    Input: [3, 7, 3, 3, 3], key = 7
+    Output: 1
+    Explanation: '7' is present in the array at index '1'.
+    """
+    # TODO: Come back to
+
+
+def count_rotations(arr):
+    """
+    Given an array of numbers which is sorted in ascending order and is rotated ‘k’ times around a pivot, find ‘k’.
+    You can assume that the array does not have any duplicates.
+
+    Example 1:
+    Input: [10, 15, 1, 3, 8]
+    Output: 2
+    Explanation: The array has been rotated 2 times.
+
+    Input: [4, 5, 7, 9, 10, -1, 2]
+    Output: 5
+    Explanation: The array has been rotated 5 times.
+    """
+    # TODO: Come back to
     return -1
 
 
 def main():
-    print(search_rotated_array([10, 15, 1, 3, 8], 15))
-    print(search_rotated_array([4, 5, 7, 9, 10, -1, 2], 10))
+    print(count_rotations([10, 15, 1, 3, 8]))
+    print(count_rotations([4, 5, 7, 9, 10, -1, 2]))
+    print(count_rotations([1, 3, 8, 10]))
 
 
 main()
