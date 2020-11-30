@@ -61,22 +61,71 @@ def find_Kth_smallest(lists, k):
     Explanation: The 3rd smallest number among all the arrays is 7.
     """
     min_heap = []
+
     for i in range(len(lists)):
-        heappush(min_heap, (lists[i], i, 0))
+        heappush(min_heap, (lists[i][0], i, 1))
 
-    iterated_list_cnt = 0
-    while iterated_list_cnt < len(lists):
-        num, list_index, index = min_heap[0], min_heap[1], min_heap[2]
+    num_count = 0
+    while min_heap:
+        num, list_index, next_index = heappop(min_heap)
+        num_count += 1
 
+        if num_count == k:
+            return num
+        elif next_index < len(lists[list_index]):
+            heappush(min_heap, (lists[list_index][next_index], list_index, next_index+1))
+
+
+def find_Kth_smallest(matrix: list[list[int]], k: int):
+    """
+    Given an N * NN∗N matrix where each row and column is sorted in ascending order, find the Kth smallest element in the matrix.
+
+    Example 1:
+    Input: Matrix=[
+        [2, 6, 8],
+        [3, 7, 10],
+        [5, 8, 11]
+      ],
+      K=5
+    Output: 7
+    Explanation: The 5th smallest number in the matrix is 7.
+    """
+    # TODO: Come back to (same answer as above.. or can be improved by doing a complex 2d binary search)
     number = -1
     return number
 
 
-def main():
-    print("Kth smallest number is: " +
-          str(find_Kth_smallest([[2, 6, 8], [3, 6, 7], [1, 3, 4]], 5)))
+def find_smallest_range(lists):
+    """
+    Given ‘M’ sorted arrays, find the smallest range that includes at least one number from each of the ‘M’ lists.
+
+    Example 1:
+    Input: L1=[1, 5, 8], L2=[4, 12], L3=[7, 8, 10]
+    Output: [4, 7]
+    Explanation: The range [4, 7] includes 5 from L1, 4 from L2 and 7 from L3.
+
+    Example 2:
+    Input: L1=[1, 9], L2=[4, 12], L3=[7, 10, 16]
+    Output: [9, 12]
+    Explanation: The range [9, 12] includes 9 from L1, 12 from L2 and 10 from L3.
+    """
+    # TODO: Come back to
+    return [-1, -1]
 
 
-main()
+def find_k_largest_pairs(nums1, nums2, k):
+    """
+    Given two sorted arrays in descending order, find ‘K’ pairs with the largest sum where each pair consists of numbers from both the arrays.
 
+    Example 1:
+    Input: L1=[9, 8, 2], L2=[6, 3, 1], K=3
+    Output: [9, 3], [9, 6], [8, 6]
+    Explanation: These 3 pairs have the largest sum. No other pair has a sum larger than any of these.
 
+    Example 2:
+    Input: L1=[5, 2, 1], L2=[2, -1], K=3
+    Output: [5, 2], [5, -1], [2, 2]
+    """
+    # TODO: come back to
+    result = []
+    return result
