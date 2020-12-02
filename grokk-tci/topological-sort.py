@@ -1,3 +1,5 @@
+from collections import deque
+
 def topological_sort(vertices, edges):
     """
     Topological Sort of a directed graph (a graph with unidirectional edges) is a linear ordering of its
@@ -11,8 +13,34 @@ def topological_sort(vertices, edges):
     1) 3, 2, 0, 1
     2) 3, 2, 1, 0
     """
-    # TODO: come back to
     sortedOrder = []
+    if vertices <= 0:
+        return sortedOrder
+
+    # a. Initialize the graph
+    in_degree = {i: 0 for i in range(vertices)}  # count of incoming edges
+    graph = {i: [] for i in range(vertices)}  # adjacency list graph
+    q = deque()
+
+    for edge in edges:
+        parent, child = edge[0], edge[1]
+        graph[parent].append(child)
+        in_degree[child] += 1
+
+    for node, cnt in in_degree.items():
+        if cnt == 0:
+            q.append(node)
+
+    while q:
+        for _ in range(len(q)):
+            node = q.popleft()
+            sortedOrder.append(node)
+
+            for child in graph[node]:
+                in_degree[child] -= 1
+                if in_degree[child] == 0:
+                    q.append(child)
+
     return sortedOrder
 
 
@@ -26,20 +54,41 @@ def is_scheduling_possible(tasks, prerequisites):
     Input: Tasks=3, Prerequisites=[0, 1], [1, 2]
     Output: true
     Explanation: To execute task '1', task '0' needs to finish first. Similarly, task '1' needs to finish
-    before '2' can be scheduled. A possible sceduling of tasks is: [0, 1, 2]
+    before '2' can be scheduled. A possible scheduling of tasks is: [0, 1, 2]
 
     Example 2:
     Input: Tasks=3, Prerequisites=[0, 1], [1, 2], [2, 0]
     Output: false
-    Explanation: The tasks have cyclic dependency, therefore they cannot be sceduled.
+    Explanation: The tasks have cyclic dependency, therefore they cannot be scheduled.
 
     Example 3:
     Input: Tasks=6, Prerequisites=[2, 5], [0, 5], [0, 4], [1, 4], [3, 2], [1, 3]
     Output: true
-    Explanation: A possible sceduling of tasks is: [0 1 4 3 2 5]
+    Explanation: A possible scheduling of tasks is: [0 1 4 3 2 5]
     """
-    # TODO: Come back to
-    return False
+    in_degrees_map = {i:0 for i in range(tasks)}
+    adjacency_map = {i:[] for i in range(tasks)}
+    scheduled_tasks = 0
+    q = deque()
+
+    for pre_req, task in prerequisites:
+        adjacency_map[pre_req].append(task)
+        in_degrees_map[task] += 1
+
+    for task, degree in in_degrees_map.items():
+        if degree == 0: q.append(task)
+
+    while q:
+        for _ in range(len(q)):
+            task = q.popleft()
+            scheduled_tasks += 1
+
+            for child_task in adjacency_map[task]:
+                in_degrees_map[child_task] -= 1
+                if in_degrees_map[child_task] == 0:
+                    q.append(child_task)
+
+    return scheduled_tasks == tasks
 
 
 def find_order(tasks, prerequisites):
@@ -66,9 +115,29 @@ def find_order(tasks, prerequisites):
     Output: [0 1 4 3 2 5]
     Explanation: A possible scheduling of tasks is: [0 1 4 3 2 5]
     """
-    sortedOrder = []
-    # TODO: come back to
-    return sortedOrder
+    in_degrees_map = {i:0 for i in range(tasks)}
+    adjacency_map = {i:[] for i in range(tasks)}
+    sorted_order = []
+    q = deque()
+
+    for pre_req, task in prerequisites:
+        adjacency_map[pre_req].append(task)
+        in_degrees_map[task] += 1
+
+    for task, degree in in_degrees_map.items():
+        if degree == 0: q.append(task)
+
+    while q:
+        for _ in range(len(q)):
+            task = q.popleft()
+            sorted_order.append(task)
+
+            for child_task in adjacency_map[task]:
+                in_degrees_map[child_task] -= 1
+                if in_degrees_map[child_task] == 0:
+                    q.append(child_task)
+
+    return sorted_order if len(sorted_order) == tasks else []
 
 
 def print_orders(tasks, prerequisites):
@@ -104,9 +173,47 @@ def print_orders(tasks, prerequisites):
     12) [1, 3, 2, 0, 5, 4]
     13) [1, 3, 2, 0, 4, 5]
     """
-    # TODO: Come back to
+    in_degrees_map = {i:0 for i in range(tasks)}
+    adjacency_map = {i:[] for i in range(tasks)}
+    sorted_orders = deque([[]])
+    sources = deque()
+
+    for parent_task, child_task in prerequisites:
+        adjacency_map[parent_task].append(child_task)
+        in_degrees_map[child_task] += 1
+
+    for task, degree in in_degrees_map.items():
+        if degree == 0: sources.append(task)
+
+    while sources:
+        level_start_index = len(sorted_orders[0])
+        for _ in range(len(sources)):
+            task = sources.popleft()
+
+            for child_task in adjacency_map[task]:
+                in_degrees_map[child_task] -= 1
+                if in_degrees_map[child_task] == 0:
+                    sources.append(child_task)
+
+    for order in sorted_orders:
+        print(order)
+
+
+def main():
+    # print("Task Orders: ")
+    # print_orders(3, [[0, 1], [1, 2]])
+    # print()
+
+    # print("Task Orders: ")
+    # print_orders(4, [[3, 2], [3, 0], [2, 0], [2, 1]])
+    # print()
+
+    print("Task Orders: ")
+    print_orders(6, [[2, 5], [0, 5], [0, 4], [1, 4], [3, 2], [1, 3]])
     print()
 
+
+main()
 
 def find_order_alien_dict(words):
     """
