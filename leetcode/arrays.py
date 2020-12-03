@@ -1,16 +1,16 @@
 from typing import List
 
-
-class Arrays:
+class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
         for i in reversed(range(len(nums))):
             if i == 0:
                 continue
 
-            if nums[i] == nums[i - 1]:
+            if nums[i] == nums[i-1]:
                 del nums[i]
 
         return len(nums)
+
 
     def moveZeroes(self, nums: List[int]) -> None:
         """
@@ -22,14 +22,15 @@ class Arrays:
         """
         p_r = 0
         while p_r < len(nums):
-            if nums[p_r] == 0 and p_r + 1 < len(nums):
-                for i in range(p_r + 1, len(nums)):
+            if nums[p_r] == 0 and p_r+1 < len(nums):
+                for i in range(p_r+1, len(nums)):
                     if nums[i] != 0:
                         nums[p_r] = nums[i]
                         nums[i] = 0
                         break
 
             p_r += 1
+
 
     def sortArrayByParity(self, A: List[int]) -> List[int]:
         """
@@ -49,12 +50,13 @@ class Arrays:
                         v = A[j]
                         A[j] = A[i]
                         A[i] = v
-                        p_even = j + 1
+                        p_even = j+1
                         break
                     p_even += 1
             i += 1
 
         return A
+
 
     def sortedSquares(self, A: List[int]) -> List[int]:
         """
@@ -67,7 +69,7 @@ class Arrays:
         l, r = 0, 0
         while r < len(A) and A[r] < 0:
             r += 1
-        l = r - 1
+        l = r-1
 
         while len(ret) != len(A):
             if l < 0 or l >= len(A):
@@ -85,6 +87,7 @@ class Arrays:
                     r += 1
 
         return ret
+
 
     def heightChecker(self, heights: List[int]) -> int:
         """
@@ -107,6 +110,7 @@ class Arrays:
                 cnt += 1
         return cnt
 
+
     def findMaxConsecutiveOnes(self, nums: List[int]) -> int:
         """
         Given a binary array, find the maximum number of consecutive 1s in this array if you can flip at most one 0.
@@ -127,13 +131,14 @@ class Arrays:
         curr_max = len(nums) if len(zero_val_indexes) == 0 else 0
         print(zero_val_indexes)
         for i, v in enumerate(zero_val_indexes):
-            start = 0 if i == 0 else zero_val_indexes[i - 1] + 1
-            end = len(nums) if i + 1 >= len(zero_val_indexes) else zero_val_indexes[i + 1]
+            start = 0 if i == 0 else zero_val_indexes[i-1]+1
+            end = len(nums) if i+1 >= len(zero_val_indexes) else zero_val_indexes[i+1]
             length = len(range(start, end))
             print(start, end, length)
             if length > curr_max:
                 curr_max = length
         return curr_max
+
 
     def thirdMax(self, nums: List[int]) -> int:
         """
@@ -165,6 +170,7 @@ class Arrays:
         else:
             return max(max_set)
 
+
     def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
         """
         Given an array of integers where 1 ≤ a[i] ≤ n (n = size of array), some elements appear twice and others appear once.
@@ -176,12 +182,32 @@ class Arrays:
         """
         for i in range(len(nums)):
 
-            new_index = abs(nums[i]) - 1
+            new_index = abs(nums[i])-1
             if nums[new_index] > 0:
                 nums[new_index] *= -1
 
-        return [i + 1 for i in range(len(nums)) if nums[i] > 0]
+        return [i+1 for i in range(len(nums)) if nums[i] > 0]
 
 
-arr = [4, 3, 2, 7, 8, 2, 3, 1]
-print(Arrays().findDisappearedNumbers(arr))
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        if not s: return 0
+        elif len(s) == 1: return 1
+
+        start = 0
+        curr_substring_len, max_substr_len = 1, 1
+        char_set = {s[0]}
+
+        for i in range(1, len(s)):
+
+            while s[i] in char_set:
+                curr_substring_len -= 1
+                char_set.remove(s[start])
+                start += 1
+
+            curr_substring_len += 1
+            char_set.add(s[i])
+            max_substr_len = max(max_substr_len, curr_substring_len)
+        return max_substr_len
+
+
+print(Solution().lengthOfLongestSubstring('pwwkew'))

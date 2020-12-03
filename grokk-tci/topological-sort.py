@@ -186,7 +186,7 @@ def print_orders(tasks, prerequisites):
         if degree == 0: sources.append(task)
 
     while sources:
-        level_start_index = len(sorted_orders[0])
+        level_orders = []
         for _ in range(len(sources)):
             task = sources.popleft()
 
@@ -195,25 +195,11 @@ def print_orders(tasks, prerequisites):
                 if in_degrees_map[child_task] == 0:
                     sources.append(child_task)
 
+    # TODO: Come back to
+
     for order in sorted_orders:
         print(order)
 
-
-def main():
-    # print("Task Orders: ")
-    # print_orders(3, [[0, 1], [1, 2]])
-    # print()
-
-    # print("Task Orders: ")
-    # print_orders(4, [[3, 2], [3, 0], [2, 0], [2, 1]])
-    # print()
-
-    print("Task Orders: ")
-    print_orders(6, [[2, 5], [0, 5], [0, 4], [1, 4], [3, 2], [1, 3]])
-    print()
-
-
-main()
 
 def find_order_alien_dict(words):
     """
