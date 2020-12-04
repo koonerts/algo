@@ -188,7 +188,6 @@ class Solution:
 
         return [i+1 for i in range(len(nums)) if nums[i] > 0]
 
-
     def lengthOfLongestSubstring(self, s: str) -> int:
         if not s: return 0
         elif len(s) == 1: return 1
@@ -209,5 +208,18 @@ class Solution:
             max_substr_len = max(max_substr_len, curr_substring_len)
         return max_substr_len
 
+    def findMedianSortedArrays(self, nums1: list[int], nums2: list[int]) -> float:
+        """
+        https://leetcode.com/problems/median-of-two-sorted-arrays/
+        """
+        # TODO: Come back to
 
-print(Solution().lengthOfLongestSubstring('pwwkew'))
+    def singleNumber(self, nums: List[int]) -> int:
+        xor = 0
+        for num in nums:
+            xor ^= num
+        return xor
+
+
+print(Solution().findMedianSortedArrays([1,2,3], [3,4,5]))
+
