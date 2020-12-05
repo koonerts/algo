@@ -1,4 +1,5 @@
 from typing import List
+from collections import deque
 
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
@@ -220,6 +221,4 @@ class Solution:
             xor ^= num
         return xor
 
-
-print(Solution().findMedianSortedArrays([1,2,3], [3,4,5]))
 

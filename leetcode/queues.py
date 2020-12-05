@@ -301,4 +301,45 @@ class Queues:
         a = [1]
         a.__reversed__()
 
-print(Queues().numSquares(12))
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        """
+        https://leetcode.com/problems/permutations/
+        """
+        permutations = []
+        que = collections.deque([[]])
+
+        for i, num in enumerate(nums):
+            for _ in range(len(que)):
+                item = que.popleft()
+                for j in range(i+1):
+                    copy = item.copy()
+                    copy.insert(j, num)
+
+                    if len(copy) == len(nums):
+                        permutations.append(copy)
+                    else:
+                        que.append(copy)
+        return permutations
+
+    def generateParenthesis(self, n: int) -> List[str]:
+        que = collections.deque([(0, 0, "")])
+        ret_list = []
+
+        while que:
+            open_cnt, closed_cnt, paren_str = que.popleft()
+
+            if open_cnt == n:
+                if len(paren_str) == (n*2)-1:
+                    ret_list.append(paren_str + ')')
+                else:
+                    que.append((open_cnt, closed_cnt+1, paren_str + ')'))
+            elif open_cnt == closed_cnt:
+                que.append((open_cnt+1, closed_cnt, paren_str + '('))
+            else:
+                que.append((open_cnt+1, closed_cnt, paren_str + '('))
+                que.append((open_cnt, closed_cnt+1, paren_str + ')'))
+
+        return ret_list
+
+
+print(Queues().generateParenthesis(3))
