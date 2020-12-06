@@ -175,3 +175,17 @@ def find_mid(lst: LinkedList):
             return node
         else:
             node = node.next_element
+
+
+def remove_duplicates(lst: LinkedList):
+    if not lst or not lst.get_head(): return lst
+
+    node, prev, vals = lst.get_head(), None, set()
+    while node:
+        if node.data in vals:
+            prev.next_element = node.next_element
+        else:
+            vals.add(node.data)
+        prev = node
+        node = node.next_element
+    return lst
