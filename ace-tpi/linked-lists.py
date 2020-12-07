@@ -18,6 +18,10 @@ class LinkedList:
 
     def insert_at_head(self, dt):
         temp_node = Node(dt)
+        if(self.is_empty()):
+            self.head_node = temp_node
+            return self.head_node
+
         temp_node.next_element = self.head_node
         self.head_node = temp_node
         return self.head_node
@@ -42,6 +46,17 @@ class LinkedList:
         temp.next_element = new_node
         return
 
+    def length(self):
+        # start from the first element
+        curr = self.get_head()
+        length = 0
+
+        # Traverse the list and count the number of nodes
+        while curr is not None:
+            length += 1
+            curr = curr.next_element
+        return length
+
     def print_list(self):
         if(self.is_empty()):
             print("List is Empty")
@@ -63,16 +78,31 @@ class LinkedList:
             first_element.next_element = None
         return
 
-    def length(self):
-        # start from the first element
-        curr = self.get_head()
-        length = 0
+    def delete(self, value):
+        deleted = False
+        if self.is_empty():  # Check if list is empty -> Return False
+            print("List is Empty")
+            return deleted
+        current_node = self.get_head()  # Get current node
+        previous_node = None  # Get previous node
+        if current_node.data is value:
+            self.delete_at_head()  # Use the previous function
+            deleted = True
+            return deleted
 
-        # Traverse the list and count the number of nodes
-        while curr is not None:
-            length += 1
-            curr = curr.next_element
-        return length
+        # Traversing/Searching for Node to Delete
+        while current_node is not None:
+            # Node to delete is found
+            if value is current_node.data:
+                # previous node now points to next node
+                previous_node.next_element = current_node.next_element
+                current_node.next_element = None
+                deleted = True
+                break
+            previous_node = current_node
+            current_node = current_node.next_element
+
+        return deleted
 
     def search(self, dt):
         if self.is_empty():
@@ -86,6 +116,32 @@ class LinkedList:
 
         print(dt, " is not in List!")
         return None
+
+    def remove_duplicates(self):
+        if self.is_empty():
+            return
+
+        # If list only has one node, leave it unchanged
+        if self.get_head().next_element is None:
+            return
+
+        outer_node = self.get_head()
+        while outer_node:
+            inner_node = outer_node  # Iterator for the inner loop
+            while inner_node:
+                if inner_node.next_element:
+                    if outer_node.data == inner_node.next_element.data:
+                        # Duplicate found, so now removing it
+                        new_next_element = inner_node.next_element.next_element
+                        inner_node.next_element = new_next_element
+                    else:
+                        # Otherwise simply iterate ahead
+                        inner_node = inner_node.next_element
+                else:
+                    # Otherwise simply iterate ahead
+                    inner_node = inner_node.next_element
+            outer_node = outer_node.next_element
+        return
 
 
 def insert_at_tail(lst: LinkedList, value: int):
@@ -189,3 +245,89 @@ def remove_duplicates(lst: LinkedList):
         prev = node
         node = node.next_element
     return lst
+
+
+def union(list1: LinkedList, list2: LinkedList):
+    if not list1: return list2
+    elif not list2: return list1
+    elif not list1 and not list2: return None
+
+    l1_node = list1.get_head()
+    while l1_node.next_element:
+        l1_node = l1_node.next_element
+    l1_node.next_element = list2.get_head()
+
+    list1.remove_duplicates()
+    return list1
+
+
+def intersection(list1: LinkedList, list2: LinkedList):
+    if not list1 or not list2 or not list1.get_head() or not list2.get_head():
+        return None
+
+    # Write your code here
+    list2_set = set()
+    list2_node = list2.get_head()
+    while list2_node:
+        list2_set.add(list2_node.data)
+        list2_node = list2_node.next_element
+
+    ret_list, intersection_head, prev = None, None, None
+    list1_node = list1.get_head()
+    while list1_node:
+        if list1_node.data in list2_set:
+            if not intersection_head:
+                intersection_head = Node(list1_node.data)
+                ret_list = LinkedList()
+                ret_list.head_node = intersection_head
+                prev = intersection_head
+            else:
+                node = Node(list1_node.data)
+                prev.next_element = node
+                prev = node
+
+        list1_node = list1_node.next_element
+
+    ret_list.remove_duplicates()
+    return ret_list
+
+
+def find_nth(lst: LinkedList, n: int) -> int:
+    if not lst or not lst.get_head(): return -1
+
+    lst_node, n_ahead = lst.get_head(), lst.get_head()
+    for _ in range(n):
+        if not n_ahead: return -1
+        n_ahead = n_ahead.next_element
+
+    while n_ahead:
+        n_ahead = n_ahead.next_element
+        lst_node = lst_node.next_element
+    return lst_node.data
+
+
+def find_happy_number(num: int):
+    def get_squared_sum(number: int) -> int:
+        s = 0
+        for n in [int(x) for x in str(number)]:
+            s += n**2
+        return s
+
+    slow_squared_sum, fast_squared_sum = num, num
+    while True:
+        slow_squared_sum = get_squared_sum(slow_squared_sum)
+        fast_squared_sum = get_squared_sum(get_squared_sum(fast_squared_sum))
+
+        if slow_squared_sum == 1 or fast_squared_sum == 1:
+            return True
+        elif slow_squared_sum == fast_squared_sum:
+            return False
+
+
+def main():
+    print(find_happy_number(23))
+    print(find_happy_number(12))
+
+
+main()
+
