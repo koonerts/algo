@@ -18,14 +18,20 @@ def are_identical(root1: BinaryTreeNode, root2: BinaryTreeNode):
 
 
 class InorderIterator:
+    """
+    TODO: Come back to -> https://www.educative.io/module/lesson/data-structures-in-python/m7wOjD0DlBO
+    """
     def __init__(self, root: BinaryTreeNode):
-        self.stack = [root]
+        self.stack = []
+
+    def populate_stack(self, root: BinaryTreeNode):
+        pass
 
     def hasNext(self):
         return len(self.stack) > 0
 
     def getNext(self):
-
+        pass
 
 
 def inorder_using_iterator(root: BinaryTreeNode):
@@ -39,5 +45,29 @@ def inorder_using_iterator(root: BinaryTreeNode):
 
 def inorder_iterative(root: BinaryTreeNode):
     result = ""
+    if not root:
+        return result
 
-    return result
+    stk = []
+    while stk or root:
+        if root:
+            stk.append(root)
+            root = root.left
+        else:
+            node = stk.pop()
+            result += str(node.data) + " "
+            root = node.right
+
+    return str(result)
+
+
+def inorder_successor_bst(root: BinaryTreeNode, d: int):
+    found_d = False
+
+    def dfs_inorder(root_node: BinaryTreeNode):
+        if root_node:
+            dfs_inorder(root_node.left)
+        else:
+
+        pass
+    return None
