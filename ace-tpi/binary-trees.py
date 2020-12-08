@@ -62,12 +62,16 @@ def inorder_iterative(root: BinaryTreeNode):
 
 
 def inorder_successor_bst(root: BinaryTreeNode, d: int):
-    found_d = False
+    """
+    TODO: -> https://www.educative.io/module/lesson/data-structures-in-python/g7wVBVxqGJG
+    """
+    successor = None
 
-    def dfs_inorder(root_node: BinaryTreeNode):
-        if root_node:
-            dfs_inorder(root_node.left)
-        else:
+    def dfs_inorder(root_node: BinaryTreeNode, successor: int):
+        if not root_node:
+            return
 
+        if root_node.data > d:
+            successor = root_node.data
         pass
     return None
