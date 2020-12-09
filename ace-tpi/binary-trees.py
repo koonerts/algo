@@ -1,3 +1,5 @@
+from collections import deque
+
 class BinaryTreeNode:
     def __init__(self, data, left=None, right=None):
         self.data = data
@@ -61,17 +63,62 @@ def inorder_iterative(root: BinaryTreeNode):
     return str(result)
 
 
-def inorder_successor_bst(root: BinaryTreeNode, d: int):
-    """
-    TODO: -> https://www.educative.io/module/lesson/data-structures-in-python/g7wVBVxqGJG
-    """
+def inorder_successor_bst(root: BinaryTreeNode, d):
+    if not root:
+        return None
+
     successor = None
 
-    def dfs_inorder(root_node: BinaryTreeNode, successor: int):
-        if not root_node:
-            return
+    while root:
+        if root.data < d:
+            root = root.right
+        elif root.data > d:
+            successor = root
+            root = root.left
+        else:
+            if root.right:
+                while root.left:
+                    root = root.left
+                successor = root
+            break
+    return successor
 
-        if root_node.data > d:
-            successor = root_node.data
-        pass
-    return None
+
+def level_order_traversal(root: BinaryTreeNode):
+    result = ""
+    que = deque([root])
+
+    while que:
+        level_result = ""
+        for _ in range(len(que)):
+            node = que.popleft()
+            level_result += str(node.data) + " "
+            if node.left: que.append(node.left)
+            if node.right: que.append(node.right)
+        result += level_result.rstrip() + "\n"
+    return result
+
+
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left, self.right = None, None
+
+
+def traverse(root):
+    result = deque()
+    # TODO: Write your code here
+    return result
+
+
+def main():
+    root = TreeNode(12)
+    root.left = TreeNode(7)
+    root.right = TreeNode(1)
+    root.left.left = TreeNode(9)
+    root.right.left = TreeNode(10)
+    root.right.right = TreeNode(5)
+    print("Reverse level order traversal: " + str(traverse(root)))
+
+
+main()
