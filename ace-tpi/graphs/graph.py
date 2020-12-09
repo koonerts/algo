@@ -1,11 +1,11 @@
-from linked_list import LinkedList
+from .linked_list import LinkedList
 
 
 class Graph:
     def __init__(self, vertices):
         # Total number of vertices
         self.vertices = vertices
-        # definining a list which can hold multiple LinkedLists
+        # defining a list which can hold multiple LinkedLists
         # equal to the number of vertices in the graph
         self.array: list[LinkedList] = []
         # Creating a new Linked List for each vertex/index of the list
