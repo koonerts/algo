@@ -221,4 +221,45 @@ class Solution:
             xor ^= num
         return xor
 
+    def rotate_with_extra_space(self, nums: List[int], k: int) -> None:
+        if not nums: return nums
+        k = k % len(nums)
+        nums_copy = nums[-k:] + nums[:-k]
+        for i in range(len(nums)):
+            nums[i] = nums_copy[i]
 
+    # def rotate_in_place(self, nums: List[int], k: int) -> None:
+    #     if not nums: return nums
+    #     k = k % len(nums)
+    #
+    #     temp, cnt, i = -1, 0, 0
+    #     while cnt < len(nums):
+
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        set_ = set()
+        for num in nums:
+            if num in set_:
+                return False
+            else:
+                set_.add(num)
+        return True
+
+    def plusOne(self, digits: List[int]) -> List[int]:
+        for i in range(len(digits)-1, -1, -1):
+            if digits[i] + 1 <= 9:
+                digits[i] += 1
+                break
+            else:
+                digits[i] = 0
+                if i == 0:
+                    digits.insert(0, 1)
+        return digits
+
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        num_map = {}
+        for i, num in enumerate(nums):
+            if num_map.get(target-num):
+                return [i, num_map.get(target-num)]
+            else:
+                num_map[num] = i
+        return []
