@@ -303,3 +303,7 @@ class BinaryTrees:
 
     def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
         pass
+
+
+    def isValidBST(self, root: TreeNode) -> bool:
+        pass

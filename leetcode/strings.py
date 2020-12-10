@@ -77,5 +77,21 @@ class Solution:
         else:
             return val
 
+    # def strStr(self, haystack: str, needle: str) -> int:
+    #     if needle == '': return 0
+    #
+    #     start_hay, start_needle = 0, 0
+    #     for i, c in enumerate(haystack):
+    #         if start_needle == len(needle):
+    #             return start_hay
+    #
+    #         if haystack[i] == needle[start_needle]:
+    #             start_needle += 1
+    #         else:
+    #             start_hay += 1
+    #             start_needle = 0
+    #             while start_hay < len(haystack) and haystack[start_hay] != needle[start_needle]:
+    #
 
-print(Solution().myAtoi("+-12"))
+
+print(Solution().strStr('a', 'a'))
