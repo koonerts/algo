@@ -1,5 +1,5 @@
 from typing import List
-from collections import deque
+import collections
 
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
@@ -11,7 +11,6 @@ class Solution:
                 del nums[i]
 
         return len(nums)
-
 
     def moveZeroes(self, nums: List[int]) -> None:
         """
@@ -31,7 +30,6 @@ class Solution:
                         break
 
             p_r += 1
-
 
     def sortArrayByParity(self, A: List[int]) -> List[int]:
         """
@@ -57,7 +55,6 @@ class Solution:
             i += 1
 
         return A
-
 
     def sortedSquares(self, A: List[int]) -> List[int]:
         """
@@ -89,7 +86,6 @@ class Solution:
 
         return ret
 
-
     def heightChecker(self, heights: List[int]) -> int:
         """
         Students are asked to stand in non-decreasing order of heights for an annual photo.
@@ -110,7 +106,6 @@ class Solution:
             if heights[i] != heights_sorted[i]:
                 cnt += 1
         return cnt
-
 
     def findMaxConsecutiveOnes(self, nums: List[int]) -> int:
         """
@@ -139,7 +134,6 @@ class Solution:
             if length > curr_max:
                 curr_max = length
         return curr_max
-
 
     def thirdMax(self, nums: List[int]) -> int:
         """
@@ -171,7 +165,6 @@ class Solution:
         else:
             return max(max_set)
 
-
     def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
         """
         Given an array of integers where 1 ≤ a[i] ≤ n (n = size of array), some elements appear twice and others appear once.
@@ -190,8 +183,10 @@ class Solution:
         return [i+1 for i in range(len(nums)) if nums[i] > 0]
 
     def lengthOfLongestSubstring(self, s: str) -> int:
-        if not s: return 0
-        elif len(s) == 1: return 1
+        if not s:
+            return 0
+        elif len(s) == 1:
+            return 1
 
         start = 0
         curr_substring_len, max_substr_len = 1, 1
@@ -224,16 +219,16 @@ class Solution:
     def rotate_with_extra_space(self, nums: List[int], k: int) -> None:
         if not nums: return nums
         k = k % len(nums)
-        nums_copy = nums[-k:] + nums[:-k]
+        nums_copy = nums[-k:]+nums[:-k]
         for i in range(len(nums)):
             nums[i] = nums_copy[i]
 
-    # def rotate_in_place(self, nums: List[int], k: int) -> None:
-    #     if not nums: return nums
-    #     k = k % len(nums)
-    #
-    #     temp, cnt, i = -1, 0, 0
-    #     while cnt < len(nums):
+        # def rotate_in_place(self, nums: List[int], k: int) -> None:
+        #     if not nums: return nums
+        #     k = k % len(nums)
+        #
+        #     temp, cnt, i = -1, 0, 0
+        #     while cnt < len(nums):
 
     def containsDuplicate(self, nums: List[int]) -> bool:
         set_ = set()
@@ -246,7 +241,7 @@ class Solution:
 
     def plusOne(self, digits: List[int]) -> List[int]:
         for i in range(len(digits)-1, -1, -1):
-            if digits[i] + 1 <= 9:
+            if digits[i]+1 <= 9:
                 digits[i] += 1
                 break
             else:
@@ -263,3 +258,73 @@ class Solution:
             else:
                 num_map[num] = i
         return []
+
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        result = []
+        nums.sort()
+        start, end = 0, len(nums) - 1
+        pass
+
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        pass
+
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        word_counts = {}
+        for word in strs:
+            ordinal = 0
+            for c in word:
+                ordinal += ord(c)
+
+            word_counts[ordinal] = word_counts.get(ordinal, []) + [word]
+        vals = list(word_counts.values())
+        print(vals)
+        return vals
+
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        if not s: return 0
+
+        max_ss = 1
+        char_freq = {s[0]:1}
+        left, right = 0, 1
+        while right < len(s):
+            char_freq[s[right]] = char_freq.get(s[right], 0) + 1
+            while char_freq[s[right]] > 1:
+                if char_freq[s[left]] == 1:
+                    del char_freq[s[left]]
+                else:
+                    char_freq[s[left]] -= 1
+                left += 1
+            max_ss = max(right-left+1, max_ss)
+            right += 1
+        print(max_ss)
+        return max_ss
+
+    def longestPalindrome(self, s: str) -> str:
+        left, right = 0, 0
+        isValid = True
+
+    def sortColors(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        if not nums or len(nums) == 1:
+            return
+
+        i, left, right = 0, 0, len(nums) - 1
+        while i < right:
+            if nums[i] == 0:
+                nums[left], nums[i] = nums[i], nums[left]
+                left += 1
+                i += 1
+            elif nums[i] == 1:
+                i += 1
+            else:
+                nums[i], nums[right] = nums[right], nums[i]
+                right -= 1
+        print(nums)
+
+
+Solution().sortColors([2,0,2,1,1,0])

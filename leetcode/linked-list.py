@@ -19,12 +19,6 @@ class Solution:
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
         """https://leetcode.com/problems/add-two-numbers/"""
 
-        # def reverse_linked_list(head: ListNode) -> ListNode:
-        #     prev, node = None, head
-        #     while node:
-        #         node.next, prev, node = prev, node, node.next
-        #     return prev
-
         carry_over = 0
         head, prev_digit_node = None, None
         while l1 or l2:
@@ -49,6 +43,10 @@ class Solution:
                 prev_digit_node.next = digit_node
 
         return head
+
+
+
+
 
     def deleteNode(self, node):
         """
@@ -147,8 +145,12 @@ class Solution:
         return True
 
 
-node = ListNode(0)
-node.next = ListNode(0)
+node = ListNode(2)
+node.next = ListNode(4)
+node.next.next = ListNode(3)
 
-val = Solution().isPalindrome(node)
-print(val)
+node2 = ListNode(5)
+node2.next = ListNode(6)
+node2.next.next = ListNode(4)
+
+val = Solution().addTwoNumbers(node, node2)
