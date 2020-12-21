@@ -155,30 +155,7 @@ class BinaryTrees:
         return max(curr_depth, l_depth, r_depth)
 
     def isSymmetric(self, root: TreeNode) -> bool:
-        """
-        Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
-        For example, this binary tree [1,2,2,3,4,4,3] is symmetric:
-
-        Ex: [1,2,2,3,4,4,3] -> True       [1,2,2,null,3,null,3] -> False
-              1                                    1
-             / \                                  / \
-            2   2                                2   2
-           / \ / \                                \   \
-          3  4 4  3                               3    3
-        """
-
-        if not root:
-            return True
-
-        def isMirror(l_node: TreeNode, r_node: TreeNode):
-            if (not l_node and r_node) or (l_node and not r_node):
-                return False
-            elif not l_node and not r_node:
-                return True
-            else:
-                return l_node.val == r_node.val and isMirror(l_node.left, r_node.right) and isMirror(l_node.right, r_node.left)
-
-        return isMirror(root.left, root.right)
+        
 
     def hasPathSum(self, root: TreeNode, sum: int) -> bool:
         """
@@ -306,4 +283,11 @@ class BinaryTrees:
 
 
     def isValidBST(self, root: TreeNode) -> bool:
-        pass
+        def validate(node: TreeNode, low=float('-inf'), high=float('inf')) -> bool:
+            if not node:
+                return True
+            elif not (low < node.val < high):
+                return False
+            else:
+                return validate(node.left, low, node.val) and validate(node.left, node.val, high)
+        return validate(root)

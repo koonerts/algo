@@ -1,13 +1,13 @@
 from typing import List
 from collections import deque
-from heapq import *
-import string
+
 
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left: 'TreeNode' = left
         self.right: 'TreeNode' = right
+
 
 class Solution:
     def inorderTraversal(self, root: TreeNode) -> List[int]:
@@ -24,6 +24,7 @@ class Solution:
 
             if node.right:
                 traverse(node.right)
+
         traverse(root)
         return result
 
@@ -42,31 +43,27 @@ class Solution:
         return result
 
     def zigzagLevelOrder(self, root: TreeNode) -> List[List[int]]:
+        if not root: return []
+
+        direction = 1  # 1 left->right, -1 right->left
         result = []
-        if not root: return result
+        q = deque([root])
 
-        def traverse(node: TreeNode, depth: int, direction: int):
-            if not node:
-                return
+        while q:
+            level_result = deque([])
+            for _ in range(len(q)):
+                node = q.popleft()
 
-            if len(result) < depth + 1:
-                result.append(deque([node.val]))
-                # if depth > 0:
-                #     result[depth-1] = list(result[depth-1])
-            else:
                 if direction == 1:
-                    result[depth].append(node.val)
+                    level_result.append(node.val)
                 else:
-                    result[depth].appendleft(node.val)
+                    level_result.appendleft(node.val)
 
-            if direction == 1:
-                traverse(node.right, depth+1, -1)
-                traverse(node.left, depth+1, -1)
-            else:
-                traverse(node.left, depth+1, 1)
-                traverse(node.right, depth+1, 1)
-        traverse(root, 0, 1)
-        result[-1] = list(result[-1])
+                if node.left: q.append(node.left)
+                if node.right: q.append(node.right)
+
+            result.append(list(level_result))
+            direction *= -1
         return result
 
     def kthSmallest(self, root: TreeNode, k: int) -> int:
@@ -107,7 +104,7 @@ class Solution:
         cnt = 0
 
         def sink_island(row, col):
-            if not(0 <= row < rows) or not(0 <= col < cols) or grid[row][col] == WATER:
+            if not (0 <= row < rows) or not (0 <= col < cols) or grid[row][col] == WATER:
                 return
 
             grid[row][col] = WATER
@@ -143,7 +140,7 @@ class Solution:
                 results.append(curr_str)
             else:
                 for letter in phone[digits[digit_index]]:
-                    dfs(curr_str + letter, digit_index+1)
+                    dfs(curr_str+letter, digit_index+1)
 
         dfs('', 0)
         return results
@@ -157,9 +154,10 @@ class Solution:
                 result.append(curr_str)
             else:
                 if open_cnt < n:
-                    add_parenthesis(curr_str + '(', open_cnt+1, closed_cnt)
+                    add_parenthesis(curr_str+'(', open_cnt+1, closed_cnt)
                 if closed_cnt < open_cnt:
-                    add_parenthesis(curr_str + ')', open_cnt, closed_cnt+1)
+                    add_parenthesis(curr_str+')', open_cnt, closed_cnt+1)
+
         add_parenthesis('', 0, 0)
         return result
 
@@ -181,5 +179,4 @@ class Solution:
         return res
 
 
-print(Solution().permute([1,2,3]))
-
+print(Solution().permute([1, 2, 3]))

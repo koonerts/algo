@@ -262,8 +262,48 @@ class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         result = []
         nums.sort()
-        start, end = 0, len(nums) - 1
-        pass
+
+        i = 0
+        while i < len(nums):
+            start, end = i+1, len(nums) - 1
+
+            while start < end:
+                val = nums[i] + nums[start] + nums[end]
+                if val == 0:
+                    result.append([nums[i], nums[start], nums[end]])
+                    start += 1
+                    end -= 1
+
+                    while start < end and nums[start] == nums[start-1]:
+                        start += 1
+                elif val < 0:
+                    start += 1
+                else:
+                    end -= 1
+
+            i += 1
+        return result
+
+    def threeSumClosest(self, nums: List[int], target: int) -> int:
+        if len(nums) == 3: return sum(nums)
+
+        nums.sort()
+        closest_sum = float('inf')
+        for i in range(len(nums)):
+            left, right = i+1, len(nums)-1
+            while left < right:
+                curr_sum = nums[i] + nums[left] + nums[right]
+                if curr_sum == target:
+                    return curr_sum
+                else:
+                    if abs(curr_sum - target) < abs(closest_sum - target):
+                        closest_sum = curr_sum
+
+                    if curr_sum < target:
+                        left += 1
+                    else:
+                        right -= 1
+        return closest_sum
 
     def setZeroes(self, matrix: List[List[int]]) -> None:
         """
@@ -272,16 +312,7 @@ class Solution:
         pass
 
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        word_counts = {}
-        for word in strs:
-            ordinal = 0
-            for c in word:
-                ordinal += ord(c)
-
-            word_counts[ordinal] = word_counts.get(ordinal, []) + [word]
-        vals = list(word_counts.values())
-        print(vals)
-        return vals
+        pass
 
     def lengthOfLongestSubstring(self, s: str) -> int:
         if not s: return 0
@@ -326,5 +357,45 @@ class Solution:
                 right -= 1
         print(nums)
 
+    def maxArea(self, heights: List[int]) -> int:
+        if not heights or len(heights) <= 1:
+            return 0
 
-Solution().sortColors([2,0,2,1,1,0])
+        def compute_area(x, y):
+            if not (0 <= x < len(heights)) or not (0 <= y < len(heights)):
+                return 0
+
+            height = min(heights[x], heights[y])
+            width = y-x
+            return height*width
+
+        left, right, max_area = 0, len(heights) - 1, 0
+        while left <= right:
+            max_area = max(max_area, compute_area(left, right))
+            if heights[left] <= heights[right]:
+                left += 1
+            else:
+                right -= 1
+        return max_area
+
+    def intToRoman(self, num: int) -> str:
+        digits = {1000: 'M', 900: 'CM', 500: 'D', 400: 'CD', 100: 'C',
+                  90: 'XC', 50: 'L', 40: 'XL', 10: 'X',
+                  9: 'IX', 5: 'V', 4: 'IV', 1: 'I'}
+
+    def missingNumber(self, nums: List[int]) -> int:
+
+        i = 0
+        while i < len(nums):
+            while nums[i] < len(nums) and nums[i] != i:
+                val = nums[i]
+                nums[i], nums[val] = nums[val], nums[i]
+            i += 1
+
+        for i in range(len(nums)):
+            if nums[i] != i:
+                return i
+        return len(nums)
+
+    def trap(self, heights: List[int]) -> int:
+        pass
