@@ -34,5 +34,29 @@ class Solution:
                 return memo[i]
         return traverse(len(nums)-1)
 
+    def canJump(self, nums: list[int]) -> bool:
+        if len(nums) <= 1: return True
 
-print(Solution().rob([2,7,9,3,1]))
+        target_index = len(nums)-1
+        left_index = len(nums)-2
+
+        while left_index >= 0:
+            dist = target_index - left_index
+            if nums[left_index] >= dist:
+                target_index = left_index
+            left_index -= 1
+        return target_index == 0
+
+    def uniquePaths(self, m: int, n: int) -> int:
+        pathCnt = 0
+
+        def traverse(x, y):
+            nonlocal pathCnt
+
+    def coinChange(self, coins: list[int], amount: int) -> int:
+        if not coins or amount <= 0: return -1
+
+        
+
+
+print(Solution().canJump([2,3,1,1,4]))
