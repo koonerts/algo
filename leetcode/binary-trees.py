@@ -2,6 +2,7 @@ from typing import List
 import enum
 import collections
 import json
+from collections import defaultdict
 
 
 class TraversalType(enum.Enum):
@@ -155,7 +156,17 @@ class BinaryTrees:
         return max(curr_depth, l_depth, r_depth)
 
     def isSymmetric(self, root: TreeNode) -> bool:
-        
+        if not root: return True
+
+        def isMirror(n1: TreeNode, n2: TreeNode) -> bool:
+            if not n1 and not n2:
+                return True
+            elif (not n1 and n2) or (n1 and not n2) or (n1.val != n2.val):
+                return False
+            else:
+                return isMirror(n1.left, n2.right) and isMirror(n1.right, n2.left)
+
+        return isMirror(root.left, root.right)
 
     def hasPathSum(self, root: TreeNode, sum: int) -> bool:
         """
@@ -269,7 +280,6 @@ class BinaryTrees:
         preorder = self.preorderTraversal(root)
         return json.dumps({'inorder':inorder, 'preorder':preorder})
 
-
     def deserialize(self, data: str) -> TreeNode:
         """
         Decodes your encoded data to tree.
@@ -277,10 +287,8 @@ class BinaryTrees:
         map = json.loads(data)
         return self.buildTree_Pre(map.inorder, map.preorder)
 
-
     def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
         pass
-
 
     def isValidBST(self, root: TreeNode) -> bool:
         def validate(node: TreeNode, low=float('-inf'), high=float('inf')) -> bool:
@@ -291,3 +299,6 @@ class BinaryTrees:
             else:
                 return validate(node.left, low, node.val) and validate(node.left, node.val, high)
         return validate(root)
+
+    def maxPathSum(self, root: TreeNode) -> int:
+        pass

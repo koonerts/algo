@@ -178,5 +178,56 @@ class Solution:
                     res.append(copy_curr)
         return res
 
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        in_degree_map = {i:0 for i in range(numCourses)}
+        adj_graph = {i:[] for i in range(numCourses)}
 
-print(Solution().permute([1, 2, 3]))
+        for parent, child in prerequisites:
+            in_degree_map[child] += 1
+            adj_graph[parent].append(child)
+
+        q = deque()
+        for course, in_degree in in_degree_map.items():
+            if in_degree == 0:
+                q.append(course)
+
+        cnt = 0
+        while q:
+            parent_course = q.popleft()
+            cnt += 1
+
+            for child_course in adj_graph[parent_course]:
+                in_degree_map[child_course] -= 1
+                if in_degree_map[child_course] == 0:
+                    q.append(child_course)
+        return cnt >= numCourses
+
+    def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+        lca_node: TreeNode or None = None
+        pass
+
+    def diameterOfBinaryTree(self, root: TreeNode) -> int:
+        if not root: return 0
+
+        def depth(node):
+            nonlocal diameter
+            if not node: return 0
+
+            left = depth(node.left)
+            right = depth(node.right)
+            # path
+            diameter = max(diameter, left + right)
+            # depth
+            return max(left, right) + 1
+
+        diameter = 0
+        depth(root)
+        return diameter
+
+
+node = TreeNode(1)
+node.left = TreeNode(2)
+node.right = TreeNode(3)
+node.left.left = TreeNode(4)
+node.left.right = TreeNode(5)
+print(Solution().diameterOfBinaryTree(node))
