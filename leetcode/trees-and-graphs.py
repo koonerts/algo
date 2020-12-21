@@ -215,19 +215,29 @@ class Solution:
 
             left = depth(node.left)
             right = depth(node.right)
-            # path
             diameter = max(diameter, left + right)
-            # depth
             return max(left, right) + 1
 
         diameter = 0
         depth(root)
         return diameter
 
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, new_color: int) -> List[List[int]]:
+        if not image: return image
 
-node = TreeNode(1)
-node.left = TreeNode(2)
-node.right = TreeNode(3)
-node.left.left = TreeNode(4)
-node.left.right = TreeNode(5)
-print(Solution().diameterOfBinaryTree(node))
+        def fill(x, y, orig_color):
+            if x >= len(image) or x < 0 or y >= len(image[x]) or y < 0 or image[x][y] != orig_color:
+                return
+            else:
+                image[x][y] = new_color
+                fill(x, y+1, orig_color)
+                fill(x, y-1, orig_color)
+                fill(x-1, y, orig_color)
+                fill(x+1, y, orig_color)
+
+        fill(sr, sc, image[sr][sc])
+        return image
+
+
+img = [[1,1,1],[1,1,0],[1,0,1]]
+print(Solution().floodFill(img, 1, 1, 2))
