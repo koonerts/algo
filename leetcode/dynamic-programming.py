@@ -56,7 +56,7 @@ class Solution:
     def coinChange(self, coins: list[int], amount: int) -> int:
         if not coins or amount <= 0: return -1
 
-        
+    def longestPalindrome(self, s: str) -> str:
 
 
 print(Solution().canJump([2,3,1,1,4]))
