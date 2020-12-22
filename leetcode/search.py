@@ -99,22 +99,28 @@ class Solution:
                     prev[end] = curr[end]
         return result
 
-    def binary_search_rotated(self, nums: List[int], target: int) -> int:
-        # if not nums: return -1
-        #
-        # def is_ascending(curr_index):
-        #     lower = curr_index if curr_index == 0 else curr_index-1
-        #     upper = curr_index if curr_index == len(nums)-1 else curr_index+1
-        #     return nums[lower] <= nums[curr_index] <= upper[curr_index]
-        #
-        # direction, start, end = -1, 0, len(nums) - 1
-        # while start <= end:
-        #     mid = (start+end)//2
-        #     if nums[mid] == target:
-        #         return mid
-        #     elif nums[start] <= nums[mid] <= nums[end]:
-        #
-        pass
+    def binary_search_rotated(self, nums: list[int], target: int) -> int:
+        if not nums: return -1
+
+        start, end = 0, len(nums) - 1
+        while start <= end:
+            mid = (start+end)//2
+            if nums[mid] == target:
+                return mid
+            else:
+                # left side sorted
+                if nums[start] <= nums[mid]:
+                    if nums[start] <= target < nums[mid]:
+                        end = mid - 1
+                    else:
+                        start = mid + 1
+                # right side sorted
+                else:
+                    if nums[mid] < target <= nums[end]:
+                        start = mid + 1
+                    else:
+                        end = mid - 1
+        return -1
 
     def minMeetingRooms(self, intervals: List[List[int]]) -> int:
         if not intervals: return 0
@@ -140,6 +146,35 @@ class Solution:
         rows, cols = len(matrix), len(matrix[0])
 
 
+    def findMedianSortedArrays(self, nums1: list[int], nums2: list[int]) -> float:
+        """
+        https://leetcode.com/problems/median-of-two-sorted-arrays/
+        """
+        len1, len2 = len(nums1), len(nums2)
+        if len2 < len1:
+            return self.findMedianSortedArrays(nums2, nums1)
+
+        total_len = len1+len2
+        start, end = 0, len1-1
+
+        while True:
+            p1 = (start+end)//2
+            p2 = ((total_len+1)//2) - (p1 + 2)
+
+            n1_p_val = float('-inf') if p1 < 0 else nums1[p1]
+            n2_p_val = float('-inf') if p2 < 0 else nums2[p2]
+            n1_next_val = float('inf') if p1+1 >= len1 else nums1[p1+1]
+            n2_next_val = float('inf') if p2+1 >= len2 else nums2[p2+1]
+
+            if n1_p_val <= n2_next_val and n2_p_val <= n1_next_val:
+                if total_len % 2 == 1:
+                    return max(n1_p_val, n2_p_val)
+                else:
+                    return (max(n1_p_val, n2_p_val) + min(n1_next_val, n2_next_val))/2
+            elif n1_p_val > n2_next_val:
+                end = p1 - 1
+            else:
+                start = p1 + 1
 
 
-print(Solution().minMeetingRooms([[0, 30],[5, 10],[15, 20]]))
+print(Solution().binary_search_rotated([4,5,6,7,0,1,2], 0))

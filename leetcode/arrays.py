@@ -204,26 +204,6 @@ class Solution:
             max_substr_len = max(max_substr_len, curr_substring_len)
         return max_substr_len
 
-    def findMedianSortedArrays(self, nums1: list[int], nums2: list[int]) -> float:
-        """
-        https://leetcode.com/problems/median-of-two-sorted-arrays/
-        """
-        len1, len2 = len(nums1), len(nums2)
-        if len2 < len1:
-            return self.findMedianSortedArrays(nums2, nums1)
-
-
-        total_len = len1+len2
-        start, end = 0, len1-1
-
-        while start <= end:
-            p1 = (start+end)//2
-            p2 = ((total_len+1)//2) - p1
-
-            if p2+1 < len2 and nums1[p1] > nums2[p2+1]:
-                end = p1 - 1
-            elif 
-
     def singleNumber(self, nums: List[int]) -> int:
         xor = 0
         for num in nums:
@@ -412,4 +392,3 @@ class Solution:
 
     def trap(self, heights: List[int]) -> int:
         pass
-
