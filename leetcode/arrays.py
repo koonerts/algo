@@ -1,18 +1,21 @@
-from typing import List
 import collections
 
 class Solution:
-    def removeDuplicates(self, nums: List[int]) -> int:
-        for i in reversed(range(len(nums))):
-            if i == 0:
-                continue
+    def removeDuplicates(self, nums: list[int]) -> int:
+        if not nums: return 0
+        elif len(nums) == 1: return 1
 
-            if nums[i] == nums[i-1]:
-                del nums[i]
+        s, i = 0, 1
+        while i < len(nums):
+            if nums[s] == nums[i]:
+                i += 1
+            else:
+                nums[s+1] = nums[i]
+                i += 1
+                s += 1
+        return s + 1
 
-        return len(nums)
-
-    def moveZeroes(self, nums: List[int]) -> None:
+    def moveZeroes(self, nums: list[int]) -> None:
         """
         Given an array nums, write a function to move all 0's to the end of it while
         maintaining the relative order of the non-zero elements.
@@ -31,7 +34,7 @@ class Solution:
 
             p_r += 1
 
-    def sortArrayByParity(self, A: List[int]) -> List[int]:
+    def sortArrayByParity(self, a:list[int]) -> list[int]:
         """
         Given an array A of non-negative integers, return an array consisting of all the even elements of A, followed by all the odd elements of A.
         You may return any answer array that satisfies this condition.
@@ -42,21 +45,21 @@ class Solution:
         """
         i = 0
         p_even = 0
-        while i < len(A):
-            if A[i] % 2 == 1:
-                for j in range(p_even, len(A)):
-                    if A[j] % 2 == 0 and j > i:
-                        v = A[j]
-                        A[j] = A[i]
-                        A[i] = v
+        while i < len(a):
+            if a[i] % 2 == 1:
+                for j in range(p_even, len(a)):
+                    if a[j] % 2 == 0 and j > i:
+                        v = a[j]
+                        a[j] = a[i]
+                        a[i] = v
                         p_even = j+1
                         break
                     p_even += 1
             i += 1
 
-        return A
+        return a
 
-    def sortedSquares(self, A: List[int]) -> List[int]:
+    def sortedSquares(self, A: list[int]) -> list[int]:
         """
         Given an array of integers A sorted in non-decreasing order, return an array of the squares of each number, also in sorted non-decreasing order.
         Input: [-4,-1,0,3,10]
@@ -86,7 +89,7 @@ class Solution:
 
         return ret
 
-    def heightChecker(self, heights: List[int]) -> int:
+    def heightChecker(self, heights: list[int]) -> int:
         """
         Students are asked to stand in non-decreasing order of heights for an annual photo.
         Return the minimum number of students that must move in order for all students to be standing in non-decreasing order of height.
@@ -107,7 +110,7 @@ class Solution:
                 cnt += 1
         return cnt
 
-    def findMaxConsecutiveOnes(self, nums: List[int]) -> int:
+    def findMaxConsecutiveOnes(self, nums: list[int]) -> int:
         """
         Given a binary array, find the maximum number of consecutive 1s in this array if you can flip at most one 0.
 
@@ -135,7 +138,7 @@ class Solution:
                 curr_max = length
         return curr_max
 
-    def thirdMax(self, nums: List[int]) -> int:
+    def thirdMax(self, nums: list[int]) -> int:
         """
         Given a non-empty array of integers, return the third maximum number in this array. If it does not exist, return the maximum number.
         The time complexity must be in O(n).
@@ -165,7 +168,7 @@ class Solution:
         else:
             return max(max_set)
 
-    def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
+    def findDisappearedNumbers(self, nums: list[int]) -> list[int]:
         """
         Given an array of integers where 1 ≤ a[i] ≤ n (n = size of array), some elements appear twice and others appear once.
         Find all the elements of [1, n] inclusive that do not appear in this array.
@@ -204,27 +207,27 @@ class Solution:
             max_substr_len = max(max_substr_len, curr_substring_len)
         return max_substr_len
 
-    def singleNumber(self, nums: List[int]) -> int:
+    def singleNumber(self, nums: list[int]) -> int:
         xor = 0
         for num in nums:
             xor ^= num
         return xor
 
-    def rotate_with_extra_space(self, nums: List[int], k: int) -> None:
+    def rotate_with_extra_space(self, nums: list[int], k: int) -> None:
         if not nums: return nums
         k = k % len(nums)
         nums_copy = nums[-k:]+nums[:-k]
         for i in range(len(nums)):
             nums[i] = nums_copy[i]
 
-        # def rotate_in_place(self, nums: List[int], k: int) -> None:
+        # def rotate_in_place(self, nums: list[int], k: int) -> None:
         #     if not nums: return nums
         #     k = k % len(nums)
         #
         #     temp, cnt, i = -1, 0, 0
         #     while cnt < len(nums):
 
-    def containsDuplicate(self, nums: List[int]) -> bool:
+    def containsDuplicate(self, nums: list[int]) -> bool:
         set_ = set()
         for num in nums:
             if num in set_:
@@ -233,7 +236,7 @@ class Solution:
                 set_.add(num)
         return True
 
-    def plusOne(self, digits: List[int]) -> List[int]:
+    def plusOne(self, digits: list[int]) -> list[int]:
         for i in range(len(digits)-1, -1, -1):
             if digits[i]+1 <= 9:
                 digits[i] += 1
@@ -244,7 +247,7 @@ class Solution:
                     digits.insert(0, 1)
         return digits
 
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
         num_map = {}
         for i, num in enumerate(nums):
             if num_map.get(target-num):
@@ -253,7 +256,7 @@ class Solution:
                 num_map[num] = i
         return []
 
-    def threeSum(self, nums: List[int]) -> List[List[int]]:
+    def threeSum(self, nums: list[int]) -> list[list[int]]:
         result = []
         nums.sort()
 
@@ -278,7 +281,7 @@ class Solution:
             i += 1
         return result
 
-    def threeSumClosest(self, nums: List[int], target: int) -> int:
+    def threeSumClosest(self, nums: list[int], target: int) -> int:
         if len(nums) == 3: return sum(nums)
 
         nums.sort()
@@ -299,13 +302,13 @@ class Solution:
                         right -= 1
         return closest_sum
 
-    def setZeroes(self, matrix: List[List[int]]) -> None:
+    def setZeroes(self, matrix: list[list[int]]) -> None:
         """
         Do not return anything, modify matrix in-place instead.
         """
         pass
 
-    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+    def groupAnagrams(self, strs: list[str]) -> list[list[str]]:
         pass
 
     def lengthOfLongestSubstring(self, s: str) -> int:
@@ -331,7 +334,7 @@ class Solution:
         left, right = 0, 0
         isValid = True
 
-    def sortColors(self, nums: List[int]) -> None:
+    def sortColors(self, nums: list[int]) -> None:
         """
         Do not return anything, modify nums in-place instead.
         """
@@ -351,7 +354,7 @@ class Solution:
                 right -= 1
         print(nums)
 
-    def maxArea(self, heights: List[int]) -> int:
+    def maxArea(self, heights: list[int]) -> int:
         if not heights or len(heights) <= 1:
             return 0
 
@@ -377,7 +380,7 @@ class Solution:
                   90: 'XC', 50: 'L', 40: 'XL', 10: 'X',
                   9: 'IX', 5: 'V', 4: 'IV', 1: 'I'}
 
-    def missingNumber(self, nums: List[int]) -> int:
+    def missingNumber(self, nums: list[int]) -> int:
         i = 0
         while i < len(nums):
             while nums[i] < len(nums) and nums[i] != i:
@@ -390,5 +393,54 @@ class Solution:
                 return i
         return len(nums)
 
-    def trap(self, heights: List[int]) -> int:
+    def trap(self, heights: list[int]) -> int:
         pass
+
+    def minWindow(self, s: str, t: str) -> str:
+        char_freq = collections.Counter(t)
+        char_index_map = {key:collections.deque() for key in char_freq}
+        left, matched_cnt, min_substr = -1, 0, ''
+
+        for i, c in enumerate(s):
+            if c in char_freq:
+                if left < 0:
+                    left = i
+
+                char_freq[c] = char_freq.get(c, 0) - 1
+                if char_freq[c] == 0:
+                    matched_cnt += 1
+                    if matched_cnt == len(char_freq):
+                        if (i-left+1) < len(min_substr):
+                            min_substr = s[left:i+1]
+
+    def maxProfit(self, prices: list[int]) -> int:
+        if len(prices) == 1: return 0
+
+        profit = 0
+        peak, valley = 0, 0
+        for i in range(1, len(prices)):
+            if prices[i] > prices[i-1]:
+                peak = i
+                if i == len(prices) - 1:
+                    profit += prices[peak] - prices[valley]
+            else:
+                if peak > valley:
+                    profit += prices[peak] - prices[valley]
+                valley = i
+        return profit
+
+    def rotate(self, nums: list[int], k: int) -> None:
+        if not nums or k == 0: return
+
+        k = k % len(nums)
+        idx, prev, temp = 0, nums[0], 0
+        for _ in range(len(nums)):
+            idx = ((idx+k) % len(nums))
+            temp = nums[idx]
+            nums[idx] = prev
+            prev = temp
+
+
+n = [-1,-100,3,99]
+print(Solution().rotate(n, 2))
+print(n)
