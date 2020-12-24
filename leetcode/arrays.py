@@ -1,9 +1,12 @@
 import collections
 
+
 class Solution:
     def removeDuplicates(self, nums: list[int]) -> int:
-        if not nums: return 0
-        elif len(nums) == 1: return 1
+        if not nums:
+            return 0
+        elif len(nums) == 1:
+            return 1
 
         s, i = 0, 1
         while i < len(nums):
@@ -13,7 +16,7 @@ class Solution:
                 nums[s+1] = nums[i]
                 i += 1
                 s += 1
-        return s + 1
+        return s+1
 
     def moveZeroes(self, nums: list[int]) -> None:
         """
@@ -23,18 +26,25 @@ class Solution:
         Input: [0,1,0,3,12]
         Output: [1,3,12,0,0]
         """
-        p_r = 0
-        while p_r < len(nums):
-            if nums[p_r] == 0 and p_r+1 < len(nums):
-                for i in range(p_r+1, len(nums)):
-                    if nums[i] != 0:
-                        nums[p_r] = nums[i]
-                        nums[i] = 0
-                        break
+        if len(nums) <= 1: return
 
-            p_r += 1
+        left, i = 0, 1
+        while i < len(nums) and left < len(nums):
+            if nums[left] == 0 and nums[i] != 0:
+                nums[left], nums[i] = nums[i], nums[left]
+                i += 1
+                left += 1
+            else:
+                if nums[left] != 0:
+                    left += 1
+                    if i <= left:
+                        i = left+1
 
-    def sortArrayByParity(self, a:list[int]) -> list[int]:
+                elif nums[i] == 0:
+                    i += 1
+        print(nums)
+
+    def sortArrayByParity(self, a: list[int]) -> list[int]:
         """
         Given an array A of non-negative integers, return an array consisting of all the even elements of A, followed by all the odd elements of A.
         You may return any answer array that satisfies this condition.
@@ -237,14 +247,17 @@ class Solution:
         return True
 
     def plusOne(self, digits: list[int]) -> list[int]:
+        carry_over = 1
         for i in range(len(digits)-1, -1, -1):
-            if digits[i]+1 <= 9:
-                digits[i] += 1
-                break
-            else:
+            val = digits[i]+1+carry_over
+            carry_over = val // 10
+            if carry_over > 0:
                 digits[i] = 0
-                if i == 0:
-                    digits.insert(0, 1)
+            else:
+                digits[i] = val
+
+        if carry_over > 0:
+            digits.insert(0, 1)
         return digits
 
     def twoSum(self, nums: list[int], target: int) -> list[int]:
@@ -262,10 +275,10 @@ class Solution:
 
         i = 0
         while i < len(nums):
-            start, end = i+1, len(nums) - 1
+            start, end = i+1, len(nums)-1
 
             while start < end:
-                val = nums[i] + nums[start] + nums[end]
+                val = nums[i]+nums[start]+nums[end]
                 if val == 0:
                     result.append([nums[i], nums[start], nums[end]])
                     start += 1
@@ -289,11 +302,11 @@ class Solution:
         for i in range(len(nums)):
             left, right = i+1, len(nums)-1
             while left < right:
-                curr_sum = nums[i] + nums[left] + nums[right]
+                curr_sum = nums[i]+nums[left]+nums[right]
                 if curr_sum == target:
                     return curr_sum
                 else:
-                    if abs(curr_sum - target) < abs(closest_sum - target):
+                    if abs(curr_sum-target) < abs(closest_sum-target):
                         closest_sum = curr_sum
 
                     if curr_sum < target:
@@ -315,10 +328,10 @@ class Solution:
         if not s: return 0
 
         max_ss = 1
-        char_freq = {s[0]:1}
+        char_freq = {s[0]: 1}
         left, right = 0, 1
         while right < len(s):
-            char_freq[s[right]] = char_freq.get(s[right], 0) + 1
+            char_freq[s[right]] = char_freq.get(s[right], 0)+1
             while char_freq[s[right]] > 1:
                 if char_freq[s[left]] == 1:
                     del char_freq[s[left]]
@@ -341,7 +354,7 @@ class Solution:
         if not nums or len(nums) == 1:
             return
 
-        i, left, right = 0, 0, len(nums) - 1
+        i, left, right = 0, 0, len(nums)-1
         while i < right:
             if nums[i] == 0:
                 nums[left], nums[i] = nums[i], nums[left]
@@ -364,9 +377,9 @@ class Solution:
 
             height = min(heights[x], heights[y])
             width = y-x
-            return height*width
+            return height * width
 
-        left, right, max_area = 0, len(heights) - 1, 0
+        left, right, max_area = 0, len(heights)-1, 0
         while left <= right:
             max_area = max(max_area, compute_area(left, right))
             if heights[left] <= heights[right]:
@@ -398,7 +411,7 @@ class Solution:
 
     def minWindow(self, s: str, t: str) -> str:
         char_freq = collections.Counter(t)
-        char_index_map = {key:collections.deque() for key in char_freq}
+        char_index_map = {key: collections.deque() for key in char_freq}
         left, matched_cnt, min_substr = -1, 0, ''
 
         for i, c in enumerate(s):
@@ -406,7 +419,7 @@ class Solution:
                 if left < 0:
                     left = i
 
-                char_freq[c] = char_freq.get(c, 0) - 1
+                char_freq[c] = char_freq.get(c, 0)-1
                 if char_freq[c] == 0:
                     matched_cnt += 1
                     if matched_cnt == len(char_freq):
@@ -421,11 +434,11 @@ class Solution:
         for i in range(1, len(prices)):
             if prices[i] > prices[i-1]:
                 peak = i
-                if i == len(prices) - 1:
-                    profit += prices[peak] - prices[valley]
+                if i == len(prices)-1:
+                    profit += prices[peak]-prices[valley]
             else:
                 if peak > valley:
-                    profit += prices[peak] - prices[valley]
+                    profit += prices[peak]-prices[valley]
                 valley = i
         return profit
 
@@ -440,7 +453,37 @@ class Solution:
             nums[idx] = prev
             prev = temp
 
+    def intersect(self, nums1: list[int], nums2: list[int]) -> list[int]:
+        if len(nums2) < len(nums1):
+            return self.intersect(nums2, nums1)
 
-n = [-1,-100,3,99]
-print(Solution().rotate(n, 2))
-print(n)
+        n2_freq = collections.Counter(nums2)
+        result = []
+        for i in range(len(nums1)):
+            if nums1[i] in n2_freq:
+                result.append(nums1[i])
+                if n2_freq[nums1[i]] == 1:
+                    del n2_freq[nums1[i]]
+                else:
+                    n2_freq[nums1[i]] -= 1
+        return result
+
+    def isValidSudoku(self, board: list[list[str]]) -> bool:
+        pass
+
+    def reverse(self, x: int) -> int:
+        reversed_x = 0
+        is_neg, x = x < 0, abs(x)
+
+        while x != 0:
+            r = x % 10
+            reversed_x = reversed_x * 10 + r
+            x = x // 10
+
+        if is_neg:
+            reversed_x = -reversed_x
+
+        return 0 if not(-2**31-1 <= reversed_x <= 2**31-1) else reversed_x
+
+
+print(Solution().reverse(-12301))

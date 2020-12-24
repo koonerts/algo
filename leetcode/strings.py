@@ -167,6 +167,9 @@ class Solution:
 
         return sorted(logs, key=get_key)
 
+    def repeatedString(s, n):
+        pass
+
 
 
 
