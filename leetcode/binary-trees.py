@@ -1,8 +1,7 @@
-from typing import List
 import enum
 import collections
 import json
-from collections import defaultdict
+from collections import defaultdict, deque
 
 
 class TraversalType(enum.Enum):
@@ -31,17 +30,17 @@ class Node:
 
 
 class Solution:
-    def preorderTraversal(self, root: TreeNode) -> List[int]:
+    def preorderTraversal(self, root: TreeNode) -> list[int]:
         out = []
         self.recurse(root, out, TraversalType.PREORDER)
         return out
 
-    def inorderTraversal(self, root: TreeNode) -> List[int]:
+    def inorderTraversal(self, root: TreeNode) -> list[int]:
         out = []
         self.recurse(root, out, TraversalType.INORDER)
         return out
 
-    def postorderTraversal(self, root: TreeNode) -> List[int]:
+    def postorderTraversal(self, root: TreeNode) -> list[int]:
         out = []
         if root:
             out += self.postorderTraversal(root.left)
@@ -51,7 +50,7 @@ class Solution:
             out.append(None)
         return out
 
-    def reverse_postorderTraversal(self, root: TreeNode) -> List[int]:
+    def reverse_postorderTraversal(self, root: TreeNode) -> list[int]:
         out = []
         if root:
             out += self.postorderTraversal(root.right)
@@ -61,7 +60,7 @@ class Solution:
             out.append(None)
         return out
 
-    def levelOrder(self, root: TreeNode) -> List[List[int]]:
+    def levelOrder(self, root: TreeNode) -> list[list[int]]:
         levels = []
         if not root:
             return levels
@@ -100,7 +99,7 @@ class Solution:
             self.recurse(root.right, out, traversal_type)
             out.append(root.val)
 
-    def preorder_traverse_iterative(self, root: TreeNode) -> List[int]:
+    def preorder_traverse_iterative(self, root: TreeNode) -> list[int]:
         out = []
         if root is None:
             return out
@@ -192,7 +191,7 @@ class Solution:
 
         return self.hasPathSum(root.left, sum) or self.hasPathSum(root.right, sum)
 
-    def buildTree_Post(self, inorder: List[int], postorder: List[int]) -> TreeNode:
+    def buildTree_Post(self, inorder: list[int], postorder: list[int]) -> TreeNode:
         """
         Given inorder and postorder traversal of a tree, construct the binary tree.
         Note: You may assume that duplicates do not exist in the tree.
@@ -218,7 +217,7 @@ class Solution:
 
         return build()
 
-    def buildTree_Pre(self, inorder: List[int], preorder: List[int]) -> TreeNode:
+    def buildTree_Pre(self, inorder: list[int], preorder: list[int]) -> TreeNode:
         """
         Given inorder and postorder traversal of a tree, construct the binary tree.
         Note: You may assume that duplicates do not exist in the tree.
@@ -318,7 +317,7 @@ class Solution:
         find_max_sum(root)
         return max_sum
 
-    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+    def ladderLength(self, beginWord: str, endWord: str, wordList: list[str]) -> int:
         q = collections.deque([beginWord])
         visited = set()
         word_set = set(wordList)
@@ -342,6 +341,31 @@ class Solution:
                             q.append(word)
         return 0
 
+    def findOrder(self, numCourses: int, prerequisites: list[list[int]]) -> list[int]:
+        if not prerequisites: return list(range(numCourses))
+
+        in_degree, graph = {i:0 for i in range(numCourses)}, {i:[] for i in range(numCourses)}
+        for course, pre_req in prerequisites:
+            in_degree[course] += 1
+            graph[pre_req].append(course)
+            if pre_req not in in_degree:
+                in_degree[pre_req] = 0
+
+        q = deque()
+        for c in (c for c in in_degree if in_degree[c] == 0):
+            q.append(c)
+
+        result = []
+        while q:
+            for _ in range(len(q)):
+                course = q.popleft()
+                result.append(course)
+                for child in graph[course]:
+                    in_degree[child] -= 1
+                    if in_degree[child] == 0:
+                        q.append(child)
+        return result if len(result) == numCourses else []
+
 
 # node = TreeNode(-10, TreeNode(9), TreeNode(20, TreeNode(15), TreeNode(7)))
-print(Solution().ladderLength('hit', 'cog', ["hot","dot","dog","lot","log","cog"]))
+print(Solution().findOrder(4, [[1,0],[2,0],[3,1],[3,2]]))
