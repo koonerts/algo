@@ -1,7 +1,13 @@
+from heapq import *
+
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
+
+    # def __lt__(self, other):
+    #     other_val = other.val if other else float('inf')
+    #     return self.val < other_val
 
     def print_list(self):
         vals = ''
@@ -43,10 +49,6 @@ class Solution:
                 prev_digit_node.next = digit_node
 
         return head
-
-
-
-
 
     def deleteNode(self, node):
         """
@@ -144,13 +146,32 @@ class Solution:
             reversed_head = reversed_head.next
         return True
 
+    def mergeKLists(self, lists: list[ListNode]) -> ListNode:
+        if not lists: return None
 
-node = ListNode(2)
-node.next = ListNode(4)
-node.next.next = ListNode(3)
+        min_heap = []
+        for i in range(len(lists)):
+            head = lists[i]
+            if head: heappush(min_heap, (head.val, head))
 
-node2 = ListNode(5)
-node2.next = ListNode(6)
-node2.next.next = ListNode(4)
+        head, prev = None, None
+        while min_heap:
+            val, node = heappop(min_heap)
+            if node.next:
+                heappush(min_heap, (node.val, node.next))
 
-val = Solution().addTwoNumbers(node, node2)
+            if not head:
+                head = node
+            else:
+                prev.next = node
+
+            prev = node
+        return head
+
+
+node1 = ListNode(1, ListNode(4, ListNode(5)))
+node2 = ListNode(1, ListNode(3, ListNode(4)))
+node3 = ListNode(2, ListNode(6))
+
+val = Solution().mergeKLists([node1, node2, node3])
+val.print_list()

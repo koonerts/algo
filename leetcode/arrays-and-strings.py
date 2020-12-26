@@ -633,10 +633,112 @@ class Solution:
         while r < len(s):
             if s[r] in char_idx:
                 l = max(l, char_idx[s[r]])
-            char_idx[s[r]] = r
+            char_idx[s[r]] = r + 1
             max_len = max(max_len, r-l+1)
             r += 1
         return max_len
 
+    def multiply(self, num1:str, num2:str):
+        if num1 == "0" or num2 == "0":
+            return "0"
+        elif num1 == "1":
+            return num2
+        elif num2 == "1":
+            return num1
 
-print(Solution().lengthOfLongestSubstring('abba'))
+        ans = 0
+        zero_cntr = 0
+        for i in range(len(num2) - 1, -1, -1):
+            n2 = int(num2[i])
+            zero_suffix = zero_cntr*"0"
+            curr = ""
+            carry_over = 0
+
+            for j in range(len(num1) - 1, -1, -1):
+                val = n2 * int(num1[j]) + carry_over
+                carry_over = val//10
+
+                if j == 0 and carry_over > 0:
+                    curr = str(carry_over) + str(val%10) + curr
+                else:
+                    curr = str(val%10) + curr
+            curr += zero_suffix
+            zero_cntr += 1
+            ans += int(curr)
+        return str(ans)
+
+    def lengthOfLongestSubstringTwoDistinct(self, s: str) -> int:
+        if len(s) <= 2:
+            return len(s)
+
+        char_freq = collections.defaultdict(lambda:0)
+        l, max_substr_len = 0, 0
+        for r, c in enumerate(s):
+            char_freq[c] += 1
+            while len(char_freq) > 2:
+                if char_freq[s[l]] == 1:
+                    del char_freq[s[l]]
+                else:
+                    char_freq[s[l]] -= 1
+                l += 1
+            max_substr_len = max(max_substr_len, r-l+1)
+        return max_substr_len
+
+    def findMissingRanges(self, nums: list[int], lower: int, upper: int) -> list[str]:
+        if lower == upper and lower not in nums: return [str(lower)]
+        elif not nums: return [f'{lower}->{upper}']
+
+        result = []
+        for i, num in enumerate(nums):
+            if i == 0:
+                if lower < num:
+                    if lower + 1 == num: result.append(str(lower))
+                    else: result.append(f'{lower}->{num-1}')
+            else:
+                diff = num - nums[i-1]
+                if diff == 2: result.append(str(num-1))
+                elif diff > 2: result.append(f'{nums[i-1]+1}->{num-1}')
+
+            if i == len(nums) - 1 and num < upper:
+                if num + 1 == upper: result.append(str(upper))
+                else: result.append(f'{num+1}->{upper}')
+        return result
+
+    def nextClosestTime(self, time: str) -> str:
+        valid_digits = [int(c) for c in time if c != ':']
+        valid_digits.sort()
+
+        new_time = ''
+        for i in range(len(time) - 1, -1, -1):
+            if time[i] == ':':
+                new_time = ':' + new_time
+                continue
+
+            val = next((d for d in valid_digits if d > int(time[i])), valid_digits[0])
+            new_time = str(val) + new_time
+            if val != valid_digits[0]:
+                return time[:i] + new_time
+
+    def expressiveWords(self, s:str, words: list[str]) -> int:
+        pass
+
+    def maxDistToClosest(self, seats: list[int]) -> int:
+        prev = None
+        max_dist = 0
+
+        for i in range(len(seats)):
+            if seats[i] == 1:
+                if prev is None:
+                    max_dist = i
+                else:
+                    mid = (prev+i)//2
+                    max_dist = max(max_dist, mid - prev)
+                prev = i
+            elif i == len(seats) - 1:
+                dist = len(seats) - 1 - prev
+                max_dist = max(max_dist, dist)
+
+        return max_dist
+
+
+print(Solution().maxDistToClosest([0,1]))

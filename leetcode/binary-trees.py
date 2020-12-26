@@ -30,7 +30,7 @@ class Node:
         self.next = next
 
 
-class BinaryTrees:
+class Solution:
     def preorderTraversal(self, root: TreeNode) -> List[int]:
         out = []
         self.recurse(root, out, TraversalType.PREORDER)
@@ -301,4 +301,47 @@ class BinaryTrees:
         return validate(root)
 
     def maxPathSum(self, root: TreeNode) -> int:
-        pass
+        def find_max_sum(node: TreeNode):
+            nonlocal max_sum
+
+            if not node:
+                return 0
+            else:
+                left_gain = max(find_max_sum(node.left), 0)
+                right_gain = max(find_max_sum(node.right), 0)
+                total_gain = left_gain + right_gain + node.val
+
+                max_sum = max(max_sum, total_gain)
+                return node.val + max(left_gain, right_gain)
+
+        max_sum = float('-inf')
+        find_max_sum(root)
+        return max_sum
+
+    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        q = collections.deque([beginWord])
+        visited = set()
+        word_set = set(wordList)
+
+        ladder_len = 0
+        while q:
+            ladder_len += 1
+            for _ in range(len(q)):
+                curr_word = q.popleft()
+                if curr_word == endWord:
+                    return ladder_len
+                else:
+                    visited.add(curr_word)
+                    for word in (w for w in word_set-visited):
+                        char_diff = 0
+                        for i in range(len(word)):
+                            if word[i] != curr_word[i]:
+                                char_diff += 1
+                                if char_diff > 1: break
+                        if char_diff == 1:
+                            q.append(word)
+        return 0
+
+
+# node = TreeNode(-10, TreeNode(9), TreeNode(20, TreeNode(15), TreeNode(7)))
+print(Solution().ladderLength('hit', 'cog', ["hot","dot","dog","lot","log","cog"]))
