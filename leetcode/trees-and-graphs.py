@@ -1,4 +1,3 @@
-from typing import List
 from collections import deque
 
 
@@ -8,9 +7,45 @@ class TreeNode:
         self.left: 'TreeNode' = left
         self.right: 'TreeNode' = right
 
+class Robot:
+    def move(self):
+        """
+        Returns true if the cell in front is open and robot moves into the cell.
+        Returns false if the cell in front is blocked and robot stays in the current cell.
+        :rtype bool
+        """
+
+    def turnLeft(self):
+        """
+        Robot will stay in the same cell after calling turnLeft/turnRight.
+        Each turn will be 90 degrees.
+        :rtype void
+        """
+
+    def turnRight(self):
+        """
+        Robot will stay in the same cell after calling turnLeft/turnRight.
+        Each turn will be 90 degrees.
+        :rtype void
+        """
+
+    def clean(self):
+        """
+        Clean the current cell.
+        :rtype void
+        """
+
 
 class Solution:
-    def inorderTraversal(self, root: TreeNode) -> List[int]:
+    def cleanRoom(self, robot):
+        """
+        :type robot: Robot
+        :rtype: None
+        """
+
+
+class Solution:
+    def inorderTraversal(self, root: TreeNode) -> list[int]:
         result = []
         if not root: return result
 
@@ -28,7 +63,7 @@ class Solution:
         traverse(root)
         return result
 
-    def inorderTraversal_iterative(self, root: TreeNode) -> List[int]:
+    def inorderTraversal_iterative(self, root: TreeNode) -> list[int]:
         result = []
         stack = [root]
 
@@ -42,7 +77,7 @@ class Solution:
             root = root.right
         return result
 
-    def zigzagLevelOrder(self, root: TreeNode) -> List[List[int]]:
+    def zigzagLevelOrder(self, root: TreeNode) -> list[list[int]]:
         if not root: return []
 
         direction = 1  # 1 left->right, -1 right->left
@@ -98,7 +133,7 @@ class Solution:
 
             root = root.right
 
-    def numIslands(self, grid: List[List[str]]) -> int:
+    def numIslands(self, grid: list[list[str]]) -> int:
         LAND, WATER = '1', '0'
         rows, cols = len(grid), len(grid[0])
         cnt = 0
@@ -124,7 +159,7 @@ class Solution:
 
         return cnt
 
-    def letterCombinations(self, digits: str) -> List[str]:
+    def letterCombinations(self, digits: str) -> list[str]:
         phone = {'2': ['a', 'b', 'c'],
                  '3': ['d', 'e', 'f'],
                  '4': ['g', 'h', 'i'],
@@ -145,7 +180,7 @@ class Solution:
         dfs('', 0)
         return results
 
-    def generateParenthesis(self, n: int) -> List[str]:
+    def generateParenthesis(self, n: int) -> list[str]:
         result = []
         if n <= 0: return result
 
@@ -161,7 +196,7 @@ class Solution:
         add_parenthesis('', 0, 0)
         return result
 
-    def permute(self, nums: List[int]) -> List[List[int]]:
+    def permute(self, nums: list[int]) -> list[list[int]]:
         if not nums or len(nums) == 1: return []
 
         res = []
@@ -178,7 +213,7 @@ class Solution:
                     res.append(copy_curr)
         return res
 
-    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+    def canFinish(self, numCourses: int, prerequisites: list[list[int]]) -> bool:
         in_degree_map = {i:0 for i in range(numCourses)}
         adj_graph = {i:[] for i in range(numCourses)}
 
@@ -222,7 +257,7 @@ class Solution:
         depth(root)
         return diameter
 
-    def floodFill(self, image: List[List[int]], sr: int, sc: int, new_color: int) -> List[List[int]]:
+    def floodFill(self, image: list[list[int]], sr: int, sc: int, new_color: int) -> list[list[int]]:
         if not image: return image
 
         def fill(x, y, orig_color):
@@ -238,6 +273,41 @@ class Solution:
         fill(sr, sc, image[sr][sc])
         return image
 
+    def longestIncreasingPath(self, matrix: list[list[int]]) -> int:
+        if not matrix: return 0
 
-img = [[1,1,1],[1,1,0],[1,0,1]]
-print(Solution().floodFill(img, 1, 1, 2))
+        def traverse(i, j, prev):
+            nonlocal max_increasing_path_len
+
+            if 0 <= i < len(matrix) and 0 <= j < len(matrix[0]) and (matrix[i][j] > prev or prev == float('-inf')):
+                if memo[i][j] == float('-inf'):
+                    left = traverse(i, j+1, matrix[i][j]) + 1
+                    right = traverse(i, j-1, matrix[i][j]) + 1
+                    up = traverse(i+1, j, matrix[i][j]) + 1
+                    down = traverse(i-1, j, matrix[i][j]) + 1
+                    memo[i][j] = max(left, right, up, down)
+
+                max_increasing_path_len = max(max_increasing_path_len, memo[i][j])
+                return memo[i][j]
+            else:
+                return 0
+
+        max_increasing_path_len = 0
+        memo = [[float('-inf') for j in range(len(matrix[0]))] for i in range(len(matrix))]
+
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                traverse(i, j, float('-inf'))
+        return max_increasing_path_len
+
+    def calcEquation(self, equations: list[list[str]], values: list[float], queries: list[list[str]]) -> list[float]:
+        pass
+
+    def cleanRoom(self, robot: Robot):
+        """
+        :type robot: Robot
+        :rtype: None
+        """
+
+
+print(Solution().longestIncreasingPath(nums))

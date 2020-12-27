@@ -47,33 +47,27 @@ def reverse_sub_list(head: Node, p: int, q: int):
     return head
 
 
-def reverse_every_k_elements(head: Node, k: int):
-    """
-    Given the head of a LinkedList and a number ‘k’, reverse every ‘k’ sized sub-list starting from the head.
-    If, in the end, you are left with a sub-list with less than ‘k’ elements, reverse it too.
-    """
-    node, prev, sublist_tail, sublist_tail_prev = head, None, head, head
-    k_cntr = k
-    is_head_set = False
+def reverse_every_k_elements(head: Node, k: int) -> Node:
+    k_cntr, sublist_cntr = 1, 0
+    sublist_tail, sublist_tail_prev, node, prev, new_head = head, head, head, None, None
 
     while node:
-        node.next, prev, node = prev, node, node.next
+        temp = node.next
+        temp = node.next
+        node.next = prev
+        prev = node
+        node = temp
 
-        k_cntr -= 1
-        if k_cntr == 0 or not node:
-            if not is_head_set:
-                head = prev
-                is_head_set = True
-
-            if sublist_tail_prev != sublist_tail:
+        if k_cntr % k == 0 or not node:
+            if not new_head:
+                new_head = prev
+            else:
                 sublist_tail_prev.next = prev
-
-            sublist_tail_prev = sublist_tail
+                sublist_tail_prev = sublist_tail
             sublist_tail = node
             prev = None
-            k_cntr = k
-
-    return head
+        k_cntr += 1
+    return new_head
 
 
 def reverse_alternate_k_elements(head: Node, k: int) -> Node:
@@ -120,37 +114,34 @@ def reverse_alternate_k_elements(head: Node, k: int) -> Node:
     return head
 
 
-def rotate(head: Node, k: int):
-    """
-    Given the head of a Singly LinkedList and a number ‘k’, rotate the LinkedList to the right by ‘k’ nodes.
+def rotate_list(head: Node, n: int):
+    if not head or n == 0: return head
 
-    Ex:
-    Input: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> None, k = 3
-    Output: 4 -> 5 -> 6 -> 1 -> 2 -> 3 -> None
-    """
+    len = 0
     node = head
-    len = 1
-
-    while True:
-        if not node.next:
-            node.next = head
-            break
-        else:
-            len += 1
-            node = node.next
-
-    k %= len
-    i = 0
-    node, prev_node = head, None
-
-    while i < len - k:
-        prev_node = node
+    while node:
+        len += 1
         node = node.next
-        i += 1
 
-    head = node
-    prev_node.next = None
-    return head
+    if abs(n) % len == 0:
+        return head
+    else:
+        iter_rng = 0
+        if n > 0:
+            iter_rng = len - (n % len)
+        else:
+            iter_rng = abs(n) % len
+
+        node, prev = head, None
+        for _ in range(iter_rng):
+            node, prev = node.next, node
+        prev.next = None
+
+        new_head = node
+        while node.next:
+            node = node.next
+        node.next = head
+        return new_head\
 
 
 def main():
@@ -159,13 +150,11 @@ def main():
     head.next.next = Node(3)
     head.next.next.next = Node(4)
     head.next.next.next.next = Node(5)
-    # head.next.next.next.next.next = Node(6)
 
     print("Nodes of original LinkedList are: ", end='')
     head.print_list()
-    result = rotate(head, 8)
-    print("Nodes of rotated LinkedList are: ", end='')
+    result = rotate_list(head, -2)
+    print("Nodes of reversed LinkedList are: ", end='')
     result.print_list()
-
 
 main()

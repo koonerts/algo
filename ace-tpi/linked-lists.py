@@ -3,6 +3,11 @@ class Node:
         self.data = data
         self.next_element = None
 
+class LinkedListNode:
+    def __init__(self, data, next=None):
+        self.data = data
+        self.next = next
+
 class LinkedList:
     def __init__(self):
         self.head_node = None
@@ -322,6 +327,31 @@ def find_happy_number(num: int):
             return True
         elif slow_squared_sum == fast_squared_sum:
             return False
+
+
+def add_integers(head1, head2):
+    if not head1: return head2
+    elif not head2: return head1
+    if not head1: return head2
+    elif not head2: return head1
+
+    carry_over = 0
+    ret_head, prev = head1, None
+    while head1 or head2 or carry_over:
+        val = (0 if not head1 else head1.data) + (0 if not head2 else head2.data) + carry_over
+        carry_over = val//10
+
+        if not head1:
+            head1 = LinkedListNode(val % 10)
+        else:
+            head1.data = val % 10
+
+        if prev: prev.next = head1
+        prev = head1
+        head1 = head1.next
+        if head2: head2 = head2.next
+
+    return ret_head
 
 
 def main():

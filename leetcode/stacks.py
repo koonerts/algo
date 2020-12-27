@@ -327,24 +327,23 @@ class Stacks:
         Input: s = "abc3[cd]xyz"
         Output: "abccdcdcdxyz"
         """
+        if not s: return s
 
         stack = []
         for c in s:
             if c != ']':
                 stack.append(c)
             else:
-                str_ = ''
-                while not stack[-1].isnumeric():
-                    stack_char = stack.pop()
-                    if stack_char != '[':
-                        str_ = stack_char + str_
+                enc_str = ''
+                while stack and stack[-1] != '[':
+                    enc_str = stack.pop() + enc_str
+                stack.pop()
 
-                n = ''
+                multiplier = ''
                 while stack and stack[-1].isnumeric():
-                    n = stack.pop() + n
+                    multiplier = stack.pop() + multiplier
 
-                for ch in str_*int(n):
-                    stack.append(ch)
+                stack.extend(list(enc_str*(int(multiplier))))
         return ''.join(stack)
 
 

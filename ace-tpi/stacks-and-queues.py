@@ -105,36 +105,57 @@ def evaluate_post_fix(exp: str) -> int:
 
 
 def next_greater_element(lst: list[int]):
-    """
-    TODO: Come back to -> https://www.educative.io/module/lesson/data-structures-in-python/JEqRg24VJxl
-    """
-    ret_list = []
+    ret_list = [-1 for i in lst]
     stack = MyStack()
+
+    for i in range(len(lst) - 1, -1, -1):
+        while not stack.is_empty() and stack.top() <= lst[i]:
+            stack.pop()
+
+        if not stack.is_empty():
+            ret_list[i] = stack.top()
+        stack.push(lst[i])
+    print(ret_list)
+    return ret_list
 
 
 class MinStack:
-    """
-    TODO: Come back to -> https://www.educative.io/module/lesson/data-structures-in-python/qV5y32RxMRp
-    """
-
     # Constructor
     def __init__(self):
-        self.main_stack = MyStack()
         self.min_stack = MyStack()
+        self.main_stack = MyStack()
+        return
 
-    # Removes and return value from newStack
+        # Removes and returns value from min_stack
     def pop(self):
-        # Write your code here
-        return -1
+        self.min_stack.pop()
+        return self.main_stack.pop()
 
-    # Pushes values into newStack
+        # Pushes values into min_stack
     def push(self, value):
-        # Write your code here
-        return False
+        self.main_stack.push(value)
+        if(self.min_stack.is_empty() or self.min_stack.top() > value):
+            self.min_stack.push(value)
+        else:
+            self.min_stack.push(self.min_stack.top())
 
-    # Returns minimum value from newStack in O(1) Time
+
+        # Returns minimum value from newStack in O(1) Time
     def min(self):
-        # Write your code here
-        pass
+        if not self.min_stack.is_empty():
+            return self.min_stack.top()
 
-    # Write any helper functions here
+
+stack = MinStack()
+stack.push(3)
+stack.push(4)
+stack.push(2)
+stack.push(4)
+stack.pop()
+
+print(stack.main_stack.stack_list)
+print("minimum value: " + str(stack.min()))
+
+stack.pop()
+print(stack.main_stack.stack_list)
+print("minimum value: " + str(stack.min()))

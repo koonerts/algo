@@ -11,12 +11,12 @@ def are_identical(root1: BinaryTreeNode, root2: BinaryTreeNode):
     if root1 is None and root2 is None:
         return True
 
-    if root1 is not None and root2 is not None:
-        return (root1.data == root2.data and
-                are_identical(root1.left, root2.left) and
-                are_identical(root1.right, root2.right))
-
-    return False
+    if root1 and root2:
+        return root1.data == root2.data and \
+               are_identical(root1.left, root2.left) and \
+               are_identical(root1.right, root2.right)
+    else:
+        return False
 
 
 class InorderIterator:
@@ -25,15 +25,22 @@ class InorderIterator:
     """
     def __init__(self, root: BinaryTreeNode):
         self.stack = []
+        self.populate_stack(root)
 
     def populate_stack(self, root: BinaryTreeNode):
-        pass
+        while root:
+            self.stack.append(root)
+            root = root.left
 
     def hasNext(self):
         return len(self.stack) > 0
 
     def getNext(self):
-        pass
+        if not self.hasNext(): return None
+
+        val = self.stack.pop()
+        self.populate_stack(val.right)
+        return val
 
 
 def inorder_using_iterator(root: BinaryTreeNode):
@@ -50,38 +57,24 @@ def inorder_iterative(root: BinaryTreeNode):
     if not root:
         return result
 
-    stk = []
-    while stk or root:
-        if root:
-            stk.append(root)
-            root = root.left
-        else:
-            node = stk.pop()
-            result += str(node.data) + " "
-            root = node.right
+    def populate_stack(node: BinaryTreeNode):
+        while node:
+            stk.append(node)
+            node = node.left
 
-    return str(result)
+    stk = []
+    populate_stack(root)
+    while stk:
+        node = stk.pop()
+        result += str(node.data) + " "
+        populate_stack(node.right)
+    return result
 
 
 def inorder_successor_bst(root: BinaryTreeNode, d):
     if not root:
         return None
-
     successor = None
-
-    while root:
-        if root.data < d:
-            root = root.right
-        elif root.data > d:
-            successor = root
-            root = root.left
-        else:
-            if root.right:
-                while root.left:
-                    root = root.left
-                successor = root
-            break
-    return successor
 
 
 def level_order_traversal(root: BinaryTreeNode):
@@ -112,13 +105,13 @@ def traverse(root):
 
 
 def main():
-    root = TreeNode(12)
-    root.left = TreeNode(7)
-    root.right = TreeNode(1)
-    root.left.left = TreeNode(9)
-    root.right.left = TreeNode(10)
-    root.right.right = TreeNode(5)
-    print("Reverse level order traversal: " + str(traverse(root)))
+    root = BinaryTreeNode(100)
+    root.left = BinaryTreeNode(50)
+    root.right = BinaryTreeNode(200)
+    root.left.left = BinaryTreeNode(25)
+    root.left.right = BinaryTreeNode(75)
+    root.left.left.right = BinaryTreeNode(35)
+    print(inorder_iterative(root))
 
 
 main()
