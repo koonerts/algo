@@ -3,7 +3,7 @@ from .node import Node
 
 class LinkedList:
     def __init__(self):
-        self.head_node = None
+        self.head_node: Node = None
 
     def get_head(self):
         return self.head_node

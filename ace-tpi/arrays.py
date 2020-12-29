@@ -234,7 +234,149 @@ def find_permutations(nums):
     pass
 
 
+def search_triplets(arr: list[int]):
+    if not arr: return []
+
+    arr.sort()
+    triplets = []
+
+    for i in range(len(arr) - 2):
+        left, right = i+1, len(arr) - 1
+        while left < right:
+            sum = arr[i] + arr[left] + arr[right]
+            if sum == 0:
+                triplets.append([arr[i], arr[left], arr[right]])
+                left += 1
+                while left <= right and arr[left] == arr[left-1]:
+                    left += 1
+            elif sum < 0:
+                left += 1
+            else:
+                right -= 1
+    return triplets
+
+
+def triplet_sum_close_to_target(arr, target_sum):
+    if not arr: return []
+
+    arr.sort()
+    min_closest_sum = float('inf')
+
+    for i in range(len(arr) - 2):
+        left, right = i+1, len(arr) - 1
+        while left < right:
+            sum = arr[i] + arr[left] + arr[right]
+            if sum == target_sum:
+                return target_sum
+            elif sum < target_sum:
+                left += 1
+            else:
+                right -= 1
+
+            diff = abs(target_sum - sum)
+            closest_diff = abs(min_closest_sum - target_sum)
+            if diff == closest_diff:
+                min_closest_sum = min(min_closest_sum, sum)
+            elif diff < closest_diff:
+                min_closest_sum = sum
+    return min_closest_sum
+
+
+def triplet_with_smaller_sum(arr, target):
+    if not arr: return []
+
+    arr.sort()
+    cntr = 0
+
+    for i in range(len(arr) - 2):
+        left, right = i+1, len(arr) - 1
+        while left < right:
+            sum = arr[i] + arr[left] + arr[right]
+            if sum < target:
+                cntr += right - left
+                left += 1
+            else:
+                right -= 1
+
+    return cntr
+
+
+def find_subarrays_with_product_less_than_target(arr, target):
+    if not arr: return []
+
+    result = []
+    left, curr_product = 0, 1
+    for i in range(1, len(arr)):
+        pass
+
+
+def can_attend_all_appointments(intervals):
+    if not intervals or len(intervals) == 1: return True
+    start, end = 0, 1
+    intervals.sort(key=lambda i:i[start])
+
+    for i in range(1, len(intervals)):
+        if intervals[i][start] < intervals[i-1][end]:
+            return False
+    return True
+
+
+def find_key_range(arr, key):
+    result = [- 1, -1]
+    if not arr: return result
+
+    def binary_search(l, r):
+        while l <= r:
+            mid = (l+r)//2
+            if arr[mid] == key:
+                return mid
+            elif arr[mid] < key:
+                l = mid + 1
+            else:
+                r = mid - 1
+        return -1
+
+    idx = binary_search(0, len(arr) - 1)
+    if idx == -1:
+        return result
+
+    low, high = idx, idx
+    result = [low, high]
+    while low != -1:
+        low = binary_search(0, low-1)
+        if low != -1:
+            result[0] = low
+    while high != -1:
+        high = binary_search(high+1, len(arr) - 1)
+        if high != -1:
+            result[1] = high
+    return result
+
+
+def search_min_diff_element(arr, key):
+    l, r = 0, len(arr) - 1
+    min_diff_element_val = float('inf')
+    while l <= r:
+        mid = (l+r)//2
+        if arr[mid] == key:
+            return arr[mid]
+        elif arr[mid] < key:
+            l = mid + 1
+        else:
+            r = mid - 1
+
+        min_diff = abs(key - min_diff_element_val)
+        curr_diff = abs(key - arr[mid])
+        if curr_diff < min_diff:
+            min_diff_element_val = arr[mid]
+    return min_diff_element_val
+
+
 def main():
-    print("Here are all the permutations: " + str(find_permutations([1, 3, 5])))
+    print(search_min_diff_element([4, 6, 10], 7))
+    print(search_min_diff_element([4, 6, 10], 4))
+    print(search_min_diff_element([1, 3, 8, 10, 15], 12))
+    print(search_min_diff_element([4, 6, 10], 17))
+
 
 main()
