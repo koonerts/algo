@@ -65,6 +65,30 @@ def dfs_traversal(g, source):
     return result
 
 
+def detect_cycle(g: Graph):
+    if g.vertices == 0: return False
+
+    visited = set()
+    q = MyQueue()
+    q.enqueue(g.array[0].get_head().data)
+    result = ''
+    while not q.is_empty():
+        data = q.dequeue()
+
+        if data not in visited:
+            result += str(data)
+            visited.add(data)
+        else:
+            return True
+
+        node = g.array[data].get_head()
+        while node:
+            q.enqueue(node.data)
+            node = node.next_element
+
+    return False
+
+
 g = Graph(7)
 num_of_vertices = g.vertices
 if num_of_vertices is 0:
