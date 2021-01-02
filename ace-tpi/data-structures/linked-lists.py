@@ -354,10 +354,88 @@ def add_integers(head1, head2):
     return ret_head
 
 
-def main():
-    print(find_happy_number(23))
-    print(find_happy_number(12))
+def remove_duplicates_using_hash_table(lst):
+    visited = set()
+    prev, node = None, lst.get_head()
+    while node:
+        if node.data in visited:
+            while node and node.data in visited:
+                node = node.next_element
+            if node and prev:
+                prev.next_element = node
+            elif prev:
+                prev.next_element = None
 
+        if node:
+            visited.add(node.data)
+            prev = node
+            node = node.next_element
+
+    return lst
+
+
+def union_using_hash_table(list1, list2):
+    visited = set()
+    l1_node = list1.get_head()
+
+    while l1_node:
+        visited.add(l1_node.data)
+        if l1_node.next_element:
+            l1_node = l1_node.next_element
+        else:
+            break
+
+    prev, l2_node = l1_node, list2.get_head()
+    if prev and l2_node:
+        prev.next_element = l2_node
+
+    while l2_node:
+        if l2_node.data in visited:
+            while l2_node and l2_node.data in visited:
+                l2_node = l2_node.next_element
+            prev.next_element = l2_node
+
+        if l2_node:
+            visited.add(l2_node.data)
+            prev = l2_node
+            l2_node = l2_node.next_element
+
+    return list1
+
+# Returns a list containing the intersection of list1 and list2
+
+
+def intersection_using_hash_table(list1, list2):
+    l2_set = set()
+    l2_node = list2.get_head()
+    while l2_node:
+        l2_set.add(l2_node.data)
+        l2_node = l2_node.next_element
+
+    l1_node, prev = list1.get_head(), None
+    while l1_node:
+        if l1_node.data not in l2_set:
+            val = l1_node.data
+            l1_node = l1_node.next_element
+            list1.delete(val)
+        else:
+            l1_node = l1_node.next_element
+
+    return list1
+
+
+def main():
+    ll = LinkedList()
+    ll.insert_at_head(15)
+    ll.insert_at_tail(22)
+    ll.insert_at_tail(8)
+
+    ll2 = LinkedList()
+    ll2.insert_at_head(7)
+    ll2.insert_at_tail(14)
+    ll2.insert_at_tail(21)
+    union_using_hash_table(ll,ll2)
+    ll.print_list()
 
 main()
 

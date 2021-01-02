@@ -273,9 +273,7 @@ def find_target_subsets(nums, s):
 
 
 def main():
-    print("Can partition: " + str(partition_to_min_subset_difference_memoized([1, 2, 3, 9])))
-    print("Can partition: " + str(partition_to_min_subset_difference_memoized([1, 2, 7, 1, 5])))
-    print("Can partition: " + str(partition_to_min_subset_difference_memoized([1, 3, 100, 4])))
+    print("Can partition: " + str(can_partition_to_equal_subsets_memoized([1, 2, 3, 4, 5, 6, 7])))
 
 
 main()
