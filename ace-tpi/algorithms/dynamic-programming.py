@@ -101,5 +101,36 @@ def longest_palindromic_subsequence_tabulated(s):
     return memo[0][len(s) - 1]
 
 
+def count_change(denominations, amount):
+    """
+    Finds the number of ways that the given number of cents can be represented.
+    :param denominations: Values of the coins available
+    :param amount: Given cent
+    :return: The number of ways that the given number of cents can be represented.
+    """
 
-print(longest_palindromic_subsequence_tabulated('abdbca'))
+    def find_ways(curr_amount, idx):
+        if curr_amount == 0:
+            return 1
+        elif curr_amount < 0 or not(0 <= idx < len(denominations)):
+            return 0
+        else:
+            if memo[idx][curr_amount] == -1:
+                memo[idx][curr_amount] = find_ways(curr_amount, idx-1) + find_ways(curr_amount - denominations[idx], idx)
+            return memo[idx][curr_amount]
+
+    memo = [[-1 for col in range(amount+1)] for row in range(len(denominations))]
+    return find_ways(amount, len(denominations)-1)
+
+
+def count_change_tabulated(denominations, amount):
+    memo = [[-1 for col in range(amount+1)] for row in range(len(denominations))]
+    for row in memo:
+        row[0] = 1
+
+    for i in range(len(memo)):
+        for j in range(len(memo[i])):
+            pass
+
+
+print(count_change([25, 10, 5, 1], 950))
