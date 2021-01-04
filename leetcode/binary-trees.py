@@ -1,17 +1,19 @@
-import enum
+from enum import Enum
 import collections
 import json
 from collections import defaultdict, deque
 
 
-class TraversalType(enum.Enum):
+class TraversalType(Enum):
     PREORDER = 1
     INORDER = 2
     POSTORDER = 3
     LEVELORDER = 4
 
 
-# Definition for a binary tree node.
+class RelationshipToParent(Enum):
+    LEFT = 1,
+    RIGHT = 2
 
 
 class TreeNode:
@@ -364,6 +366,34 @@ class Solution:
                         q.append(child)
         return result if len(result) == numCourses else []
 
+    def removeLeafNodes(self, root: TreeNode, target: int) -> TreeNode:
+        if not root or (not root.left and not root.right and root.val == target): return None
 
-# node = TreeNode(-10, TreeNode(9), TreeNode(20, TreeNode(15), TreeNode(7)))
-print(Solution().findOrder(4, [[1,0],[2,0],[3,1],[3,2]]))
+        def remove(node: TreeNode, parent: TreeNode, rel: RelationshipToParent):
+            if not node:
+                return
+            else:
+                remove(node.left, node, RelationshipToParent.LEFT)
+                remove(node.right, node, RelationshipToParent.RIGHT)
+
+                if node.val == target and not node.left and not node.right:
+                    if rel == RelationshipToParent.LEFT:
+                        parent.left = None
+                    else:
+                        parent.right = None
+        remove(root, None, None)
+
+        if (not root.left and not root.right and root.val == target):
+            return None
+        else:
+            return root
+
+
+node = TreeNode(1)
+node.left = TreeNode(2)
+node.left.left = TreeNode(2)
+node.right = TreeNode(3)
+node.right.left = TreeNode(2)
+node.right.right = TreeNode(4)
+print(Solution().removeLeafNodes(node, 2))
+print(node)
