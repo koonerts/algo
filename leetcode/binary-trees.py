@@ -290,13 +290,11 @@ class Solution:
         pass
 
     def isValidBST(self, root: TreeNode) -> bool:
-        def validate(node: TreeNode, low=float('-inf'), high=float('inf')) -> bool:
+        def validate(node, low=float('-inf'), high=float('inf')):
             if not node:
                 return True
-            elif not (low < node.val < high):
-                return False
             else:
-                return validate(node.left, low, node.val) and validate(node.left, node.val, high)
+                return low < node.val < high and validate(node.left, low, node.val) and validate(node.right, node.val, high)
         return validate(root)
 
     def maxPathSum(self, root: TreeNode) -> int:

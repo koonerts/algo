@@ -36,15 +36,71 @@ class Robot:
         """
 
 
-class Solution:
-    def cleanRoom(self, robot):
-        """
-        :type robot: Robot
-        :rtype: None
-        """
+
+class BSTIterator:
+
+    def __init__(self, root: TreeNode):
+        self.stk = []
+        self.populate_stack(root)
+
+    def populate_stack(self, node):
+        while node:
+            self.stk.append(node)
+            node = node.left
+
+    def next(self) -> int:
+        node = self.stk.pop()
+        if node.right:
+            self.populate_stack(node.right)
+        return node.val
+
+    def hasNext(self) -> bool:
+        return len(self.stk) > 0
 
 
 class Solution:
+    def searchBST(self, root: TreeNode, val: int) -> TreeNode:
+        while root:
+            if root.val == val:
+                return root
+            elif root.val > val:
+                root = root.left
+            else:
+                root = root.right
+        return None
+
+    def insertIntoBST(self, root: TreeNode, val: int) -> TreeNode:
+        if not root: return TreeNode(val)
+
+        node = root
+        while node:
+            if node.val > val:
+                if node.left:
+                    node = node.left
+                else:
+                    node.left = TreeNode(val)
+                    break
+            else:
+                if node.right:
+                    node = node.right
+                else:
+                    node.right = TreeNode(val)
+                    break
+        return root
+
+    def deleteNode(self, root: TreeNode, key: int) -> TreeNode:
+        if not root or root.val == key: return None
+
+        node = root
+        prev = None
+        while node:
+            if node.val > key:
+                prev = node
+                node = node.left
+            elif node.val < key:
+                prev = node
+                node = node.right
+
     def inorderTraversal(self, root: TreeNode) -> list[int]:
         result = []
         if not root: return result
@@ -118,20 +174,23 @@ class Solution:
                 root = root.right
 
     def inorderSuccessor(self, root: TreeNode, p: TreeNode) -> TreeNode:
-        stk = []
-        p_found = False
-        while root or stk:
-            while root:
-                stk.append(root)
+        successor = None
+        while root:
+            if root.val == p.val:
+                if root.right:
+                    successor = root.right
+                    while successor and successor.left:
+                        successor = successor.left
+                    return successor
+                else:
+                    return successor
+            elif root.val > p.val:
+                successor = root
                 root = root.left
+            else:
+                root = root.right
+        return successor
 
-            root = stk.pop()
-            if p_found:
-                return root
-            elif root == p:
-                p_found = True
-
-            root = root.right
 
     def numIslands(self, grid: list[list[str]]) -> int:
         LAND, WATER = '1', '0'
@@ -310,4 +369,9 @@ class Solution:
         """
 
 
-print(Solution().longestIncreasingPath(nums))
+
+
+
+root = TreeNode(2, left=TreeNode(1), right=TreeNode(3))
+val = Solution().inorderSuccessor(root, root.left)
+print(None if not val else val.val)

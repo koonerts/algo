@@ -1,4 +1,4 @@
-
+import math
 
 def find_peak(lst):
     """
@@ -120,9 +120,31 @@ def find_closest(lst, target):
     :return: Closest element from the list to the target
     """
     l, r = 0, len(lst) - 1
-    min_diff_ele, min_diff = float('inf'), float('inf')
+    min_diff_ele = float('inf')
     while l <= r:
-        pass
+        mid = (l+r)//2
+        val = lst[mid]
+        if val == target:
+            return val
+        elif val < target:
+            l = mid + 1
+        else:
+            r = mid - 1
+
+        if abs(target - val) < abs(target - min_diff_ele):
+            min_diff_ele = val
+    return min_diff_ele
 
 
-print(max_sub_list_of_size_k([-1,-2,-3,-4,-5,-6], 2))
+def shuffle_list(lst):
+    """
+    Shuffles the list
+    :param lst: List of integers
+    """
+    if not math.log2(len(lst)).is_integer():
+        return lst
+
+    p
+
+
+print(find_closest([-9, -4, -2, 0, 1, 3, 4, 10], 5))
