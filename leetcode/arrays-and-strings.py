@@ -790,4 +790,14 @@ class Solution:
         return cnt > len(nums)/2
 
 
-print(Solution().nextGreaterElement([4,1,2], [1,3,4,2]))
+    def isValidSubsequence(self, array, seq):
+        seq_idx = 0
+        for num in array:
+            if seq_idx >= len(seq): return True
+
+            if num == seq[seq_idx]:
+                seq_idx += 1
+        return False
+
+
+print(Solution().isValidSubsequence([5, 1, 22, 25, 6, -1, 8, 10], [5, -1, 8, 10]))
