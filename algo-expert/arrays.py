@@ -58,4 +58,81 @@ def selectionSort(array):
     return array
 
 
-print(selectionSort([0,5,4,3,7,6]))
+def threeNumberSum(array, targetSum):
+    array.sort()
+
+    res = []
+    for i in range(len(array) - 1):
+        j = i + 1
+        k = len(array) - 1
+        while j < k:
+            sum_val = array[i] + array[j] + array[k]
+            if sum_val == targetSum:
+                res.append([array[i], array[j], array[k]])
+                j += 1
+                k -= 1
+            elif sum_val < targetSum:
+                j += 1
+            else:
+                k -= 1
+    return res
+
+
+def smallestDifference(arrayOne, arrayTwo):
+    arrayOne.sort()
+    arrayTwo.sort()
+
+    p1, p2 = 0, 0
+    result = [float('inf'), float('-inf')]
+    while True:
+        abs_diff = abs(arrayOne[p1] - arrayTwo[p2])
+        if abs_diff < abs(result[0] - result[1]):
+            result[0], result[1] = arrayOne[p1], arrayTwo[p2]
+
+        if p1 + 1 >= len(arrayOne) and p2 + 1 >= len(arrayTwo):
+            return result
+        elif p1 + 1 >= len(arrayOne):
+            p2 += 1
+        elif p2 + 1 >= len(arrayTwo):
+            p1 += 1
+        else:
+            if arrayOne[p1+1] < arrayTwo[p2+1]:
+                p1 += 1
+            else:
+                p2 += 1
+
+
+def moveElementToEnd(array, toMove):
+    l, r = 0, len(array) - 1
+    while l < r:
+        if array[l] == toMove:
+            array[l], array[r] = array[r], array[l]
+            r -= 1
+        else:
+            l += 1
+    return array
+
+
+def isMonotonic(array):
+    if len(array) <= 1: return True
+
+    is_increasing, i = None, 0
+    while is_increasing is None and i < len(array) - 1:
+        if array[i] < array[i+1]:
+            is_increasing = True
+        elif array[i] > array[i+1]:
+            is_increasing = False
+
+    if is_increasing is None:
+        return True
+    else:
+        for j in range(i+1, len(array)):
+            if is_increasing and array[j] < array[j-1]:
+                return False
+            elif (not is_increasing) and array[j] > array[j-1]:
+                return False
+        return True
+
+
+
+print(smallestDifference([-1,5,10,20,28,3], [26,134,135,15,17]))
