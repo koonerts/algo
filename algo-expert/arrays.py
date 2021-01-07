@@ -135,21 +135,64 @@ def isMonotonic(array):
 
 
 def spiralTraverse(array):
-    direction = 1
-    x_bounds, y_bounds = len(array), len(array[0])
+    RIGHT, DOWN, LEFT, UP = 0, 1, 2, 3
+    direction = RIGHT
+    y_left, y_right = 0, len(array[0]) - 1
+    x_top, x_bot = 0, len(array) - 1
 
     result = []
     x, y = 0, 0
     while len(result) < len(array)*len(array[0]):
-        if direction == 1:
-            while x < x_bound:
+        if direction == RIGHT:
+            y = y_left
+            while y_left <= y <= y_right:
+                result.append(array[x][y])
+                y += 1
+            y -= 1
+            x_top += 1
+        elif direction == DOWN:
+            x = x_top
+            while x_top <= x <= x_bot:
                 result.append(array[x][y])
                 x += 1
+            x -= 1
+            y_right -= 1
+        elif direction == LEFT:
+            y = y_right
+            while y_left <= y <= y_right:
+                result.append(array[x][y])
+                y -= 1
+            y += 1
+            x_bot -= 1
+        elif direction == UP:
+            x = x_bot
+            while x_top <= x <= x_bot:
+                result.append(array[x][y])
+                x -= 1
+            x += 1
+            y_left += 1
+        direction = (direction+1) % 4
+    return result
 
+
+def longestPeak(array):
+    if len(array) <= 2: return False
+
+    longest_peak = 0
+    i = 1
+    while i < len(array) - 1:
+        if array[i-1] < array[i] > array[i+1]:
+            l, r = i-1, i+1
+            while l-1 >= 0 and array[l-1] < array[l]:
+                l -= 1
+            while r+1 < len(array) and array[r] > array[r+1]:
+                r += 1
+            longest_peak = max(longest_peak, r-l+1)
+            i = r
         else:
+            i += 1
+    return longest_peak
 
-        direction *= -1
-    pass
 
 
-print(smallestDifference([-1,5,10,20,28,3], [26,134,135,15,17]))
+print(longestPeak([1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3]))
