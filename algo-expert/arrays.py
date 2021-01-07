@@ -134,5 +134,22 @@ def isMonotonic(array):
         return True
 
 
+def spiralTraverse(array):
+    direction = 1
+    x_bounds, y_bounds = len(array), len(array[0])
+
+    result = []
+    x, y = 0, 0
+    while len(result) < len(array)*len(array[0]):
+        if direction == 1:
+            while x < x_bound:
+                result.append(array[x][y])
+                x += 1
+
+        else:
+
+        direction *= -1
+    pass
+
 
 print(smallestDifference([-1,5,10,20,28,3], [26,134,135,15,17]))
