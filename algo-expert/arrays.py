@@ -194,5 +194,10 @@ def longestPeak(array):
     return longest_peak
 
 
+def firstDuplicateValue(array):
+    i = 0
+    while i < len(array):
+        pass
 
-print(longestPeak([1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3]))
+
+print(firstDuplicateValue([7, 6, 5, 3, 6, 4, 3, 5, 2]))
