@@ -1,3 +1,5 @@
+from collections import deque
+
 
 def getNthFib(n):
     if n <= 1: return 1
@@ -200,4 +202,98 @@ def firstDuplicateValue(array):
         pass
 
 
-print(firstDuplicateValue([7, 6, 5, 3, 6, 4, 3, 5, 2]))
+def hasSingleCycle(array):
+    curr_idx = 0
+    for i in range(len(array)):
+        curr_idx = (array[curr_idx] + curr_idx) % len(array)
+        if curr_idx == 0 and i < len(array)-1:
+            return False
+    return curr_idx == 0
+
+
+def kadanesAlgorithm(array):
+    if not array: return 0
+    elif len(array) == 1: return array[0]
+
+    max_sum, curr_sum = 0, 0
+    for i in range(len(array)):
+        curr_sum += array[i]
+        max_sum = max(max_sum, curr_sum)
+        if curr_sum < 0:
+            curr_sum = 0
+    return max_sum
+
+
+def riverSizes(matrix):
+    results = []
+
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+
+            if matrix[i][j] == 1:
+                q = deque([(i,j)])
+                size = 0
+
+                while q:
+                    r, c = q.popleft()
+                    if 0 <= r < len(matrix) and 0 <= c < len(matrix[0]) and matrix[r][c] == 1:
+                        size += 1
+                        matrix[r][c] = 0
+                        q.append((r,c+1))
+                        q.append((r,c-1))
+                        q.append((r+1,c))
+                        q.append((r-1,c))
+                results.append(size)
+    return results
+
+
+def removeIslands(matrix):
+    visited = set()
+    non_islands = set()
+    directions = [(0,1), (0,-1), (1,0), (-1,0)]
+
+    for i in [0, len(matrix)-1]:
+        for j in range(len(matrix[0])):
+            if matrix[i][j] == 1:
+                q = deque([(i,j)])
+                while q:
+                    r, c = q.popleft()
+                    visited.add((r,c))
+                    non_islands.add((r,c))
+
+                    for d in directions:
+                        new_r = r + d[0]
+                        new_c = c + d[1]
+                        if (new_r, new_c) not in visited and 0 <= new_r < len(matrix) and 0 <= new_c < len(matrix[0]) and matrix[new_r][new_c] == 1:
+                            q.append((new_r, new_c))
+
+    for i in range(len(matrix)):
+        for j in [0, len(matrix[0])-1]:
+            if (i,j) not in visited and matrix[i][j] == 1:
+                q = deque([(i,j)])
+                while q:
+                    r, c = q.popleft()
+                    visited.add((r,c))
+                    non_islands.add((r,c))
+
+                    for d in directions:
+                        new_r = r + d[0]
+                        new_c = c + d[1]
+                        if (new_r, new_c) not in visited and 0 <= new_r < len(matrix) and 0 <= new_c < len(matrix[0]) and matrix[new_r][new_c] == 1:
+                            q.append((new_r, new_c))
+
+    for i in range(1, len(matrix)-1):
+        for j in range(1, len(matrix[0])-1):
+            if (i,j) not in non_islands and matrix[i][j] == 1:
+                matrix[i][j] = 0
+    return matrix
+
+
+print(removeIslands([
+    [1, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 1, 1],
+    [0, 0, 1, 0, 1, 0],
+    [1, 1, 0, 0, 1, 0],
+    [1, 0, 1, 1, 0, 0],
+    [1, 0, 0, 0, 0, 1]
+]))

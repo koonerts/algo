@@ -1,3 +1,11 @@
+from collections import deque
+
+
+# This is an input class. Do not edit.
+class AncestralTree:
+    def __init__(self, name):
+        self.name = name
+        self.ancestor = None
 
 
 class BST:
@@ -6,12 +14,37 @@ class BST:
         self.left = None
         self.right = None
 
+    def insert(self, value):
+        if value < self.value:
+            if self.left is None:
+                self.left = BST(value)
+            else:
+                self.left.insert(value)
+        else:
+            if self.right is None:
+                self.right = BST(value)
+            else:
+                self.right.insert(value)
+
+    def contains(self, value):
+        # Write your code here.
+        pass
+
+    def remove(self, value, parent=None):
+        # Write your code here.
+        # Do not edit the return statement of this method.
+        return self
+
+    def is_leaf(self):
+        return not self.left and not self.right
+
 
 class BinaryTree:
-    def __init__(self, value):
+    def __init__(self, value, left=None, right=None, parent=None):
         self.value = value
-        self.left = None
-        self.right = None
+        self.left = left
+        self.right = right
+        self.parent = parent
 
 
 class Node:
@@ -28,6 +61,31 @@ class Node:
         for child in self.children:
             self.depthFirstSearch(array)
         return array
+
+    def breadthFirstSearch(self, array):
+        q = deque([self])
+        while q:
+            node = q.popleft()
+            array.append(node.name)
+            for child in node.children:
+                q.append(child)
+        return array
+
+
+def create_bst_from_map(bst_map) -> BST:
+    tree = bst_map['tree']
+    node_map = {}
+    root: BST
+    for n in tree['nodes']:
+        node_map[n['id']] = BST(n['value'])
+        if n['id'] == tree['root']:
+            root = node_map[n['id']]
+
+    for n in tree['nodes']:
+        node = node_map[n['id']]
+        if n['left']: node.left = node_map[n['left']]
+        if n['right']: node.right = node_map[n['right']]
+    return root
 
 
 def findClosestValueInBst(tree: BST, target: int):
@@ -79,14 +137,98 @@ def nodeDepths(root: BinaryTree):
     return depth_sum
 
 
-node = BinaryTree(1)
-node.left = BinaryTree(2)
-node.left.left = BinaryTree(4)
-node.left.left.left = BinaryTree(8)
-node.left.left.right = BinaryTree(9)
-node.left.right = BinaryTree(5)
-node.left.right.left = BinaryTree(10)
-node.right = BinaryTree(3)
-node.right.right = BinaryTree(7)
-node.right.left = BinaryTree(6)
-print(nodeDepths(node))
+def validateBst(tree: BST, low_limit=float('-inf'), high_limit=float('inf')):
+    if not tree:
+        return True
+    else:
+        return low_limit <= tree.value < high_limit \
+               and validateBst(tree.left, low_limit, tree.value) \
+               and validateBst(tree.right, tree.value, high_limit)
+
+
+def minHeightBst(array):
+    mid = (len(array)-1)//2
+    root = BST(array[mid])
+
+
+def invertBinaryTree(tree):
+    if tree:
+        tree.left, tree.right = tree.right, tree.left
+        invertBinaryTree(tree.left)
+        invertBinaryTree(tree.right)
+    return tree
+
+
+def binaryTreeDiameter(tree):
+    if not root: return 0
+
+    def depth(node: BinaryTree):
+        nonlocal diameter
+        if not node: return 0
+
+        left = depth(node.left)
+        right = depth(node.right)
+        diameter = max(diameter, left + right)
+        return max(left, right) + 1
+
+    diameter = 0
+    depth(tree)
+    return diameter
+
+
+def findSuccessor(tree: BinaryTree, node: BinaryTree):
+    if node.right:
+        temp = node.right
+        while temp.left:
+            temp = temp.left
+        return temp
+    else:
+        temp = node
+        while temp.parent and temp.parent.right == temp:
+            temp = temp.parent
+        return temp.parent
+
+
+def getYoungestCommonAncestor(topAncestor: AncestralTree, descendantOne: AncestralTree, descendantTwo: AncestralTree):
+    d1_depth, d2_depth = 0, 0
+    node1 = descendantOne
+    while node1 != topAncestor:
+        d1_depth += 1
+        node1 = node1.ancestor
+
+    node2 = descendantTwo
+    while node2 != topAncestor:
+        d2_depth += 1
+        node2 = node2.ancestor
+
+    depth_diff = abs(d1_depth-d2_depth)
+    for _ in range(depth_diff):
+        if d1_depth > d2_depth:
+            descendantOne = descendantOne.ancestor
+        else:
+            descendantTwo = descendantTwo.ancestor
+
+    while descendantOne != descendantTwo:
+        descendantOne = descendantOne.ancestor
+        descendantTwo = descendantTwo.ancestor
+    return descendantOne
+
+
+x = {
+    "tree": {
+        "nodes": [
+            {"id": "10", "left": "5", "right": "15", "value": 10},
+            {"id": "15", "left": "13", "right": "22", "value": 15},
+            {"id": "22", "left": None, "right": None, "value": 22},
+            {"id": "13", "left": None, "right": "14", "value": 13},
+            {"id": "14", "left": None, "right": None, "value": 14},
+            {"id": "5", "left": "2", "right": "5-2", "value": 5},
+            {"id": "5-2", "left": None, "right": None, "value": 5},
+            {"id": "2", "left": "1", "right": None, "value": 2},
+            {"id": "1", "left": None, "right": None, "value": 1}
+        ],
+        "root": "10"
+    }
+}
+root = create_bst_from_map(x)
+print(validateBst(root))
