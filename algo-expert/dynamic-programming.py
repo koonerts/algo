@@ -17,8 +17,11 @@ def maxSubsetSumNoAdjacent(array):
 
 def numberOfWaysToMakeChange(n, denoms):
     memo = [float('-inf') for i in range(n+1)]
-    def recurse(idx, curr_sum):
-        pass
+    memo[0] = 1
+    for i in range(len(denoms)):
+        for j in range(len(memo)):
+            if denoms[i] <= j:
+                pass
 
 
 def minNumberOfCoinsForChange(n, denoms):

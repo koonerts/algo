@@ -24,9 +24,14 @@ def removeKthNodeFromEnd(head: LinkedList, k):
     if prev:
         prev.next = node.next
     else:
-        head = node.next
-        node = None
-    return head
+        node = head
+        while node:
+            node.value = node.next.value
+            if not node.next.next.next:
+                node.next = None
+                node = None
+                break
+            node = node.next
 
 
 head = LinkedList(0)

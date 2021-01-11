@@ -289,11 +289,33 @@ def removeIslands(matrix):
     return matrix
 
 
-print(removeIslands([
-    [1, 0, 0, 0, 0, 0],
-    [0, 1, 0, 1, 1, 1],
-    [0, 0, 1, 0, 1, 0],
-    [1, 1, 0, 0, 1, 0],
-    [1, 0, 1, 1, 0, 0],
-    [1, 0, 0, 0, 0, 1]
-]))
+def getPermutations(array):
+    result = []
+    if not array: return result
+
+    q = deque([[]])
+    for num in array:
+        for i in range(len(q)):
+            p = q.popleft()
+            for j in range(len(p)+1):
+                p_copy = p.copy()
+                p_copy.insert(j, num)
+
+                if len(p_copy) == len(array):
+                    result.append(list(p_copy))
+                else:
+                    q.append(p_copy)
+    return result
+
+
+def powerset(array):
+    q = [[]]
+    for num in array:
+        for i in range(len(q)):
+            item = q[i].copy()
+            item.append(num)
+            q.append(item)
+    return q
+
+
+print(powerset([1, 2, 3]))

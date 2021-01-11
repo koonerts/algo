@@ -13,33 +13,76 @@ class DoublyLinkedList:
         self.tail = None
 
     def setHead(self, node):
-        # Write your code here.
-        pass
+        if not self.head:
+            self.head = node
+            self.tail = node
+        else:
+            temp = self.head
+            new_head = self.remove(node) or node
+            self.head = new_head
+            self.head.next = temp
+            self.head.prev = None
+            temp.prev = self.head
 
     def setTail(self, node):
-        # Write your code here.
-        pass
+        if not self.head:
+            self.setHead(node)
+        else:
+            temp = self.tail
+            self.tail = self.remove(node) or node
+            self.tail.prev = temp
+            self.tail.next = None
 
     def insertBefore(self, node, nodeToInsert):
-        # Write your code here.
-        pass
+        if node == self.head:
+            self.setHead(nodeToInsert)
+        else:
+            nodeToInsert = self.remove(nodeToInsert) or nodeToInsert
+            nodeToInsert.prev = node.prev
+            nodeToInsert.next = node
+            node.prev = nodeToInsert
+
 
     def insertAfter(self, node, nodeToInsert):
-        # Write your code here.
-        pass
+        if node == self.tail:
+            self.setTail(nodeToInsert)
+        else:
+            nodeToInsert = self.remove(nodeToInsert) or nodeToInsert
+            nodeToInsert.next = node.next
+            nodeToInsert.prev = node
+            node.next = nodeToInsert
 
     def insertAtPosition(self, position, nodeToInsert):
-        # Write your code here.
-        pass
+        iter_node = self.head
+        for _ in range(position-1):
+            iter_node = iter_node.next
+        self.insertBefore(iter_node, nodeToInsert)
 
     def removeNodesWithValue(self, value):
-        # Write your code here.
-        pass
+        iter_node = self.head
+        while iter_node and iter_node.value != value:
+            iter_node = iter_node.next
+        if iter_node and iter_node.value == value:
+            return self.remove(iter_node)
 
     def remove(self, node):
-        # Write your code here.
-        pass
+        iter_node = self.head
+        while iter_node and iter_node != node:
+            iter_node = iter_node.next
+
+        if not iter_node: return None
+        else:
+            if iter_node.prev:
+                iter_node.prev.next = iter_node.next
+            if iter_node.next:
+                iter_node.next.prev = iter_node.prev
+
+            iter_node.prev = None
+            iter_node.next = None
+            return iter_node
 
     def containsNodeWithValue(self, value):
-        # Write your code here.
-        pass
+        iter_node = self.head
+        while iter_node and iter_node.value != value:
+            iter_node = iter_node.next
+        return iter_node and iter_node.value == value
