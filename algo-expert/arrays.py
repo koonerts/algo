@@ -336,4 +336,94 @@ def threeNumberSort(array, order):
     return array
 
 
-print(powerset([1, 2, 3]))
+def sunsetViews(buildings, direction):
+    iterator = range(len(buildings)) if direction == 'WEST' else reversed(range(len(buildings)))
+    stk = []
+    result = []
+    for i in iterator:
+        if (direction == 'EAST' and i == len(buildings) - 1) or (direction == 'WEST' and i == 0):
+            result.append(i)
+            stk.append(buildings[i])
+        else:
+            while stk and stk[-1] < buildings[i]:
+                stk.pop()
+
+            if not stk:
+                result.append(i)
+                stk.append(buildings[i])
+    return list(reversed(result)) if direction == 'EAST' else result
+
+
+def fourNumberSum(array, targetSum):
+    if len(array) < 4: return []
+
+    result = []
+    array.sort()
+    for i in range(len(array)-3):
+        for j in range(i+1, len(array)-2):
+            k, l = j+1, len(array)-1
+            
+            while k < l:
+                val = array[i] + array[j] + array[k] + array[l]
+                if val == targetSum:
+                    result.append([array[i], array[j], array[k], array[l]])
+                    k += 1
+                    l -= 1
+                elif val < targetSum:
+                    k += 1
+                else:
+                    l -= 1
+    return result
+
+
+def subarraySort(array):
+    l, r = float('inf'), float('inf')
+    min_val, max_val = float('inf'), float('-inf')
+    for i in range(len(array)-1):
+        if array[i] > array[i+1]:
+            l = i+1
+            break
+
+    if l == float('inf'): return [-1, -1]
+
+    for i in reversed(range(len(array))):
+        if array[i] < array[l-1]:
+            r = i
+            break
+
+    min_val = min(array[l:r+1])
+    max_val = max(array[l:r+1])
+    low, high = 0, len(array)-1
+    while True:
+        if (array[low] > min_val or low == l) and (array[high] < max_val or high == r):
+            break
+
+        if not (array[low] > min_val or low == l):
+            low += 1
+
+        if not (array[high] < max_val or high == r):
+            high -= 1
+    return [low, high]
+
+
+def largestRange(array):
+    num_set = set(array)
+    max_range = [array[0], array[0]]
+    for i in range(len(array)):
+        if not max_range[0] or not (max_range[0] <= array[i] <= max_range[1]):
+            low, high = array[i], array[i]
+            while True:
+                if low-1 not in num_set and high+1 not in num_set:
+                    break
+                else:
+                    if low-1 in num_set:
+                        low -= 1
+                    if high+1 in num_set:
+                        high += 1
+            if high-low+1 > max_range[1]-max_range[0]+1:
+                max_range[0], max_range[1] = low, high
+    return max_range
+
+
+print(largestRange([1,1]))
+print(largestRange([1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6]))
