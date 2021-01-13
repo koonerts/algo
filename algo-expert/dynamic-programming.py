@@ -16,12 +16,14 @@ def maxSubsetSumNoAdjacent(array):
 
 
 def numberOfWaysToMakeChange(n, denoms):
-    memo = [float('-inf') for i in range(n+1)]
+    memo = [0 for i in range(n+1)]
     memo[0] = 1
-    for i in range(len(denoms)):
-        for j in range(len(memo)):
-            if denoms[i] <= j:
-                pass
+
+    for denom in denoms:
+        for i in range(1, n+1):
+            if denom <= i:
+                memo[i] += memo[i-denom]
+    return memo[-1]
 
 
 def minNumberOfCoinsForChange(n, denoms):
@@ -33,3 +35,6 @@ def minNumberOfCoinsForChange(n, denoms):
             if denoms[i] <= j:
                 min_coins[j] = min(min_coins[j], min_coins[j-denoms[i]] + 1)
     return min_coins[-1] if min_coins[-1] < float('inf') else -1
+
+
+print(numberOfWaysToMakeChange(6, [1, 5]))

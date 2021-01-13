@@ -44,6 +44,4 @@ head.next.next.next.next.next.next = LinkedList(6)
 head.next.next.next.next.next.next.next = LinkedList(7)
 head.next.next.next.next.next.next.next.next = LinkedList(8)
 head.next.next.next.next.next.next.next.next.next = LinkedList(9)
-
-result = removeKthNodeFromEnd(head, 10)
-print(repr(result))
+removeKthNodeFromEnd(head, 10)

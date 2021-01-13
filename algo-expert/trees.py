@@ -147,8 +147,16 @@ def validateBst(tree: BST, low_limit=float('-inf'), high_limit=float('inf')):
 
 
 def minHeightBst(array):
-    mid = (len(array)-1)//2
-    root = BST(array[mid])
+    def construct_bst(low, high):
+        if low > high:
+            return None
+
+        mid = (low+high)//2
+        root = BST(array[mid])
+        root.left = construct_bst(low, mid-1)
+        root.right = construct_bst(mid+1, high)
+        return root
+    return construct_bst(0, len(array)-1)
 
 
 def invertBinaryTree(tree):
@@ -160,20 +168,20 @@ def invertBinaryTree(tree):
 
 
 def binaryTreeDiameter(tree):
-    if not root: return 0
+    if not tree: return 0
 
-    def depth(node: BinaryTree):
-        nonlocal diameter
-        if not node: return 0
-
-        left = depth(node.left)
-        right = depth(node.right)
-        diameter = max(diameter, left + right)
-        return max(left, right) + 1
-
-    diameter = 0
-    depth(tree)
-    return diameter
+    def find_depths(node):
+        nonlocal max_diameter
+        if not node:
+            return 0
+        else:
+            left_depth = find_depths(node.left)
+            right_depth = find_depths(node.right)
+            max_diameter = max(max_diameter, left_depth+right_depth)
+            return max(left_depth, right_depth) + 1
+    max_diameter = 0
+    find_depths(tree)
+    return max_diameter
 
 
 def findSuccessor(tree: BinaryTree, node: BinaryTree):
@@ -217,18 +225,18 @@ def getYoungestCommonAncestor(topAncestor: AncestralTree, descendantOne: Ancestr
 x = {
     "tree": {
         "nodes": [
-            {"id": "10", "left": "5", "right": "15", "value": 10},
-            {"id": "15", "left": "13", "right": "22", "value": 15},
-            {"id": "22", "left": None, "right": None, "value": 22},
-            {"id": "13", "left": None, "right": "14", "value": 13},
-            {"id": "14", "left": None, "right": None, "value": 14},
-            {"id": "5", "left": "2", "right": "5-2", "value": 5},
-            {"id": "5-2", "left": None, "right": None, "value": 5},
-            {"id": "2", "left": "1", "right": None, "value": 2},
-            {"id": "1", "left": None, "right": None, "value": 1}
+            {"id": "1", "left": "3", "right": "2", "value": 1},
+            {"id": "3", "left": "7", "right": "4", "value": 3},
+            {"id": "7", "left": "8", "right": None, "value": 7},
+            {"id": "8", "left": "9", "right": None, "value": 8},
+            {"id": "9", "left": None, "right": None, "value": 9},
+            {"id": "4", "left": None, "right": "5", "value": 4},
+            {"id": "5", "left": None, "right": "6", "value": 5},
+            {"id": "6", "left": None, "right": None, "value": 6},
+            {"id": "2", "left": None, "right": None, "value": 2}
         ],
-        "root": "10"
+        "root": "1"
     }
 }
 root = create_bst_from_map(x)
-print(validateBst(root))
+print(binaryTreeDiameter(root))

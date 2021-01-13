@@ -1,5 +1,5 @@
 from collections import deque
-
+from heapq import *
 
 def getNthFib(n):
     if n <= 1: return 1
@@ -15,6 +15,24 @@ def getNthFib(n):
 def productSum(array):
     # Write your code here.
     pass
+
+
+def findThreeLargestNumbers(array):
+    largest_nums = [array[0], array[1], array[2]]
+    largest_nums.sort()
+
+    if len(array) == 3:
+        return largest_nums
+
+    for i in range(3, len(array)):
+        if array[i] >= largest_nums[2]:
+            largest_nums[0], largest_nums[1], largest_nums[2] = largest_nums[1], largest_nums[2], array[i]
+        elif array[i] >= largest_nums[1]:
+            largest_nums[0], largest_nums[1] = largest_nums[1], array[i]
+        elif array[i] > largest_nums[0]:
+            largest_nums[0] = array[i]
+    return largest_nums
+
 
 
 def bubbleSort(array):
@@ -425,5 +443,19 @@ def largestRange(array):
     return max_range
 
 
-print(largestRange([1,1]))
-print(largestRange([1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6]))
+def searchInSortedMatrix(matrix, target):
+    row, col = len(matrix)-1, 0
+    while row >= 0 and col < len(matrix[0]):
+        if matrix[row][col] > target: row -= 1
+        elif matrix[row][col] < target: col += 1
+        else: return [row, col]
+    return [-1,-1]
+
+
+print(searchInSortedMatrix([
+    [1, 4, 7, 12, 15, 1000],
+    [2, 5, 19, 31, 32, 1001],
+    [3, 8, 24, 33, 35, 1002],
+    [40, 41, 42, 44, 45, 1003],
+    [99, 100, 103, 106, 128, 1004]
+], 44))
