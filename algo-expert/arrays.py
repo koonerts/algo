@@ -452,10 +452,30 @@ def searchInSortedMatrix(matrix, target):
     return [-1,-1]
 
 
-print(searchInSortedMatrix([
-    [1, 4, 7, 12, 15, 1000],
-    [2, 5, 19, 31, 32, 1001],
-    [3, 8, 24, 33, 35, 1002],
-    [40, 41, 42, 44, 45, 1003],
-    [99, 100, 103, 106, 128, 1004]
-], 44))
+def zigzagTraverse(array):
+    pass
+
+
+def shiftedBinarySearch(array, target):
+    low, high = 0, len(array)-1
+
+    while low <= high:
+        mid = (high+low)//2
+        if array[mid] == target:
+            return mid
+        else:
+            # left side sorted
+            if array[low] <= array[mid]:
+                if array[low] <= target < array[mid]:
+                    high = mid - 1
+                else:
+                    low = mid + 1
+            else:
+                if array[mid] < target <= array[high]:
+                    low = mid + 1
+                else:
+                    high = mid - 1
+    return -1
+
+
+print(shiftedBinarySearch([33, 37, 45, 61, 71, 72, 73, 355, 0, 1, 21], 355))

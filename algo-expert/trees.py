@@ -71,9 +71,38 @@ class Node:
                 q.append(child)
         return array
 
+def create_binary_tree_from_map(bt_map) -> BinaryTree:
+    if 'tree' in bt_map:
+        tree = bt_map['tree']
+    else:
+        tree = bt_map
+
+    node_map = {}
+    root: BinaryTree
+    for n in tree['nodes']:
+        node_map[n['id']] = BinaryTree(n['value'])
+        if n['id'] == tree['root']:
+            root = node_map[n['id']]
+
+    for n in tree['nodes']:
+        node = node_map[n['id']]
+
+        if n['left']:
+            node.left = node_map[n['left']]
+            node.left.parent = node
+
+        if n['right']:
+            node.right = node_map[n['right']]
+            node.right.parent = node
+
+    return root
 
 def create_bst_from_map(bst_map) -> BST:
-    tree = bst_map['tree']
+    if 'tree' in bst_map:
+        tree = bst_map['tree']
+    else:
+        tree = bst_map
+
     node_map = {}
     root: BST
     for n in tree['nodes']:
@@ -222,21 +251,86 @@ def getYoungestCommonAncestor(topAncestor: AncestralTree, descendantOne: Ancestr
     return descendantOne
 
 
-x = {
-    "tree": {
-        "nodes": [
-            {"id": "1", "left": "3", "right": "2", "value": 1},
-            {"id": "3", "left": "7", "right": "4", "value": 3},
-            {"id": "7", "left": "8", "right": None, "value": 7},
-            {"id": "8", "left": "9", "right": None, "value": 8},
-            {"id": "9", "left": None, "right": None, "value": 9},
-            {"id": "4", "left": None, "right": "5", "value": 4},
-            {"id": "5", "left": None, "right": "6", "value": 5},
-            {"id": "6", "left": None, "right": None, "value": 6},
-            {"id": "2", "left": None, "right": None, "value": 2}
-        ],
-        "root": "1"
-    }
-}
-root = create_bst_from_map(x)
-print(binaryTreeDiameter(root))
+def topologicalSort(jobs, deps):
+    if not jobs or not deps: return jobs
+
+    graph, in_degree = {i:[] for i in jobs}, {i:0 for i in jobs}
+    for pre_req, job in deps:
+        if job not in graph: graph[pre_req] = [job]
+        else: graph[pre_req].append(job)
+        in_degree[job] = in_degree.get(job, 0) + 1
+
+    q = deque()
+    for job in in_degree:
+        if in_degree[job] == 0:
+            q.append(job)
+
+    result = []
+    while q:
+        job = q.pop()
+        result.append(job)
+        for child in graph[result[-1]]:
+            in_degree[child] -= 1
+            if in_degree[child] == 0:
+                q.append(child)
+    return result if len(result) == len(jobs) else []
+
+
+def iterativeInOrderTraversal(tree, callback):
+    node = tree
+    while node.parent:
+        node = node.parent
+
+    prev = None
+    while node:
+        if node.left and prev != node.left:
+            prev = node
+            node = node.left
+        else:
+            callback(node)
+            if node.right:
+                prev = node
+                node = node.right
+            else:
+                while node.parent and node.parent.right == node:
+                    node = node.parent
+
+                prev = node
+                node = node.parent
+
+
+def flattenBinaryTree(root):
+    head, stk = None, []
+    node, prev = root, None
+    while stk or node:
+        while node:
+            stk.append(node)
+            node = node.left
+
+        node = stk.pop()
+        if not head:
+            head = node
+
+        if prev:
+            prev.right = node
+            node.left = prev
+        prev = node
+        node = node.right
+    return head
+
+
+root = create_binary_tree_from_map({
+    "nodes": [
+        {"id": "1", "left": "2", "right": "3", "value": 1},
+        {"id": "3", "left": "6", "right": None, "value": 3},
+        {"id": "6", "left": None, "right": None, "value": 6},
+        {"id": "2", "left": "4", "right": "5", "value": 2},
+        {"id": "5", "left": "7", "right": "8", "value": 5},
+        {"id": "8", "left": None, "right": None, "value": 8},
+        {"id": "7", "left": None, "right": None, "value": 7},
+        {"id": "4", "left": None, "right": None, "value": 4}
+    ],
+    "root": "1"
+})
+res = flattenBinaryTree(root)
+print(res)

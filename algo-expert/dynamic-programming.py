@@ -37,4 +37,11 @@ def minNumberOfCoinsForChange(n, denoms):
     return min_coins[-1] if min_coins[-1] < float('inf') else -1
 
 
+def levenshteinDistance(str1, str2):
+    prev_i, prev_j, prev_ij, curr = 0, 0, 0, 0
+    for i in range(len(str1)):
+        for j in range(len(str2)):
+            if str1[i] == str2[j]:
+                pass
+
 print(numberOfWaysToMakeChange(6, [1, 5]))
