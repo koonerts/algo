@@ -478,4 +478,34 @@ def shiftedBinarySearch(array, target):
     return -1
 
 
-print(shiftedBinarySearch([33, 37, 45, 61, 71, 72, 73, 355, 0, 1, 21], 355))
+def calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration):
+
+    def convert_to_minutes(lst_intervals):
+        for intervals in lst_intervals:
+            for i in range(len(intervals)):
+                start, end = intervals[i]
+                start_hrs, start_mins = start.split(':')
+                end_hrs, end_mins = end.split(':')
+
+                intervals[i][0] = 60*int(start_hrs) + int(start_mins)
+                intervals[i][1] = 60*int(end_hrs) + int(end_mins)
+
+    def convert_to_military(lst_intervals):
+        for intervals in lst_intervals:
+            for i in range(len(intervals)):
+                start_hrs, start_mins = intervals[i][0]//60, "00" if intervals[i][0] % 60 == 0 else intervals[i][0] % 60
+                end_hrs, end_mins = intervals[i][1]//60, "00" if intervals[i][1] % 60 == 0 else intervals[i][1] % 60
+
+                intervals[i][0] = f'{start_hrs}:{start_mins}'
+                intervals[i][1] = f'{end_hrs}:{end_mins}'
+
+    convert_to_minutes([calendar1, [dailyBounds1], calendar2, [dailyBounds2]])
+
+
+
+    convert_to_military([calendar1, [dailyBounds1], calendar2, [dailyBounds2]])
+
+
+calendarMatching([["9:00", "10:30"], ["12:00", "13:00"], ["16:00", "18:00"]], ["9:00", "20:00"],
+                 [["10:00", "11:30"], ["12:30", "14:30"], ["14:30", "15:00"], ["16:00", "17:00"]], ["10:00", "18:30"],
+                 30)
