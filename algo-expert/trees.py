@@ -11,28 +11,88 @@ class AncestralTree:
 class BST:
     def __init__(self, value):
         self.value = value
-        self.left = None
-        self.right = None
+        self.left: 'BST' = None
+        self.right: 'BST' = None
 
     def insert(self, value):
         if value < self.value:
-            if self.left is None:
+            if not self.left:
                 self.left = BST(value)
             else:
                 self.left.insert(value)
         else:
-            if self.right is None:
+            if not self.right:
                 self.right = BST(value)
             else:
                 self.right.insert(value)
 
     def contains(self, value):
-        # Write your code here.
-        pass
+        if self.value == value:
+            return True
+        elif value < self.value:
+            if not self.left:
+                return False
+            else:
+                return self.left.contains(value)
+        else:
+            if not self.right:
+                return False
+            else:
+                return self.right.contains(value)
 
     def remove(self, value, parent=None):
-        # Write your code here.
-        # Do not edit the return statement of this method.
+        if not parent and self.value == value:
+            if self.is_leaf():
+                return
+            elif not self.right:
+                self.value = self.left.value
+                self.left = self.left.left
+            else:
+                if self.right.left:
+                    prev = self.right
+                    node = self.right.left
+                    while node.left:
+                        prev = node
+                        node = node.left
+
+                    self.value = node.value
+                    prev.left = None
+                else:
+                    self.value = self.right.value
+                    self.right = self.right.right
+        else:
+            if value < self.value and self.left:
+                self.left.remove(value, self)
+            elif value > self.value and self.right:
+                self.right.remove(value, self)
+            else:
+                if self.is_leaf():
+                    if parent.left == self:
+                        parent.left = None
+                    else:
+                        parent.right = None
+                elif not self.right:
+                    if parent.left == self:
+                        parent.left = self.left
+                    else:
+                        parent.right = self.left
+                else:
+                    if self.right.left:
+                        prev = self.right
+                        node = self.right.left
+                        while node.left:
+                            prev = node
+                            node = node.left
+                        self.value = node.value
+                        prev.left = None
+                    else:
+                        if parent.left == self:
+                            parent.left.value = self.right.value
+                            parent.left.right = parent.left.right.right
+                        else:
+                            parent.right.value = self.right.value
+                            parent.right.right = parent.right.right.right
+
         return self
 
     def is_leaf(self):
@@ -71,6 +131,13 @@ class Node:
                 q.append(child)
         return array
 
+# This is an input class. Do not edit.
+class OrgChart:
+    def __init__(self, name):
+        self.name = name
+        self.directReports = []
+
+
 def create_binary_tree_from_map(bt_map) -> BinaryTree:
     if 'tree' in bt_map:
         tree = bt_map['tree']
@@ -96,6 +163,7 @@ def create_binary_tree_from_map(bt_map) -> BinaryTree:
             node.right.parent = node
 
     return root
+
 
 def create_bst_from_map(bst_map) -> BST:
     if 'tree' in bst_map:
@@ -319,18 +387,44 @@ def flattenBinaryTree(root):
     return head
 
 
+def maxPathSum(tree):
+    if not tree: return 0
+    elif not tree.left and not tree.right: return tree.value
+
+    def dfs_sum(node):
+        nonlocal max_path_sum
+        if not node:
+            return 0
+        else:
+            l_sum = dfs_sum(node.left)
+            r_sum = dfs_sum(node.right)
+
+            max_path_sum = max(max_path_sum, l_sum + r_sum + node.value, l_sum + node.value, r_sum + node.value)
+            return max(l_sum, r_sum) + node.value
+
+    max_path_sum = float('-inf')
+    dfs_sum(tree)
+    return max_path_sum
+
+
+def sameBsts(arrayOne, arrayTwo):
+    if arrayOne[0] != arrayTwo[1] or len(arrayOne) != len(arrayTwo):
+        return False
+
+
+def getLowestCommonManager(topManager: OrgChart, reportOne: OrgChart, reportTwo: OrgChart):
+    pass
+
 root = create_binary_tree_from_map({
     "nodes": [
         {"id": "1", "left": "2", "right": "3", "value": 1},
-        {"id": "3", "left": "6", "right": None, "value": 3},
+        {"id": "3", "left": "6", "right": "7", "value": 3},
+        {"id": "7", "left": None, "right": None, "value": 7},
         {"id": "6", "left": None, "right": None, "value": 6},
         {"id": "2", "left": "4", "right": "5", "value": 2},
-        {"id": "5", "left": "7", "right": "8", "value": 5},
-        {"id": "8", "left": None, "right": None, "value": 8},
-        {"id": "7", "left": None, "right": None, "value": 7},
+        {"id": "5", "left": None, "right": None, "value": 5},
         {"id": "4", "left": None, "right": None, "value": 4}
     ],
     "root": "1"
 })
-res = flattenBinaryTree(root)
-print(res)
+print(maxPathSum(root))

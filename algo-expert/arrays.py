@@ -215,9 +215,13 @@ def longestPeak(array):
 
 
 def firstDuplicateValue(array):
-    i = 0
-    while i < len(array):
-        pass
+    for i in range(len(array)):
+        val = abs(array[i])
+        if array[val-1] < 0:
+            return val
+
+        array[val-1] *= -1
+    return -1
 
 
 def hasSingleCycle(array):
@@ -500,12 +504,56 @@ def calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDu
                 intervals[i][1] = f'{end_hrs}:{end_mins}'
 
     convert_to_minutes([calendar1, [dailyBounds1], calendar2, [dailyBounds2]])
-
-
-
     convert_to_military([calendar1, [dailyBounds1], calendar2, [dailyBounds2]])
 
 
-calendarMatching([["9:00", "10:30"], ["12:00", "13:00"], ["16:00", "18:00"]], ["9:00", "20:00"],
-                 [["10:00", "11:30"], ["12:30", "14:30"], ["14:30", "15:00"], ["16:00", "17:00"]], ["10:00", "18:30"],
-                 30)
+def mergeSortedArrays(arrays):
+    min_heap = []
+    for i in range(len(arrays)):
+        min_heap.append((arrays[i][0], 0, i))
+    heapify(min_heap)
+
+    result = []
+    while min_heap:
+        num, idx, list_id = heappop(min_heap)
+        result.append(num)
+
+        if idx < len(arrays[list_id]) - 1:
+            heappush(min_heap, (arrays[list_id][idx+1], idx+1, list_id))
+    return result
+
+
+def quickSort(array):
+
+    def qs_rec(lo, hi):
+        if lo >= hi:
+            return
+        else:
+            mid = (lo+hi)//2
+            array[mid], array[hi] = array[hi], array[mid]
+            pivot = array[hi]
+            i, left, right = 0, lo, hi-1
+
+            while left <= right:
+                if array[left] < pivot:
+                    left += 1
+                if array[right] > pivot:
+                    right -= 1
+                if array[left] > pivot > array[right]:
+                    array[left], array[right] = array[right], array[left]
+                    left += 1
+                    right -= 1
+            array[hi], array[left] = array[left], array[hi]
+
+            qs_rec(lo, left-1)
+            qs_rec(left+1, hi)
+    qs_rec(0, len(array)-1)
+
+
+# calendarMatching([["9:00", "10:30"], ["12:00", "13:00"], ["16:00", "18:00"]], ["9:00", "20:00"],
+#                  [["10:00", "11:30"], ["12:30", "14:30"], ["14:30", "15:00"], ["16:00", "17:00"]], ["10:00", "18:30"],
+#                  30)
+
+x = [8, 5, 2, 9, 5, 6, 3]
+print(quickSort(x))
+print(x)
