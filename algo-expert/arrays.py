@@ -550,6 +550,29 @@ def quickSort(array):
     qs_rec(0, len(array)-1)
 
 
+def indexEqualsValue(array):
+
+    def binary_search_helper(lo, hi):
+        nonlocal index
+        if lo > hi:
+            return
+
+
+        mid = (lo+hi)//2
+        if array[mid] == mid:
+            index = min(index, mid)
+
+            
+        elif array[mid] < 0:
+            binary_search_helper(mid+1, hi)
+
+
+    index = float('-inf')
+    binary_search_helper(0, len(array)-1)
+    return index
+
+
+
 # calendarMatching([["9:00", "10:30"], ["12:00", "13:00"], ["16:00", "18:00"]], ["9:00", "20:00"],
 #                  [["10:00", "11:30"], ["12:30", "14:30"], ["14:30", "15:00"], ["16:00", "17:00"]], ["10:00", "18:30"],
 #                  30)
