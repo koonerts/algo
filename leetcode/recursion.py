@@ -74,24 +74,36 @@ class Solution:
         swap_rec(head, prev=None, prev_sublist_tail=head, k=0)
         return new_head
 
-    # def exist(self, board: list[list[str]], word: str) -> bool:
-    #
-    #     def search(idx:int) -> bool:
-    #         pass
-    #
-    #     char_idx_map = {}
-    #     for i, c in enumerate(word):
-    #         char_idx_map[c] = char_idx_map.get(c, [])
-    #         char_idx_map[c].append(i)
-    #
-    #     for i in range(len(board)):
-    #         for j in range(len(board[i])):
-    #             if board[i][j] in char_idx_map:
-    #                 for idx
+    def totalNQueens(self, n):
+
+        def is_not_under_attack(row, col):
+            return not (rows[col] or hills[row - col] or dales[row + col])
+
+        def place_queen(row, col):
+            rows[col] = 1
+            hills[row - col] = 1  # "hill" diagonals
+            dales[row + col] = 1  # "dale" diagonals
+
+        def remove_queen(row, col):
+            rows[col] = 0
+            hills[row - col] = 0  # "hill" diagonals
+            dales[row + col] = 0  # "dale" diagonals
+
+        def backtrack(row=0, count=0):
+            for col in range(n):
+                if is_not_under_attack(row, col):
+                    place_queen(row, col)
+                    if row + 1 == n:
+                        count += 1
+                    else:
+                        count = backtrack(row + 1, count)
+                    remove_queen(row, col)
+            return count
+
+        rows = [0] * n
+        hills = [0] * (2 * n - 1)  # "hill" diagonals
+        dales = [0] * (2 * n - 1)  # "dale" diagonals
+        return backtrack()
 
 
-root = ListNode(1, ListNode(2, ListNode(3, ListNode(4))))
-root.print_list()
-res = Solution().swapPairs(root)
-res.print_list()
-
+print(Solution().totalNQueens(4))
