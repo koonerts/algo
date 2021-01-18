@@ -1,4 +1,22 @@
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+    def print_list(self):
+        vals = ''
+        node = self
+        while node:
+            if node:
+                vals += str(node.val)
+            if node.next:
+                vals += '->'
+            node = node.next
+
+        print(vals)
+
 class Solution:
+
     def reverseString(self, s: list[str]) -> None:
         """
         Write a function that reverses a string. The input string is given as an array of characters char[].
@@ -33,6 +51,29 @@ class Solution:
                         return True
         return False
 
+    def swapPairs(self, head: ListNode) -> ListNode:
+        if not head.next: return head
+
+        def swap_rec(node, prev, prev_sublist_tail, k):
+            if not node:
+                if prev_sublist_tail and prev and (prev_sublist_tail != prev):
+                    prev_sublist_tail.next = prev
+                if prev:
+                    prev.next = None
+            else:
+                if k == 1:
+                    temp = node.next
+                    node.next = prev
+                    if prev_sublist_tail:
+                        prev_sublist_tail.next = node
+                    swap_rec(temp, prev, prev, (k+1) % 2)
+                else:
+                    swap_rec(node.next, node, prev_sublist_tail, (k+1) % 2)
+
+        new_head = head.next
+        swap_rec(head, prev=None, prev_sublist_tail=head, k=0)
+        return new_head
+
     # def exist(self, board: list[list[str]], word: str) -> bool:
     #
     #     def search(idx:int) -> bool:
@@ -49,4 +90,8 @@ class Solution:
     #                 for idx
 
 
-print(Solution().exist([["A", "B", "C", "E"], ["S", "F", "E", "S"], ["A", "D", "E", "E"]], 'ABCESEEEFS'))
+root = ListNode(1, ListNode(2, ListNode(3, ListNode(4))))
+root.print_list()
+res = Solution().swapPairs(root)
+res.print_list()
+

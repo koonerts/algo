@@ -800,4 +800,24 @@ class Solution:
         return False
 
 
-print(Solution().isValidSubsequence([5, 1, 22, 25, 6, -1, 8, 10], [5, -1, 8, 10]))
+    def two_way_merge(self, arr1, arr2):
+        i, j = 0, 0
+        result = []
+        while i < len(arr1) or j < len(arr2):
+            if i >= len(arr1):
+                result.append(arr2[j])
+                j += 1
+            elif j >= len(arr2):
+                result.append(arr1[i])
+                i+= 1
+            else:
+                if arr1[i] <= arr2[j]:
+                    result.append(arr1[i])
+                    i += 1
+                else:
+                    result.append(arr2[j])
+                    j+=1
+        return result
+
+
+print(Solution().two_way_merge([1,2,4], [-1,2,3,5]))

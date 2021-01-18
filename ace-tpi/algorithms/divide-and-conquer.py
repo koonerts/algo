@@ -143,8 +143,50 @@ def shuffle_list(lst):
     """
     if not math.log2(len(lst)).is_integer():
         return lst
+    pass
 
-    p
+
+def find_max_subarray(lst):
+
+    def find_max_crossing_mid(lo, hi):
+        mid = (lo+hi)//2
+        l_max, l_idx = float('-inf'), -1
+        sum = 0
+        for i in reversed(range(lo, mid+1)):
+            sum += lst[i]
+            if sum > l_max:
+                l_max = sum
+                l_idx = i
+
+        r_max, r_idx = float('-inf'), -1
+        sum = 0
+        for i in range(mid+1, hi+1):
+            sum += lst[i]
+            if sum > r_max:
+                r_max = sum
+                r_idx = i
+
+        return l_idx, r_idx, l_max+r_max
+
+    def find_max_rec(lo=0, hi=len(lst)-1):
+        if not 0 <= lo <= hi < len(lst):
+            return -1, -1, 0
+        elif lo == hi:
+            return lo, hi, lst[lo]
+        else:
+            mid = (lo+hi)//2
+            left_x, left_y, left_max = find_max_rec(lo, mid-1)
+            right_x, right_y, right_max = find_max_rec(mid+1, hi)
+            cross_x, cross_y, cross_max = find_max_crossing_mid(lo, hi)
+
+            if left_max > right_max and left_max > cross_max:
+                return left_x, left_y, left_max
+            elif right_max > left_max and right_max > cross_max:
+                return right_x, right_y, right_max
+            else:
+                return cross_x, cross_y, cross_max
+
+    return find_max_rec()
 
 
-print(find_closest([-9, -4, -2, 0, 1, 3, 4, 10], 5))
+print(find_max_subarray([13,-3,-25,20,-3,-16,-23,18,20,-7,12,-5,-22,15,-4,7]))

@@ -1,5 +1,6 @@
 from collections import deque
 from heapq import *
+import functools
 
 def getNthFib(n):
     if n <= 1: return 1
@@ -10,6 +11,12 @@ def getNthFib(n):
     for i in range(2, n):
         memo[i] = memo[i-1] + memo[i-2]
     return memo[-1]
+
+
+@functools.lru_cache(maxsize=None)
+def fib(n):
+    if n < 2: return n
+    else: return fib(n-1) + fib(n-2)
 
 
 def productSum(array):
