@@ -510,8 +510,42 @@ def calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDu
                 intervals[i][0] = f'{start_hrs}:{start_mins}'
                 intervals[i][1] = f'{end_hrs}:{end_mins}'
 
+    def merge_overlaps(intervals):
+        result = [intervals[0]]
+        for i in range(1, len(intervals)):
+            if intervals[i][0] >= intervals[i-1][1]:
+                result.append(intervals[i])
+            else:
+                intervals[i-1][1] = max(intervals[i-1][1], intervals[i][1])
+        return result
+
+    def get_free_openings(booked_times):
+        bounds = [max(dailyBounds1[0], dailyBounds2[0]), min(dailyBounds1[1], dailyBounds2[1])]
+        if not booked_times:
+            return [bounds]
+
+        openings = []
+        if bounds[0] < booked_times[0][0] and booked_times[0][0] - bounds[0] >= meetingDuration:
+            openings.append([bounds[0], booked_times[0]])
+
+        prev = booked_times[0]
+        for i in range(1, len(booked_times)):
+            open_slot = [prev[1], booked_times[i][0]]
+            if open_slot[0] >= bounds[0] and open_slot[1] <= bounds[1] and \
+                    open_slot[1]-open_slot[0] >= meetingDuration:
+                openings.append(open_slot)
+            prev = booked_times[i]
+
+        if bounds[1] > booked_times[-1][1] and bounds[1] - booked_times[-1][1] >= meetingDuration:
+            openings.append([booked_times[-1][1], bounds[1]])
+        return openings
+
     convert_to_minutes([calendar1, [dailyBounds1], calendar2, [dailyBounds2]])
-    convert_to_military([calendar1, [dailyBounds1], calendar2, [dailyBounds2]])
+    booked_times = sorted(calendar1 + calendar2, key=lambda x:x[0])
+    booked_times = merge_overlaps(booked_times)
+    openings = get_free_openings(booked_times)
+    convert_to_military([openings])
+    return openings
 
 
 def mergeSortedArrays(arrays):
@@ -579,11 +613,57 @@ def indexEqualsValue(array):
     return index
 
 
+def searchForRange(array, target):
+    def binary_search_direction(lo, hi, direction):
+        idx = -1
+        while lo <= hi:
+            mid = (lo+hi)//2
+            if array[mid] == target:
+                idx = mid
+                if direction == 'LEFT':
+                    hi = mid - 1
+                else:
+                    lo = mid + 1
+            elif array[mid] < target:
+                lo = mid + 1
+            else:
+                hi = mid - 1
+        return idx
 
-# calendarMatching([["9:00", "10:30"], ["12:00", "13:00"], ["16:00", "18:00"]], ["9:00", "20:00"],
-#                  [["10:00", "11:30"], ["12:30", "14:30"], ["14:30", "15:00"], ["16:00", "17:00"]], ["10:00", "18:30"],
-#                  30)
+    left, right = -1, -1
+    left = binary_search_direction(0, len(array)-1, 'LEFT')
+    if left != -1:
+        right = binary_search_direction(0, len(array)-1, 'RIGHT')
+    return [left, right]
 
-x = [8, 5, 2, 9, 5, 6, 3]
-print(quickSort(x))
-print(x)
+
+def quickselect(array, k):
+    max_heap = []
+
+    for i in range(len(array)):
+        if len(max_heap) < k:
+            heappush(max_heap, -array[i])
+        elif array[i] < -max_heap[0]:
+            heappushpop(max_heap, -array[i])
+    return -max_heap[0]
+
+
+def minRewards(scores):
+    rewards = [0]*len(scores)
+    rewards[0] = 1
+    min_reward = 1
+
+    for i, val in enumerate(scores):
+        if val < scores[i-1]:
+            rewards[i] = rewards[i-1] - 1
+            min_reward = min(min_reward, rewards[i])
+        else:
+            rewards[i] = rewards[i-1] + 1
+    print(rewards)
+    print([r+abs(min_reward)+1 for r in rewards])
+
+
+result = calendarMatching([["9:00", "10:30"], ["12:00", "13:00"], ["16:00", "18:00"]], ["9:00", "20:00"],
+                          [["10:00", "11:30"], ["12:30", "14:30"], ["14:30", "15:00"], ["16:00", "17:00"]], ["10:00", "18:30"],
+                          45)
+print(result)

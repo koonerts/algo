@@ -75,35 +75,49 @@ class Solution:
         return new_head
 
     def totalNQueens(self, n):
+        diag1 = [0 for i in range((2*n) - 1)]
+        diag2 = [0 for i in range((2*n) - 1)]
+        cols = [0 for i in range(n)]
+        queens = []
+        result = []
 
-        def is_not_under_attack(row, col):
-            return not (rows[col] or hills[row - col] or dales[row + col])
+        def can_place(row, col):
+            return not cols[col] and not diag1[row-col] and not diag2[row+col]
 
         def place_queen(row, col):
-            rows[col] = 1
-            hills[row - col] = 1  # "hill" diagonals
-            dales[row + col] = 1  # "dale" diagonals
+            queens.append((row, col))
+            cols[col] = 1
+            diag1[row-col] = 1
+            diag2[row+col] = 1
 
         def remove_queen(row, col):
-            rows[col] = 0
-            hills[row - col] = 0  # "hill" diagonals
-            dales[row + col] = 0  # "dale" diagonals
+            queens.remove((row,col))
+            cols[col] = 0
+            diag1[row-col] = 0
+            diag2[row+col] = 0
 
-        def backtrack(row=0, count=0):
+        def traverse(row=0):
             for col in range(n):
-                if is_not_under_attack(row, col):
+                if can_place(row, col):
                     place_queen(row, col)
-                    if row + 1 == n:
-                        count += 1
-                    else:
-                        count = backtrack(row + 1, count)
-                    remove_queen(row, col)
-            return count
 
-        rows = [0] * n
-        hills = [0] * (2 * n - 1)  # "hill" diagonals
-        dales = [0] * (2 * n - 1)  # "dale" diagonals
-        return backtrack()
+                    if row == n-1:
+                        board = []
+                        for i in range(n):
+                            string = ''
+                            for j in range(n):
+                                if (i,j) in queens:
+                                    string += 'Q'
+                                else:
+                                    string += '.'
+                            board.append(string)
+                        result.append(board)
+                    else:
+                        traverse(row+1)
+                    remove_queen(row, col)
+
+        traverse()
+        return result
 
 
 print(Solution().totalNQueens(4))
