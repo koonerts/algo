@@ -1,5 +1,5 @@
 from collections import deque
-
+import math
 
 # This is an input class. Do not edit.
 class AncestralTree:
@@ -415,16 +415,48 @@ def sameBsts(arrayOne, arrayTwo):
 def getLowestCommonManager(topManager: OrgChart, reportOne: OrgChart, reportTwo: OrgChart):
     pass
 
+
+def rightSiblingTree(root):
+    if not root: return root
+
+    q = deque([root.left, root.right])
+
+    while q:
+        prev = None
+        q_len = len(q)
+        for i in range(q_len):
+            left, right = q.popleft()
+            pass
+
+
+def allKindsOfNodeDepths(root):
+
+    def depths(node, level=0):
+        nonlocal total_sum
+        if not node:
+            return
+        else:
+            for i in range(1,level+1):
+                total_sum += i
+            depths(node.left, level+1)
+            depths(node.right, level+1)
+
+    total_sum=0
+    depths(root)
+    return total_sum
+
 root = create_binary_tree_from_map({
     "nodes": [
         {"id": "1", "left": "2", "right": "3", "value": 1},
-        {"id": "3", "left": "6", "right": "7", "value": 3},
-        {"id": "7", "left": None, "right": None, "value": 7},
-        {"id": "6", "left": None, "right": None, "value": 6},
         {"id": "2", "left": "4", "right": "5", "value": 2},
+        {"id": "3", "left": "6", "right": "7", "value": 3},
+        {"id": "4", "left": "8", "right": "9", "value": 4},
         {"id": "5", "left": None, "right": None, "value": 5},
-        {"id": "4", "left": None, "right": None, "value": 4}
+        {"id": "6", "left": None, "right": None, "value": 6},
+        {"id": "7", "left": None, "right": None, "value": 7},
+        {"id": "8", "left": None, "right": None, "value": 8},
+        {"id": "9", "left": None, "right": None, "value": 9}
     ],
     "root": "1"
 })
-print(maxPathSum(root))
+print(allKindsOfNodeDepths(root.left))
