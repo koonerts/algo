@@ -19,11 +19,6 @@ def fib(n):
     else: return fib(n-1) + fib(n-2)
 
 
-def productSum(array):
-    # Write your code here.
-    pass
-
-
 def findThreeLargestNumbers(array):
     largest_nums = [array[0], array[1], array[2]]
     largest_nums.sort()
@@ -39,7 +34,6 @@ def findThreeLargestNumbers(array):
         elif array[i] > largest_nums[0]:
             largest_nums[0] = array[i]
     return largest_nums
-
 
 
 def bubbleSort(array):
@@ -602,11 +596,11 @@ def indexEqualsValue(array):
         mid = (lo+hi)//2
         if array[mid] == mid:
             index = min(index, mid)
-
-            
+            binary_search_helper(lo, mid-1)
         elif array[mid] < 0:
             binary_search_helper(mid+1, hi)
-
+        else:
+            pass
 
     index = float('-inf')
     binary_search_helper(0, len(array)-1)
@@ -663,7 +657,47 @@ def minRewards(scores):
     print([r+abs(min_reward)+1 for r in rewards])
 
 
-result = calendarMatching([["9:00", "10:30"], ["12:00", "13:00"], ["16:00", "18:00"]], ["9:00", "20:00"],
-                          [["10:00", "11:30"], ["12:30", "14:30"], ["14:30", "15:00"], ["16:00", "17:00"]], ["10:00", "18:30"],
-                          45)
-print(result)
+
+def minimumWaitingTime(queries):
+    if not queries: return 0
+
+    queries.sort()
+    wait_time = queries[0]
+    wait_sum = wait_time
+    for i in range(1, len(queries)-1):
+        wait_time += queries[i]
+        wait_sum += wait_time
+    return wait_sum
+
+
+def taskAssignment(k, tasks):
+    idx_map = {}
+    for i, v in enumerate(tasks):
+        if v not in idx_map:
+            idx_map[v] = [i]
+        else:
+            idx_map[v].append(i)
+
+    tasks.sort()
+    lo, hi = 0, len(tasks)-1
+
+    results = []
+    while lo < hi:
+        v1 = idx_map[tasks[lo]][-1]
+        idx_map[tasks[lo]].pop()
+
+        v2 = idx_map[tasks[hi]][-1]
+        idx_map[tasks[hi]].pop()
+
+        results.append([v1, v2])
+
+        lo += 1
+        hi -= 1
+    return results
+
+
+print(taskAssignment(3, [1, 3, 5, 3, 1, 4]))
+# result = calendarMatching([["9:00", "10:30"], ["12:00", "13:00"], ["16:00", "18:00"]], ["9:00", "20:00"],
+#                           [["10:00", "11:30"], ["12:30", "14:30"], ["14:30", "15:00"], ["16:00", "17:00"]], ["10:00", "18:30"],
+#                           45)
+# print(result)

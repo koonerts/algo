@@ -445,18 +445,28 @@ def allKindsOfNodeDepths(root):
     depths(root)
     return total_sum
 
-root = create_binary_tree_from_map({
-    "nodes": [
-        {"id": "1", "left": "2", "right": "3", "value": 1},
-        {"id": "2", "left": "4", "right": "5", "value": 2},
-        {"id": "3", "left": "6", "right": "7", "value": 3},
-        {"id": "4", "left": "8", "right": "9", "value": 4},
-        {"id": "5", "left": None, "right": None, "value": 5},
-        {"id": "6", "left": None, "right": None, "value": 6},
-        {"id": "7", "left": None, "right": None, "value": 7},
-        {"id": "8", "left": None, "right": None, "value": 8},
-        {"id": "9", "left": None, "right": None, "value": 9}
-    ],
-    "root": "1"
-})
-print(allKindsOfNodeDepths(root.left))
+
+def cycleInGraph(edges):
+    in_degrees = {i:0 for i in range(len(edges))}
+    for node, children in enumerate(edges):
+        for child in children:
+            in_degrees[child] += 1
+
+    q = deque()
+    for node in in_degrees:
+        if in_degrees[node] == 0:
+            q.append(node)
+
+    node_cnt = 0
+    while q:
+        node = q.popleft()
+        node_cnt += 1
+
+        for child in edges[node]:
+            in_degrees[child] -= 1
+            if in_degrees[child] == 0:
+                q.append(child)
+    return True if node_cnt != len(edges) else False
+
+
+print(cycleInGraph([[1, 3], [2, 3, 4], [0], [], [2, 5], []]))
