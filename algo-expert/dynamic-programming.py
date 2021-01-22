@@ -94,6 +94,8 @@ def knapsackProblemRecursive(items, capacity):
     # return memo[-1][-1], chosen_items[-1::-1]
 
 
+def levenshteinDistance(str1, str2):
+    edits = [[y for y in range(len(str1)+1)] for x in range(len(str2)+1)]
 
 
 print(knapsackProblemRecursive([[1, 2], [4, 3], [5, 6], [6, 7]], 10))
