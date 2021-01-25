@@ -1,3 +1,10 @@
+import functools
+import numpy as np
+
+
+
+def print_matrix(matrix):
+    print(np.array(matrix))
 
 
 def maxSubsetSumNoAdjacent(array):
@@ -46,24 +53,34 @@ def levenshteinDistance(str1, str2):
 
 
 def knapsackProblem(items, capacity):
-    PRICE, WEIGHT = 0, 1
-    memo = [[0 for j in range(capacity+1)] for i in range(len(items)+1)]
+    PROFIT, WEIGHT = 0, 1
+    max_profits = [[0 for _ in range(capacity+1)] for _ in range(len(items))]
 
-    for i in range(1, len(memo)):
-        for j in range(1, len(memo[0])):
-            if j - items[i-1][WEIGHT] >= 0:
-                memo[i][j] = max(memo[i-1][j], memo[i-1][j-items[i-1][WEIGHT]] + items[i-1][PRICE])
-            else:
-                memo[i][j] = memo[i-1][j]
+    for i in range(len(items)):
+        for j in range(1, capacity+1):
+            profit_with = 0
+            if items[i][WEIGHT] <= j:
+                profit_with = items[i][PROFIT] + (0 if i-1 < 0 else max_profits[i-1][j - items[i][WEIGHT]])
 
-    profit = memo[-1][-1]
-    chosen_items = []
-    for i in range(len(memo), 0, -1):
-        if profit != memo[i-1][capacity]:
-            chosen_items.append(i-1)
-            capacity -= items[i-1][WEIGHT]
-            profit -= items[i-1][PRICE]
-    return memo[-1][-1], chosen_items[-1::-1]
+
+            profit_without = 0
+            if i-1 >= 0 and j-1 >= 0:
+                profit_without = max_profits[i-1][j]
+            max_profits[i][j] = max(profit_with, profit_without)
+
+    profit = max_profits[-1][-1]
+    cap = capacity
+    picked_items = []
+    for i in reversed(range(len(max_profits))):
+        if i == 0:
+            if items[i][WEIGHT] <= cap:
+                picked_items.append(0)
+        else:
+            if profit != max_profits[i-1][cap]:
+                picked_items.append(i)
+                profit -= items[i][PROFIT]
+                cap -= items[i][WEIGHT]
+    return max_profits[-1][-1], picked_items
 
 
 def knapsackProblemRecursive(items, capacity):
@@ -84,18 +101,40 @@ def knapsackProblemRecursive(items, capacity):
             memo[i][j] = max(profit_with, profit_without)
             return memo[i][j]
     return helper(1, capacity)
-    # profit = memo[-1][-1]
-    # chosen_items = []
-    # for i in range(len(memo), 0, -1):
-    #     if profit != memo[i-1][capacity]:
-    #         chosen_items.append(i-1)
-    #         capacity -= items[i-1][WEIGHT]
-    #         profit -= items[i-1][PRICE]
-    # return memo[-1][-1], chosen_items[-1::-1]
 
 
-def levenshteinDistance(str1, str2):
-    edits = [[y for y in range(len(str1)+1)] for x in range(len(str2)+1)]
+
+def levenshteinDistance(s, t):
+    rows = len(s)+1
+    cols = len(t)+1
+    dist = [[0 for x in range(cols)] for x in range(rows)]
+
+    # source prefixes can be transformed into empty strings
+    # by deletions:
+    for i in range(1, rows):
+        dist[i][0] = i
+
+    # target prefixes can be created from an empty source string
+    # by inserting the characters
+    for i in range(1, cols):
+        dist[0][i] = i
+
+    for col in range(1, cols):
+        for row in range(1, rows):
+            if s[row-1] == t[col-1]:
+                cost = 0
+            else:
+                cost = 1
+            dist[row][col] = min(dist[row-1][col] + 1,      # deletion
+                                 dist[row][col-1] + 1,      # insertion
+                                 dist[row-1][col-1] + cost) # substitution
+
+    print_matrix(dist)
+    return dist[-1][-1]
 
 
-print(knapsackProblemRecursive([[1, 2], [4, 3], [5, 6], [6, 7]], 10))
+def maxSumIncreasingSubsequence(array):
+    sums = [0]*len(array)
+
+
+print(knapsackProblem([[1, 2], [4, 3], [5, 6], [6, 7]], 10))

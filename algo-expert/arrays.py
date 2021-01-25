@@ -2,6 +2,12 @@ from collections import deque
 from heapq import *
 import functools
 
+
+def print_matrix(matrix):
+    for row in matrix:
+        print(row)
+
+
 def getNthFib(n):
     if n <= 1: return 1
 
@@ -586,25 +592,13 @@ def quickSort(array):
 
 
 def indexEqualsValue(array):
+    lo, hi = 0, len(array) - 1
 
-    def binary_search_helper(lo, hi):
-        nonlocal index
-        if lo > hi:
-            return
-
-
+    while lo <= hi:
         mid = (lo+hi)//2
         if array[mid] == mid:
-            index = min(index, mid)
-            binary_search_helper(lo, mid-1)
-        elif array[mid] < 0:
-            binary_search_helper(mid+1, hi)
-        else:
-            pass
-
-    index = float('-inf')
-    binary_search_helper(0, len(array)-1)
-    return index
+            return mid
+        # elif
 
 
 def searchForRange(array, target):
@@ -696,7 +690,34 @@ def taskAssignment(k, tasks):
     return results
 
 
-print(taskAssignment(3, [1, 3, 5, 3, 1, 4]))
+def mergeSort(array):
+
+    def partition(lo, hi):
+        if lo < hi:
+            mid = (lo+hi)//2
+            partition(lo,mid)
+            partition(mid+1, hi)
+            merge(lo, mid, hi)
+
+    def merge(lo, mid, hi):
+        i, j = lo, mid+1
+
+        result = []
+        while i <= mid or j <= hi:
+            if j > hi or (i <= mid and array[i] <= array[j]):
+                result.append(array[i])
+                i += 1
+            else:
+                result.append(array[j])
+                j += 1
+
+        for i in range(lo, hi+1):
+            array[i] = result[i-lo]
+    partition(0, len(array)-1)
+    return array
+
+
+print(mergeSort([8, 5, 2, 9, 5, 6, 3]))
 # result = calendarMatching([["9:00", "10:30"], ["12:00", "13:00"], ["16:00", "18:00"]], ["9:00", "20:00"],
 #                           [["10:00", "11:30"], ["12:30", "14:30"], ["14:30", "15:00"], ["16:00", "17:00"]], ["10:00", "18:30"],
 #                           45)

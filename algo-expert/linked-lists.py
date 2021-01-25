@@ -18,6 +18,7 @@ class LinkedList:
 def create_ll_from_map(nmap) -> LinkedList:
     head = None
     node_map = {}
+    nmap = nmap.get('linkedList', nmap)
     for n in nmap['nodes']:
         node = LinkedList(n['value'])
         node_map[n['id']] = node
@@ -113,19 +114,92 @@ def shiftLinkedList(head, k):
         node = node.next
     return new_head
 
+
+def rearrangeLinkedList(head, k):
+    low_head, low_tail, k_head, k_tail, hi_head, hi_tail = None, None, None, None, None, None
+    node = head
+    while node:
+        if node.value < k:
+            if not low_head:
+                low_head, low_tail = node, node
+            else:
+                low_tail.next = node
+                low_tail = low_tail.next
+        elif node.value > k:
+            if not hi_head:
+                hi_head, hi_tail = node, node
+            else:
+                hi_tail.next = node
+                hi_tail = hi_tail.next
+        else:
+            if not k_head:
+                k_head, k_tail = node, node
+            else:
+                k_tail.next = node
+                k_tail = k_tail.next
+        node = node.next
+
+    new_head = low_head or k_head or hi_head
+    if low_tail:
+        if k_head:
+            low_tail.next = k_head
+        else:
+            low_tail.next = hi_head
+    if k_tail:
+        k_tail.next = hi_head
+    if hi_tail:
+        hi_tail.next = None
+    return new_head
+
+
+def linkedListPalindrome(head):
+    if not head or not head.next: return True
+
+    len = 0
+    node = head
+    while node:
+        len += 1
+        node = node.next
+
+    mid = len//2
+    node, prev = head, None
+    for _ in range(mid):
+        temp = node.next
+        node.next = prev
+        prev = node
+        node = temp
+
+    p1, p2 = prev, node
+    if len % 2 == 1:
+        p2 = p2.next
+    p1.print_list()
+    p2.print_list()
+
+    while p1 or p2:
+        if (not p1 and p2) or (p1 and not p2) or (p1.value != p2.value):
+            return False
+        p1 = p1.next
+        p2 = p2.next
+    return True
+
+
 nmap = {
-    "head": "0",
-    "nodes": [
-        {"id": "0", "next": "1", "value": 0},
-        {"id": "1", "next": "2", "value": 1},
-        {"id": "2", "next": "3", "value": 2},
-        {"id": "3", "next": "4", "value": 3},
-        {"id": "4", "next": "5", "value": 4},
-        {"id": "5", "next": None, "value": 5}
-    ]
+    "linkedList": {
+        "head": "6",
+        "nodes": [
+            {"id": "6", "next": "5", "value": 6},
+            {"id": "5", "next": "4", "value": 5},
+            {"id": "4", "next": "3", "value": 4},
+            {"id": "3", "next": "4-2", "value": 3},
+            {"id": "4-2", "next": "5-2", "value": 4},
+            {"id": "5-2", "next": "6-2", "value": 5},
+            {"id": "6-2", "next": None, "value": 6}
+        ]
+    }
 }
 
-
 root = create_ll_from_map(nmap)
-res = shiftLinkedList(root, -8)
-res.print_list()
+root.print_list()
+res = linkedListPalindrome(root)
+print(res)
+

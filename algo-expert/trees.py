@@ -469,4 +469,14 @@ def cycleInGraph(edges):
     return True if node_cnt != len(edges) else False
 
 
+def dijkstrasAlgorithm(start, edges):
+    result = [float('inf') for i in range(len(edges))]
+    result[start] = 0
+
+    def traverse(node):
+        for children in edges[start]:
+            pass
+
+
+
 print(cycleInGraph([[1, 3], [2, 3, 4], [0], [], [2, 5], []]))
