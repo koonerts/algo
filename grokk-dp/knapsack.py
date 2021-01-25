@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def print_matrix(matrix):
     print(np.array(matrix))
 
@@ -38,15 +39,3 @@ def get_selected_knapsack_items(max_profits, profits, weights):
             capacity -= weights[i-1]
     items_picked.reverse()
     return items_picked
-
-
-def can_partition_subsets_equal(nums):
-    total_sum = nums.sum()
-    if total_sum % 2 == 1:
-        return False
-
-    target = total_sum/2
-    dp = [[0 for _ in range(target+1)] for _ in range(len(nums)+1)]
-
-    for i in range(1, nums+1):
-        for j in range(1, target+1):

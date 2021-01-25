@@ -133,6 +133,14 @@ def levenshteinDistance(s, t):
     return dist[-1][-1]
 
 
+def minNumberOfJumps(array):
+    def min_jumps(idx):
+        if idx <= 0:
+            return 0
+        else:
+            return min_jumps()
+
+
 def maxSumIncreasingSubsequence(array):
     sums = [0]*len(array)
 
