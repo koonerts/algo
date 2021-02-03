@@ -16,6 +16,16 @@ func max(nums ...int) int {
 	return maxInt
 }
 
+func min(nums ...int) int {
+	minInt := math.MaxInt32
+	for i := range nums {
+		if nums[i] < minInt {
+			minInt = nums[i]
+		}
+	}
+	return minInt
+}
+
 func printSlice(iMatrix interface{}) {
 	switch matrix := iMatrix.(type) {
 	case [][]bool:
@@ -268,4 +278,49 @@ func RodCuttingProfit(lengths []int, prices []int, maxLen int) (int, []int) {
 		}
 	}
 	return dp[len(dp)-1][maxLen], rods
+}
+
+
+func CoinChangeUnlimited(denoms []int, total int) int {
+	ways := make([]int, total+1)
+	ways[0] = 1
+
+	for i := range denoms {
+		for j := 1; j <= total; j++ {
+			if j >= denoms[i] {
+				ways[j] += ways[j-denoms[i]]
+			}
+		}
+	}
+	printSlice(ways)
+	return ways[total]
+}
+
+
+func MinCoinChainUnlimited(denoms []int, total int) int {
+	ways := make([]int, total+1)
+	for i := range ways {
+		if i == 0 {
+			ways[i] = 0
+		} else {
+			ways[i] = math.MaxInt32
+		}
+	}
+
+	for i := range denoms {
+		for j := 1; j <= total; j++ {
+			if j >= denoms[i] {
+				without, with := ways[j], math.MaxInt32
+				if ways[j-denoms[i]] != math.MaxInt32 {
+					with = ways[j-denoms[i]]+1
+				}
+
+				if min(without, with) != math.MaxInt32 {
+					ways[j] = min(without, with)
+				}
+			}
+		}
+	}
+	printSlice(ways)
+	return ways[total]
 }
