@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	fmt.Println(RodCuttingProfit([]int{ 1, 2, 3, 4, 5 }, []int{2,6,7,10,13}, 5))
+	fmt.Println(MinCoinChainUnlimited([]int{ 1, 2, 3 }, 5))
 }
 
 
