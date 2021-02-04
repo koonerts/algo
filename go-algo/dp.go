@@ -3,52 +3,9 @@ package main
 import (
 	"fmt"
 	"math"
+	"sort"
 )
 
-
-func max(nums ...int) int {
-	maxInt := math.MinInt32
-	for i := range nums {
-		if nums[i] > maxInt {
-			maxInt = nums[i]
-		}
-	}
-	return maxInt
-}
-
-func min(nums ...int) int {
-	minInt := math.MaxInt32
-	for i := range nums {
-		if nums[i] < minInt {
-			minInt = nums[i]
-		}
-	}
-	return minInt
-}
-
-func printSlice(iMatrix interface{}) {
-	switch matrix := iMatrix.(type) {
-	case [][]bool:
-		for _, value := range matrix {
-			fmt.Println(value)
-		}
-	case [][]string:
-		for _, value := range matrix {
-			fmt.Println(value)
-		}
-	case [][]int:
-		for _, value := range matrix {
-			fmt.Println(value)
-		}
-	case []bool:
-		fmt.Println(matrix)
-	case []string:
-		fmt.Println(matrix)
-	case []int:
-		fmt.Println(matrix)
-	}
-
-}
 
 func knapsackZeroOne(weights []int, profits []int, capacity int) {
 	rows := len(weights) + 1
@@ -323,4 +280,81 @@ func MinCoinChainUnlimited(denoms []int, total int) int {
 	}
 	printSlice(ways)
 	return ways[total]
+}
+
+
+func MaxRibbonCut(lengths []int, n int) int {
+	cuts := make([]int, n+1)
+	sort.Ints(lengths)
+	for i := 1; i <= n; i++ {
+		if i < lengths[0] {
+			continue
+		} else if i > lengths[0] {
+			cuts[i] = 0
+		} else {
+			cuts[i] = 1
+		}
+	}
+
+	for i := range lengths {
+		for j := 1; j <= n; j++ {
+			with, without := 0, cuts[j]
+			if j - lengths[i] > 0 && cuts[j - lengths[i]] != 0 {
+				with = cuts[j - lengths[i]] + 1
+			}
+
+			cuts[j] = max(with, without)
+		}
+	}
+
+	printSlice(cuts)
+	return cuts[n]
+}
+
+
+func Fib(n int) int {
+	if n <= 1 { return n }
+
+	dp := make([]int, n+1)
+	dp[0], dp[1] = 0, 1
+
+	for i := 2; i <= n; i++ {
+		dp[i] = dp[i-1] + dp[i-2]
+	}
+	return dp[n]
+}
+
+func MinJumps(nums []int) int {
+	dp := make([]int, len(nums))
+	for i := range dp {
+		dp[i] = math.MaxInt32
+	}
+
+	var traverse func(idx int) int
+	traverse = func(idx int) int {
+		if idx >= len(nums)-1 {
+			return 0
+		} else {
+			if dp[idx] == math.MaxInt32 {
+				for i := 1; i <= nums[idx]; i++ {
+					cnt := traverse(idx+i) + 1
+					dp[idx] = min(dp[idx], cnt)
+				}
+			}
+			return dp[idx]
+		}
+	}
+	return traverse(0)
+}
+
+func MaxStealProfit(profits []int) int {
+	dp := make([]int, len(profits)+1)
+	dp[0] = 0
+	dp[1] = profits[0]
+
+	for i := 2; i < len(dp); i++ {
+		dp[i] = max(dp[i-1], profits[i-1] + dp[i-2])
+	}
+	printSlice(dp)
+	return dp[len(profits)]
 }

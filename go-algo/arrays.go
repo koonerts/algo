@@ -150,3 +150,48 @@ func IsMonotonic(array []int) bool {
 	}
 	return true
 }
+
+
+type Block map[string]bool
+func ApartmentHunting(blocks []Block, reqs []string) int {
+	dist := map[int]map[string]int{}
+
+	var traverse func(idx int, dir int, itemToFind string) int
+	traverse = func(idx int, dir int, itemToFind string) int {
+		if !(0 <= idx && idx < len(blocks)) {
+			return math.MaxInt32
+		} else if _, ok := dist[idx][itemToFind]; ok {
+			return dist[idx][itemToFind]
+		} else if blocks[idx][itemToFind] == true {
+			return 0
+		} else {
+			return traverse(idx+dir, dir, itemToFind) + 1
+			/*dist[itemToFind] = traverse(idx+dir, dir, itemToFind) + 1
+			return dist[itemToFind]*/
+		}
+	}
+
+	for i := range blocks {
+		for _, req := range reqs {
+			up := traverse(i, -1, req)
+			down := traverse(i, 1, req)
+			if dist[i] == nil {
+				dist[i] = make(map[string]int)
+			}
+			dist[i][req] = min(up, down)
+		}
+	}
+
+	idx, minDistAll := -1, math.MaxInt32
+	for i, d := range dist {
+		maxDistCurr := math.MinInt32
+		for _, val := range d {
+			maxDistCurr = max(val, maxDistCurr)
+		}
+		if maxDistCurr < minDistAll {
+			idx = i
+			minDistAll = maxDistCurr
+		}
+	}
+	return idx
+}
