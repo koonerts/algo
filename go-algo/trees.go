@@ -8,14 +8,14 @@ import (
 )
 
 type BST struct {
-	Id string
+	Id    string
 	Value int
 	Left  *BST
 	Right *BST
 }
 
 type BinaryTree struct {
-	Id string
+	Id    string
 	Value int
 	Left  *BinaryTree
 	Right *BinaryTree
@@ -41,7 +41,7 @@ func createBinaryTree(jsonStr string) *BinaryTree {
 	nodes := tree["nodes"].([]interface{})
 	for _, val := range nodes {
 		node := val.(map[string]interface{})
-		tNode := BinaryTree{Id:node["id"].(string), Value:int(node["value"].(float64))}
+		tNode := BinaryTree{Id: node["id"].(string), Value: int(node["value"].(float64))}
 		binaryTreeMap[tNode.Id] = &tNode
 		nodeMap[tNode.Id] = node
 		if tree["root"].(string) == tNode.Id {
@@ -75,7 +75,7 @@ func (tree *BST) FindClosestValue(target int) int {
 			traverse(node.Right)
 		}
 
-		if math.Abs(float64(node.Value - target)) < math.Abs(float64(closest - target)) {
+		if math.Abs(float64(node.Value-target)) < math.Abs(float64(closest-target)) {
 			closest = node.Value
 		}
 	}
@@ -110,7 +110,7 @@ func NodeDepths(root *BinaryTree) int {
 	traverse = func(node *BinaryTree, depthSum *int, depth int) {
 		defer wg.Done()
 		if node != nil {
-			sync<-1
+			sync <- 1
 			*depthSum += depth
 			<-sync
 

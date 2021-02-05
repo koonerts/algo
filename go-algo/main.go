@@ -7,16 +7,8 @@ import (
 )
 
 func main() {
-	blocks := []Block {
-		{"gym": false, "school": true, "store": false},
-		{"gym": true, "school": false, "store": false},
-		{"gym": true, "school": true, "store": false},
-		{"gym": false, "school": true, "store": false},
-		{"gym": false, "school": true, "store": true},
-	}
-	fmt.Println(ApartmentHunting(blocks, []string{"gym", "school", "store"}))
+	fmt.Println(LongestCommonSubstringLength("passport", "ppsspt"))
 }
-
 
 func PrettyPrint(v interface{}) (err error) {
 	b, err := json.MarshalIndent(v, "", "  ")
@@ -25,7 +17,6 @@ func PrettyPrint(v interface{}) (err error) {
 	}
 	return
 }
-
 
 func max(nums ...int) int {
 	maxInt := math.MinInt32
@@ -47,26 +38,26 @@ func min(nums ...int) int {
 	return minInt
 }
 
-func printSlice(iMatrix interface{}) {
-	switch matrix := iMatrix.(type) {
+func printSlice(iSlice interface{}) {
+	switch slice := iSlice.(type) {
 	case [][]bool:
-		for _, value := range matrix {
+		for _, value := range slice {
 			fmt.Println(value)
 		}
 	case [][]string:
-		for _, value := range matrix {
+		for _, value := range slice {
 			fmt.Println(value)
 		}
 	case [][]int:
-		for _, value := range matrix {
+		for _, value := range slice {
 			fmt.Println(value)
 		}
 	case []bool:
-		fmt.Println(matrix)
+		fmt.Println(slice)
 	case []string:
-		fmt.Println(matrix)
+		fmt.Println(slice)
 	case []int:
-		fmt.Println(matrix)
+		fmt.Println(slice)
 	}
 
 }

@@ -5,12 +5,11 @@ import (
 	"sort"
 )
 
-
 func TwoNumberSum(array []int, target int) []int {
 	set := map[int]struct{}{}
 	for _, num := range array {
 		if _, exists := set[target-num]; exists {
-			return []int{target-num, num}
+			return []int{target - num, num}
 		} else {
 			set[num] = struct{}{}
 		}
@@ -18,20 +17,22 @@ func TwoNumberSum(array []int, target int) []int {
 	return []int{}
 }
 
-
 func IsValidSubsequence(array []int, sequence []int) bool {
-	if len(sequence) > len(array) { return false }
+	if len(sequence) > len(array) {
+		return false
+	}
 
 	seqIdx := 0
 	for _, num := range array {
 		if sequence[seqIdx] == num {
 			seqIdx++
 		}
-		if seqIdx >= len(sequence) { return true }
+		if seqIdx >= len(sequence) {
+			return true
+		}
 	}
 	return false
 }
-
 
 func MinimumWaitingTime(queries []int) int {
 	if len(queries) <= 1 {
@@ -49,7 +50,6 @@ func MinimumWaitingTime(queries []int) int {
 	return waitSum
 }
 
-
 func FindThreeLargestNumbers(array []int) []int {
 	mh := NewMinHeap([]int{})
 	for _, num := range array {
@@ -63,7 +63,6 @@ func FindThreeLargestNumbers(array []int) []int {
 
 	return (*mh)[:]
 }
-
 
 func ThreeNumberSum(array []int, target int) [][]int {
 	results := [][]int{}
@@ -86,7 +85,6 @@ func ThreeNumberSum(array []int, target int) [][]int {
 
 	return results
 }
-
 
 func SmallestDifference(array1, array2 []int) []int {
 	sort.Ints(array1)
@@ -112,12 +110,17 @@ func SmallestDifference(array1, array2 []int) []int {
 	return result[:2]
 }
 
-
 func MoveElementToEnd(array []int, toMove int) []int {
-	for p1,p2 := 0,0; p1 < len(array) && p2 < len(array); {
-		if array[p1] != toMove { p1++ }
-		if array[p2] == toMove { p2++ }
-		if p2 < p1 { p2 = p1 }
+	for p1, p2 := 0, 0; p1 < len(array) && p2 < len(array); {
+		if array[p1] != toMove {
+			p1++
+		}
+		if array[p2] == toMove {
+			p2++
+		}
+		if p2 < p1 {
+			p2 = p1
+		}
 		if p1 < len(array) && p2 < len(array) && array[p1] == toMove && array[p2] != toMove {
 			array[p1], array[p2] = array[p2], array[p1]
 			p1++
@@ -127,9 +130,10 @@ func MoveElementToEnd(array []int, toMove int) []int {
 	return array
 }
 
-
 func IsMonotonic(array []int) bool {
-	if len(array) <= 1 { return true }
+	if len(array) <= 1 {
+		return true
+	}
 
 	idx := 0
 	var isIncreasing bool
@@ -151,8 +155,8 @@ func IsMonotonic(array []int) bool {
 	return true
 }
 
-
 type Block map[string]bool
+
 func ApartmentHunting(blocks []Block, reqs []string) int {
 	dist := map[int]map[string]int{}
 

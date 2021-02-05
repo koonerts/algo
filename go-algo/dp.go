@@ -6,7 +6,6 @@ import (
 	"sort"
 )
 
-
 func knapsackZeroOne(weights []int, profits []int, capacity int) {
 	rows := len(weights) + 1
 	cols := capacity + 1
@@ -35,8 +34,10 @@ func knapsackZeroOne(weights []int, profits []int, capacity int) {
 
 	chosenItems := []int{}
 	currProfit, currCapacity := maxProfit, capacity
-	for i := rows-1; i > 0; i-- {
-		if currProfit <= 0 || currCapacity <= 0 {break}
+	for i := rows - 1; i > 0; i-- {
+		if currProfit <= 0 || currCapacity <= 0 {
+			break
+		}
 		if currProfit != maxProfits[i-1][currCapacity] {
 			chosenItems = append(chosenItems, i-1)
 			currProfit -= profits[i-1]
@@ -52,7 +53,7 @@ func KnapsackZeroOneOptimized(weights []int, profits []int, capacity int) {
 	maxProfits := make([]int, cols)
 
 	for i := 1; i < rows; i++ {
-		for j := cols-1; j > 0; j-- {
+		for j := cols - 1; j > 0; j-- {
 			itemWeight, itemProfit := weights[i-1], profits[i-1]
 
 			profitWith := 0
@@ -69,18 +70,22 @@ func KnapsackZeroOneOptimized(weights []int, profits []int, capacity int) {
 
 func CanPartitionEqualSubsets(nums []int) bool {
 	sum := 0
-	for i := range nums {sum += nums[i]}
-	if sum%2 == 1 {return false}
+	for i := range nums {
+		sum += nums[i]
+	}
+	if sum%2 == 1 {
+		return false
+	}
 
-	rows := len(nums)+1
-	cols := (sum/2) + 1
+	rows := len(nums) + 1
+	cols := (sum / 2) + 1
 	dp := make([][]bool, rows)
 	for i := range dp {
 		dp[i] = make([]bool, cols)
 		dp[i][0] = true
 		if i == 0 {
 			for j := range dp[i] {
-				dp[i][j]=true
+				dp[i][j] = true
 			}
 		}
 	}
@@ -104,7 +109,6 @@ func CanPartitionEqualSubsets(nums []int) bool {
 	return dp[rows-1][cols-1]
 }
 
-
 func CanPartitionTargetSubsets(nums []int, target int) bool {
 	dp := make([]bool, target+1)
 	dp[0] = true
@@ -122,12 +126,14 @@ func CanPartitionTargetSubsets(nums []int, target int) bool {
 
 func MinimumSubsetDiffPartition(nums []int) int {
 	sum := 0
-	for _, num := range nums {sum += num}
+	for _, num := range nums {
+		sum += num
+	}
 	var target int
-	if sum % 2 == 1 {
-		target = (sum+1)/2
+	if sum%2 == 1 {
+		target = (sum + 1) / 2
 	} else {
-		target = sum/2
+		target = sum / 2
 	}
 
 	dp := make([]bool, target+1)
@@ -143,7 +149,7 @@ func MinimumSubsetDiffPartition(nums []int) int {
 	printSlice(dp)
 
 	var canPartitionNum int
-	for i := len(dp)-1; i >= 0; i-- {
+	for i := len(dp) - 1; i >= 0; i-- {
 		if dp[i] {
 			canPartitionNum = i
 			break
@@ -152,7 +158,6 @@ func MinimumSubsetDiffPartition(nums []int) int {
 
 	return int(math.Abs(float64(canPartitionNum) - float64(sum-canPartitionNum)))
 }
-
 
 func CountSubsets(nums []int, target int) int {
 	dp := make([]int, target+1)
@@ -173,7 +178,6 @@ func CountSubsets(nums []int, target int) int {
 	printSlice(dp)
 	return dp[target]
 }
-
 
 func KnapsackUnlimited(weights []int, profits []int, capacity int) int {
 	rows := len(weights) + 1
@@ -201,7 +205,6 @@ func KnapsackUnlimited(weights []int, profits []int, capacity int) int {
 	maxProfit := maxProfits[rows-1][cols-1]
 	return maxProfit
 }
-
 
 func RodCuttingProfit(lengths []int, prices []int, maxLen int) (int, []int) {
 	dp := make([][]int, len(lengths)+1)
@@ -237,7 +240,6 @@ func RodCuttingProfit(lengths []int, prices []int, maxLen int) (int, []int) {
 	return dp[len(dp)-1][maxLen], rods
 }
 
-
 func CoinChangeUnlimited(denoms []int, total int) int {
 	ways := make([]int, total+1)
 	ways[0] = 1
@@ -252,7 +254,6 @@ func CoinChangeUnlimited(denoms []int, total int) int {
 	printSlice(ways)
 	return ways[total]
 }
-
 
 func MinCoinChainUnlimited(denoms []int, total int) int {
 	ways := make([]int, total+1)
@@ -269,7 +270,7 @@ func MinCoinChainUnlimited(denoms []int, total int) int {
 			if j >= denoms[i] {
 				without, with := ways[j], math.MaxInt32
 				if ways[j-denoms[i]] != math.MaxInt32 {
-					with = ways[j-denoms[i]]+1
+					with = ways[j-denoms[i]] + 1
 				}
 
 				if min(without, with) != math.MaxInt32 {
@@ -281,7 +282,6 @@ func MinCoinChainUnlimited(denoms []int, total int) int {
 	printSlice(ways)
 	return ways[total]
 }
-
 
 func MaxRibbonCut(lengths []int, n int) int {
 	cuts := make([]int, n+1)
@@ -299,8 +299,8 @@ func MaxRibbonCut(lengths []int, n int) int {
 	for i := range lengths {
 		for j := 1; j <= n; j++ {
 			with, without := 0, cuts[j]
-			if j - lengths[i] > 0 && cuts[j - lengths[i]] != 0 {
-				with = cuts[j - lengths[i]] + 1
+			if j-lengths[i] > 0 && cuts[j-lengths[i]] != 0 {
+				with = cuts[j-lengths[i]] + 1
 			}
 
 			cuts[j] = max(with, without)
@@ -311,9 +311,10 @@ func MaxRibbonCut(lengths []int, n int) int {
 	return cuts[n]
 }
 
-
 func Fib(n int) int {
-	if n <= 1 { return n }
+	if n <= 1 {
+		return n
+	}
 
 	dp := make([]int, n+1)
 	dp[0], dp[1] = 0, 1
@@ -353,8 +354,107 @@ func MaxStealProfit(profits []int) int {
 	dp[1] = profits[0]
 
 	for i := 2; i < len(dp); i++ {
-		dp[i] = max(dp[i-1], profits[i-1] + dp[i-2])
+		dp[i] = max(dp[i-1], profits[i-1]+dp[i-2])
 	}
 	printSlice(dp)
 	return dp[len(profits)]
+}
+
+func LongestPalindromicSubsequence(text string) (length int) {
+	n := len(text)
+	dp := make([][]int, n)
+	for i := range dp {
+		dp[i] = make([]int, n)
+		dp[i][i] = 1
+	}
+
+	for i := n - 1; i >= 0; i-- {
+		for j := i + 1; j < n; j++ {
+			if text[i] == text[j] {
+				dp[i][j] = 2 + dp[i+1][j-1]
+			} else {
+				dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+			}
+		}
+	}
+	printSlice(dp)
+	return dp[0][n-1]
+}
+
+func LongestPalindromicSubstring(text string) (int, string) {
+	n := len(text)
+	dp := make([][]bool, n)
+	for i := range dp {
+		dp[i] = make([]bool, n)
+		dp[i][i] = true
+	}
+
+	maxSsLen := 1
+	maxSs := text[:1]
+	for i := n - 1; i >= 0; i-- {
+		for j := i + 1; j < n; j++ {
+			if text[i] == text[j] {
+				ssLen := j-i+1
+				if ssLen == 2 || dp[i+1][j-1] {
+					if ssLen > maxSsLen {
+						maxSs = text[i:j+1]
+						maxSsLen = ssLen
+					}
+					dp[i][j] = true
+				}
+			}
+		}
+	}
+	printSlice(dp)
+	return maxSsLen, maxSs
+}
+
+func PalindromicSubstringCount(text string) int {
+	n := len(text)
+	dp := make([][]bool, n)
+
+	cnt := 0
+	for i := range dp {
+		dp[i] = make([]bool, n)
+		dp[i][i] = true
+		cnt++
+	}
+
+	for i := n - 1; i >= 0; i-- {
+		for j := i + 1; j < n; j++ {
+			if text[i] == text[j] {
+				ssLen := j-i+1
+				if ssLen == 2 || dp[i+1][j-1] {
+					dp[i][j] = true
+					cnt++
+				}
+			}
+		}
+	}
+	printSlice(dp)
+	return cnt
+}
+
+func MinDeleteCountToMakePalindrome(text string) (length int) {
+	return len(text) - LongestPalindromicSubsequence(text)
+}
+
+
+func LongestCommonSubstringLength(s1, s2 string) int {
+	dp := make([][]int, len(s1)+1)
+	for i := range dp {
+		dp[i] = make([]int, len(s2)+1)
+	}
+
+	maxLen := 0
+	for i := 1; i <= len(s1); i++ {
+		for j:= 1; j <= len(s2); j++ {
+			if s1[i-1] == s2[j-1] {
+				dp[i][j] = 1 + dp[i-1][j-1]
+				maxLen = max(maxLen, dp[i][j])
+			}
+		}
+	}
+	printSlice(dp)
+	return maxLen
 }
