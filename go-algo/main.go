@@ -8,13 +8,17 @@ import (
 	"unsafe"
 )
 
-
 func main() {
-	calendar1 := []StringMeeting{{"9:00", "10:30"}, {"12:00", "13:00"}, {"16:00", "18:00"}}
-	bounds1 := StringMeeting{"9:00", "20:00"}
-	calendar2 := []StringMeeting{{"10:00", "11:30"}, {"12:30", "14:30"}, {"14:30", "15:00"}, {"16:00", "17:00"}}
-	bounds2 := StringMeeting{"10:00", "18:30"}
-	fmt.Println(CalendarMatching(calendar1, bounds1, calendar2, bounds2, 45))
+	grid := [][]float64{
+		{0, 0, 0, 0, 0, 0, 0},
+		{1, 0, 1, 0, 0, 0, 0},
+		{0, 0, 1, 1, 1, 0, 0},
+		{0, 0, 0, 0, 0, 0, 0},
+		{1, 1, 1, 0, 0, 1, 0},
+		{0, 0, 0, 0, 0, 0, 1},
+		{0, 0, 0, 0, 0, 0, 0},
+	}
+	fmt.Println(WaterfallStreams(grid, 3))
 }
 
 func PrettyPrint(v interface{}) (err error) {
@@ -59,11 +63,17 @@ func printSlice(iSlice interface{}) {
 		for _, value := range slice {
 			fmt.Println(value)
 		}
+	case [][]float64:
+		for _, value := range slice {
+			fmt.Println(value)
+		}
 	case []bool:
 		fmt.Println(slice)
 	case []string:
 		fmt.Println(slice)
 	case []int:
+		fmt.Println(slice)
+	case []float64:
 		fmt.Println(slice)
 	}
 }
@@ -89,4 +99,3 @@ func byteSliceToString(bs []byte) string {
 	// header being a prefix of the slice header!
 	return *(*string)(unsafe.Pointer(&bs))
 }
-

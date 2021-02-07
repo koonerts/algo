@@ -388,3 +388,75 @@ func CalendarMatching(calendar1 []StringMeeting, dailyBounds1 StringMeeting,
 	fmt.Println(blocked)
 	return openingsStringMeetings
 }
+
+type Direction int
+const(
+	Left Direction = iota+1
+	Right
+	Down
+)
+
+func WaterfallStreams(array [][]float64, source int) []float64 {
+	flow(array, 0, source, 100, Down)
+	return array[len(array)-1]
+}
+
+func getFlowDirections(array[][]float64, x, y int, flowDir Direction) (validFlows []Direction) {
+	if x < 0 || x >= len(array) || y < 0 || y >= len(array[0]) {
+		return
+	}
+
+	blockedLeft := y == 0 || array[x][y-1] == 1
+	blockedRight := y == len(array[0])-1 || array[x][y+1] == 1
+	blockedDown := array[x+1][y] == 1
+	switch flowDir {
+	case Left:
+		if !blockedDown {
+			validFlows = append(validFlows, Down)
+		} else if !blockedLeft {
+			validFlows = append(validFlows, Left)
+		}
+	case Right:
+		if !blockedDown {
+			validFlows = append(validFlows, Down)
+		} else if !blockedRight {
+			validFlows = append(validFlows, Right)
+		}
+	case Down:
+		if !blockedDown {
+			validFlows = append(validFlows, Down)
+		} else {
+			if !blockedLeft {
+				validFlows = append(validFlows, Left)
+			}
+			if !blockedRight {
+				validFlows = append(validFlows, Right)
+			}
+		}
+	}
+	return
+}
+
+func flow(array[][]float64, x, y int, amount float64, flowDir Direction) {
+	if x == len(array)-1 {
+		array[x][y] += amount
+	} else {
+		validFlows := getFlowDirections(array, x, y, flowDir)
+		if len(validFlows) > 0 {
+			for _, dir := range validFlows {
+				xidx, yidx, amt := x, y, amount
+				switch dir {
+				case Left:
+					if flowDir == Down {amt/=2}
+					yidx--
+				case Right:
+					if flowDir == Down {amt/=2}
+					yidx++
+				case Down:
+					xidx++
+				}
+				flow(array, xidx, yidx, amt, dir)
+			}
+		}
+	}
+}
