@@ -363,7 +363,7 @@ func CalendarMatching(calendar1 []StringMeeting, dailyBounds1 StringMeeting,
 	}
 
 	openings := make([]DurationMeeting, 0)
-	if bound.Start < blocked[0].Start {
+	if bound.Start < blocked[0].Start && blocked[0].Start-bound.Start >= meetingDur {
 		openings = append(openings, DurationMeeting{bound.Start, blocked[0].Start})
 	}
 
@@ -371,13 +371,13 @@ func CalendarMatching(calendar1 []StringMeeting, dailyBounds1 StringMeeting,
 	for i := 1; i < len(blocked); i++ {
 		start := prev.End
 		end := minDuration(blocked[i].Start, bound.End)
-		if end - start >= meetingDur {
+		if end - start >= meetingDur && start >= bound.Start && end <= bound.End {
 			openings = append(openings, DurationMeeting{start, end})
 		}
 		prev = blocked[i]
 	}
 
-	if bound.End > blocked[len(blocked)-1].End {
+	if bound.End > blocked[len(blocked)-1].End && bound.End-blocked[len(blocked)-1].End >= meetingDur{
 		openings = append(openings, DurationMeeting{blocked[len(blocked)-1].End, bound.End})
 	}
 
