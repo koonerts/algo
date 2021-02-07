@@ -348,6 +348,21 @@ func MinJumps(nums []int) int {
 	return traverse(0)
 }
 
+func MinJumpsTabulated(nums []int) int {
+	dp := make([]int, len(nums))
+	for i := range dp {
+		dp[i] = math.MaxInt32
+	}
+	dp[0] = 0
+
+	for i := range dp {
+		for j := 1; j <= nums[i] && j+i < len(nums); j++ {
+			dp[i+j] = min(dp[i+j], dp[i]+1)
+		}
+	}
+	return dp[len(nums)-1]
+}
+
 func MaxStealProfit(profits []int) int {
 	dp := make([]int, len(profits)+1)
 	dp[0] = 0
@@ -455,6 +470,88 @@ func LongestCommonSubstringLength(s1, s2 string) int {
 			}
 		}
 	}
+
 	printSlice(dp)
 	return maxLen
 }
+
+func LongestCommonSubsequenceLength(s1, s2 string) int {
+	dp := make([][]int, len(s1)+1)
+	for i := range dp {
+		dp[i] = make([]int, len(s2)+1)
+	}
+
+	maxLen := 0
+	for i := 1; i <= len(s1); i++ {
+		for j := 1; j <= len(s2); j++ {
+			if s1[i-1] == s2[j-1] {
+				dp[i][j] = 1 + dp[i-1][j-1]
+			} else {
+				dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+			}
+			maxLen = max(maxLen, dp[i][j])
+		}
+	}
+	printSlice(dp)
+	return maxLen
+}
+
+func LongestCommonSubsequence(s1 string, s2 string) string {
+	dp := make([][]string, len(s1)+1)
+	for i := range dp {
+		dp[i] = make([]string, len(s2)+1)
+	}
+
+	for i := 1; i <= len(s1); i++ {
+		for j := 1; j <= len(s2); j++ {
+			if s1[i-1] == s2[j-1] {
+				dp[i][j] = dp[i-1][j-1] + string(s1[i-1])
+			} else {
+				if len(dp[i-1][j]) >= len(dp[i][j-1]) {
+					dp[i][j] = dp[i-1][j]
+				} else {
+					dp[i][j] = dp[i][j-1]
+				}
+			}
+		}
+	}
+
+	return dp[len(s1)][len(s2)]
+}
+
+
+func MaxSumIncreasingSubsequence(array []int) (maxSum int, nums []int) {
+	if len(array) == 0 { return }
+
+	sums := make([]int,  len(array))
+	indexes := make([]int, len(array))
+	for i := range array {
+		sums[i] = array[i]
+		indexes[i] = -1
+	}
+
+	maxSum = array[0]
+	maxIdx := 0
+	for i := 1; i < len(array); i++ {
+		for j := 0; j < i; j++ {
+			if array[i] > array[j] && sums[i] < sums[j] + array[i] {
+				sums[i] = sums[j] + array[i]
+				indexes[i] = j
+			}
+		}
+
+		if sums[i] > sums[maxIdx] {
+			maxIdx = i
+		}
+	}
+
+	maxSum = sums[maxIdx]
+	for maxIdx != -1 {
+		nums = append(nums, array[maxIdx])
+		maxIdx = indexes[maxIdx]
+	}
+	reverseSlice(nums)
+
+	return
+}
+

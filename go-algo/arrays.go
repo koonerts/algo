@@ -1,8 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"math"
 	"sort"
+	"strings"
+	"time"
 )
 
 func TwoNumberSum(array []int, target int) []int {
@@ -198,4 +201,190 @@ func ApartmentHunting(blocks []Block, reqs []string) int {
 		}
 	}
 	return idx
+}
+
+// TODO: Unfinished
+func SubarraySort(array []int) []int {
+	lo, hi := 0, len(array)-1
+	loRet, hiRet := -1, -1
+	for lo < hi {
+		if array[lo] <= array[lo+1] {
+			lo++
+		} else {
+
+		}
+		if array[hi] >= array[hi-1] {
+			hi--
+		}
+	}
+	return []int{loRet, hiRet}
+}
+
+func LongestSubstringWithoutDuplication(str string) string {
+	charFreq := make(map[byte]bool)
+	lo, hi := 0, 0
+	maxLo, maxHi := 0, 0
+	for hi < len(str) {
+		for charFreq[str[hi]] {
+			delete(charFreq, str[lo])
+			lo++
+		}
+		charFreq[str[hi]] = true
+		if hi-lo+1 > maxHi-maxLo+1 {
+			maxLo, maxHi = lo, hi
+		}
+		hi++
+	}
+	return str[maxLo : maxHi+1]
+}
+
+func IndexEqualsValue(array []int) int {
+	lo, hi := 0, len(array)-1
+	idx := -1
+	for lo < hi {
+		mid := (lo + hi) / 2
+		if array[mid] == mid {
+			idx = mid
+			hi = mid - 1
+		} else if array[mid] > mid {
+			hi = mid - 1
+		} else {
+			lo = mid + 1
+		}
+	}
+	return idx
+}
+
+func WaterArea(heights []int) int {
+
+	lIdx, rIdx := 0, len(heights)-1
+	lWall, rWall := heights[lIdx], heights[rIdx]
+	// areas := make([]int, len(heights))
+	area := 0
+	for lIdx < rIdx {
+		if heights[lIdx] < heights[rIdx] {
+			//areas[lIdx] = lWall - heights[lIdx]
+			lIdx++
+			lWall = max(lWall, heights[lIdx])
+			area += lWall - heights[lIdx]
+		} else {
+			rIdx--
+			rWall = max(rWall, heights[rIdx])
+			area += rWall - heights[rIdx]
+		}
+	}
+	return area
+}
+
+type StringMeeting struct {
+	Start string
+	End   string
+}
+
+type DurationMeeting struct {
+	Start time.Duration
+	End   time.Duration
+}
+
+func NewDurationMeeting(startStr, endStr string) DurationMeeting {
+	start, _ := time.ParseDuration(strings.Replace(startStr, ":", "h", 1) + "m")
+	end, _ := time.ParseDuration(strings.Replace(endStr, ":", "h", 1) + "m")
+	return DurationMeeting{start, end}
+}
+
+func NewStringMeeting(startDur, endDur time.Duration) StringMeeting {
+	start := fmt.Sprintf("%d", int64(startDur.Hours())) + ":" + fmt.Sprintf("%d", int((startDur - time.Duration(startDur.Hours())*time.Hour).Minutes()))
+	end := fmt.Sprintf("%d", int64(endDur.Hours())) + ":" + fmt.Sprintf("%d", int64((endDur - time.Duration(endDur.Hours())*time.Hour).Minutes()))
+	if strings.HasSuffix(start, ":0") { start += "0" }
+	if strings.HasSuffix(end, ":0") { end += "0" }
+	return StringMeeting{start, end}
+}
+
+func getDurations(calendar1 []StringMeeting, dailyBounds1 StringMeeting,
+	calendar2 []StringMeeting, dailyBounds2 StringMeeting, meetingDuration int,
+	) (cd1, cd2 []DurationMeeting, bound DurationMeeting, meetingDur time.Duration) {
+	for i := range calendar1 {
+		cd1 = append(cd1, NewDurationMeeting(calendar1[i].Start, calendar1[i].End))
+	}
+	for i := range calendar2 {
+		cd2 = append(cd2, NewDurationMeeting(calendar2[i].Start, calendar2[i].End))
+	}
+	b1 := NewDurationMeeting(dailyBounds1.Start, dailyBounds1.End)
+	b2 := NewDurationMeeting(dailyBounds2.Start, dailyBounds2.End)
+	bound = DurationMeeting{maxDuration(b1.Start, b2.Start), minDuration(b1.End, b2.End)}
+	meetingDur = time.Minute*time.Duration(meetingDuration)
+	return
+}
+
+func minDuration(durs ...time.Duration) time.Duration {
+	min := durs[0]
+	for i := range durs {
+		if durs[i] < min {
+			min = durs[i]
+		}
+	}
+	return min
+}
+
+func maxDuration(durs ...time.Duration) time.Duration {
+	max := durs[0]
+	for i := range durs {
+		if durs[i] > max {
+			max = durs[i]
+		}
+	}
+	return max
+}
+
+func CalendarMatching(calendar1 []StringMeeting, dailyBounds1 StringMeeting,
+	calendar2 []StringMeeting, dailyBounds2 StringMeeting, meetingDuration int) []StringMeeting {
+	cd1, cd2, bound, meetingDur := getDurations(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)
+
+	blocked := make([]DurationMeeting, 0, len(cd1)+len(cd2))
+	for i,j := 0,0; i < len(cd1) || j < len(cd2); {
+		if j >= len(cd2) || (i < len(cd1) && cd1[i].Start <= cd2[j].Start) {
+			if len(blocked) == 0 || blocked[len(blocked)-1].End < cd1[i].Start {
+				blocked = append(blocked, cd1[i])
+			} else {
+				blocked[len(blocked)-1].End = maxDuration(blocked[len(blocked)-1].End, cd1[i].End)
+			}
+			i++
+		} else {
+			if len(blocked) == 0 || blocked[len(blocked)-1].End < cd2[j].Start {
+				blocked = append(blocked, cd2[j])
+			} else {
+				blocked[len(blocked)-1].End = maxDuration(blocked[len(blocked)-1].End, cd2[j].End)
+			}
+			j++
+		}
+	}
+	if len(blocked) == 0 {
+		return []StringMeeting{NewStringMeeting(bound.Start, bound.End)}
+	}
+
+	openings := make([]DurationMeeting, 0)
+	if bound.Start < blocked[0].Start {
+		openings = append(openings, DurationMeeting{bound.Start, blocked[0].Start})
+	}
+
+	prev := blocked[0]
+	for i := 1; i < len(blocked); i++ {
+		start := prev.End
+		end := minDuration(blocked[i].Start, bound.End)
+		if end - start >= meetingDur {
+			openings = append(openings, DurationMeeting{start, end})
+		}
+		prev = blocked[i]
+	}
+
+	if bound.End > blocked[len(blocked)-1].End {
+		openings = append(openings, DurationMeeting{blocked[len(blocked)-1].End, bound.End})
+	}
+
+	openingsStringMeetings := make([]StringMeeting, 0, len(openings))
+	for i := range openings {
+		openingsStringMeetings = append(openingsStringMeetings, NewStringMeeting(openings[i].Start, openings[i].End))
+	}
+	fmt.Println(blocked)
+	return openingsStringMeetings
 }
