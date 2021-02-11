@@ -375,16 +375,15 @@ func MaxStealProfit(profits []int) int {
 	return dp[len(profits)]
 }
 
-func LongestPalindromicSubsequence(text string) (length int) {
-	n := len(text)
-	dp := make([][]int, n)
+func LongestPalindromicSubsequenceTabulated(text string) (maxLen int) {
+	dp := make([][]int, len(text)+1)
 	for i := range dp {
-		dp[i] = make([]int, n)
+		dp[i] = make([]int, len(text)+1)
 		dp[i][i] = 1
 	}
 
-	for i := n - 1; i >= 0; i-- {
-		for j := i + 1; j < n; j++ {
+	for i := len(text)-1; i >= 0; i-- {
+		for j := i+1; j < len(text); j++ {
 			if text[i] == text[j] {
 				dp[i][j] = 2 + dp[i+1][j-1]
 			} else {
@@ -392,8 +391,39 @@ func LongestPalindromicSubsequence(text string) (length int) {
 			}
 		}
 	}
-	printSlice(dp)
-	return dp[0][n-1]
+
+	return dp[0][len(text)-1]
+}
+
+
+func LongestPalindromicSubsequenceRecursive(text string) int {
+	dp := make([][]int, len(text))
+	for i := range dp {
+		dp[i] = make([]int, len(text))
+		for j := range dp[i] {
+			dp[i][j] = -1
+		}
+		dp[i][i] = 1
+	}
+
+	var find func(lo, hi int) int
+	find = func(lo, hi int) int {
+		if lo > hi {
+			return 0
+		} else {
+			if dp[lo][hi] == -1 {
+				if text[lo] == text[hi] {
+					dp[lo][hi] = 2 + find(lo+1, hi-1)
+				} else {
+					dp[lo][hi] = max(find(lo+1, hi), find(lo, hi-1))
+				}
+			}
+
+			return dp[lo][hi]
+		}
+	}
+
+	return find(0, len(text)-1)
 }
 
 func LongestPalindromicSubstring(text string) (int, string) {
@@ -451,9 +481,8 @@ func PalindromicSubstringCount(text string) int {
 }
 
 func MinDeleteCountToMakePalindrome(text string) (length int) {
-	return len(text) - LongestPalindromicSubsequence(text)
+	return len(text) - LongestPalindromicSubsequenceTabulated(text)
 }
-
 
 func LongestCommonSubstringLength(s1, s2 string) int {
 	dp := make([][]int, len(s1)+1)

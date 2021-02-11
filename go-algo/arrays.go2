@@ -293,16 +293,20 @@ func NewDurationMeeting(startStr, endStr string) DurationMeeting {
 }
 
 func NewStringMeeting(startDur, endDur time.Duration) StringMeeting {
-	start := fmt.Sprintf("%d", int64(startDur.Hours())) + ":" + fmt.Sprintf("%d", int((startDur - time.Duration(startDur.Hours())*time.Hour).Minutes()))
-	end := fmt.Sprintf("%d", int64(endDur.Hours())) + ":" + fmt.Sprintf("%d", int64((endDur - time.Duration(endDur.Hours())*time.Hour).Minutes()))
-	if strings.HasSuffix(start, ":0") { start += "0" }
-	if strings.HasSuffix(end, ":0") { end += "0" }
+	start := fmt.Sprintf("%d", int64(startDur.Hours())) + ":" + fmt.Sprintf("%d", int((startDur-time.Duration(startDur.Hours())*time.Hour).Minutes()))
+	end := fmt.Sprintf("%d", int64(endDur.Hours())) + ":" + fmt.Sprintf("%d", int64((endDur-time.Duration(endDur.Hours())*time.Hour).Minutes()))
+	if strings.HasSuffix(start, ":0") {
+		start += "0"
+	}
+	if strings.HasSuffix(end, ":0") {
+		end += "0"
+	}
 	return StringMeeting{start, end}
 }
 
 func getDurations(calendar1 []StringMeeting, dailyBounds1 StringMeeting,
 	calendar2 []StringMeeting, dailyBounds2 StringMeeting, meetingDuration int,
-	) (cd1, cd2 []DurationMeeting, bound DurationMeeting, meetingDur time.Duration) {
+) (cd1, cd2 []DurationMeeting, bound DurationMeeting, meetingDur time.Duration) {
 	for i := range calendar1 {
 		cd1 = append(cd1, NewDurationMeeting(calendar1[i].Start, calendar1[i].End))
 	}
@@ -312,7 +316,7 @@ func getDurations(calendar1 []StringMeeting, dailyBounds1 StringMeeting,
 	b1 := NewDurationMeeting(dailyBounds1.Start, dailyBounds1.End)
 	b2 := NewDurationMeeting(dailyBounds2.Start, dailyBounds2.End)
 	bound = DurationMeeting{maxDuration(b1.Start, b2.Start), minDuration(b1.End, b2.End)}
-	meetingDur = time.Minute*time.Duration(meetingDuration)
+	meetingDur = time.Minute * time.Duration(meetingDuration)
 	return
 }
 
@@ -341,7 +345,7 @@ func CalendarMatching(calendar1 []StringMeeting, dailyBounds1 StringMeeting,
 	cd1, cd2, bound, meetingDur := getDurations(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)
 
 	blocked := make([]DurationMeeting, 0, len(cd1)+len(cd2))
-	for i,j := 0,0; i < len(cd1) || j < len(cd2); {
+	for i, j := 0, 0; i < len(cd1) || j < len(cd2); {
 		if j >= len(cd2) || (i < len(cd1) && cd1[i].Start <= cd2[j].Start) {
 			if len(blocked) == 0 || blocked[len(blocked)-1].End < cd1[i].Start {
 				blocked = append(blocked, cd1[i])
@@ -371,13 +375,13 @@ func CalendarMatching(calendar1 []StringMeeting, dailyBounds1 StringMeeting,
 	for i := 1; i < len(blocked); i++ {
 		start := prev.End
 		end := minDuration(blocked[i].Start, bound.End)
-		if end - start >= meetingDur && start >= bound.Start && end <= bound.End {
+		if end-start >= meetingDur && start >= bound.Start && end <= bound.End {
 			openings = append(openings, DurationMeeting{start, end})
 		}
 		prev = blocked[i]
 	}
 
-	if bound.End > blocked[len(blocked)-1].End && bound.End-blocked[len(blocked)-1].End >= meetingDur{
+	if bound.End > blocked[len(blocked)-1].End && bound.End-blocked[len(blocked)-1].End >= meetingDur {
 		openings = append(openings, DurationMeeting{blocked[len(blocked)-1].End, bound.End})
 	}
 
@@ -390,8 +394,9 @@ func CalendarMatching(calendar1 []StringMeeting, dailyBounds1 StringMeeting,
 }
 
 type Direction int
-const(
-	Left Direction = iota+1
+
+const (
+	Left Direction = iota + 1
 	Right
 	Down
 )
@@ -401,7 +406,7 @@ func WaterfallStreams(array [][]float64, source int) []float64 {
 	return array[len(array)-1]
 }
 
-func getFlowDirections(array[][]float64, x, y int, flowDir Direction) (validFlows []Direction) {
+func getFlowDirections(array [][]float64, x, y int, flowDir Direction) (validFlows []Direction) {
 	if x < 0 || x >= len(array) || y < 0 || y >= len(array[0]) {
 		return
 	}
@@ -437,7 +442,7 @@ func getFlowDirections(array[][]float64, x, y int, flowDir Direction) (validFlow
 	return
 }
 
-func flow(array[][]float64, x, y int, amount float64, flowDir Direction) {
+func flow(array [][]float64, x, y int, amount float64, flowDir Direction) {
 	if x == len(array)-1 {
 		array[x][y] += amount
 	} else {
@@ -447,10 +452,14 @@ func flow(array[][]float64, x, y int, amount float64, flowDir Direction) {
 				xidx, yidx, amt := x, y, amount
 				switch dir {
 				case Left:
-					if flowDir == Down {amt/=2}
+					if flowDir == Down {
+						amt /= 2
+					}
 					yidx--
 				case Right:
-					if flowDir == Down {amt/=2}
+					if flowDir == Down {
+						amt /= 2
+					}
 					yidx++
 				case Down:
 					xidx++
@@ -459,4 +468,113 @@ func flow(array[][]float64, x, y int, amount float64, flowDir Direction) {
 			}
 		}
 	}
+}
+
+func MaxSumSubArraySizeK(nums []int, k int) (maxSum int) {
+	lo, hi := 0, 0
+	currSum := 0
+	for hi < len(nums) {
+		if hi-lo+1 > k {
+			currSum -= nums[lo]
+			lo++
+		}
+		currSum += nums[hi]
+		maxSum = max(maxSum, currSum)
+		hi++
+	}
+
+	return
+}
+
+func LongestSubstringLengthWithKDistinct(text string, k int) (maxLen int) {
+	charFreq := map[uint8]int{}
+
+	lo, hi := 0, 0
+	for hi < len(text) {
+		if _, ok := charFreq[text[hi]]; !ok && len(charFreq) == k {
+			for len(charFreq) == k {
+				if charFreq[text[lo]] == 1 {
+					delete(charFreq, text[lo])
+				} else {
+					charFreq[text[lo]]--
+				}
+				lo++
+			}
+		}
+
+		charFreq[text[hi]]++
+		maxLen = max(hi-lo+1, maxLen)
+		hi++
+	}
+	return
+}
+
+func ContainsPermutation(text, pattern string) (contains bool) {
+	charFreq := map[uint8]int{}
+	totalCnt := len(pattern)
+	for i := range pattern {
+		charFreq[pattern[i]]++
+	}
+
+	lo, hi := 0, 0
+	for hi < len(text) {
+		if cnt, ok := charFreq[text[hi]]; ok {
+			if cnt == 0 {
+				for charFreq[text[hi]] == 0 {
+					charFreq[text[lo]]++
+					totalCnt++
+					lo++
+				}
+			} else {
+				charFreq[text[hi]]++
+				totalCnt--
+			}
+			if totalCnt == 0 {
+				return true
+			}
+		} else {
+			for lo <= hi {
+				if _, ok := charFreq[text[lo]]; ok {
+					charFreq[text[lo]]++
+					totalCnt++
+				}
+				lo++
+			}
+		}
+		hi++
+	}
+	return
+}
+
+func FindAnagramStartingIndices(text, pattern string) (indices []int) {
+	if len(text) == 0 || len(pattern) == 0 {
+		return
+	}
+
+	cf := map[uint8]int{}
+	totalCnt := len(pattern)
+	for i := range pattern {
+		cf[pattern[i]]++
+	}
+
+	lo, hi := 0, 0
+	for hi < len(text) {
+		if cnt, ok := cf[text[hi]]; ok {
+			for cnt == 0 {
+				cf[text[lo]]++
+				totalCnt++
+				cnt = cf[text[hi]]
+			}
+			if cnt == 0 {
+				cf[text[hi]]++
+			}
+			totalCnt--
+			if totalCnt == 0 {
+				indices = append(indices, lo)
+
+			}
+		}
+	}
+
+	return
 }
