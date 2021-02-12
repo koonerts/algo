@@ -578,3 +578,28 @@ func FindAnagramStartingIndices(text, pattern string) (indices []int) {
 
 	return
 }
+
+
+func TournamentWinner(competitions [][]string, results []int) (winner string) {
+	wins := map[string]int{}
+
+	maxWins := 0
+	for i := range results {
+		w := 0
+		if results[i] == 0 {
+			w = 1
+		}
+		wins[competitions[i][w]]++
+		if wins[competitions[i][w]] > maxWins {
+			maxWins = wins[competitions[i][w]]
+			winner = competitions[i][w]
+		}
+	}
+
+	return
+}
+
+func NonConstructibleChange(coins []int) (change int) {
+	sort.Ints(coins)
+	return
+}

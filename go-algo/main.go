@@ -9,12 +9,7 @@ import (
 )
 
 func main() {
-	x := map[string]int{}
-	fmt.Println(In(x, 2))
-	fmt.Println(ContainsPermutation("oidbcaf", "oidbcaf"))
-	fmt.Println(ContainsPermutation("odicf", "dc"))
-	fmt.Println(ContainsPermutation("bcdxabcdy", "bcdyabcdx"))
-	fmt.Println(ContainsPermutation("aaacb", "abc"))
+	fmt.Println(TournamentWinner([][]string{{"HTML", "C#"}, {"C#", "Python"}, {"Python", "HTML"}}, []int{0,0,1}))
 }
 
 func PrettyPrint(v interface{}) (err error) {
