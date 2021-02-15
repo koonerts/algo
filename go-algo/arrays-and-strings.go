@@ -718,3 +718,45 @@ func romanToInt(s string) (val int) {
 	return
 }
 
+func threeSum(nums []int) (sums [][]int) {
+	sort.Ints(nums)
+
+	for i := 0; i < len(nums)-2; {
+		j, k := i+1, len(nums)-1
+		for j < k {
+			iv, jv, kv := nums[i], nums[j], nums[k]
+			sum := iv+jv+kv
+			if sum == 0 {
+				sums = append(sums, []int{iv,jv,kv})
+				j++
+				k--
+
+				for j < k && nums[j-1] == nums[j] {j++}
+				for j < k && nums[k] == nums[k+1] {k--}
+			} else if sum > 0 {
+				k--
+			} else {
+				j++
+			}
+		}
+		i++
+		for i < len(nums)-2 && nums[i-1] == nums[i]{i++}
+	}
+
+	return
+}
+
+
+func removeDuplicates(nums []int) int {
+	if len(nums) == 2 && nums[0] == nums[1] {
+		return 1
+	}
+
+	lo, hi := 1, 2
+	for hi < len(nums) {
+		if nums[lo-1] == nums[lo] && nums[hi] != nums[lo] {
+			nums[lo] = nums[hi]
+			lo++
+		}
+	}
+}

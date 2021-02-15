@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	fmt.Println(romanToInt("MCMXCIV"))
+	fmt.Println(threeSum([]int{-1,0,1,2,-1,-4}))
 }
 
 func PrettyPrint(v interface{}) (err error) {
