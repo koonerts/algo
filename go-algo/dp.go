@@ -579,7 +579,7 @@ func MaxSumIncreasingSubsequence(array []int) (maxSum int, nums []int) {
 		nums = append(nums, array[maxIdx])
 		maxIdx = indexes[maxIdx]
 	}
-	reverseSlice(nums)
+	ReverseSlice(nums)
 
 	return
 }

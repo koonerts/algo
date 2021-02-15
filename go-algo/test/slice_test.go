@@ -12,7 +12,7 @@ func BenchmarkSliceReverseSwap(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		main.reverseSlice(x)
+		main.ReverseSlice(x)
 	}
 }
 
@@ -30,7 +30,7 @@ func BenchmarkSliceReverseIntSlice(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		main.reverseIntSlice(x)
+		main.ReverseIntSlice(x)
 	}
 }
 

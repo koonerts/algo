@@ -5,11 +5,12 @@ import (
 	"fmt"
 	"math"
 	"reflect"
+	"strconv"
 	"unsafe"
 )
 
 func main() {
-	fmt.Println(TournamentWinner([][]string{{"HTML", "C#"}, {"C#", "Python"}, {"Python", "HTML"}}, []int{0,0,1}))
+	fmt.Println(romanToInt("MCMXCIV"))
 }
 
 func PrettyPrint(v interface{}) (err error) {
@@ -38,6 +39,11 @@ func min(nums ...int) int {
 		}
 	}
 	return minInt
+}
+
+func IsNumeric(s string) bool {
+	_, err := strconv.ParseFloat(s, 64)
+	return err == nil
 }
 
 func printSlice(iSlice interface{}) {
@@ -69,7 +75,7 @@ func printSlice(iSlice interface{}) {
 	}
 }
 
-func reverseSlice(s interface{}) {
+func ReverseSlice(s interface{}) {
 	n := reflect.ValueOf(s).Len()
 	swap := reflect.Swapper(s)
 	for i, j := 0, n-1; i < j; i, j = i+1, j-1 {
@@ -77,7 +83,7 @@ func reverseSlice(s interface{}) {
 	}
 }
 
-func reverseIntSlice(data []int) {
+func ReverseIntSlice(data []int) {
 	for i, j := 0, len(data)-1; i < j; i, j = i+1, j-1 {
 		data[i], data[j] = data[j], data[i]
 	}

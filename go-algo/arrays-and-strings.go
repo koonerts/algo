@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -560,24 +561,64 @@ func FindAnagramStartingIndices(text, pattern string) (indices []int) {
 	lo, hi := 0, 0
 	for hi < len(text) {
 		if cnt, ok := cf[text[hi]]; ok {
-			for cnt == 0 {
-				cf[text[lo]]++
-				totalCnt++
-				cnt = cf[text[hi]]
-			}
 			if cnt == 0 {
-				cf[text[hi]]++
+				for cf[text[hi]] == 0 && lo < hi {
+					cf[text[lo]]++
+					lo++
+					totalCnt++
+				}
+				cf[text[hi]]--
+				totalCnt--
+			} else {
+				cf[text[hi]]--
+				totalCnt--
 			}
-			totalCnt--
+
 			if totalCnt == 0 {
 				indices = append(indices, lo)
-
+				cf[text[lo]]++
+				cf[text[hi]]++
+				lo++
+				totalCnt++
+			}
+		} else {
+			for lo <= hi {
+				if _, ok := cf[text[lo]]; ok {
+					cf[text[lo]]++
+					totalCnt++
+				}
 			}
 		}
+
+		hi++
 	}
 
 	return
 }
+
+/*func SmallestSubstringContainingPattern(str, pattern string) (ss string) {
+	if len(str) == 0 || len(pattern) == 0 {
+		return
+	}
+
+	pLen := len(pattern)
+	cf := map[uint8]int{}
+	for i := range pattern {
+		cf[pattern[i]]++
+	}
+
+	lo, hi := 0, 0
+	for hi < len(str) {
+		if cnt, ok := cf[str[hi]]; ok {
+			if cnt == 0 && str[lo] == str[hi] {
+				lo++
+			} else {
+				cf[str[hi]]--
+				pLen--
+			}
+		}
+	}
+}*/
 
 
 func TournamentWinner(competitions [][]string, results []int) (winner string) {
@@ -603,3 +644,77 @@ func NonConstructibleChange(coins []int) (change int) {
 	sort.Ints(coins)
 	return
 }
+
+func lengthOfLongestSubstringWithoutDups(s string) (maxLen int) {
+	lo, hi := 0, 0
+	charSet := map[uint8]int{}
+	for hi < len(s) {
+		if _, ok := charSet[s[hi]]; ok {
+			lo = max(lo, charSet[s[hi]]+1)
+		}
+		maxLen = max(maxLen, hi-lo+1)
+		charSet[s[hi]] = hi
+		hi++
+	}
+	return
+}
+
+func myAtoi(s string) (val int) {
+	if len(s) == 0 {
+		return
+	}
+
+	idx := 0
+	for idx < len(s) && s[idx] == ' ' {
+		idx++
+	}
+	if idx == len(s) {
+		return
+	}
+
+	var isNegative bool
+	if s[idx] == '-' || s[idx] == '+' {
+		if s[idx] == '-' {
+			isNegative = true
+		}
+		idx++
+	}
+	if idx == len(s) || !IsNumeric(string(s[idx])) {
+		return
+	}
+	numStart, numEnd := idx, idx
+	for numEnd < len(s) && IsNumeric(string(s[numEnd])) {
+		numEnd++
+	}
+	num, _ := strconv.ParseInt(s[numStart:numEnd], 10, 64)
+	if isNegative {
+		num = -num
+	}
+
+	if num > math.MaxInt32 {
+		val = math.MaxInt32
+	} else if num < math.MinInt32 {
+		val = math.MinInt32
+	} else {
+		val = int(num)
+	}
+
+	return
+}
+
+func romanToInt(s string) (val int) {
+	rn := map[string]int{"I":1, "IV":4, "V":5, "IX":9, "X":10, "XL":40, "L":50, "XC":90, "C":100, "CD":400, "D":500, "CM":900, "M":1000}
+
+	i := 0
+	for i < len(s) {
+		if i+1 < len(s) && rn[s[i:i+2]] != 0 {
+			val += rn[s[i:i+2]]
+			i += 2
+		} else {
+			val += rn[s[i:i+1]]
+			i++
+		}
+	}
+	return
+}
+

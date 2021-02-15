@@ -135,3 +135,19 @@ func (n *Node) DepthFirstSearch(array []string) []string {
 	}
 	return array
 }
+
+func TreeDiameter(root *BinaryTree) (diameter int) {
+	findDepth(root, &diameter)
+	return
+}
+
+func findDepth(node *BinaryTree, maxDiameter *int) (depth int) {
+	if node == nil {
+		return 0
+	} else {
+		lDepth := findDepth(node.Left, maxDiameter) + 1
+		rDepth := findDepth(node.Right, maxDiameter) + 1
+		*maxDiameter = max(*maxDiameter, lDepth + rDepth - 1)
+		return max(lDepth, rDepth)
+	}
+}

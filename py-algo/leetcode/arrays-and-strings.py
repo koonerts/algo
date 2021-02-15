@@ -1,5 +1,8 @@
 import collections
+import numpy as np
 
+def print_matrix(matrix):
+    print(np.array(matrix))
 
 class Solution:
     def removeDuplicates(self, nums: list[int]) -> int:
@@ -13,10 +16,10 @@ class Solution:
             if nums[s] == nums[i]:
                 i += 1
             else:
-                nums[s+1] = nums[i]
+                nums[s + 1] = nums[i]
                 i += 1
                 s += 1
-        return s+1
+        return s + 1
 
     def moveZeroes(self, nums: list[int]) -> None:
         """
@@ -38,7 +41,7 @@ class Solution:
                 if nums[left] != 0:
                     left += 1
                     if i <= left:
-                        i = left+1
+                        i = left + 1
 
                 elif nums[i] == 0:
                     i += 1
@@ -62,7 +65,7 @@ class Solution:
                         v = a[j]
                         a[j] = a[i]
                         a[i] = v
-                        p_even = j+1
+                        p_even = j + 1
                         break
                     p_even += 1
             i += 1
@@ -80,7 +83,7 @@ class Solution:
         l, r = 0, 0
         while r < len(a) and a[r] < 0:
             r += 1
-        l = r-1
+        l = r - 1
 
         while len(ret) != len(a):
             if l < 0 or l >= len(a):
@@ -140,8 +143,8 @@ class Solution:
         curr_max = len(nums) if len(zero_val_indexes) == 0 else 0
         print(zero_val_indexes)
         for i, v in enumerate(zero_val_indexes):
-            start = 0 if i == 0 else zero_val_indexes[i-1]+1
-            end = len(nums) if i+1 >= len(zero_val_indexes) else zero_val_indexes[i+1]
+            start = 0 if i == 0 else zero_val_indexes[i - 1] + 1
+            end = len(nums) if i + 1 >= len(zero_val_indexes) else zero_val_indexes[i + 1]
             length = len(range(start, end))
             print(start, end, length)
             if length > curr_max:
@@ -189,11 +192,11 @@ class Solution:
         """
         for i in range(len(nums)):
 
-            new_index = abs(nums[i])-1
+            new_index = abs(nums[i]) - 1
             if nums[new_index] > 0:
                 nums[new_index] *= -1
 
-        return [i+1 for i in range(len(nums)) if nums[i] > 0]
+        return [i + 1 for i in range(len(nums)) if nums[i] > 0]
 
     def singleNumber(self, nums: list[int]) -> int:
         xor = 0
@@ -204,7 +207,7 @@ class Solution:
     def rotate_with_extra_space(self, nums: list[int], k: int) -> None:
         if not nums: return nums
         k = k % len(nums)
-        nums_copy = nums[-k:]+nums[:-k]
+        nums_copy = nums[-k:] + nums[:-k]
         for i in range(len(nums)):
             nums[i] = nums_copy[i]
 
@@ -226,8 +229,8 @@ class Solution:
 
     def plusOne(self, digits: list[int]) -> list[int]:
         carry_over = 1
-        for i in range(len(digits)-1, -1, -1):
-            val = digits[i]+1+carry_over
+        for i in range(len(digits) - 1, -1, -1):
+            val = digits[i] + 1 + carry_over
             carry_over = val // 10
             if carry_over > 0:
                 digits[i] = 0
@@ -241,8 +244,8 @@ class Solution:
     def twoSum(self, nums: list[int], target: int) -> list[int]:
         num_map = {}
         for i, num in enumerate(nums):
-            if num_map.get(target-num):
-                return [i, num_map.get(target-num)]
+            if num_map.get(target - num):
+                return [i, num_map.get(target - num)]
             else:
                 num_map[num] = i
         return []
@@ -253,16 +256,16 @@ class Solution:
 
         i = 0
         while i < len(nums):
-            start, end = i+1, len(nums)-1
+            start, end = i + 1, len(nums) - 1
 
             while start < end:
-                val = nums[i]+nums[start]+nums[end]
+                val = nums[i] + nums[start] + nums[end]
                 if val == 0:
                     result.append([nums[i], nums[start], nums[end]])
                     start += 1
                     end -= 1
 
-                    while start < end and nums[start] == nums[start-1]:
+                    while start < end and nums[start] == nums[start - 1]:
                         start += 1
                 elif val < 0:
                     start += 1
@@ -278,13 +281,13 @@ class Solution:
         nums.sort()
         closest_sum = float('inf')
         for i in range(len(nums)):
-            left, right = i+1, len(nums)-1
+            left, right = i + 1, len(nums) - 1
             while left < right:
-                curr_sum = nums[i]+nums[left]+nums[right]
+                curr_sum = nums[i] + nums[left] + nums[right]
                 if curr_sum == target:
                     return curr_sum
                 else:
-                    if abs(curr_sum-target) < abs(closest_sum-target):
+                    if abs(curr_sum - target) < abs(closest_sum - target):
                         closest_sum = curr_sum
 
                     if curr_sum < target:
@@ -313,7 +316,7 @@ class Solution:
         if not nums or len(nums) == 1:
             return
 
-        i, left, right = 0, 0, len(nums)-1
+        i, left, right = 0, 0, len(nums) - 1
         while i < right:
             if nums[i] == 0:
                 nums[left], nums[i] = nums[i], nums[left]
@@ -335,10 +338,10 @@ class Solution:
                 return 0
 
             height = min(heights[x], heights[y])
-            width = y-x
+            width = y - x
             return height * width
 
-        left, right, max_area = 0, len(heights)-1, 0
+        left, right, max_area = 0, len(heights) - 1, 0
         while left <= right:
             max_area = max(max_area, compute_area(left, right))
             if heights[left] <= heights[right]:
@@ -378,12 +381,12 @@ class Solution:
                 if left < 0:
                     left = i
 
-                char_freq[c] = char_freq.get(c, 0)-1
+                char_freq[c] = char_freq.get(c, 0) - 1
                 if char_freq[c] == 0:
                     matched_cnt += 1
                     if matched_cnt == len(char_freq):
-                        if (i-left+1) < len(min_substr):
-                            min_substr = s[left:i+1]
+                        if (i - left + 1) < len(min_substr):
+                            min_substr = s[left:i + 1]
 
     def maxProfit(self, prices: list[int]) -> int:
         if len(prices) == 1: return 0
@@ -391,13 +394,13 @@ class Solution:
         profit = 0
         peak, valley = 0, 0
         for i in range(1, len(prices)):
-            if prices[i] > prices[i-1]:
+            if prices[i] > prices[i - 1]:
                 peak = i
-                if i == len(prices)-1:
-                    profit += prices[peak]-prices[valley]
+                if i == len(prices) - 1:
+                    profit += prices[peak] - prices[valley]
             else:
                 if peak > valley:
-                    profit += prices[peak]-prices[valley]
+                    profit += prices[peak] - prices[valley]
                 valley = i
         return profit
 
@@ -407,7 +410,7 @@ class Solution:
         k = k % len(nums)
         idx, prev, temp = 0, nums[0], 0
         for _ in range(len(nums)):
-            idx = ((idx+k) % len(nums))
+            idx = ((idx + k) % len(nums))
             temp = nums[idx]
             nums[idx] = prev
             prev = temp
@@ -442,7 +445,7 @@ class Solution:
         if is_neg:
             reversed_x = -reversed_x
 
-        return 0 if not(-2**31-1 <= reversed_x <= 2**31-1) else reversed_x
+        return 0 if not (-2 ** 31 - 1 <= reversed_x <= 2 ** 31 - 1) else reversed_x
 
     def firstUniqChar(self, s: str) -> int:
         char_map = {}
@@ -479,7 +482,7 @@ class Solution:
         for i, c in enumerate(s):
             if c in ['+', '-'] or c.isnumeric():
                 start = i
-                end = i+1
+                end = i + 1
                 while end < len(s) and s[end].isnumeric():
                     end += 1
                 break
@@ -506,10 +509,10 @@ class Solution:
             return 0
 
         val = int(s[start:end])
-        if val > 2**31:
-            return 2**31
-        elif val < (-2)**31:
-            return (-2)**31
+        if val > 2 ** 31:
+            return 2 ** 31
+        elif val < (-2) ** 31:
+            return (-2) ** 31
         else:
             return val
 
@@ -567,17 +570,17 @@ class Solution:
         while i < len(logs):
             id_sep_index = str.index(logs[i], ' ')
 
-            if logs[i][id_sep_index+1:id_sep_index+2].isnumeric():
+            if logs[i][id_sep_index + 1:id_sep_index + 2].isnumeric():
                 digit_logs.append(logs[i])
             else:
                 if not letter_logs:
                     letter_logs.append(logs[i])
                 else:
-                    log_data = logs[i][id_sep_index+1:]
+                    log_data = logs[i][id_sep_index + 1:]
 
                     for j in range(len(letter_logs)):
                         ll_id_sep_index = str.index(letter_logs[j], ' ')
-                        ll_log_data = letter_logs[j][ll_id_sep_index+1:]
+                        ll_log_data = letter_logs[j][ll_id_sep_index + 1:]
 
                         if log_data < ll_log_data:
                             letter_logs.insert(j, logs[i])
@@ -598,7 +601,7 @@ class Solution:
     def reorderLogFilesV2(self, logs: list[str]) -> list[str]:
         def get_key(log):
             _id, rest = log.split(" ", maxsplit=1)
-            return (0, rest, _id) if rest[0].isalpha() else (1, )
+            return (0, rest, _id) if rest[0].isalpha() else (1,)
 
         return sorted(logs, key=get_key)
 
@@ -619,7 +622,7 @@ class Solution:
         email_set = set()
         for email in emails:
             local, domain = clean_email(email)
-            email_set.add((local,domain))
+            email_set.add((local, domain))
         print(email_set)
         return len(email_set)
 
@@ -634,11 +637,11 @@ class Solution:
             if s[r] in char_idx:
                 l = max(l, char_idx[s[r]])
             char_idx[s[r]] = r + 1
-            max_len = max(max_len, r-l+1)
+            max_len = max(max_len, r - l + 1)
             r += 1
         return max_len
 
-    def multiply(self, num1:str, num2:str):
+    def multiply(self, num1: str, num2: str):
         if num1 == "0" or num2 == "0":
             return "0"
         elif num1 == "1":
@@ -650,18 +653,18 @@ class Solution:
         zero_cntr = 0
         for i in range(len(num2) - 1, -1, -1):
             n2 = int(num2[i])
-            zero_suffix = zero_cntr*"0"
+            zero_suffix = zero_cntr * "0"
             curr = ""
             carry_over = 0
 
             for j in range(len(num1) - 1, -1, -1):
                 val = n2 * int(num1[j]) + carry_over
-                carry_over = val//10
+                carry_over = val // 10
 
                 if j == 0 and carry_over > 0:
-                    curr = str(carry_over) + str(val%10) + curr
+                    curr = str(carry_over) + str(val % 10) + curr
                 else:
-                    curr = str(val%10) + curr
+                    curr = str(val % 10) + curr
             curr += zero_suffix
             zero_cntr += 1
             ans += int(curr)
@@ -671,7 +674,7 @@ class Solution:
         if len(s) <= 2:
             return len(s)
 
-        char_freq = collections.defaultdict(lambda:0)
+        char_freq = collections.defaultdict(lambda: 0)
         l, max_substr_len = 0, 0
         for r, c in enumerate(s):
             char_freq[c] += 1
@@ -681,27 +684,35 @@ class Solution:
                 else:
                     char_freq[s[l]] -= 1
                 l += 1
-            max_substr_len = max(max_substr_len, r-l+1)
+            max_substr_len = max(max_substr_len, r - l + 1)
         return max_substr_len
 
     def findMissingRanges(self, nums: list[int], lower: int, upper: int) -> list[str]:
-        if lower == upper and lower not in nums: return [str(lower)]
-        elif not nums: return [f'{lower}->{upper}']
+        if lower == upper and lower not in nums:
+            return [str(lower)]
+        elif not nums:
+            return [f'{lower}->{upper}']
 
         result = []
         for i, num in enumerate(nums):
             if i == 0:
                 if lower < num:
-                    if lower + 1 == num: result.append(str(lower))
-                    else: result.append(f'{lower}->{num-1}')
+                    if lower + 1 == num:
+                        result.append(str(lower))
+                    else:
+                        result.append(f'{lower}->{num - 1}')
             else:
-                diff = num - nums[i-1]
-                if diff == 2: result.append(str(num-1))
-                elif diff > 2: result.append(f'{nums[i-1]+1}->{num-1}')
+                diff = num - nums[i - 1]
+                if diff == 2:
+                    result.append(str(num - 1))
+                elif diff > 2:
+                    result.append(f'{nums[i - 1] + 1}->{num - 1}')
 
             if i == len(nums) - 1 and num < upper:
-                if num + 1 == upper: result.append(str(upper))
-                else: result.append(f'{num+1}->{upper}')
+                if num + 1 == upper:
+                    result.append(str(upper))
+                else:
+                    result.append(f'{num + 1}->{upper}')
         return result
 
     def nextClosestTime(self, time: str) -> str:
@@ -719,7 +730,7 @@ class Solution:
             if val != valid_digits[0]:
                 return time[:i] + new_time
 
-    def expressiveWords(self, s:str, words: list[str]) -> int:
+    def expressiveWords(self, s: str, words: list[str]) -> int:
         pass
 
     def maxDistToClosest(self, seats: list[int]) -> int:
@@ -731,7 +742,7 @@ class Solution:
                 if prev is None:
                     max_dist = i
                 else:
-                    mid = (prev+i)//2
+                    mid = (prev + i) // 2
                     max_dist = max(max_dist, mid - prev)
                 prev = i
             elif i == len(seats) - 1:
@@ -758,7 +769,7 @@ class Solution:
             low = -1
             start, end = 0, len(nums) - 1
             while start <= end:
-                mid = (start + end)//2
+                mid = (start + end) // 2
                 if nums[mid] == target:
                     low = mid
                     end = mid - 1
@@ -772,7 +783,7 @@ class Solution:
             high = -1
             start, end = 0, len(nums) - 1
             while start <= end:
-                mid = (start + end)//2
+                mid = (start + end) // 2
                 if nums[mid] == target:
                     high = mid
                     start = mid + 1
@@ -787,8 +798,7 @@ class Solution:
         higher = binary_search_high()
 
         cnt = higher - lower + 1
-        return cnt > len(nums)/2
-
+        return cnt > len(nums) / 2
 
     def isValidSubsequence(self, array, seq):
         seq_idx = 0
@@ -799,7 +809,6 @@ class Solution:
                 seq_idx += 1
         return False
 
-
     def two_way_merge(self, arr1, arr2):
         i, j = 0, 0
         result = []
@@ -809,15 +818,56 @@ class Solution:
                 j += 1
             elif j >= len(arr2):
                 result.append(arr1[i])
-                i+= 1
+                i += 1
             else:
                 if arr1[i] <= arr2[j]:
                     result.append(arr1[i])
                     i += 1
                 else:
                     result.append(arr2[j])
-                    j+=1
+                    j += 1
         return result
 
+    def calculate(self, s: str) -> int:
+        stk = []
+        opening_paren_indexes = []
 
-print(Solution().two_way_merge([1,2,4], [-1,2,3,5]))
+        for c in s:
+            if c == ")":
+                val = str(eval(''.join(stk[opening_paren_indexes[-1]+1:])))
+                while len(stk) > opening_paren_indexes[-1]:
+                    stk.pop()
+                stk.append(val)
+                opening_paren_indexes.pop()
+            elif c == '(':
+                stk.append(c)
+                opening_paren_indexes.append(len(stk)-1)
+            else:
+                stk.append(c)
+        return eval(''.join(stk))
+
+    def findBall(self, grid: list[list[int]]) -> list[int]:
+        LEFT, RIGHT = -1, 1
+        ret = [-1]*len(grid[0])
+
+        def traverse(x, y) -> int:
+            if 0 <= x < len(grid) and 0 <= y < len(grid[0]) and grid[x][y] != -1 and grid[x][y] != 1:
+                return grid[x][y]
+            elif x > len(grid)-1:
+                return y*10
+            elif grid[x][y] == LEFT and y == 0 \
+                    or grid[x][y] == RIGHT and y == len(grid[0])-1 \
+                    or grid[x][y] == RIGHT and grid[x][y+1] == LEFT \
+                    or grid[x][y] == LEFT and grid[x][y-1] == RIGHT:
+                return -1
+            else:
+                grid[x][y] = traverse(x+1, y + grid[x][y])
+                return grid[x][y]
+
+        for i in range(len(ret)):
+            ret[i] = traverse(0, i)//10
+        print_matrix(grid)
+        return ret
+
+
+print(Solution().findBall(grid=[[1,1,1,1,1,1],[-1,-1,-1,-1,-1,-1],[1,1,1,1,1,1],[-1,-1,-1,-1,-1,-1]]))
