@@ -620,7 +620,6 @@ func FindAnagramStartingIndices(text, pattern string) (indices []int) {
 	}
 }*/
 
-
 func TournamentWinner(competitions [][]string, results []int) (winner string) {
 	wins := map[string]int{}
 
@@ -703,7 +702,7 @@ func myAtoi(s string) (val int) {
 }
 
 func romanToInt(s string) (val int) {
-	rn := map[string]int{"I":1, "IV":4, "V":5, "IX":9, "X":10, "XL":40, "L":50, "XC":90, "C":100, "CD":400, "D":500, "CM":900, "M":1000}
+	rn := map[string]int{"I": 1, "IV": 4, "V": 5, "IX": 9, "X": 10, "XL": 40, "L": 50, "XC": 90, "C": 100, "CD": 400, "D": 500, "CM": 900, "M": 1000}
 
 	i := 0
 	for i < len(s) {
@@ -725,14 +724,18 @@ func threeSum(nums []int) (sums [][]int) {
 		j, k := i+1, len(nums)-1
 		for j < k {
 			iv, jv, kv := nums[i], nums[j], nums[k]
-			sum := iv+jv+kv
+			sum := iv + jv + kv
 			if sum == 0 {
-				sums = append(sums, []int{iv,jv,kv})
+				sums = append(sums, []int{iv, jv, kv})
 				j++
 				k--
 
-				for j < k && nums[j-1] == nums[j] {j++}
-				for j < k && nums[k] == nums[k+1] {k--}
+				for j < k && nums[j-1] == nums[j] {
+					j++
+				}
+				for j < k && nums[k] == nums[k+1] {
+					k--
+				}
 			} else if sum > 0 {
 				k--
 			} else {
@@ -740,12 +743,13 @@ func threeSum(nums []int) (sums [][]int) {
 			}
 		}
 		i++
-		for i < len(nums)-2 && nums[i-1] == nums[i]{i++}
+		for i < len(nums)-2 && nums[i-1] == nums[i] {
+			i++
+		}
 	}
 
 	return
 }
-
 
 func removeDuplicates(nums []int) int {
 	if len(nums) == 2 && nums[0] == nums[1] {
@@ -760,23 +764,50 @@ func removeDuplicates(nums []int) int {
 		}
 	}
 	fmt.Println(nums)
-	return i+1
+	return i + 1
 }
 
-// TODO: Come back to
-func nextPermutation(nums []int)  {
-	for i := len(nums)-2; i >= 0; i-- {
-		if nums[i] < nums[i+1] && !(nums[i] < nums[len(nums)-1]) {
-			nums[i], nums[i+1] = nums[i+1], nums[i]
-			fmt.Println(nums)
-			return
-		} else if nums[i] < nums[len(nums)-1] {
-			nums[i], nums[len(nums)-1] = nums[len(nums)-1], nums[i]
-			fmt.Println(nums)
-			return
+func nextPermutation(nums []int) {
+	firstDecreasingIdx := -1
+	for i := len(nums) - 2; i >= 0; i-- {
+		if nums[i] < nums[i+1] {
+			firstDecreasingIdx = i
+			break
 		}
 	}
-	sort.Ints(nums)
-	fmt.Println(nums)
+
+	if firstDecreasingIdx == -1 {
+		sort.Ints(nums)
+		return
+	}
+
+	for i := firstDecreasingIdx + 1; i < len(nums); i++ {
+		if nums[i] > nums[firstDecreasingIdx] && (i == len(nums)-1 || nums[i+1] <= nums[firstDecreasingIdx]) {
+			nums[i], nums[firstDecreasingIdx] = nums[firstDecreasingIdx], nums[i]
+			break
+		}
+	}
+
+	for i, j := firstDecreasingIdx+1, len(nums)-1; i < j; i, j = i+1, j-1 {
+		nums[i], nums[j] = nums[j], nums[i]
+	}
+	return
+}
+
+func multiply(num1, num2 string) (result string) {
+	if len(num2) > len(num1) {
+		return multiply(num2, num1)
+	}
+
+	carryover := 0
+	currResult := 0
+	for i := len(num1) - 1; i >= 0; i-- {
+		for j := len(num2) - 1; j >= 0; j-- {
+			ival, _ := strconv.Atoi(string(num1[i]))
+			jval, _ := strconv.Atoi(string(num2[j]))
+			product := (ival * jval) + carryover
+
+		}
+	}
 	return
 }

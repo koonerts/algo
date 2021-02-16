@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	nextPermutation([]int{1,3,2})
+	fmt.Println(1 / 10)
 }
 
 func PrettyPrint(v interface{}) (err error) {
@@ -81,6 +81,11 @@ func ReverseSlice(s interface{}) {
 	for i, j := 0, n-1; i < j; i, j = i+1, j-1 {
 		swap(i, j)
 	}
+}
+
+func Swap(s interface{}, i, j int) {
+	swap := reflect.Swapper(s)
+	swap(i, j)
 }
 
 func ReverseIntSlice(data []int) {
