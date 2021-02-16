@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	fmt.Println(threeSum([]int{-1,0,1,2,-1,-4}))
+	nextPermutation([]int{1,3,2})
 }
 
 func PrettyPrint(v interface{}) (err error) {

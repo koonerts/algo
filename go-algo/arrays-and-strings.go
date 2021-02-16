@@ -752,11 +752,31 @@ func removeDuplicates(nums []int) int {
 		return 1
 	}
 
-	lo, hi := 1, 2
-	for hi < len(nums) {
-		if nums[lo-1] == nums[lo] && nums[hi] != nums[lo] {
-			nums[lo] = nums[hi]
-			lo++
+	i := 0
+	for j := 1; j < len(nums); j++ {
+		if nums[i] != nums[j] {
+			i++
+			nums[i] = nums[j]
 		}
 	}
+	fmt.Println(nums)
+	return i+1
+}
+
+// TODO: Come back to
+func nextPermutation(nums []int)  {
+	for i := len(nums)-2; i >= 0; i-- {
+		if nums[i] < nums[i+1] && !(nums[i] < nums[len(nums)-1]) {
+			nums[i], nums[i+1] = nums[i+1], nums[i]
+			fmt.Println(nums)
+			return
+		} else if nums[i] < nums[len(nums)-1] {
+			nums[i], nums[len(nums)-1] = nums[len(nums)-1], nums[i]
+			fmt.Println(nums)
+			return
+		}
+	}
+	sort.Ints(nums)
+	fmt.Println(nums)
+	return
 }
