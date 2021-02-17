@@ -794,20 +794,54 @@ func nextPermutation(nums []int) {
 	return
 }
 
-func multiply(num1, num2 string) (result string) {
-	if len(num2) > len(num1) {
-		return multiply(num2, num1)
+func multiplyStrings(num1 string, num2 string) string {
+	if num1 == "0" || num2 == "0" {
+		return "0"
 	}
-
-	carryover := 0
-	currResult := 0
-	for i := len(num1) - 1; i >= 0; i-- {
-		for j := len(num2) - 1; j >= 0; j-- {
-			ival, _ := strconv.Atoi(string(num1[i]))
-			jval, _ := strconv.Atoi(string(num2[j]))
-			product := (ival * jval) + carryover
-
+	l1, l2 := len(num1), len(num2)
+	res := make([]byte, l1+l2)
+	for i := l1 - 1; i >= 0; i-- {
+		for j := l2 - 1; j >= 0; j-- {
+			val := (num1[i] - '0') * (num2[j] - '0')
+			res[i+j+1] += val
+			if res[i+j+1] >= 10 {
+				res[i+j] += res[i+j+1] / 10
+				res[i+j+1] %= 10
+			}
 		}
 	}
-	return
+	if res[0] == 0 {
+		res = res[1:]
+	}
+	for i := range res {
+		res[i] += '0'
+	}
+	return string(res)
+}
+
+
+func addStrings(num1, num2 string) string {
+	i, j := len(num1)-1, len(num2)-1
+	carryover := 0
+	returnVal := ""
+	for i >= 0 || j >= 0 {
+		ival, jval := 0, 0
+		if i >= 0 {
+			ival, _ = strconv.Atoi(string(num1[i]))
+		}
+		if j >= 0 {
+			jval, _ = strconv.Atoi(string(num2[j]))
+		}
+		sum := ival+jval+carryover
+		if i > 0 || j > 0 {
+			returnVal = strconv.FormatInt(int64(sum%10), 10) + returnVal
+			carryover = sum/10
+		} else {
+			returnVal = strconv.FormatInt(int64(sum), 10) + returnVal
+		}
+
+		i--
+		j--
+	}
+	return returnVal
 }

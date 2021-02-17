@@ -641,34 +641,30 @@ class Solution:
             r += 1
         return max_len
 
-    def multiply(self, num1: str, num2: str):
-        if num1 == "0" or num2 == "0":
-            return "0"
-        elif num1 == "1":
-            return num2
-        elif num2 == "1":
-            return num1
+    def multiply(self, num1: str, num2: str) -> str:
+        if num1 == "0" or num2 == "0": return "0"
+        elif num1 == "1": return num2
+        elif num2 == "1": return num1
+        elif len(num2) > len(num1): return self.multiply(num2, num1)
 
-        ans = 0
-        zero_cntr = 0
-        for i in range(len(num2) - 1, -1, -1):
-            n2 = int(num2[i])
-            zero_suffix = zero_cntr * "0"
-            curr = ""
+        total_sum = 0
+        outer_multiplier = 1
+        for i in range(len(num2)-1, -1, -1):
             carry_over = 0
-
-            for j in range(len(num1) - 1, -1, -1):
-                val = n2 * int(num1[j]) + carry_over
-                carry_over = val // 10
-
-                if j == 0 and carry_over > 0:
-                    curr = str(carry_over) + str(val % 10) + curr
+            sum_ = 0
+            inner_multiplier = 1
+            for j in range(len(num1)-1, -1, -1):
+                prod = int(num2[i])*int(num1[j]) + carry_over
+                if j != 0:
+                    sum_ += (prod%10)*inner_multiplier
+                    carry_over = prod//10
                 else:
-                    curr = str(val % 10) + curr
-            curr += zero_suffix
-            zero_cntr += 1
-            ans += int(curr)
-        return str(ans)
+                    sum_ += prod*inner_multiplier
+
+                inner_multiplier *= 10
+            total_sum += sum_*outer_multiplier
+            outer_multiplier *= 10
+        return str(total_sum)
 
     def lengthOfLongestSubstringTwoDistinct(self, s: str) -> int:
         if len(s) <= 2:
@@ -870,4 +866,4 @@ class Solution:
         return ret
 
 
-print(Solution().findBall(grid=[[1,1,1,1,1,1],[-1,-1,-1,-1,-1,-1],[1,1,1,1,1,1],[-1,-1,-1,-1,-1,-1]]))
+print(Solution().multiply("123", "456"))

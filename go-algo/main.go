@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	fmt.Println(1 / 10)
+	fmt.Println(multiplyStrings("498828660196", "840477629533"))
 }
 
 func PrettyPrint(v interface{}) (err error) {
