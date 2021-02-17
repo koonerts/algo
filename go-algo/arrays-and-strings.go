@@ -845,3 +845,81 @@ func addStrings(num1, num2 string) string {
 	}
 	return returnVal
 }
+
+
+func groupAnagrams(strs []string) (groups [][]string) {
+	groupsDict := map[string][]string{}
+	for _, str := range strs {
+		chars := make([]byte, 26)
+		for i := range str {
+			chars[str[i]-'a']++
+		}
+		idStr := string(chars)
+		if _, ok := groupsDict[idStr]; ok {
+			groupsDict[idStr] = append(groupsDict[idStr], str)
+		} else {
+			groupsDict[idStr] = []string{str}
+		}
+	}
+
+	for _, g := range groupsDict {
+		groups = append(groups, g)
+	}
+	return
+}
+
+
+func addBinary(a string, b string) string {
+	i, j := len(a)-1, len(b)-1
+	carry := '0'
+	arr := make([]byte, max(i+1,j+1)+1)
+	for i >= 0 || j >= 0 {
+		iv, jv := '0', '0'
+		if i >= 0 && a[i] == '1' {
+			iv = '1'
+		}
+		if j >= 0 && b[j] == '1' {
+			jv = '1'
+		}
+
+		result := iv+jv+carry
+		if result == '1'*3 {
+			arr[max(i,j)+1] = '1'
+			carry = '1'
+		} else if result == '1'*2 + '0' {
+			arr[max(i,j)+1] = '0'
+			carry = '1'
+		} else if result == '1' + '0'*2 {
+			arr[max(i,j)+1] = '1'
+			carry = '0'
+		} else {
+			arr[max(i,j)+1] = '0'
+			carry = '0'
+		}
+
+		if i <= 0 && j <= 0 {
+			if carry == '1' {
+				arr[0] = '1'
+			} else {
+				arr = arr[1:]
+			}
+		}
+		i--
+		j--
+	}
+	return string(arr)
+}
+
+func minWindow(s string, t string) (minSubString string) {
+	lo, hi := 0, 0
+	charFreq := map[uint8]int{}
+	for i := range t {
+		charFreq[t[i]]++
+	}
+
+	for hi < len(s) {
+
+		hi++
+	}
+
+}

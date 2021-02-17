@@ -10,7 +10,8 @@ import (
 )
 
 func main() {
-	fmt.Println(multiplyStrings("498828660196", "840477629533"))
+	fmt.Println(math.MaxInt64)
+	fmt.Println(addBinary("1010", "1011"))
 }
 
 func PrettyPrint(v interface{}) (err error) {
