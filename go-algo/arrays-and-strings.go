@@ -910,15 +910,32 @@ func addBinary(a string, b string) string {
 	return string(arr)
 }
 
+type CharIndexTuple struct {
+	char byte
+	index int
+}
 func minWindow(s string, t string) (minSubString string) {
-	lo, hi := 0, 0
 	charFreq := map[uint8]int{}
 	for i := range t {
 		charFreq[t[i]]++
 	}
 
-	for hi < len(s) {
 
+	filteredS := []CharIndexTuple{}
+	for i := range s {
+		if _, ok := charFreq[s[i]]; ok {
+			filteredS = append(filteredS, CharIndexTuple{s[i], i})
+		}
+	}
+
+	lo, hi := 0, 0
+	patternLen := len(t)
+	for hi < len(filteredS) {
+
+		for patternLen <= 0
+
+		tup := filteredS[hi]
+		charFreq[tup.char]--
 		hi++
 	}
 

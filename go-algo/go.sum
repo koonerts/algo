@@ -1,2 +1,2 @@
-github.com/golang-collections/collections v0.0.0-20130729185459-604e922904d3 h1:zN2lZNZRflqFyxVaTIU61KNKQ9C0055u9CAfpmqUvo4=
-github.com/golang-collections/collections v0.0.0-20130729185459-604e922904d3/go.mod h1:nPpo7qLxd6XL3hWJG/O60sR8ZKfMCiIoNap5GvD12KU=
+github.com/gammazero/deque v0.0.0-20201010052221-3932da5530cc h1:F7BbnLACph7UYiz9ZHi6npcROwKaZUyviDjsNERsoMM=
+github.com/gammazero/deque v0.0.0-20201010052221-3932da5530cc/go.mod h1:IlBLfYXnuw9sspy1XS6ctu5exGb6WHGKQsyo4s7bOEA=
