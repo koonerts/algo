@@ -917,9 +917,8 @@ type CharIndexTuple struct {
 func minWindow(s string, t string) (minSubString string) {
 	charFreq := map[uint8]int{}
 	for i := range t {
-		charFreq[t[i]]++
+		charFreq[t[i]] += 1
 	}
-
 
 	filteredS := []CharIndexTuple{}
 	for i := range s {
@@ -929,14 +928,71 @@ func minWindow(s string, t string) (minSubString string) {
 	}
 
 	lo, hi := 0, 0
-	patternLen := len(t)
+	patternLen := len(charFreq)
+	minLo, minHi := math.MinInt32, math.MaxInt32
 	for hi < len(filteredS) {
-
-		for patternLen <= 0
-
 		tup := filteredS[hi]
 		charFreq[tup.char]--
+
+		if charFreq[tup.char] == 0 {
+			patternLen--
+		}
+
+		if patternLen == 0 {
+			for charFreq[filteredS[lo].char] <= 0 && lo <= hi {
+				if filteredS[hi].index - filteredS[lo].index + 1 < minHi - minLo + 1 {
+					minLo, minHi = filteredS[lo].index, filteredS[hi].index
+				}
+
+				charFreq[filteredS[lo].char]++
+				lo++
+				if charFreq[filteredS[lo-1].char] == 1 {
+					break
+				}
+			}
+			patternLen++
+		}
 		hi++
 	}
+	if minLo != math.MinInt32 {
+		minSubString = s[minLo:minHi+1]
+	}
+	return
+}
 
+func isOneEditDistance(s string, t string) bool {
+	if math.Abs(float64(len(s) - len(t))) > 1 {
+		return false
+	} else if len(s) + len(t) == 1 {
+		return true
+	} else if len(t) < len(s) {
+		return isOneEditDistance(t, s)
+	} else if s == t[:len(s)] {
+		return len(s) != len(t)
+	}
+
+	diffCnt := 0
+	for i, j := 0, 0; i < len(s) && j < len(t); {
+		if len(s) == len(t) {
+			if s[i] != t[i] {
+				diffCnt++
+			}
+			i++
+		} else {
+			if s[i] != t[j] {
+				diffCnt++
+				j++
+			} else {
+				i++
+				j++
+			}
+		}
+	}
+	return diffCnt == 1
+}
+
+func productExceptSelf(nums []int) []int {
+	products := make([]int, len(nums))
+
+	return products
 }

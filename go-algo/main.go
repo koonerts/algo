@@ -10,8 +10,7 @@ import (
 )
 
 func main() {
-	fmt.Println(math.MaxInt64)
-	fmt.Println(addBinary("1010", "1011"))
+	fmt.Println(isOneEditDistance("ab", "acb"))
 }
 
 func PrettyPrint(v interface{}) (err error) {
