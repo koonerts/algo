@@ -991,8 +991,41 @@ func isOneEditDistance(s string, t string) bool {
 	return diffCnt == 1
 }
 
+// TODO: Come back to
 func productExceptSelf(nums []int) []int {
 	products := make([]int, len(nums))
-
 	return products
+}
+
+func moveZeroes(nums []int)  {
+	lo, hi := 0, 0
+	for lo < len(nums) && hi < len(nums) {
+		if nums[lo] != 0 {
+			lo++
+		}
+		if nums[hi] == 0 {
+			hi++
+		}
+		if lo > hi {
+			hi = lo+1
+			continue
+		}
+
+		if hi < len(nums) && nums[lo] == 0 && nums[hi] != 0 {
+			nums[lo], nums[hi] = nums[hi], nums[lo]
+			lo++
+			hi++
+		}
+	}
+}
+
+
+func lengthOfLongestSubstringKDistinct(s string, k int) int {
+	freq := map[uint8]int{}
+	lo, hi := 0, 0
+	for hi < len(s) {
+		if freq[s[hi]] < k {
+			freq[s[hi]] += 1
+		}
+	}
 }
