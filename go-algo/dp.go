@@ -24,7 +24,7 @@ func knapsackZeroOne(weights []int, profits []int, capacity int) {
 			}
 
 			profitWithout := maxProfits[i-1][j]
-			maxProfits[i][j] = max(profitWith, profitWithout)
+			maxProfits[i][j] = MaxInt(profitWith, profitWithout)
 		}
 	}
 	printSlice(maxProfits)
@@ -62,7 +62,7 @@ func KnapsackZeroOneOptimized(weights []int, profits []int, capacity int) {
 			}
 
 			profitWithout := maxProfits[j-1]
-			maxProfits[j] = max(profitWith, profitWithout)
+			maxProfits[j] = MaxInt(profitWith, profitWithout)
 		}
 	}
 	fmt.Println(maxProfits)
@@ -197,7 +197,7 @@ func KnapsackUnlimited(weights []int, profits []int, capacity int) int {
 			}
 
 			profitWithout := maxProfits[i-1][j]
-			maxProfits[i][j] = max(profitWith, profitWithout)
+			maxProfits[i][j] = MaxInt(profitWith, profitWithout)
 		}
 	}
 	printSlice(maxProfits)
@@ -219,7 +219,7 @@ func RodCuttingProfit(lengths []int, prices []int, maxLen int) (int, []int) {
 				profitWith = prices[i-1] + dp[i][j-lengths[i-1]]
 			}
 			profitWithout = dp[i-1][j]
-			dp[i][j] = max(profitWith, profitWithout)
+			dp[i][j] = MaxInt(profitWith, profitWithout)
 		}
 	}
 
@@ -273,8 +273,8 @@ func MinCoinChainUnlimited(denoms []int, total int) int {
 					with = ways[j-denoms[i]] + 1
 				}
 
-				if min(without, with) != math.MaxInt32 {
-					ways[j] = min(without, with)
+				if MinInt(without, with) != math.MaxInt32 {
+					ways[j] = MinInt(without, with)
 				}
 			}
 		}
@@ -303,7 +303,7 @@ func MaxRibbonCut(lengths []int, n int) int {
 				with = cuts[j-lengths[i]] + 1
 			}
 
-			cuts[j] = max(with, without)
+			cuts[j] = MaxInt(with, without)
 		}
 	}
 
@@ -339,7 +339,7 @@ func MinJumps(nums []int) int {
 			if dp[idx] == math.MaxInt32 {
 				for i := 1; i <= nums[idx]; i++ {
 					cnt := traverse(idx+i) + 1
-					dp[idx] = min(dp[idx], cnt)
+					dp[idx] = MinInt(dp[idx], cnt)
 				}
 			}
 			return dp[idx]
@@ -357,7 +357,7 @@ func MinJumpsTabulated(nums []int) int {
 
 	for i := range dp {
 		for j := 1; j <= nums[i] && j+i < len(nums); j++ {
-			dp[i+j] = min(dp[i+j], dp[i]+1)
+			dp[i+j] = MinInt(dp[i+j], dp[i]+1)
 		}
 	}
 	return dp[len(nums)-1]
@@ -369,7 +369,7 @@ func MaxStealProfit(profits []int) int {
 	dp[1] = profits[0]
 
 	for i := 2; i < len(dp); i++ {
-		dp[i] = max(dp[i-1], profits[i-1]+dp[i-2])
+		dp[i] = MaxInt(dp[i-1], profits[i-1]+dp[i-2])
 	}
 	printSlice(dp)
 	return dp[len(profits)]
@@ -387,7 +387,7 @@ func LongestPalindromicSubsequenceTabulated(text string) (maxLen int) {
 			if text[i] == text[j] {
 				dp[i][j] = 2 + dp[i+1][j-1]
 			} else {
-				dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+				dp[i][j] = MaxInt(dp[i+1][j], dp[i][j-1])
 			}
 		}
 	}
@@ -415,7 +415,7 @@ func LongestPalindromicSubsequenceRecursive(text string) int {
 				if text[lo] == text[hi] {
 					dp[lo][hi] = 2 + find(lo+1, hi-1)
 				} else {
-					dp[lo][hi] = max(find(lo+1, hi), find(lo, hi-1))
+					dp[lo][hi] = MaxInt(find(lo+1, hi), find(lo, hi-1))
 				}
 			}
 
@@ -495,7 +495,7 @@ func LongestCommonSubstringLength(s1, s2 string) int {
 		for j:= 1; j <= len(s2); j++ {
 			if s1[i-1] == s2[j-1] {
 				dp[i][j] = 1 + dp[i-1][j-1]
-				maxLen = max(maxLen, dp[i][j])
+				maxLen = MaxInt(maxLen, dp[i][j])
 			}
 		}
 	}
@@ -516,9 +516,9 @@ func LongestCommonSubsequenceLength(s1, s2 string) int {
 			if s1[i-1] == s2[j-1] {
 				dp[i][j] = 1 + dp[i-1][j-1]
 			} else {
-				dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+				dp[i][j] = MaxInt(dp[i-1][j], dp[i][j-1])
 			}
-			maxLen = max(maxLen, dp[i][j])
+			maxLen = MaxInt(maxLen, dp[i][j])
 		}
 	}
 	printSlice(dp)

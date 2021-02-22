@@ -184,8 +184,8 @@ func findDepth(node *BinaryTree, maxDiameter *int) (depth int) {
 	} else {
 		lDepth := findDepth(node.Left, maxDiameter) + 1
 		rDepth := findDepth(node.Right, maxDiameter) + 1
-		*maxDiameter = max(*maxDiameter, lDepth+rDepth-1)
-		return max(lDepth, rDepth)
+		*maxDiameter = MaxInt(*maxDiameter, lDepth+rDepth-1)
+		return MaxInt(lDepth, rDepth)
 	}
 }
 
@@ -231,11 +231,11 @@ func maxPathSum(root *TreeNode) int {
 	depthSum = func(node *TreeNode) int {
 		if node == nil {return 0}
 
-		leftSum := max(depthSum(node.Left), 0)
-		rightSum := max(depthSum(node.Right), 0)
+		leftSum := MaxInt(depthSum(node.Left), 0)
+		rightSum := MaxInt(depthSum(node.Right), 0)
 		totalSum := leftSum+rightSum+node.Val
-		maxSum = max(maxSum, totalSum)
-		return max(0, max(leftSum + node.Val, rightSum + node.Val))
+		maxSum = MaxInt(maxSum, totalSum)
+		return MaxInt(0, MaxInt(leftSum + node.Val, rightSum + node.Val))
 	}
 	depthSum(root)
 	return maxSum
@@ -376,3 +376,92 @@ func getTreeNode(root *TreeNode, val int) (returnNode *TreeNode) {
 	return
 }
 
+func (node *TreeNode) IsLeaf() bool {
+	return node.Left == nil && node.Right == nil
+}
+
+func binaryTreePaths(root *TreeNode) (paths []string) {
+	if root == nil {
+		return
+	} else if root.IsLeaf() {
+		paths = append(paths, fmt.Sprintf("%d", root.Val))
+		return
+	}
+
+	var traverse func(node *TreeNode, path string)
+	traverse = func(node *TreeNode, path string) {
+		if node == nil {
+			return
+		} else if node.IsLeaf() {
+			paths = append(paths, path + fmt.Sprintf("%s%d", "->", node.Val))
+		} else {
+			if node.Left != nil {
+				traverse(node.Left, path + fmt.Sprintf("%s%d", "->", node.Val))
+			}
+			if node.Right != nil {
+				traverse(node.Right, path + fmt.Sprintf("%s%d", "->", node.Val))
+			}
+		}
+	}
+	traverse(root.Left, fmt.Sprintf("%d", root.Val))
+	traverse(root.Right, fmt.Sprintf("%d", root.Val))
+	return
+}
+
+// TODO: Come back to
+func alienOrder(words []string) (order string) {
+	inDegree, adjGraph := make(map[string]int), make(map[string][]string)
+	keys := []string{}
+	for _, word := range words {
+		for i := range word {
+			currLetter := string(word[i])
+			if i == 0 {
+				if _, ok := inDegree[currLetter]; !ok {
+					inDegree[currLetter] = 0
+				}
+			} else {
+				prevLetter := string(word[i-1])
+				if prevLetter != currLetter && !ContainsString(adjGraph[prevLetter], currLetter) {
+					inDegree[currLetter] += 1
+					adjGraph[prevLetter] = append(adjGraph[prevLetter], currLetter)
+				}
+			}
+
+			if !ContainsString(keys, currLetter) {
+				keys = append(keys, currLetter)
+			}
+		}
+	}
+	fmt.Println(keys)
+
+	que := make([]string, 0, len(inDegree))
+	i := 0
+	for i < len(keys) {
+		if inDegree[keys[i]] == 0 {
+			que = append(que, keys[i])
+			keys = append(keys[:i], keys[i+1:]...)
+		} else {
+			i++
+		}
+	}
+
+
+	var letter string
+	for len(que) != 0 {
+		letter, que = que[0], que[1:]
+		order += letter
+		for _, child := range adjGraph[letter] {
+			inDegree[child]--
+		}
+		i := 0
+		for i < len(keys) {
+			if inDegree[keys[i]] == 0 {
+				que = append(que, keys[i])
+				keys = append(keys[:i], keys[i+1:]...)
+			} else {
+				i++
+			}
+		}
+	}
+	return
+}

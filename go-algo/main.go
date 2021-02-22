@@ -7,13 +7,11 @@ import (
 	"reflect"
 	"strconv"
 	"unsafe"
+	_ "gopkg.in/karalabe/cookiejar.v2/collections/deque"
 )
 
 func main() {
-	root := createTreeNode([]int{37,-34,-48,-1<<31,-100,-101,48,-1<<31,-1<<31,-1<<31,-1<<31,-54,-1<<31,-71,-22,-1<<31,-1<<31,-1<<31,8})
-	p := getTreeNode(root, -71)
-	q := getTreeNode(root, 8)
-	fmt.Println(lowestCommonAncestor(root, p, q))
+	fmt.Println(alienOrder([]string{"wrt","wrf","er","ett","rftt"}))
 }
 
 func PrettyPrint(v interface{}) (err error) {
@@ -22,26 +20,6 @@ func PrettyPrint(v interface{}) (err error) {
 		fmt.Println(string(b))
 	}
 	return
-}
-
-func max(nums ...int) int {
-	maxInt := math.MinInt32
-	for i := range nums {
-		if nums[i] > maxInt {
-			maxInt = nums[i]
-		}
-	}
-	return maxInt
-}
-
-func min(nums ...int) int {
-	minInt := math.MaxInt32
-	for i := range nums {
-		if nums[i] < minInt {
-			minInt = nums[i]
-		}
-	}
-	return minInt
 }
 
 func IsNumeric(s string) bool {
@@ -78,6 +56,14 @@ func printSlice(iSlice interface{}) {
 	}
 }
 
+func ContainsString(s []string, val string) bool {
+	for i := range s {
+		if s[i] == val {
+			return true
+		}
+	}
+	return false
+}
 
 func ReverseSlice(s interface{}) {
 	n := reflect.ValueOf(s).Len()
@@ -99,4 +85,31 @@ func byteSliceToString(bs []byte) string {
 	// This is copied from runtime. It relies on the string
 	// header being a prefix of the slice header!
 	return *(*string)(unsafe.Pointer(&bs))
+}
+
+func MaxInt(nums ...int) int {
+	maxInt := math.MinInt32
+	for i := range nums {
+		if nums[i] > maxInt {
+			maxInt = nums[i]
+		}
+	}
+	return maxInt
+}
+
+func MinInt(nums ...int) int {
+	minInt := math.MaxInt32
+	for i := range nums {
+		if nums[i] < minInt {
+			minInt = nums[i]
+		}
+	}
+	return minInt
+}
+
+func AbsInt(n int) int {
+	if n < 0 {
+		return -n
+	}
+	return n
 }

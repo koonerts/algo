@@ -186,7 +186,7 @@ func ApartmentHunting(blocks []Block, reqs []string) int {
 			if dist[i] == nil {
 				dist[i] = make(map[string]int)
 			}
-			dist[i][req] = min(up, down)
+			dist[i][req] = MinInt(up, down)
 		}
 	}
 
@@ -194,7 +194,7 @@ func ApartmentHunting(blocks []Block, reqs []string) int {
 	for i, d := range dist {
 		maxDistCurr := math.MinInt32
 		for _, val := range d {
-			maxDistCurr = max(val, maxDistCurr)
+			maxDistCurr = MaxInt(val, maxDistCurr)
 		}
 		if maxDistCurr < minDistAll {
 			idx = i
@@ -266,11 +266,11 @@ func WaterArea(heights []int) int {
 		if heights[lIdx] < heights[rIdx] {
 			//areas[lIdx] = lWall - heights[lIdx]
 			lIdx++
-			lWall = max(lWall, heights[lIdx])
+			lWall = MaxInt(lWall, heights[lIdx])
 			area += lWall - heights[lIdx]
 		} else {
 			rIdx--
-			rWall = max(rWall, heights[rIdx])
+			rWall = MaxInt(rWall, heights[rIdx])
 			area += rWall - heights[rIdx]
 		}
 	}
@@ -480,7 +480,7 @@ func MaxSumSubArraySizeK(nums []int, k int) (maxSum int) {
 			lo++
 		}
 		currSum += nums[hi]
-		maxSum = max(maxSum, currSum)
+		maxSum = MaxInt(maxSum, currSum)
 		hi++
 	}
 
@@ -504,7 +504,7 @@ func LongestSubstringLengthWithKDistinct(text string, k int) (maxLen int) {
 		}
 
 		charFreq[text[hi]]++
-		maxLen = max(hi-lo+1, maxLen)
+		maxLen = MaxInt(hi-lo+1, maxLen)
 		hi++
 	}
 	return
@@ -649,9 +649,9 @@ func lengthOfLongestSubstringWithoutDups(s string) (maxLen int) {
 	charSet := map[uint8]int{}
 	for hi < len(s) {
 		if _, ok := charSet[s[hi]]; ok {
-			lo = max(lo, charSet[s[hi]]+1)
+			lo = MaxInt(lo, charSet[s[hi]]+1)
 		}
-		maxLen = max(maxLen, hi-lo+1)
+		maxLen = MaxInt(maxLen, hi-lo+1)
 		charSet[s[hi]] = hi
 		hi++
 	}
@@ -872,7 +872,7 @@ func groupAnagrams(strs []string) (groups [][]string) {
 func addBinary(a string, b string) string {
 	i, j := len(a)-1, len(b)-1
 	carry := '0'
-	arr := make([]byte, max(i+1,j+1)+1)
+	arr := make([]byte, MaxInt(i+1,j+1)+1)
 	for i >= 0 || j >= 0 {
 		iv, jv := '0', '0'
 		if i >= 0 && a[i] == '1' {
@@ -884,16 +884,16 @@ func addBinary(a string, b string) string {
 
 		result := iv+jv+carry
 		if result == '1'*3 {
-			arr[max(i,j)+1] = '1'
+			arr[MaxInt(i,j)+1] = '1'
 			carry = '1'
 		} else if result == '1'*2 + '0' {
-			arr[max(i,j)+1] = '0'
+			arr[MaxInt(i,j)+1] = '0'
 			carry = '1'
 		} else if result == '1' + '0'*2 {
-			arr[max(i,j)+1] = '1'
+			arr[MaxInt(i,j)+1] = '1'
 			carry = '0'
 		} else {
-			arr[max(i,j)+1] = '0'
+			arr[MaxInt(i,j)+1] = '0'
 			carry = '0'
 		}
 
@@ -1037,7 +1037,7 @@ func lengthOfLongestSubstringKDistinct(s string, k int) (maxLen int) {
 				lo++
 			}
 		}
-		maxLen = max(maxLen, hi-lo+1)
+		maxLen = MaxInt(maxLen, hi-lo+1)
 		hi++
 	}
 	return
