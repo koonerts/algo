@@ -21,9 +21,46 @@ type BinaryTree struct {
 	Right *BinaryTree
 }
 
-type Node struct {
+type AdjacencyListNode struct {
 	Name     string
-	Children []*Node
+	Children []*AdjacencyListNode
+}
+
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
+
+type Node struct {
+	Val int
+	Neighbors []*Node
+}
+
+func createTreeNode(vals []int) *TreeNode {
+	nodeSet := map[int]*TreeNode{}
+	for i, val := range vals {
+		if val == -1<<31 {
+			continue
+		}
+		node := &TreeNode{val, nil, nil}
+		nodeSet[i] = node
+	}
+
+	for i := range vals {
+		if vals[i] == -1<<31 {
+			continue
+		}
+		left := 2*i + 1
+		right := left + 1
+		if left < len(vals) && nodeSet[left] != nil {
+			nodeSet[i].Left = nodeSet[left]
+		}
+		if right < len(vals) && nodeSet[right] != nil {
+			nodeSet[i].Right = nodeSet[right]
+		}
+	}
+	return nodeSet[0]
 }
 
 func createBinaryTree(jsonStr string) *BinaryTree {
@@ -128,7 +165,7 @@ func NodeDepths(root *BinaryTree) int {
 	return depthSum
 }
 
-func (n *Node) DepthFirstSearch(array []string) []string {
+func (n *AdjacencyListNode) DepthFirstSearch(array []string) []string {
 	array = append(array, n.Name)
 	for _, child := range n.Children {
 		array = child.DepthFirstSearch(array)
@@ -147,7 +184,195 @@ func findDepth(node *BinaryTree, maxDiameter *int) (depth int) {
 	} else {
 		lDepth := findDepth(node.Left, maxDiameter) + 1
 		rDepth := findDepth(node.Right, maxDiameter) + 1
-		*maxDiameter = max(*maxDiameter, lDepth + rDepth - 1)
+		*maxDiameter = max(*maxDiameter, lDepth+rDepth-1)
 		return max(lDepth, rDepth)
 	}
 }
+
+func isValidBST(root *TreeNode) bool {
+	var validate func(node *TreeNode, lo, hi int) bool
+	validate = func(node *TreeNode, lo, hi int) bool {
+		if node == nil {
+			return true
+		} else {
+			return lo < node.Val && node.Val < hi &&
+				validate(node.Left, lo, node.Val) &&
+				validate(node.Right, node.Val, hi)
+		}
+	}
+	return validate(root, -1<<63, 1<<63-1)
+}
+
+func flatten(root *TreeNode) {
+	preOrder := []*TreeNode{}
+	var traversePreOrder func(node *TreeNode)
+	traversePreOrder = func(node *TreeNode) {
+		if node == nil {
+			return
+		} else {
+			preOrder = append(preOrder, node)
+			traversePreOrder(node.Left)
+			traversePreOrder(node.Right)
+		}
+	}
+	traversePreOrder(root)
+	for i := range preOrder {
+		if i+1 < len(preOrder) {
+			preOrder[i].Right = preOrder[i+1]
+			preOrder[i].Left = nil
+		}
+	}
+}
+
+func maxPathSum(root *TreeNode) int {
+	maxSum := -1<<31
+
+	var depthSum func(node *TreeNode) int
+	depthSum = func(node *TreeNode) int {
+		if node == nil {return 0}
+
+		leftSum := max(depthSum(node.Left), 0)
+		rightSum := max(depthSum(node.Right), 0)
+		totalSum := leftSum+rightSum+node.Val
+		maxSum = max(maxSum, totalSum)
+		return max(0, max(leftSum + node.Val, rightSum + node.Val))
+	}
+	depthSum(root)
+	return maxSum
+}
+
+func cloneGraph(node *Node) *Node {
+	nodeMap := make(map[*Node]*Node)
+
+	var clone func(node *Node) *Node
+	clone = func(node *Node) *Node {
+		if node == nil {
+			return nil
+		} else if nodeMap[node] != nil {
+			return nodeMap[node]
+		}
+
+		cpy := &Node{node.Val, nil}
+		nodeMap[node] = cpy
+		if len(node.Neighbors) > 0 {
+			for i := range node.Neighbors {
+				cpy.Neighbors = append(cpy.Neighbors, clone(node.Neighbors[i]))
+			}
+		}
+		return cpy
+	}
+	return clone(node)
+}
+
+func rightSideView(root *TreeNode) (result []int) {
+	if root == nil { return nil }
+	stk := []*TreeNode{root}
+	for len(stk) > 0 {
+		levelLength := len(stk)
+		for i := 0; i < levelLength; i++ {
+			node := stk[0]
+			stk = stk[1:]
+			if node.Left != nil {
+				stk = append(stk, node.Left)
+			}
+			if node.Right != nil {
+				stk = append(stk, node.Right)
+			}
+			if i == levelLength-1 {
+				result = append(result, node.Val)
+			}
+		}
+	}
+	return
+}
+
+func numIslands(grid [][]byte) (cnt int) {
+	if len(grid) == 0 {
+		return 0
+	}
+
+	var clearIsland func(i, j int)
+	clearIsland = func(i, j int) {
+		if 0 <= i && i < len(grid) && 0 <= j && j < len(grid[i]) && grid[i][j] == '1' {
+			grid[i][j] = '0'
+			clearIsland(i+1, j)
+			clearIsland(i-1, j)
+			clearIsland(i, j+1)
+			clearIsland(i, j-1)
+		}
+	}
+
+	for i := range grid {
+		for j := range grid[i] {
+			if grid[i][j] == '1' {
+				cnt++
+				clearIsland(i, j)
+			}
+		}
+	}
+	return
+}
+
+type AncestorTreeNode struct {
+	Node, Ancestor *TreeNode
+}
+func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
+	stk := []*TreeNode{root}
+	levelOrder := make([]*TreeNode, 0)
+	var node *TreeNode
+	pIdx, qIdx, nIdx := -1, -1, 0
+	for len(stk) > 0 {
+		levelLen := len(stk)
+		for i := 0; i < levelLen; i++ {
+			node, stk = stk[0], stk[1:]
+			levelOrder = append(levelOrder, node)
+			if pIdx == -1 && node == p {
+				pIdx = nIdx
+			}
+			if qIdx == -1 && node == q {
+				qIdx = nIdx
+			}
+			if pIdx != -1 && qIdx != -1 {
+				break
+			}
+			if node != nil {
+				stk = append(stk, node.Left)
+				stk = append(stk, node.Right)
+			}
+			nIdx++
+		}
+		if pIdx != -1 && qIdx != -1 {
+			break
+		}
+	}
+
+	for pIdx != qIdx {
+		if pIdx > qIdx {
+			pIdx = (pIdx-1)/2
+		} else {
+			qIdx = (qIdx-1)/2
+		}
+	}
+	return levelOrder[pIdx]
+}
+
+func getTreeNode(root *TreeNode, val int) (returnNode *TreeNode) {
+	var traverse func(node *TreeNode)
+	traverse = func(node *TreeNode) {
+		if returnNode == nil {
+			if node == nil {
+				return
+			}
+
+			if node.Val == val {
+				returnNode = node
+			} else {
+				traverse(node.Left)
+				traverse(node.Right)
+			}
+		}
+	}
+	traverse(root)
+	return
+}
+

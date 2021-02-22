@@ -10,10 +10,10 @@ import (
 )
 
 func main() {
-	arr := []int{0,1,0,3,12}
-	moveZeroes(arr)
-	fmt.Println(arr)
-	fmt.Println(10)
+	root := createTreeNode([]int{37,-34,-48,-1<<31,-100,-101,48,-1<<31,-1<<31,-1<<31,-1<<31,-54,-1<<31,-71,-22,-1<<31,-1<<31,-1<<31,8})
+	p := getTreeNode(root, -71)
+	q := getTreeNode(root, 8)
+	fmt.Println(lowestCommonAncestor(root, p, q))
 }
 
 func PrettyPrint(v interface{}) (err error) {

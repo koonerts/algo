@@ -1019,13 +1019,146 @@ func moveZeroes(nums []int)  {
 	}
 }
 
+func lengthOfLongestSubstringKDistinct(s string, k int) (maxLen int) {
+	if k == 0 {return 0}
 
-func lengthOfLongestSubstringKDistinct(s string, k int) int {
 	freq := map[uint8]int{}
 	lo, hi := 0, 0
 	for hi < len(s) {
-		if freq[s[hi]] < k {
+		if len(freq) < k || freq[s[hi]] > 0 {
 			freq[s[hi]] += 1
+		} else {
+			for len(freq) == k {
+				if freq[s[lo]] == 1 {
+					delete(freq, s[lo])
+				} else {
+					freq[s[lo]]--
+				}
+				lo++
+			}
+		}
+		maxLen = max(maxLen, hi-lo+1)
+		hi++
+	}
+	return
+}
+
+type IpType int
+const (
+	IPv4 IpType = iota + 1
+	IPv6
+)
+func validIPAddress(IP string) string {
+	var ipGroups []string
+	var ipType IpType
+	if strings.Contains(IP, ".") && strings.Contains(IP, ":") {
+		return "Neither"
+	} else if strings.Contains(IP, ".") {
+		ipGroups = strings.Split(IP, ".")
+		ipType = IPv4
+	} else if strings.Contains(IP, ":") {
+		ipGroups = strings.Split(IP, ":")
+		ipType = IPv6
+	}
+
+	if ipType == IPv4 && validateIpv4Address(ipGroups){
+		return "IPv4"
+	} else if ipType == IPv6 && validateIpv6Address(ipGroups) {
+		return "IPv6"
+	}
+	return "Neither"
+}
+
+func validateIpv4Address(ipGroups []string) (isValid bool) {
+	if len(ipGroups) != 4 {
+		return
+	}
+
+	for _, ipSection := range ipGroups {
+		ipSecNum, err := strconv.Atoi(ipSection)
+		if err != nil || ipSecNum < 0 || ipSecNum > 255 {
+			return
+		}
+		if len(ipSection) == 0 {
+			return
+		}
+		if len(ipSection) > 1 && strings.HasPrefix(ipSection, "0") {
+			return
 		}
 	}
+
+	return true
+}
+
+func validateIpv6Address(ipGroups []string) (isValid bool) {
+	if len(ipGroups) != 8 {
+		return
+	}
+
+	var lowerCaseLow, lowerCaseHigh uint8 = 'a', 'f'
+	var upperCaseLow, upperCaseHigh uint8 = 'A', 'F'
+
+	for _, ipSection := range ipGroups {
+		if len(ipSection) == 0 || len(ipSection) > 4 {
+			return
+		}
+
+		for i := range ipSection {
+
+			_, err := strconv.Atoi(string(ipSection[i]))
+			if err != nil &&
+				!((ipSection[i] >= lowerCaseLow && ipSection[i] <= lowerCaseHigh) ||
+					(ipSection[i] >= upperCaseLow && ipSection[i] <= upperCaseHigh)) {
+				return
+			}
+		}
+	}
+
+	return true
+}
+
+// TODO: Come back to
+func subarraySum(nums []int, k int) (cnt int) {
+	lo, hi := 0, 0
+	sum := 0
+	for hi < len(nums) {
+		sum += nums[hi]
+		for (sum >= k && k >= 0) || (sum <= k && k < 0) && lo < len(nums) {
+			if sum == k {
+				cnt++
+			}
+			sum -= nums[lo]
+			lo++
+		}
+		hi++
+	}
+	return
+}
+
+func validPalindrome(s string) bool {
+	if len(s) <= 2 {
+		return true
+	}
+
+	deleteCnt := 0
+	lo, hi := 0, len(s)-1
+	for lo <= hi {
+		if s[lo] == s[hi] {
+			lo++
+			hi--
+		} else if deleteCnt != 0 {
+			return false
+		} else {
+			if lo+1 <= hi && s[lo+1] == s[hi] && (lo+2 > hi-1 || s[lo+2] == s[hi-1]) {
+				lo++
+				deleteCnt++
+			} else if hi-1 >= lo && s[lo] == s[hi-1] && (hi-2 < lo+1 || s[lo+1] == s[hi-2]) {
+				hi--
+				deleteCnt++
+			} else {
+				return false
+			}
+		}
+	}
+	return true
 }

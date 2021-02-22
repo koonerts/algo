@@ -372,6 +372,7 @@ class Solution:
 
 
 
+
 root = TreeNode(2, left=TreeNode(1), right=TreeNode(3))
 val = Solution().inorderSuccessor(root, root.left)
 print(None if not val else val.val)
