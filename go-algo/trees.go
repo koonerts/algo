@@ -411,8 +411,9 @@ func binaryTreePaths(root *TreeNode) (paths []string) {
 // TODO: Come back to
 func alienOrder(words []string) (order string) {
 	inDegree, adjGraph := make(map[string]int), make(map[string][]string)
-	keys := []string{}
-	for _, word := range words {
+
+	for i := range words {
+		for j :=
 		for i := range word {
 			currLetter := string(word[i])
 			if i == 0 {
@@ -427,12 +428,9 @@ func alienOrder(words []string) (order string) {
 				}
 			}
 
-			if !ContainsString(keys, currLetter) {
-				keys = append(keys, currLetter)
-			}
+
 		}
 	}
-	fmt.Println(keys)
 
 	que := make([]string, 0, len(inDegree))
 	i := 0

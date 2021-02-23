@@ -1,5 +1,10 @@
 from collections import deque
 
+class Node:
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
@@ -57,6 +62,42 @@ class BSTIterator:
     def hasNext(self) -> bool:
         return len(self.stk) > 0
 
+
+def listToNode(nums) -> Node:
+    node_map = {}
+    for i, num in enumerate(nums):
+        if num is None:
+            node_map[i] = None
+        else:
+            node = Node(num)
+            node_map[i] = node
+
+    for i, num in enumerate(nums):
+        left = 2*i + 1
+        right = left + 1
+        if left < len(nums) and left in node_map:
+            node_map[i].left = node_map[left]
+        if right < len(nums) and right in node_map:
+            node_map[i].right = node_map[right]
+    return node_map[0]
+
+def listToTreeNode(nums) -> TreeNode:
+    node_map = {}
+    for i, num in enumerate(nums):
+        if num is None:
+            node_map[i] = None
+        else:
+            node = TreeNode(num)
+            node_map[i] = node
+
+    for i, num in enumerate(nums):
+        left = 2*i + 1
+        right = left + 1
+        if left < len(nums) and left in node_map:
+            node_map[i].left = node_map[left]
+        if right < len(nums) and right in node_map:
+            node_map[i].right = node_map[right]
+    return node_map[0]
 
 class Solution:
     def searchBST(self, root: TreeNode, val: int) -> TreeNode:
@@ -368,11 +409,99 @@ class Solution:
         :rtype: None
         """
 
+    def alienOrder(self, words: list[str]) -> str:
+        in_deg = {c:0 for word in words for c in word}
+        adj_graph = {c:[] for word in words for c in word}
+        for i in range(len(words)):
+            for l in range(i+1, len(words)):
+                word = words[i]
+                next_word = words[l]
+                if word == next_word:
+                    continue
+                j, k = 0, 0
+                while j < len(word) and k < len(next_word):
+                    if word[j] == next_word[k]:
+                        j += 1
+                        k += 1
+                        if k >= len(next_word):
+                            return ""
+                    elif next_word[k] not in adj_graph[word[j]]:
+                        adj_graph[word[j]].append(next_word[k])
+                        in_deg[next_word[k]] += 1
+                        break
+                    else:
+                        break
+
+        que = deque([])
+        for char, in_degree in in_deg.items():
+            if in_degree == 0:
+                que.append(char)
+
+        result = ""
+        while que:
+            char = que.popleft()
+            result += char
+            for child in adj_graph[char]:
+                in_deg[child] -= 1
+                if in_deg[child] == 0:
+                    que.append(child)
+
+        if len(result) != len(in_deg):
+            return ""
+        return result
+
+    def treeToDoublyList(self, root: Node) -> Node:
+        if not root:
+            return root
+        stk = []
+        node = root
+
+        head, tail, prev = None, None, None
+        while stk or node:
+            while node:
+                stk.append(node)
+                node = node.left
+
+            node = stk.pop()
+            if not head:
+                head = node
+
+            if not node.right and not stk:
+                tail = node
+
+            node.left = prev
+            if prev:
+                prev.right = node
+            prev = node
+            node = node.right
+
+        head.left = tail
+        tail.right = head
+        return head
+
+    # TODO: Come back to
+    def isBipartite(self, graph: list[list[int]]) -> bool:
+        if not graph: return True
+        s1, s2 = set(), set()
+
+        set_number = 1
+        q = deque([0])
+        while q:
+            for _ in range(len(q)):
+                node = q.popleft()
+                if set_number == 1:
+                    s1.add(node)
+                else:
+                    s2.add(node)
+
+                for child in graph[node]:
+                    if child not in s1 and child not in s2:
+                        q.append(child)
+            set_number *= -1
+        print(s1)
+        print(s2)
+        return s1.isdisjoint(s2)
 
 
-
-
-
-root = TreeNode(2, left=TreeNode(1), right=TreeNode(3))
-val = Solution().inorderSuccessor(root, root.left)
-print(None if not val else val.val)
+res = Solution().isBipartite([[],[2,4,6],[1,4,8,9],[7,8],[1,2,8,9],[6,9],[1,5,7,8,9],[3,6,9],[2,3,4,6,9],[2,4,5,6,7,8]])
+print(res)
