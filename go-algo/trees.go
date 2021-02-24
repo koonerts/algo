@@ -410,56 +410,49 @@ func binaryTreePaths(root *TreeNode) (paths []string) {
 
 // TODO: Come back to
 func alienOrder(words []string) (order string) {
-	inDegree, adjGraph := make(map[string]int), make(map[string][]string)
-
-	for i := range words {
-		for j :=
-		for i := range word {
-			currLetter := string(word[i])
-			if i == 0 {
-				if _, ok := inDegree[currLetter]; !ok {
-					inDegree[currLetter] = 0
-				}
-			} else {
-				prevLetter := string(word[i-1])
-				if prevLetter != currLetter && !ContainsString(adjGraph[prevLetter], currLetter) {
-					inDegree[currLetter] += 1
-					adjGraph[prevLetter] = append(adjGraph[prevLetter], currLetter)
-				}
-			}
-
-
-		}
-	}
-
-	que := make([]string, 0, len(inDegree))
-	i := 0
-	for i < len(keys) {
-		if inDegree[keys[i]] == 0 {
-			que = append(que, keys[i])
-			keys = append(keys[:i], keys[i+1:]...)
-		} else {
-			i++
-		}
-	}
-
-
-	var letter string
-	for len(que) != 0 {
-		letter, que = que[0], que[1:]
-		order += letter
-		for _, child := range adjGraph[letter] {
-			inDegree[child]--
-		}
-		i := 0
-		for i < len(keys) {
-			if inDegree[keys[i]] == 0 {
-				que = append(que, keys[i])
-				keys = append(keys[:i], keys[i+1:]...)
-			} else {
-				i++
-			}
-		}
-	}
+	// inDegree, adjGraph := make(map[string]int), make(map[string][]string)
 	return
+}
+
+type VertTreeNode struct {
+	node *TreeNode
+	col int
+}
+func verticalOrder(root *TreeNode) [][]int {
+	if root == nil {
+		return [][]int{}
+	}
+
+	nodeMap := map[int][]int{}
+	minCol := 0
+	maxCol := 0
+
+
+	q := []VertTreeNode{VertTreeNode{root, 0}}
+	var vertNode VertTreeNode
+	for len(q) > 0 {
+		levelLength := len(q)
+		for i := 0; i < levelLength; i++ {
+			vertNode, q = q[0], q[1:]
+			minCol, maxCol = MinInt(minCol, vertNode.col), MaxInt(maxCol, vertNode.col)
+
+			/*if nodeMap[vertNode.col] == nil {
+				nodeMap[vertNode.col] = &[]int{}
+			}*/
+			nodeMap[vertNode.col] = append(nodeMap[vertNode.col], vertNode.node.Val)
+			if vertNode.node.Left != nil {
+				q = append(q, VertTreeNode{vertNode.node.Left, vertNode.col-1})
+			}
+			if vertNode.node.Right != nil {
+				q = append(q, VertTreeNode{vertNode.node.Right, vertNode.col+1})
+			}
+		}
+	}
+
+	results := make([][]int, 0, len(nodeMap))
+	for col := minCol; col < maxCol+1; col++ {
+		results = append(results, nodeMap[col])
+	}
+
+	return results
 }

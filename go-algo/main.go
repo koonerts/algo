@@ -10,8 +10,9 @@ import (
 	_ "gopkg.in/karalabe/cookiejar.v2/collections/deque"
 )
 
+
 func main() {
-	fmt.Println(alienOrder([]string{"wrt","wrf","er","ett","rftt"}))
+	fmt.Println(permute([]int{1,1,2}))
 }
 
 func PrettyPrint(v interface{}) (err error) {
