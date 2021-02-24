@@ -819,7 +819,6 @@ func multiplyStrings(num1 string, num2 string) string {
 	return string(res)
 }
 
-
 func addStrings(num1, num2 string) string {
 	i, j := len(num1)-1, len(num2)-1
 	carryover := 0
@@ -832,10 +831,10 @@ func addStrings(num1, num2 string) string {
 		if j >= 0 {
 			jval, _ = strconv.Atoi(string(num2[j]))
 		}
-		sum := ival+jval+carryover
+		sum := ival + jval + carryover
 		if i > 0 || j > 0 {
 			returnVal = strconv.FormatInt(int64(sum%10), 10) + returnVal
-			carryover = sum/10
+			carryover = sum / 10
 		} else {
 			returnVal = strconv.FormatInt(int64(sum), 10) + returnVal
 		}
@@ -845,7 +844,6 @@ func addStrings(num1, num2 string) string {
 	}
 	return returnVal
 }
-
 
 func groupAnagrams(strs []string) (groups [][]string) {
 	groupsDict := map[string][]string{}
@@ -868,11 +866,10 @@ func groupAnagrams(strs []string) (groups [][]string) {
 	return
 }
 
-
 func addBinary(a string, b string) string {
 	i, j := len(a)-1, len(b)-1
 	carry := '0'
-	arr := make([]byte, MaxInt(i+1,j+1)+1)
+	arr := make([]byte, MaxInt(i+1, j+1)+1)
 	for i >= 0 || j >= 0 {
 		iv, jv := '0', '0'
 		if i >= 0 && a[i] == '1' {
@@ -882,18 +879,18 @@ func addBinary(a string, b string) string {
 			jv = '1'
 		}
 
-		result := iv+jv+carry
+		result := iv + jv + carry
 		if result == '1'*3 {
-			arr[MaxInt(i,j)+1] = '1'
+			arr[MaxInt(i, j)+1] = '1'
 			carry = '1'
-		} else if result == '1'*2 + '0' {
-			arr[MaxInt(i,j)+1] = '0'
+		} else if result == '1'*2+'0' {
+			arr[MaxInt(i, j)+1] = '0'
 			carry = '1'
-		} else if result == '1' + '0'*2 {
-			arr[MaxInt(i,j)+1] = '1'
+		} else if result == '1'+'0'*2 {
+			arr[MaxInt(i, j)+1] = '1'
 			carry = '0'
 		} else {
-			arr[MaxInt(i,j)+1] = '0'
+			arr[MaxInt(i, j)+1] = '0'
 			carry = '0'
 		}
 
@@ -911,9 +908,10 @@ func addBinary(a string, b string) string {
 }
 
 type CharIndexTuple struct {
-	char byte
+	char  byte
 	index int
 }
+
 func minWindow(s string, t string) (minSubString string) {
 	charFreq := map[uint8]int{}
 	for i := range t {
@@ -940,7 +938,7 @@ func minWindow(s string, t string) (minSubString string) {
 
 		if patternLen == 0 {
 			for charFreq[filteredS[lo].char] <= 0 && lo <= hi {
-				if filteredS[hi].index - filteredS[lo].index + 1 < minHi - minLo + 1 {
+				if filteredS[hi].index-filteredS[lo].index+1 < minHi-minLo+1 {
 					minLo, minHi = filteredS[lo].index, filteredS[hi].index
 				}
 
@@ -955,15 +953,15 @@ func minWindow(s string, t string) (minSubString string) {
 		hi++
 	}
 	if minLo != math.MinInt32 {
-		minSubString = s[minLo:minHi+1]
+		minSubString = s[minLo : minHi+1]
 	}
 	return
 }
 
 func isOneEditDistance(s string, t string) bool {
-	if math.Abs(float64(len(s) - len(t))) > 1 {
+	if math.Abs(float64(len(s)-len(t))) > 1 {
 		return false
-	} else if len(s) + len(t) == 1 {
+	} else if len(s)+len(t) == 1 {
 		return true
 	} else if len(t) < len(s) {
 		return isOneEditDistance(t, s)
@@ -997,7 +995,7 @@ func productExceptSelf(nums []int) []int {
 	return products
 }
 
-func moveZeroes(nums []int)  {
+func moveZeroes(nums []int) {
 	lo, hi := 0, 0
 	for lo < len(nums) && hi < len(nums) {
 		if nums[lo] != 0 {
@@ -1007,7 +1005,7 @@ func moveZeroes(nums []int)  {
 			hi++
 		}
 		if lo > hi {
-			hi = lo+1
+			hi = lo + 1
 			continue
 		}
 
@@ -1020,7 +1018,9 @@ func moveZeroes(nums []int)  {
 }
 
 func lengthOfLongestSubstringKDistinct(s string, k int) (maxLen int) {
-	if k == 0 {return 0}
+	if k == 0 {
+		return 0
+	}
 
 	freq := map[uint8]int{}
 	lo, hi := 0, 0
@@ -1044,10 +1044,12 @@ func lengthOfLongestSubstringKDistinct(s string, k int) (maxLen int) {
 }
 
 type IpType int
+
 const (
 	IPv4 IpType = iota + 1
 	IPv6
 )
+
 func validIPAddress(IP string) string {
 	var ipGroups []string
 	var ipType IpType
@@ -1061,7 +1063,7 @@ func validIPAddress(IP string) string {
 		ipType = IPv6
 	}
 
-	if ipType == IPv4 && validateIpv4Address(ipGroups){
+	if ipType == IPv4 && validateIpv4Address(ipGroups) {
 		return "IPv4"
 	} else if ipType == IPv6 && validateIpv6Address(ipGroups) {
 		return "IPv6"
@@ -1161,4 +1163,101 @@ func validPalindrome(s string) bool {
 		}
 	}
 	return true
+}
+
+// TODO: Come back to and improve time complexity
+func divide(dividend int, divisor int) (cnt int) {
+	isNegative := false
+	if dividend < 0 {
+		isNegative = !isNegative
+		dividend = -dividend
+	}
+	if divisor < 0 {
+		isNegative = !isNegative
+		divisor = -divisor
+	}
+
+	for dividend >= divisor {
+		cnt++
+		dividend -= divisor
+	}
+
+	if isNegative {
+		cnt = -cnt
+	}
+	if cnt < -1<<31 {
+		cnt = -1 << 31
+	} else if cnt > 1<<31-1 {
+		cnt = 1<<31 - 1
+	}
+	return
+}
+
+func binarySearchSifted(nums []int, target int) int {
+	if len(nums) == 0 {
+		return -1
+	}
+
+	lo, hi := 0, len(nums)-1
+	for lo <= hi {
+		mid := (lo+hi)/2
+		if nums[mid] == target {
+			return mid
+		} else if nums[lo] <= nums[mid] {
+			if target < nums[mid] && target >= nums[lo] {
+				hi = mid-1
+			} else {
+				lo = mid+1
+			}
+		} else {
+			if target > nums[mid] && target <= nums[hi] {
+				lo = mid+1
+			} else {
+				hi = mid-1
+			}
+		}
+	}
+	return -1
+}
+
+type SearchDirection int
+const (
+	Forward SearchDirection = iota + 1
+	Backward
+)
+func binarySearchRange(nums []int, lo, hi, target int, dir SearchDirection) int {
+	idx := -1
+	for lo <= hi {
+		mid := (lo+hi)/2
+		if nums[mid] == target {
+			idx = mid
+			if dir == Forward {
+				lo = mid+1
+			} else {
+				hi = mid-1
+			}
+		} else if target < nums[mid] {
+			hi = mid-1
+		} else {
+			lo = mid+1
+		}
+	}
+	return idx
+}
+func searchRange(nums []int, target int) []int {
+	results := []int{-1,-1}
+	if len(nums) == 0 {return results}
+
+	low := binarySearchRange(nums, 0, len(nums)-1, target, Backward)
+	if low == -1 {
+		return results
+	}
+	results[0] = low
+	results[1] = low
+
+	high := binarySearchRange(nums, low+1, len(nums)-1, target, Forward)
+	if high != -1 {
+		results[1] = high
+	}
+	return results
 }

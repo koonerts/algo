@@ -12,7 +12,9 @@ import (
 
 
 func main() {
-	fmt.Println(permute([]int{1,1,2}))
+	fmt.Println(binarySearchSifted([]int{4,5,6,7,0,1,2}, 0))
+	fmt.Println(binarySearchSifted([]int{4,5,6,7,0,1,2}, 3))
+	fmt.Println(binarySearchSifted([]int{1}, 0))
 }
 
 func PrettyPrint(v interface{}) (err error) {
