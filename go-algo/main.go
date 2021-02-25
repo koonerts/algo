@@ -3,18 +3,16 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"math"
+	_ "gopkg.in/karalabe/cookiejar.v2/collections/deque"
 	"reflect"
 	"strconv"
 	"unsafe"
-	_ "gopkg.in/karalabe/cookiejar.v2/collections/deque"
 )
 
 
 func main() {
-	fmt.Println(binarySearchSifted([]int{4,5,6,7,0,1,2}, 0))
-	fmt.Println(binarySearchSifted([]int{4,5,6,7,0,1,2}, 3))
-	fmt.Println(binarySearchSifted([]int{1}, 0))
+	fmt.Println(findPeakElement([]int{1,2,3,1}))
+	fmt.Println(findPeakElement([]int{1,2,1,3,5,6,4}))
 }
 
 func PrettyPrint(v interface{}) (err error) {
@@ -91,7 +89,7 @@ func byteSliceToString(bs []byte) string {
 }
 
 func MaxInt(nums ...int) int {
-	maxInt := math.MinInt32
+	maxInt := nums[0]
 	for i := range nums {
 		if nums[i] > maxInt {
 			maxInt = nums[i]
@@ -101,7 +99,7 @@ func MaxInt(nums ...int) int {
 }
 
 func MinInt(nums ...int) int {
-	minInt := math.MaxInt32
+	minInt := nums[0]
 	for i := range nums {
 		if nums[i] < minInt {
 			minInt = nums[i]

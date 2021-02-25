@@ -1261,3 +1261,44 @@ func searchRange(nums []int, target int) []int {
 	}
 	return results
 }
+
+func merge(intervals [][]int) [][]int {
+	if len(intervals) <= 1 {
+		return intervals
+	}
+
+	start, end := 0, 1
+	sort.Slice(intervals, func(i, j int) bool {
+		return intervals[i][start] <= intervals[j][start]
+	})
+
+	results := [][]int{intervals[0]}
+	for i := 1; i < len(intervals); i++ {
+		prev := results[len(results)-1]
+		if prev[end] < intervals[i][start] {
+			results = append(results, intervals[i])
+		} else {
+			prev[start] = MinInt(prev[start], intervals[i][start])
+			prev[end] = MaxInt(prev[end], intervals[i][end])
+		}
+	}
+	return results
+}
+
+
+func findPeakElement(nums []int) int {
+	if len(nums) == 1 {
+		return 0
+	} else if nums[0] > nums[1] {
+		return 0
+	} else if nums[len(nums)-1] > nums[len(nums)-2] {
+		return len(nums)-1
+	}
+
+	for i := 1; i < len(nums)-1; i++ {
+		if nums[i-1] < nums[i] && nums[i] > nums[i+1] {
+			return i
+		}
+	}
+	return -1
+}
