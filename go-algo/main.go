@@ -11,8 +11,8 @@ import (
 
 
 func main() {
-	fmt.Println(findPeakElement([]int{1,2,3,1}))
-	fmt.Println(findPeakElement([]int{1,2,1,3,5,6,4}))
+	fmt.Println(intersection([]int{1,2,2,1}, []int{2,2}))
+	fmt.Println(intersection([]int{4,9,5}, []int{9,4,9,8,4}))
 }
 
 func PrettyPrint(v interface{}) (err error) {

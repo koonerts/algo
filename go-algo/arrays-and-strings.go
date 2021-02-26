@@ -1287,18 +1287,70 @@ func merge(intervals [][]int) [][]int {
 
 
 func findPeakElement(nums []int) int {
-	if len(nums) == 1 {
-		return 0
-	} else if nums[0] > nums[1] {
+	if len(nums) == 1 || nums[0] > nums[1] {
 		return 0
 	} else if nums[len(nums)-1] > nums[len(nums)-2] {
 		return len(nums)-1
 	}
 
-	for i := 1; i < len(nums)-1; i++ {
-		if nums[i-1] < nums[i] && nums[i] > nums[i+1] {
-			return i
+	lo, hi := 0, len(nums)-1
+	for lo <= hi {
+		mid := (lo+hi)/2
+		if mid+1 <= hi && nums[mid] < nums[mid+1] {
+			lo = mid+1
+		} else if mid-1 >= lo && nums[mid] < nums[mid-1] {
+			hi = mid-1
+		} else {
+			return mid
 		}
 	}
 	return -1
+}
+
+func isBadVersion(version int) bool {
+	return true
+}
+
+func firstBadVersion(n int) int {
+	if n == 1 {
+		return 1
+	}
+
+	lo, hi := 1, n
+	isBadIdx := -1
+	for lo <= hi {
+		mid := (lo+hi)/2
+		if isBadVersion(mid) {
+			isBadIdx = mid
+			hi = mid-1
+		} else {
+			lo = mid+1
+		}
+	}
+	return isBadIdx
+}
+
+func intersection(nums1 []int, nums2 []int) []int {
+	if len(nums1) == 0 || len(nums2) == 0 {
+		return []int{}
+	} else if len(nums2) < len(nums1) {
+		return intersection(nums2, nums1)
+	}
+
+	m1, m2 := map[int]struct{}{}, map[int]struct{}{}
+	for i := 0; i < len(nums1) || i < len(nums2); i++ {
+		if i < len(nums1) {
+			m1[nums1[i]] = struct{}{}
+		}
+		if i < len(nums2) {
+			m2[nums2[i]] = struct{}{}
+		}
+	}
+	results := make([]int, 0, len(m1))
+	for num := range m1 {
+		if _, ok := m2[num]; ok {
+			results = append(results, num)
+		}
+	}
+	return results
 }
