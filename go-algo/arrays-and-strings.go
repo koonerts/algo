@@ -989,12 +989,6 @@ func isOneEditDistance(s string, t string) bool {
 	return diffCnt == 1
 }
 
-// TODO: Come back to
-func productExceptSelf(nums []int) []int {
-	products := make([]int, len(nums))
-	return products
-}
-
 func moveZeroes(nums []int) {
 	lo, hi := 0, 0
 	for lo < len(nums) && hi < len(nums) {
@@ -1354,3 +1348,33 @@ func intersection(nums1 []int, nums2 []int) []int {
 	}
 	return results
 }
+
+func productExceptSelf(nums []int) []int {
+	results, left, right := make([]int, len(nums)), make([]int, len(nums)), make([]int, len(nums))
+	left[0], right[len(nums)-1] = 1, 1
+	for i, j := 0, len(nums)-1; i < len(nums) && j >= 0; i, j = i+1, j-1 {
+		if i > 0 {
+			left[i] = left[i-1]*nums[i-1]
+		}
+		if j < len(nums)-1 {
+			right[i] = right[i+1]*nums[i+1]
+		}
+	}
+	for i := range results {
+		results[i] = left[i]*right[i]
+	}
+	return results
+}
+
+
+/*func strStr(haystack string, needle string) int {
+	if needle == "" {return 0}
+	else if len(needle) > len(haystack) {return -1}
+	p1, p2 := 0, 0
+	for i := range haystack {
+
+
+	}
+	return -1
+}*/
+
