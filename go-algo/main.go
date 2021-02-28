@@ -3,16 +3,36 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	_ "go-algo/collections"
 	_ "gopkg.in/karalabe/cookiejar.v2/collections/deque"
 	"reflect"
 	"strconv"
 	"unsafe"
 )
 
-
 func main() {
-	fmt.Println(intersection([]int{1,2,2,1}, []int{2,2}))
-	fmt.Println(intersection([]int{4,9,5}, []int{9,4,9,8,4}))
+	root := createBinaryTree("{\"nodes\":[{\"id\":\"1\",\"left\":\"2\",\"right\":\"3\",\"value\":1},{\"id\":\"2\",\"left\":\"4\",\"right\":\"5\",\"value\":2},{\"id\":\"3\",\"left\":null,\"right\":\"6\",\"value\":3},{\"id\":\"4\",\"left\":null,\"right\":null,\"value\":4},{\"id\":\"5\",\"left\":\"7\",\"right\":\"8\",\"value\":5},{\"id\":\"6\",\"left\":null,\"right\":null,\"value\":6},{\"id\":\"7\",\"left\":null,\"right\":null,\"value\":7},{\"id\":\"8\",\"left\":null,\"right\":null,\"value\":8}],\"root\":\"1\"}")
+	fmt.Println(HeightBalancedBinaryTree(root))
+}
+
+
+type MatrixHelper struct {
+	IntMatrix [][]int
+	StringMatrix [][]string
+}
+func strToIntMatrix(str string) [][]int {
+	bytes := []byte(`{"intMatrix":`)
+	bytes = append(append(bytes, str...), `}`...)
+	var v MatrixHelper
+	_ = json.Unmarshal(bytes, &v)
+	return v.IntMatrix
+}
+func strToStringMatrix(str string) [][]string {
+	bytes := []byte(`{"stringMatrix":`)
+	bytes = append(append(bytes, str...), `}`...)
+	var v MatrixHelper
+	_ = json.Unmarshal(bytes, &v)
+	return v.StringMatrix
 }
 
 func PrettyPrint(v interface{}) (err error) {

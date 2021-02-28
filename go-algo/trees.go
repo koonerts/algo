@@ -1,8 +1,10 @@
 package main
 
 import (
+	"container/heap"
 	"encoding/json"
 	"fmt"
+	"go-algo/collections"
 	"math"
 	"sync"
 )
@@ -33,7 +35,7 @@ type TreeNode struct {
 }
 
 type Node struct {
-	Val int
+	Val       int
 	Neighbors []*Node
 }
 
@@ -94,6 +96,43 @@ func createBinaryTree(jsonStr string) *BinaryTree {
 		}
 		if right != nil {
 			binaryTreeMap[id].Right = binaryTreeMap[right.(string)]
+		}
+	}
+
+	return root
+}
+
+func createBST(jsonStr string) *BST {
+	var itree interface{}
+	bytes := []byte(jsonStr)
+	err := json.Unmarshal(bytes, &itree)
+	if err != nil {
+		fmt.Println(err)
+	}
+	tree := itree.(map[string]interface{})
+	var root *BST
+	var bstMap = map[string]*BST{}
+	var nodeMap = map[string]interface{}{}
+
+	nodes := tree["nodes"].([]interface{})
+	for _, val := range nodes {
+		node := val.(map[string]interface{})
+		tNode := BST{Id: node["id"].(string), Value: int(node["value"].(float64))}
+		bstMap[tNode.Id] = &tNode
+		nodeMap[tNode.Id] = node
+		if tree["root"].(string) == tNode.Id {
+			root = &tNode
+		}
+	}
+
+	for id := range bstMap {
+		left := nodeMap[id].(map[string]interface{})["left"]
+		right := nodeMap[id].(map[string]interface{})["right"]
+		if left != nil {
+			bstMap[id].Left = bstMap[left.(string)]
+		}
+		if right != nil {
+			bstMap[id].Right = bstMap[right.(string)]
 		}
 	}
 
@@ -225,17 +264,19 @@ func flatten(root *TreeNode) {
 }
 
 func maxPathSum(root *TreeNode) int {
-	maxSum := -1<<31
+	maxSum := -1 << 31
 
 	var depthSum func(node *TreeNode) int
 	depthSum = func(node *TreeNode) int {
-		if node == nil {return 0}
+		if node == nil {
+			return 0
+		}
 
 		leftSum := MaxInt(depthSum(node.Left), 0)
 		rightSum := MaxInt(depthSum(node.Right), 0)
-		totalSum := leftSum+rightSum+node.Val
+		totalSum := leftSum + rightSum + node.Val
 		maxSum = MaxInt(maxSum, totalSum)
-		return MaxInt(0, MaxInt(leftSum + node.Val, rightSum + node.Val))
+		return MaxInt(0, MaxInt(leftSum+node.Val, rightSum+node.Val))
 	}
 	depthSum(root)
 	return maxSum
@@ -265,7 +306,9 @@ func cloneGraph(node *Node) *Node {
 }
 
 func rightSideView(root *TreeNode) (result []int) {
-	if root == nil { return nil }
+	if root == nil {
+		return nil
+	}
 	stk := []*TreeNode{root}
 	for len(stk) > 0 {
 		levelLength := len(stk)
@@ -316,6 +359,7 @@ func numIslands(grid [][]byte) (cnt int) {
 type AncestorTreeNode struct {
 	Node, Ancestor *TreeNode
 }
+
 func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 	stk := []*TreeNode{root}
 	levelOrder := make([]*TreeNode, 0)
@@ -348,9 +392,9 @@ func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 
 	for pIdx != qIdx {
 		if pIdx > qIdx {
-			pIdx = (pIdx-1)/2
+			pIdx = (pIdx - 1) / 2
 		} else {
-			qIdx = (qIdx-1)/2
+			qIdx = (qIdx - 1) / 2
 		}
 	}
 	return levelOrder[pIdx]
@@ -393,13 +437,13 @@ func binaryTreePaths(root *TreeNode) (paths []string) {
 		if node == nil {
 			return
 		} else if node.IsLeaf() {
-			paths = append(paths, path + fmt.Sprintf("%s%d", "->", node.Val))
+			paths = append(paths, path+fmt.Sprintf("%s%d", "->", node.Val))
 		} else {
 			if node.Left != nil {
-				traverse(node.Left, path + fmt.Sprintf("%s%d", "->", node.Val))
+				traverse(node.Left, path+fmt.Sprintf("%s%d", "->", node.Val))
 			}
 			if node.Right != nil {
-				traverse(node.Right, path + fmt.Sprintf("%s%d", "->", node.Val))
+				traverse(node.Right, path+fmt.Sprintf("%s%d", "->", node.Val))
 			}
 		}
 	}
@@ -416,8 +460,9 @@ func alienOrder(words []string) (order string) {
 
 type VertTreeNode struct {
 	node *TreeNode
-	col int
+	col  int
 }
+
 func verticalOrder(root *TreeNode) [][]int {
 	if root == nil {
 		return [][]int{}
@@ -426,7 +471,6 @@ func verticalOrder(root *TreeNode) [][]int {
 	nodeMap := map[int][]int{}
 	minCol := 0
 	maxCol := 0
-
 
 	q := []VertTreeNode{VertTreeNode{root, 0}}
 	var vertNode VertTreeNode
@@ -441,10 +485,10 @@ func verticalOrder(root *TreeNode) [][]int {
 			}*/
 			nodeMap[vertNode.col] = append(nodeMap[vertNode.col], vertNode.node.Val)
 			if vertNode.node.Left != nil {
-				q = append(q, VertTreeNode{vertNode.node.Left, vertNode.col-1})
+				q = append(q, VertTreeNode{vertNode.node.Left, vertNode.col - 1})
 			}
 			if vertNode.node.Right != nil {
-				q = append(q, VertTreeNode{vertNode.node.Right, vertNode.col+1})
+				q = append(q, VertTreeNode{vertNode.node.Right, vertNode.col + 1})
 			}
 		}
 	}
@@ -455,4 +499,98 @@ func verticalOrder(root *TreeNode) [][]int {
 	}
 
 	return results
+}
+
+func FindKthLargestValueInBst(tree *BST, k int) int {
+	stk := []*BST{}
+	node := tree
+	ih := &collections.IntMinHeap{}
+	for len(stk) > 0 || node != nil {
+		for node != nil {
+			stk = append(stk, node)
+			node = node.Left
+		}
+		node, stk = stk[len(stk)-1], stk[:len(stk)-1]
+		if len(*ih) < k || node.Value > (*ih)[0] {
+			heap.Push(ih, node.Value)
+			if len(*ih) > k {
+				heap.Pop(ih)
+			}
+		}
+		node = node.Right
+	}
+	return (*ih)[0]
+}
+
+/*func ReconstructBst(preOrderTraversalValues []int) *BST {
+	if len(preOrderTraversalValues) == 0 {
+		return nil
+	}
+
+	var reconstruct func(idx, lo, hi int) *BST
+	reconstruct = func(idx, lo, hi int) *BST {
+		if idx >= len(preOrderTraversalValues) {
+			return nil
+		}
+
+	}
+}*/
+
+type ZigZagDirection int
+
+const (
+	LeftToRight ZigZagDirection = 1
+	RightToLeft ZigZagDirection = -1
+)
+
+func zigzagLevelOrder(root *TreeNode) [][]int {
+	if root == nil {
+		return [][]int{}
+	}
+
+	zdir := LeftToRight
+	q := []*TreeNode{root}
+	var node *TreeNode
+	var results [][]int
+	for len(q) > 0 {
+		qLen := len(q)
+		levelResults := make([]int, 0, qLen)
+		for i := 0; i < qLen; i++ {
+			node, q = q[0], q[1:]
+			levelResults = append(levelResults, node.Val)
+			if node.Left != nil {
+				q = append(q, node.Left)
+			}
+			if node.Right != nil {
+				q = append(q, node.Right)
+			}
+		}
+		if zdir == RightToLeft {
+			ReverseIntSlice(levelResults)
+		}
+		results = append(results, levelResults)
+		zdir *= -1
+	}
+	return results
+}
+
+func HeightBalancedBinaryTree(tree *BinaryTree) bool {
+	var isBalanced = true
+	var depth func(node *BinaryTree) int
+	depth = func(node *BinaryTree) int {
+		if node == nil {
+			return 0
+		} else if isBalanced == false {
+			return -1
+		} else {
+			left := depth(node.Left)
+			right := depth(node.Right)
+			if AbsInt(left-right) > 1 {
+				isBalanced = false
+			}
+			return MaxInt(left, right) + 1
+		}
+	}
+	depth(tree)
+	return isBalanced
 }

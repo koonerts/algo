@@ -1,7 +1,9 @@
 package main
 
 import (
+	"container/heap"
 	"fmt"
+	"go-algo/collections"
 	"math"
 	"sort"
 	"strconv"
@@ -55,7 +57,7 @@ func MinimumWaitingTime(queries []int) int {
 }
 
 func FindThreeLargestNumbers(array []int) []int {
-	mh := NewMinHeap([]int{})
+	mh := collections.NewMyMinHeap([]int{})
 	for _, num := range array {
 		if mh.Length() < 3 {
 			mh.Insert(num)
@@ -264,7 +266,6 @@ func WaterArea(heights []int) int {
 	area := 0
 	for lIdx < rIdx {
 		if heights[lIdx] < heights[rIdx] {
-			//areas[lIdx] = lWall - heights[lIdx]
 			lIdx++
 			lWall = MaxInt(lWall, heights[lIdx])
 			area += lWall - heights[lIdx]
@@ -1194,20 +1195,20 @@ func binarySearchSifted(nums []int, target int) int {
 
 	lo, hi := 0, len(nums)-1
 	for lo <= hi {
-		mid := (lo+hi)/2
+		mid := (lo + hi) / 2
 		if nums[mid] == target {
 			return mid
 		} else if nums[lo] <= nums[mid] {
 			if target < nums[mid] && target >= nums[lo] {
-				hi = mid-1
+				hi = mid - 1
 			} else {
-				lo = mid+1
+				lo = mid + 1
 			}
 		} else {
 			if target > nums[mid] && target <= nums[hi] {
-				lo = mid+1
+				lo = mid + 1
 			} else {
-				hi = mid-1
+				hi = mid - 1
 			}
 		}
 	}
@@ -1215,32 +1216,36 @@ func binarySearchSifted(nums []int, target int) int {
 }
 
 type SearchDirection int
+
 const (
 	Forward SearchDirection = iota + 1
 	Backward
 )
+
 func binarySearchRange(nums []int, lo, hi, target int, dir SearchDirection) int {
 	idx := -1
 	for lo <= hi {
-		mid := (lo+hi)/2
+		mid := (lo + hi) / 2
 		if nums[mid] == target {
 			idx = mid
 			if dir == Forward {
-				lo = mid+1
+				lo = mid + 1
 			} else {
-				hi = mid-1
+				hi = mid - 1
 			}
 		} else if target < nums[mid] {
-			hi = mid-1
+			hi = mid - 1
 		} else {
-			lo = mid+1
+			lo = mid + 1
 		}
 	}
 	return idx
 }
 func searchRange(nums []int, target int) []int {
-	results := []int{-1,-1}
-	if len(nums) == 0 {return results}
+	results := []int{-1, -1}
+	if len(nums) == 0 {
+		return results
+	}
 
 	low := binarySearchRange(nums, 0, len(nums)-1, target, Backward)
 	if low == -1 {
@@ -1279,21 +1284,20 @@ func merge(intervals [][]int) [][]int {
 	return results
 }
 
-
 func findPeakElement(nums []int) int {
 	if len(nums) == 1 || nums[0] > nums[1] {
 		return 0
 	} else if nums[len(nums)-1] > nums[len(nums)-2] {
-		return len(nums)-1
+		return len(nums) - 1
 	}
 
 	lo, hi := 0, len(nums)-1
 	for lo <= hi {
-		mid := (lo+hi)/2
+		mid := (lo + hi) / 2
 		if mid+1 <= hi && nums[mid] < nums[mid+1] {
-			lo = mid+1
+			lo = mid + 1
 		} else if mid-1 >= lo && nums[mid] < nums[mid-1] {
-			hi = mid-1
+			hi = mid - 1
 		} else {
 			return mid
 		}
@@ -1313,12 +1317,12 @@ func firstBadVersion(n int) int {
 	lo, hi := 1, n
 	isBadIdx := -1
 	for lo <= hi {
-		mid := (lo+hi)/2
+		mid := (lo + hi) / 2
 		if isBadVersion(mid) {
 			isBadIdx = mid
-			hi = mid-1
+			hi = mid - 1
 		} else {
-			lo = mid+1
+			lo = mid + 1
 		}
 	}
 	return isBadIdx
@@ -1349,23 +1353,51 @@ func intersection(nums1 []int, nums2 []int) []int {
 	return results
 }
 
+func intersection2(nums1 []int, nums2 []int) (results []int) {
+	if len(nums1) == 0 || len(nums2) == 0 {
+		return []int{}
+	} else if len(nums2) < len(nums1) {
+		return intersection2(nums2, nums1)
+	}
+	sort.Ints(nums1)
+	sort.Ints(nums2)
+
+	for i, j := 0, 0; i < len(nums1) && j < len(nums2); {
+		if nums1[i] == nums2[j] {
+			results = append(results, nums1[i])
+			i++
+			j++
+		} else {
+			if nums1[i] < nums2[j] {
+				i++
+			} else {
+				j++
+			}
+		}
+	}
+	return
+}
+
 func productExceptSelf(nums []int) []int {
 	results, left, right := make([]int, len(nums)), make([]int, len(nums)), make([]int, len(nums))
 	left[0], right[len(nums)-1] = 1, 1
 	for i, j := 0, len(nums)-1; i < len(nums) && j >= 0; i, j = i+1, j-1 {
 		if i > 0 {
-			left[i] = left[i-1]*nums[i-1]
+			left[i] = left[i-1] * nums[i-1]
 		}
 		if j < len(nums)-1 {
-			right[i] = right[i+1]*nums[i+1]
+			right[i] = right[i+1] * nums[i+1]
 		}
 	}
 	for i := range results {
-		results[i] = left[i]*right[i]
+		results[i] = left[i] * right[i]
 	}
 	return results
 }
 
+func rotate(matrix [][]int) {
+
+}
 
 /*func strStr(haystack string, needle string) int {
 	if needle == "" {return 0}
@@ -1378,3 +1410,158 @@ func productExceptSelf(nums []int) []int {
 	return -1
 }*/
 
+func mostCommonWord(paragraph string, banned []string) string {
+	t := true
+	split := map[byte]bool{'!': t, '?': t, '\'': t, ',': t, ';': t, '.': t, ' ': t}
+	cnts := map[string]int{}
+	maxWord, maxCnt := "", 0
+	paragraph = strings.ToLower(paragraph)
+	lo, hi := 0, 0
+	for hi < len(paragraph) {
+		if split[paragraph[hi]] || hi+1 == len(paragraph) {
+			if hi+1 == len(paragraph) {
+				hi++
+			}
+			word := paragraph[lo:hi]
+			if word != "" && !ContainsString(banned, word) {
+				cnts[word] += 1
+				if cnts[word] > maxCnt {
+					maxCnt = cnts[word]
+					maxWord = word
+				}
+			}
+			hi++
+			lo = hi
+		} else {
+			hi++
+		}
+	}
+	fmt.Println(cnts)
+	return maxWord
+}
+
+func trap(height []int) int {
+	if len(height) <= 1 {
+		return 0
+	}
+	lo, hi := 0, len(height)-1
+	sum, lmax, rmax := 0, height[lo], height[hi]
+
+	for lo < hi {
+		if height[lo] < height[hi] {
+			lo++
+			lmax = int(math.Max(float64(lmax), float64(height[lo])))
+			sum += lmax - height[lo]
+		} else {
+			hi--
+			rmax = int(math.Max(float64(rmax), float64(height[hi])))
+			sum += rmax - height[hi]
+		}
+	}
+	return sum
+}
+
+type LogType int
+
+const (
+	Letter LogType = iota + 1
+	Digit
+)
+
+func reorderLogFiles(logs []string) []string {
+	sort.SliceStable(logs, func(i, j int) bool {
+		iIdIndex := strings.Index(logs[i], " ")
+		jIdIndex := strings.Index(logs[j], " ")
+		iLogType, jLogType := Letter, Letter
+		if _, err := strconv.Atoi(logs[i][iIdIndex+1 : iIdIndex+2]); err == nil {
+			iLogType = Digit
+		}
+		if _, err := strconv.Atoi(logs[j][jIdIndex+1 : jIdIndex+2]); err == nil {
+			jLogType = Digit
+		}
+
+		if iLogType == Digit && jLogType == Digit {
+			return i < j
+		} else if iLogType != jLogType {
+			return iLogType < jLogType
+		} else {
+			if logs[i][iIdIndex+1:] == logs[j][jIdIndex+1:] {
+				return logs[i][:iIdIndex] <= logs[j][:jIdIndex]
+			} else {
+				return logs[i][iIdIndex+1:] < logs[j][jIdIndex+1:]
+			}
+		}
+	})
+	return logs
+}
+
+type PointHeap [][]int
+
+func (p PointHeap) Len() int {
+	return len(p)
+}
+
+func (p PointHeap) Less(i, j int) bool {
+	return !less(p[i], p[j])
+}
+
+func (p PointHeap) Swap(i, j int) {
+	p[i], p[j] = p[j], p[i]
+}
+
+func (p *PointHeap) Push(val interface{}) {
+	*p = append(*p, val.([]int))
+}
+
+func (p *PointHeap) Pop() interface{} {
+	val := (*p)[len(*p)-1]
+	*p = (*p)[:len(*p)-1]
+	return val
+}
+
+func getEuclideanDistanceToOrigin(p []int) float64 {
+	return math.Sqrt(math.Pow(float64(p[0]), 2) + math.Pow(float64(p[1]), 2))
+}
+
+func less(p1, p2 []int) bool {
+	return getEuclideanDistanceToOrigin(p1) < getEuclideanDistanceToOrigin(p2)
+}
+
+func kClosest(points [][]int, K int) [][]int {
+	ph := &PointHeap{}
+	for _, point := range points {
+		if len(*ph) < K || less(point, (*ph)[0]) {
+			heap.Push(ph, point)
+			if len(*ph) > K {
+				heap.Pop(ph)
+			}
+		}
+	}
+	return *ph
+}
+
+func kClosestUsingSort(points [][]int, K int) [][]int {
+	sort.Slice(points, func(i, j int) bool {
+		return less(points[i], points[j])
+	})
+	results := make([][]int, 0, K)
+	for i := 0; i < K; i++ {
+		results = append(results, points[i])
+	}
+	return results
+}
+
+func maxProfit(prices []int) int {
+	if len(prices) <= 1 {return 0}
+	maxRight := prices[len(prices)-1]
+	maxP := 0
+	for i := len(prices)-2; i >= 0; i-- {
+		if prices[i] > maxRight {
+			maxRight = prices[i]
+		}
+		if maxRight - prices[i] > maxP {
+			maxP = maxRight - prices[i]
+		}
+	}
+	return maxP
+}

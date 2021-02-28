@@ -13,6 +13,11 @@ type NodeRnd struct {
 	Random *NodeRnd
 }
 
+type LinkedList struct {
+	Value int
+	Next  *LinkedList
+}
+
 func createListNodeList(vals []int) *ListNode {
 	var head, prev *ListNode
 	for _, val := range vals {
@@ -243,3 +248,37 @@ func copyList(head *ListNode) (newHead *ListNode, length int) {
 	return
 }
 
+func SumOfLinkedLists(l1 *LinkedList, l2 *LinkedList) *LinkedList {
+	if l1 == nil {return l2}
+	if l2 == nil {return l1}
+
+	var head *LinkedList
+	var prev *LinkedList
+	carryOver := 0
+	for l1 != nil || l2 != nil {
+		l1Val, l2Val := 0, 0
+		if l1 != nil {
+			l1Val = l1.Value
+			l1 = l1.Next
+		}
+		if l2 != nil {
+			l2Val = l2.Value
+			l2 = l2.Next
+		}
+
+		sum := l1Val+l2Val+carryOver
+		carryOver = sum/10
+		node := &LinkedList{Value:sum%10}
+		if head == nil {
+			head = node
+		}
+		if prev != nil {
+			prev.Next = node
+		}
+		prev = node
+	}
+	if carryOver != 0 {
+		prev.Next = &LinkedList{Value:1}
+	}
+	return head
+}

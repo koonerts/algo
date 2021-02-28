@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"sort"
+	"strconv"
 )
 
 func knapsackZeroOne(weights []int, profits []int, capacity int) {
@@ -584,3 +585,74 @@ func MaxSumIncreasingSubsequence(array []int) (maxSum int, nums []int) {
 	return
 }
 
+
+func decodeWays(s string) (ways int) {
+	if len(s) == 0 || s[0] == '0' {
+		return
+	}
+
+	dp := make([]int, len(s))
+	dp[0] = 1
+	for i := 1; i < len(s); i++ {
+		if s[i] != '0' {
+			dp[i] = dp[i-1]
+		}
+
+		twoDig, _ := strconv.Atoi(s[i-1:i+1])
+		if twoDig >= 10 && twoDig <= 26 {
+			if i == 1 {
+				if s[i] == '0' {
+					dp[i] = 1
+				} else {
+					dp[i] = 2
+				}
+			} else {
+				dp[i] += dp[i-2]
+			}
+		}
+	}
+	return dp[len(s)-1]
+}
+
+func longestPalindrome(s string) string {
+	if len(s) <= 1 {return s}
+	dp := make([][]bool, len(s))
+	for i := range dp {
+		dp[i] = make([]bool, len(s))
+		dp[i][i] = true
+	}
+
+	maxss, maxssLen := string(s[0]), 1
+	for i := len(s)-1; i >= 0; i-- {
+		for j := i+1; j < len(s); j++ {
+			if s[i] == s[j] {
+				ssLen := j-i+1
+				if ssLen == 2 || dp[i+1][j-1] {
+					if ssLen > maxssLen {
+						maxssLen = ssLen
+						maxss = s[i:j+1]
+					}
+					dp[i][j] = true
+				}
+			}
+		}
+	}
+	return maxss
+}
+
+/*func wordBreak(s string, wordDict []string) (canSegment bool) {
+	if len(wordDict) == 0 {
+		return true
+	} else if len(s) == 0 {
+		return false
+	}
+
+	var trySegment func(s string) bool
+	trySegment = func(s string) bool {
+		if s == "" {
+			return true
+		}
+	}
+
+	return
+}*/

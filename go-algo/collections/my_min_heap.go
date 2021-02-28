@@ -1,39 +1,35 @@
-package main
+package collections
 
-// Do not edit the class below except for the buildHeap,
-// siftDown, siftUp, peek, remove, and insert methods.
-// Feel free to add new properties and methods to the class.
-type MinHeap []int
+type MyMinHeap []int
 
-func NewMinHeap(array []int) *MinHeap {
-	// Do not edit the lines below.
-	heap := MinHeap(array)
+func NewMyMinHeap(array []int) *MyMinHeap {
+	heap := MyMinHeap(array)
 	ptr := &heap
 	ptr.BuildHeap(array)
 	return ptr
 }
 
-func (h *MinHeap) BuildHeap(array []int) {
-	for i := len(array)-1; i >= 0; i-- {
+func (h *MyMinHeap) BuildHeap(array []int) {
+	for i := len(array)/2; i >= 0; i-- {
 		h.siftUp(i)
 	}
 }
 
-func (h *MinHeap) siftDown(startIdx, endIdx int) {
+func (h *MyMinHeap) siftDown(startIdx, endIdx int) {
 	node := (*h)[endIdx]
 	for startIdx < endIdx {
 		parentIdx := (endIdx-1)/2
 		if node < (*h)[parentIdx] {
 			(*h)[endIdx] = (*h)[parentIdx]
 			endIdx = parentIdx
-		} else{
+		} else {
 			break
 		}
 	}
 	(*h)[endIdx] = node
 }
 
-func (h *MinHeap) siftUp(startIndex int) {
+func (h *MyMinHeap) siftUp(startIndex int) {
 	swapIdx, node := startIndex, (*h)[startIndex]
 	leftIdx := 2*startIndex + 1
 	for leftIdx < len(*h) {
@@ -49,15 +45,11 @@ func (h *MinHeap) siftUp(startIndex int) {
 	h.siftDown(startIndex, swapIdx)
 }
 
-func (h *MinHeap) Peek() int {
-	if len(*h) > 0 { 
-		return (*h)[0] 
-	} else {
-		return -1
-	}
+func (h *MyMinHeap) Peek() int {
+	return (*h)[0]
 }
 
-func (h *MinHeap) Remove() int {
+func (h *MyMinHeap) Remove() int {
 	lst := (*h)[len(*h)-1]
 	*h = (*h)[:len(*h)-1]
 	if len(*h) == 0 {
@@ -70,11 +62,11 @@ func (h *MinHeap) Remove() int {
 	}
 }
 
-func (h *MinHeap) Insert(value int) {
+func (h *MyMinHeap) Insert(value int) {
 	*h = append(*h, value)
 	h.siftDown(0, len(*h)-1)
 }
 
-func (h *MinHeap) Length() int {
+func (h *MyMinHeap) Length() int {
 	return len(*h)
 }
