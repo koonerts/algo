@@ -1,7 +1,9 @@
-package main
+package dp
 
 import (
 	"fmt"
+	math2 "go-algo/math"
+	"go-algo/slice"
 	"math"
 	"sort"
 	"strconv"
@@ -25,10 +27,10 @@ func knapsackZeroOne(weights []int, profits []int, capacity int) {
 			}
 
 			profitWithout := maxProfits[i-1][j]
-			maxProfits[i][j] = MaxInt(profitWith, profitWithout)
+			maxProfits[i][j] = math2.MaxInt(profitWith, profitWithout)
 		}
 	}
-	printSlice(maxProfits)
+	slice.PrintSlice(maxProfits)
 
 	maxProfit := maxProfits[rows-1][cols-1]
 	fmt.Println(maxProfit)
@@ -63,7 +65,7 @@ func KnapsackZeroOneOptimized(weights []int, profits []int, capacity int) {
 			}
 
 			profitWithout := maxProfits[j-1]
-			maxProfits[j] = MaxInt(profitWith, profitWithout)
+			maxProfits[j] = math2.MaxInt(profitWith, profitWithout)
 		}
 	}
 	fmt.Println(maxProfits)
@@ -90,7 +92,7 @@ func CanPartitionEqualSubsets(nums []int) bool {
 			}
 		}
 	}
-	printSlice(dp)
+	slice.PrintSlice(dp)
 	fmt.Println()
 
 	for i := 1; i < rows; i++ {
@@ -106,7 +108,7 @@ func CanPartitionEqualSubsets(nums []int) bool {
 			}
 		}
 	}
-	printSlice(dp)
+	slice.PrintSlice(dp)
 	return dp[rows-1][cols-1]
 }
 
@@ -121,7 +123,7 @@ func CanPartitionTargetSubsets(nums []int, target int) bool {
 			}
 		}
 	}
-	printSlice(dp)
+	slice.PrintSlice(dp)
 	return dp[target]
 }
 
@@ -147,7 +149,7 @@ func MinimumSubsetDiffPartition(nums []int) int {
 			}
 		}
 	}
-	printSlice(dp)
+	slice.PrintSlice(dp)
 
 	var canPartitionNum int
 	for i := len(dp) - 1; i >= 0; i-- {
@@ -176,7 +178,7 @@ func CountSubsets(nums []int, target int) int {
 			}
 		}
 	}
-	printSlice(dp)
+	slice.PrintSlice(dp)
 	return dp[target]
 }
 
@@ -198,10 +200,10 @@ func KnapsackUnlimited(weights []int, profits []int, capacity int) int {
 			}
 
 			profitWithout := maxProfits[i-1][j]
-			maxProfits[i][j] = MaxInt(profitWith, profitWithout)
+			maxProfits[i][j] = math2.MaxInt(profitWith, profitWithout)
 		}
 	}
-	printSlice(maxProfits)
+	slice.PrintSlice(maxProfits)
 
 	maxProfit := maxProfits[rows-1][cols-1]
 	return maxProfit
@@ -220,7 +222,7 @@ func RodCuttingProfit(lengths []int, prices []int, maxLen int) (int, []int) {
 				profitWith = prices[i-1] + dp[i][j-lengths[i-1]]
 			}
 			profitWithout = dp[i-1][j]
-			dp[i][j] = MaxInt(profitWith, profitWithout)
+			dp[i][j] = math2.MaxInt(profitWith, profitWithout)
 		}
 	}
 
@@ -252,7 +254,7 @@ func CoinChangeUnlimited(denoms []int, total int) int {
 			}
 		}
 	}
-	printSlice(ways)
+	slice.PrintSlice(ways)
 	return ways[total]
 }
 
@@ -274,13 +276,13 @@ func MinCoinChainUnlimited(denoms []int, total int) int {
 					with = ways[j-denoms[i]] + 1
 				}
 
-				if MinInt(without, with) != math.MaxInt32 {
-					ways[j] = MinInt(without, with)
+				if math2.MinInt(without, with) != math.MaxInt32 {
+					ways[j] = math2.MinInt(without, with)
 				}
 			}
 		}
 	}
-	printSlice(ways)
+	slice.PrintSlice(ways)
 	return ways[total]
 }
 
@@ -304,11 +306,11 @@ func MaxRibbonCut(lengths []int, n int) int {
 				with = cuts[j-lengths[i]] + 1
 			}
 
-			cuts[j] = MaxInt(with, without)
+			cuts[j] = math2.MaxInt(with, without)
 		}
 	}
 
-	printSlice(cuts)
+	slice.PrintSlice(cuts)
 	return cuts[n]
 }
 
@@ -340,7 +342,7 @@ func MinJumps(nums []int) int {
 			if dp[idx] == math.MaxInt32 {
 				for i := 1; i <= nums[idx]; i++ {
 					cnt := traverse(idx+i) + 1
-					dp[idx] = MinInt(dp[idx], cnt)
+					dp[idx] = math2.MinInt(dp[idx], cnt)
 				}
 			}
 			return dp[idx]
@@ -358,7 +360,7 @@ func MinJumpsTabulated(nums []int) int {
 
 	for i := range dp {
 		for j := 1; j <= nums[i] && j+i < len(nums); j++ {
-			dp[i+j] = MinInt(dp[i+j], dp[i]+1)
+			dp[i+j] = math2.MinInt(dp[i+j], dp[i]+1)
 		}
 	}
 	return dp[len(nums)-1]
@@ -370,9 +372,9 @@ func MaxStealProfit(profits []int) int {
 	dp[1] = profits[0]
 
 	for i := 2; i < len(dp); i++ {
-		dp[i] = MaxInt(dp[i-1], profits[i-1]+dp[i-2])
+		dp[i] = math2.MaxInt(dp[i-1], profits[i-1]+dp[i-2])
 	}
-	printSlice(dp)
+	slice.PrintSlice(dp)
 	return dp[len(profits)]
 }
 
@@ -388,7 +390,7 @@ func LongestPalindromicSubsequenceTabulated(text string) (maxLen int) {
 			if text[i] == text[j] {
 				dp[i][j] = 2 + dp[i+1][j-1]
 			} else {
-				dp[i][j] = MaxInt(dp[i+1][j], dp[i][j-1])
+				dp[i][j] = math2.MaxInt(dp[i+1][j], dp[i][j-1])
 			}
 		}
 	}
@@ -416,7 +418,7 @@ func LongestPalindromicSubsequenceRecursive(text string) int {
 				if text[lo] == text[hi] {
 					dp[lo][hi] = 2 + find(lo+1, hi-1)
 				} else {
-					dp[lo][hi] = MaxInt(find(lo+1, hi), find(lo, hi-1))
+					dp[lo][hi] = math2.MaxInt(find(lo+1, hi), find(lo, hi-1))
 				}
 			}
 
@@ -451,7 +453,7 @@ func LongestPalindromicSubstring(text string) (int, string) {
 			}
 		}
 	}
-	printSlice(dp)
+	slice.PrintSlice(dp)
 	return maxSsLen, maxSs
 }
 
@@ -477,7 +479,7 @@ func PalindromicSubstringCount(text string) int {
 			}
 		}
 	}
-	printSlice(dp)
+	slice.PrintSlice(dp)
 	return cnt
 }
 
@@ -496,12 +498,12 @@ func LongestCommonSubstringLength(s1, s2 string) int {
 		for j:= 1; j <= len(s2); j++ {
 			if s1[i-1] == s2[j-1] {
 				dp[i][j] = 1 + dp[i-1][j-1]
-				maxLen = MaxInt(maxLen, dp[i][j])
+				maxLen = math2.MaxInt(maxLen, dp[i][j])
 			}
 		}
 	}
 
-	printSlice(dp)
+	slice.PrintSlice(dp)
 	return maxLen
 }
 
@@ -517,12 +519,12 @@ func LongestCommonSubsequenceLength(s1, s2 string) int {
 			if s1[i-1] == s2[j-1] {
 				dp[i][j] = 1 + dp[i-1][j-1]
 			} else {
-				dp[i][j] = MaxInt(dp[i-1][j], dp[i][j-1])
+				dp[i][j] = math2.MaxInt(dp[i-1][j], dp[i][j-1])
 			}
-			maxLen = MaxInt(maxLen, dp[i][j])
+			maxLen = math2.MaxInt(maxLen, dp[i][j])
 		}
 	}
-	printSlice(dp)
+	slice.PrintSlice(dp)
 	return maxLen
 }
 
@@ -580,7 +582,7 @@ func MaxSumIncreasingSubsequence(array []int) (maxSum int, nums []int) {
 		nums = append(nums, array[maxIdx])
 		maxIdx = indexes[maxIdx]
 	}
-	ReverseSlice(nums)
+	slice.ReverseSlice(nums)
 
 	return
 }

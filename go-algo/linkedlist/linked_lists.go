@@ -1,4 +1,4 @@
-package main
+package linkedlist
 
 import "fmt"
 
@@ -268,7 +268,7 @@ func SumOfLinkedLists(l1 *LinkedList, l2 *LinkedList) *LinkedList {
 
 		sum := l1Val+l2Val+carryOver
 		carryOver = sum/10
-		node := &LinkedList{Value:sum%10}
+		node := &LinkedList{Value: sum%10}
 		if head == nil {
 			head = node
 		}
@@ -278,7 +278,7 @@ func SumOfLinkedLists(l1 *LinkedList, l2 *LinkedList) *LinkedList {
 		prev = node
 	}
 	if carryOver != 0 {
-		prev.Next = &LinkedList{Value:1}
+		prev.Next = &LinkedList{Value: 1}
 	}
 	return head
 }

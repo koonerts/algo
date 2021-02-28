@@ -1,15 +1,22 @@
-package main
+package arr
 
 import (
 	"container/heap"
 	"fmt"
-	"go-algo/collections"
+	"go-algo/collection"
+	math2 "go-algo/math"
+	"go-algo/slice"
 	"math"
 	"sort"
 	"strconv"
 	"strings"
 	"time"
 )
+
+func IsNumeric(s string) bool {
+	_, err := strconv.ParseFloat(s, 64)
+	return err == nil
+}
 
 func TwoNumberSum(array []int, target int) []int {
 	set := map[int]struct{}{}
@@ -57,7 +64,7 @@ func MinimumWaitingTime(queries []int) int {
 }
 
 func FindThreeLargestNumbers(array []int) []int {
-	mh := collections.NewMyMinHeap([]int{})
+	mh := collection.NewMyMinHeap([]int{})
 	for _, num := range array {
 		if mh.Length() < 3 {
 			mh.Insert(num)
@@ -188,7 +195,7 @@ func ApartmentHunting(blocks []Block, reqs []string) int {
 			if dist[i] == nil {
 				dist[i] = make(map[string]int)
 			}
-			dist[i][req] = MinInt(up, down)
+			dist[i][req] = math2.MinInt(up, down)
 		}
 	}
 
@@ -196,7 +203,7 @@ func ApartmentHunting(blocks []Block, reqs []string) int {
 	for i, d := range dist {
 		maxDistCurr := math.MinInt32
 		for _, val := range d {
-			maxDistCurr = MaxInt(val, maxDistCurr)
+			maxDistCurr = math2.MaxInt(val, maxDistCurr)
 		}
 		if maxDistCurr < minDistAll {
 			idx = i
@@ -267,11 +274,11 @@ func WaterArea(heights []int) int {
 	for lIdx < rIdx {
 		if heights[lIdx] < heights[rIdx] {
 			lIdx++
-			lWall = MaxInt(lWall, heights[lIdx])
+			lWall = math2.MaxInt(lWall, heights[lIdx])
 			area += lWall - heights[lIdx]
 		} else {
 			rIdx--
-			rWall = MaxInt(rWall, heights[rIdx])
+			rWall = math2.MaxInt(rWall, heights[rIdx])
 			area += rWall - heights[rIdx]
 		}
 	}
@@ -481,7 +488,7 @@ func MaxSumSubArraySizeK(nums []int, k int) (maxSum int) {
 			lo++
 		}
 		currSum += nums[hi]
-		maxSum = MaxInt(maxSum, currSum)
+		maxSum = math2.MaxInt(maxSum, currSum)
 		hi++
 	}
 
@@ -505,7 +512,7 @@ func LongestSubstringLengthWithKDistinct(text string, k int) (maxLen int) {
 		}
 
 		charFreq[text[hi]]++
-		maxLen = MaxInt(hi-lo+1, maxLen)
+		maxLen = math2.MaxInt(hi-lo+1, maxLen)
 		hi++
 	}
 	return
@@ -650,9 +657,9 @@ func lengthOfLongestSubstringWithoutDups(s string) (maxLen int) {
 	charSet := map[uint8]int{}
 	for hi < len(s) {
 		if _, ok := charSet[s[hi]]; ok {
-			lo = MaxInt(lo, charSet[s[hi]]+1)
+			lo = math2.MaxInt(lo, charSet[s[hi]]+1)
 		}
-		maxLen = MaxInt(maxLen, hi-lo+1)
+		maxLen = math2.MaxInt(maxLen, hi-lo+1)
 		charSet[s[hi]] = hi
 		hi++
 	}
@@ -870,7 +877,7 @@ func groupAnagrams(strs []string) (groups [][]string) {
 func addBinary(a string, b string) string {
 	i, j := len(a)-1, len(b)-1
 	carry := '0'
-	arr := make([]byte, MaxInt(i+1, j+1)+1)
+	arr := make([]byte, math2.MaxInt(i+1, j+1)+1)
 	for i >= 0 || j >= 0 {
 		iv, jv := '0', '0'
 		if i >= 0 && a[i] == '1' {
@@ -882,16 +889,16 @@ func addBinary(a string, b string) string {
 
 		result := iv + jv + carry
 		if result == '1'*3 {
-			arr[MaxInt(i, j)+1] = '1'
+			arr[math2.MaxInt(i, j)+1] = '1'
 			carry = '1'
 		} else if result == '1'*2+'0' {
-			arr[MaxInt(i, j)+1] = '0'
+			arr[math2.MaxInt(i, j)+1] = '0'
 			carry = '1'
 		} else if result == '1'+'0'*2 {
-			arr[MaxInt(i, j)+1] = '1'
+			arr[math2.MaxInt(i, j)+1] = '1'
 			carry = '0'
 		} else {
-			arr[MaxInt(i, j)+1] = '0'
+			arr[math2.MaxInt(i, j)+1] = '0'
 			carry = '0'
 		}
 
@@ -1032,7 +1039,7 @@ func lengthOfLongestSubstringKDistinct(s string, k int) (maxLen int) {
 				lo++
 			}
 		}
-		maxLen = MaxInt(maxLen, hi-lo+1)
+		maxLen = math2.MaxInt(maxLen, hi-lo+1)
 		hi++
 	}
 	return
@@ -1277,8 +1284,8 @@ func merge(intervals [][]int) [][]int {
 		if prev[end] < intervals[i][start] {
 			results = append(results, intervals[i])
 		} else {
-			prev[start] = MinInt(prev[start], intervals[i][start])
-			prev[end] = MaxInt(prev[end], intervals[i][end])
+			prev[start] = math2.MinInt(prev[start], intervals[i][start])
+			prev[end] = math2.MaxInt(prev[end], intervals[i][end])
 		}
 	}
 	return results
@@ -1423,7 +1430,7 @@ func mostCommonWord(paragraph string, banned []string) string {
 				hi++
 			}
 			word := paragraph[lo:hi]
-			if word != "" && !ContainsString(banned, word) {
+			if word != "" && !slice.ContainsString(banned, word) {
 				cnts[word] += 1
 				if cnts[word] > maxCnt {
 					maxCnt = cnts[word]

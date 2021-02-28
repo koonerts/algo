@@ -2,7 +2,7 @@ package test
 
 import (
 	"errors"
-	"go-algo"
+	"go-algo/slice"
 	"reflect"
 	"testing"
 )
@@ -12,7 +12,7 @@ func BenchmarkSliceReverseSwap(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		main.ReverseSlice(x)
+		slice.ReverseSlice(x)
 	}
 }
 
@@ -30,7 +30,7 @@ func BenchmarkSliceReverseIntSlice(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		main.ReverseIntSlice(x)
+		slice.ReverseIntSlice(x)
 	}
 }
 

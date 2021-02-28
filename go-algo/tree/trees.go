@@ -1,10 +1,12 @@
-package main
+package tree
 
 import (
 	"container/heap"
 	"encoding/json"
 	"fmt"
-	"go-algo/collections"
+	"go-algo/collection"
+	mathcstm "go-algo/math"
+	"go-algo/slice"
 	"math"
 	"sync"
 )
@@ -65,7 +67,7 @@ func createTreeNode(vals []int) *TreeNode {
 	return nodeSet[0]
 }
 
-func createBinaryTree(jsonStr string) *BinaryTree {
+func CreateBinaryTree(jsonStr string) *BinaryTree {
 	var itree interface{}
 	bytes := []byte(jsonStr)
 	err := json.Unmarshal(bytes, &itree)
@@ -223,8 +225,8 @@ func findDepth(node *BinaryTree, maxDiameter *int) (depth int) {
 	} else {
 		lDepth := findDepth(node.Left, maxDiameter) + 1
 		rDepth := findDepth(node.Right, maxDiameter) + 1
-		*maxDiameter = MaxInt(*maxDiameter, lDepth+rDepth-1)
-		return MaxInt(lDepth, rDepth)
+		*maxDiameter = mathcstm.MaxInt(*maxDiameter, lDepth+rDepth-1)
+		return mathcstm.MaxInt(lDepth, rDepth)
 	}
 }
 
@@ -272,11 +274,11 @@ func maxPathSum(root *TreeNode) int {
 			return 0
 		}
 
-		leftSum := MaxInt(depthSum(node.Left), 0)
-		rightSum := MaxInt(depthSum(node.Right), 0)
+		leftSum := mathcstm.MaxInt(depthSum(node.Left), 0)
+		rightSum := mathcstm.MaxInt(depthSum(node.Right), 0)
 		totalSum := leftSum + rightSum + node.Val
-		maxSum = MaxInt(maxSum, totalSum)
-		return MaxInt(0, MaxInt(leftSum+node.Val, rightSum+node.Val))
+		maxSum = mathcstm.MaxInt(maxSum, totalSum)
+		return mathcstm.MaxInt(0, mathcstm.MaxInt(leftSum+node.Val, rightSum+node.Val))
 	}
 	depthSum(root)
 	return maxSum
@@ -478,7 +480,7 @@ func verticalOrder(root *TreeNode) [][]int {
 		levelLength := len(q)
 		for i := 0; i < levelLength; i++ {
 			vertNode, q = q[0], q[1:]
-			minCol, maxCol = MinInt(minCol, vertNode.col), MaxInt(maxCol, vertNode.col)
+			minCol, maxCol = mathcstm.MinInt(minCol, vertNode.col), mathcstm.MaxInt(maxCol, vertNode.col)
 
 			/*if nodeMap[vertNode.col] == nil {
 				nodeMap[vertNode.col] = &[]int{}
@@ -504,7 +506,7 @@ func verticalOrder(root *TreeNode) [][]int {
 func FindKthLargestValueInBst(tree *BST, k int) int {
 	stk := []*BST{}
 	node := tree
-	ih := &collections.IntMinHeap{}
+	ih := &collection.IntMinHeap{}
 	for len(stk) > 0 || node != nil {
 		for node != nil {
 			stk = append(stk, node)
@@ -566,7 +568,7 @@ func zigzagLevelOrder(root *TreeNode) [][]int {
 			}
 		}
 		if zdir == RightToLeft {
-			ReverseIntSlice(levelResults)
+			slice.ReverseIntSlice(levelResults)
 		}
 		results = append(results, levelResults)
 		zdir *= -1
@@ -585,10 +587,10 @@ func HeightBalancedBinaryTree(tree *BinaryTree) bool {
 		} else {
 			left := depth(node.Left)
 			right := depth(node.Right)
-			if AbsInt(left-right) > 1 {
+			if mathcstm.AbsInt(left-right) > 1 {
 				isBalanced = false
 			}
-			return MaxInt(left, right) + 1
+			return mathcstm.MaxInt(left, right) + 1
 		}
 	}
 	depth(tree)
