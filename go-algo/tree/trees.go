@@ -41,7 +41,7 @@ type Node struct {
 	Neighbors []*Node
 }
 
-func createTreeNode(vals []int) *TreeNode {
+func CreateTreeNode(vals []int) *TreeNode {
 	nodeSet := map[int]*TreeNode{}
 	for i, val := range vals {
 		if val == -1<<31 {
@@ -104,7 +104,7 @@ func CreateBinaryTree(jsonStr string) *BinaryTree {
 	return root
 }
 
-func createBST(jsonStr string) *BST {
+func CreateBST(jsonStr string) *BST {
 	var itree interface{}
 	bytes := []byte(jsonStr)
 	err := json.Unmarshal(bytes, &itree)
