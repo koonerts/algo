@@ -2,7 +2,7 @@ package dp
 
 import (
 	"fmt"
-	math2 "go-algo/math"
+	math2 "go-algo/mathext"
 	"go-algo/slice"
 	"math"
 	"sort"
@@ -385,8 +385,8 @@ func LongestPalindromicSubsequenceTabulated(text string) (maxLen int) {
 		dp[i][i] = 1
 	}
 
-	for i := len(text)-1; i >= 0; i-- {
-		for j := i+1; j < len(text); j++ {
+	for i := len(text) - 1; i >= 0; i-- {
+		for j := i + 1; j < len(text); j++ {
 			if text[i] == text[j] {
 				dp[i][j] = 2 + dp[i+1][j-1]
 			} else {
@@ -397,7 +397,6 @@ func LongestPalindromicSubsequenceTabulated(text string) (maxLen int) {
 
 	return dp[0][len(text)-1]
 }
-
 
 func LongestPalindromicSubsequenceRecursive(text string) int {
 	dp := make([][]int, len(text))
@@ -442,10 +441,10 @@ func LongestPalindromicSubstring(text string) (int, string) {
 	for i := n - 1; i >= 0; i-- {
 		for j := i + 1; j < n; j++ {
 			if text[i] == text[j] {
-				ssLen := j-i+1
+				ssLen := j - i + 1
 				if ssLen == 2 || dp[i+1][j-1] {
 					if ssLen > maxSsLen {
-						maxSs = text[i:j+1]
+						maxSs = text[i : j+1]
 						maxSsLen = ssLen
 					}
 					dp[i][j] = true
@@ -471,7 +470,7 @@ func PalindromicSubstringCount(text string) int {
 	for i := n - 1; i >= 0; i-- {
 		for j := i + 1; j < n; j++ {
 			if text[i] == text[j] {
-				ssLen := j-i+1
+				ssLen := j - i + 1
 				if ssLen == 2 || dp[i+1][j-1] {
 					dp[i][j] = true
 					cnt++
@@ -495,7 +494,7 @@ func LongestCommonSubstringLength(s1, s2 string) int {
 
 	maxLen := 0
 	for i := 1; i <= len(s1); i++ {
-		for j:= 1; j <= len(s2); j++ {
+		for j := 1; j <= len(s2); j++ {
 			if s1[i-1] == s2[j-1] {
 				dp[i][j] = 1 + dp[i-1][j-1]
 				maxLen = math2.MaxInt(maxLen, dp[i][j])
@@ -551,11 +550,12 @@ func LongestCommonSubsequence(s1 string, s2 string) string {
 	return dp[len(s1)][len(s2)]
 }
 
-
 func MaxSumIncreasingSubsequence(array []int) (maxSum int, nums []int) {
-	if len(array) == 0 { return }
+	if len(array) == 0 {
+		return
+	}
 
-	sums := make([]int,  len(array))
+	sums := make([]int, len(array))
 	indexes := make([]int, len(array))
 	for i := range array {
 		sums[i] = array[i]
@@ -566,7 +566,7 @@ func MaxSumIncreasingSubsequence(array []int) (maxSum int, nums []int) {
 	maxIdx := 0
 	for i := 1; i < len(array); i++ {
 		for j := 0; j < i; j++ {
-			if array[i] > array[j] && sums[i] < sums[j] + array[i] {
+			if array[i] > array[j] && sums[i] < sums[j]+array[i] {
 				sums[i] = sums[j] + array[i]
 				indexes[i] = j
 			}
@@ -587,7 +587,6 @@ func MaxSumIncreasingSubsequence(array []int) (maxSum int, nums []int) {
 	return
 }
 
-
 func decodeWays(s string) (ways int) {
 	if len(s) == 0 || s[0] == '0' {
 		return
@@ -600,7 +599,7 @@ func decodeWays(s string) (ways int) {
 			dp[i] = dp[i-1]
 		}
 
-		twoDig, _ := strconv.Atoi(s[i-1:i+1])
+		twoDig, _ := strconv.Atoi(s[i-1 : i+1])
 		if twoDig >= 10 && twoDig <= 26 {
 			if i == 1 {
 				if s[i] == '0' {
@@ -617,7 +616,9 @@ func decodeWays(s string) (ways int) {
 }
 
 func longestPalindrome(s string) string {
-	if len(s) <= 1 {return s}
+	if len(s) <= 1 {
+		return s
+	}
 	dp := make([][]bool, len(s))
 	for i := range dp {
 		dp[i] = make([]bool, len(s))
@@ -625,14 +626,14 @@ func longestPalindrome(s string) string {
 	}
 
 	maxss, maxssLen := string(s[0]), 1
-	for i := len(s)-1; i >= 0; i-- {
-		for j := i+1; j < len(s); j++ {
+	for i := len(s) - 1; i >= 0; i-- {
+		for j := i + 1; j < len(s); j++ {
 			if s[i] == s[j] {
-				ssLen := j-i+1
+				ssLen := j - i + 1
 				if ssLen == 2 || dp[i+1][j-1] {
 					if ssLen > maxssLen {
 						maxssLen = ssLen
-						maxss = s[i:j+1]
+						maxss = s[i : j+1]
 					}
 					dp[i][j] = true
 				}

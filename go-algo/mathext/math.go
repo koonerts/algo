@@ -1,4 +1,4 @@
-package math
+package mathext
 
 func MaxInt(nums ...int) int {
 	maxInt := nums[0]

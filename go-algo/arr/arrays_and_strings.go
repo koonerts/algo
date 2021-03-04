@@ -4,7 +4,7 @@ import (
 	"container/heap"
 	"fmt"
 	"go-algo/collection"
-	math2 "go-algo/math"
+	mathext "go-algo/mathext"
 	"go-algo/slice"
 	"math"
 	"sort"
@@ -195,7 +195,7 @@ func ApartmentHunting(blocks []Block, reqs []string) int {
 			if dist[i] == nil {
 				dist[i] = make(map[string]int)
 			}
-			dist[i][req] = math2.MinInt(up, down)
+			dist[i][req] = mathext.MinInt(up, down)
 		}
 	}
 
@@ -203,7 +203,7 @@ func ApartmentHunting(blocks []Block, reqs []string) int {
 	for i, d := range dist {
 		maxDistCurr := math.MinInt32
 		for _, val := range d {
-			maxDistCurr = math2.MaxInt(val, maxDistCurr)
+			maxDistCurr = mathext.MaxInt(val, maxDistCurr)
 		}
 		if maxDistCurr < minDistAll {
 			idx = i
@@ -274,11 +274,11 @@ func WaterArea(heights []int) int {
 	for lIdx < rIdx {
 		if heights[lIdx] < heights[rIdx] {
 			lIdx++
-			lWall = math2.MaxInt(lWall, heights[lIdx])
+			lWall = mathext.MaxInt(lWall, heights[lIdx])
 			area += lWall - heights[lIdx]
 		} else {
 			rIdx--
-			rWall = math2.MaxInt(rWall, heights[rIdx])
+			rWall = mathext.MaxInt(rWall, heights[rIdx])
 			area += rWall - heights[rIdx]
 		}
 	}
@@ -488,7 +488,7 @@ func MaxSumSubArraySizeK(nums []int, k int) (maxSum int) {
 			lo++
 		}
 		currSum += nums[hi]
-		maxSum = math2.MaxInt(maxSum, currSum)
+		maxSum = mathext.MaxInt(maxSum, currSum)
 		hi++
 	}
 
@@ -512,7 +512,7 @@ func LongestSubstringLengthWithKDistinct(text string, k int) (maxLen int) {
 		}
 
 		charFreq[text[hi]]++
-		maxLen = math2.MaxInt(hi-lo+1, maxLen)
+		maxLen = mathext.MaxInt(hi-lo+1, maxLen)
 		hi++
 	}
 	return
@@ -657,9 +657,9 @@ func lengthOfLongestSubstringWithoutDups(s string) (maxLen int) {
 	charSet := map[uint8]int{}
 	for hi < len(s) {
 		if _, ok := charSet[s[hi]]; ok {
-			lo = math2.MaxInt(lo, charSet[s[hi]]+1)
+			lo = mathext.MaxInt(lo, charSet[s[hi]]+1)
 		}
-		maxLen = math2.MaxInt(maxLen, hi-lo+1)
+		maxLen = mathext.MaxInt(maxLen, hi-lo+1)
 		charSet[s[hi]] = hi
 		hi++
 	}
@@ -877,7 +877,7 @@ func groupAnagrams(strs []string) (groups [][]string) {
 func addBinary(a string, b string) string {
 	i, j := len(a)-1, len(b)-1
 	carry := '0'
-	arr := make([]byte, math2.MaxInt(i+1, j+1)+1)
+	arr := make([]byte, mathext.MaxInt(i+1, j+1)+1)
 	for i >= 0 || j >= 0 {
 		iv, jv := '0', '0'
 		if i >= 0 && a[i] == '1' {
@@ -889,16 +889,16 @@ func addBinary(a string, b string) string {
 
 		result := iv + jv + carry
 		if result == '1'*3 {
-			arr[math2.MaxInt(i, j)+1] = '1'
+			arr[mathext.MaxInt(i, j)+1] = '1'
 			carry = '1'
 		} else if result == '1'*2+'0' {
-			arr[math2.MaxInt(i, j)+1] = '0'
+			arr[mathext.MaxInt(i, j)+1] = '0'
 			carry = '1'
 		} else if result == '1'+'0'*2 {
-			arr[math2.MaxInt(i, j)+1] = '1'
+			arr[mathext.MaxInt(i, j)+1] = '1'
 			carry = '0'
 		} else {
-			arr[math2.MaxInt(i, j)+1] = '0'
+			arr[mathext.MaxInt(i, j)+1] = '0'
 			carry = '0'
 		}
 
@@ -1039,7 +1039,7 @@ func lengthOfLongestSubstringKDistinct(s string, k int) (maxLen int) {
 				lo++
 			}
 		}
-		maxLen = math2.MaxInt(maxLen, hi-lo+1)
+		maxLen = mathext.MaxInt(maxLen, hi-lo+1)
 		hi++
 	}
 	return
@@ -1284,8 +1284,8 @@ func merge(intervals [][]int) [][]int {
 		if prev[end] < intervals[i][start] {
 			results = append(results, intervals[i])
 		} else {
-			prev[start] = math2.MinInt(prev[start], intervals[i][start])
-			prev[end] = math2.MaxInt(prev[end], intervals[i][end])
+			prev[start] = mathext.MinInt(prev[start], intervals[i][start])
+			prev[end] = mathext.MaxInt(prev[end], intervals[i][end])
 		}
 	}
 	return results
@@ -1559,16 +1559,82 @@ func kClosestUsingSort(points [][]int, K int) [][]int {
 }
 
 func maxProfit(prices []int) int {
-	if len(prices) <= 1 {return 0}
+	if len(prices) <= 1 {
+		return 0
+	}
 	maxRight := prices[len(prices)-1]
 	maxP := 0
-	for i := len(prices)-2; i >= 0; i-- {
+	for i := len(prices) - 2; i >= 0; i-- {
 		if prices[i] > maxRight {
 			maxRight = prices[i]
 		}
-		if maxRight - prices[i] > maxP {
+		if maxRight-prices[i] > maxP {
 			maxP = maxRight - prices[i]
 		}
 	}
 	return maxP
+}
+
+func DivisibleSumPairs(n int32, k int32, ar []int32) int32 {
+	var ways int32
+	for i := range ar {
+		for j := i + 1; j < len(ar); j++ {
+			if float32(ar[i]+ar[j])/float32(k) == 1.0 {
+				ways++
+			}
+		}
+	}
+	return ways
+}
+
+func MaxBinaryGap(N int) int {
+	if N <= 4 {
+		return 0
+	}
+	biStr := strconv.FormatInt(int64(N), 2)
+	lo, hi, maxGap := 0, 0, 0
+	for hi < len(biStr) {
+		if hi > lo && biStr[lo] == '1' && biStr[hi] == '1' {
+			if hi-lo-1 > maxGap {
+				maxGap = hi - lo - 1
+			}
+			lo = hi
+			hi++
+		} else {
+			if biStr[lo] != '1' {
+				lo++
+			}
+			if hi <= lo {
+				hi++
+			}
+			if hi < len(biStr) && biStr[hi] != '1' {
+				hi++
+			}
+		}
+	}
+	return maxGap
+}
+
+func FindMissingInt(A []int) int {
+	if len(A) == 1 {
+		return 1
+	}
+	for i := range A {
+		if abs(A[i]) <= len(A) {
+			A[abs(A[i])-1] = -A[abs(A[i])-1]
+		}
+	}
+	for i := range A {
+		if A[i] > 0 {
+			return i + 1
+		}
+	}
+	return -1
+}
+
+func abs(num int) int {
+	if num < 0 {
+		return -num
+	}
+	return num
 }

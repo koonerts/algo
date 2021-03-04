@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"go-algo/collection"
-	mathcstm "go-algo/math"
+	mathcstm "go-algo/mathext"
 	"go-algo/slice"
 	"math"
 	"sync"
@@ -595,4 +595,44 @@ func HeightBalancedBinaryTree(tree *BinaryTree) bool {
 	}
 	depth(tree)
 	return isBalanced
+}
+
+func BranchSumsLarger(arr []int64) string {
+	if len(arr) <= 1 {
+		return ""
+	} else if len(arr) == 2 {
+		return "Left"
+	} else if len(arr) == 3 {
+		if arr[1] > arr[2] {
+			return "Left"
+		}
+		return "Right"
+	}
+
+	var lsum, rsum int64
+	var findSums func(i int, side string)
+	findSums = func(i int, side string) {
+		if i > len(arr) {
+			return
+		}
+		if arr[i] != -1 {
+			if side == "Left" {
+				lsum += arr[i]
+			} else {
+				rsum += arr[i]
+			}
+		}
+		lChild := 2*i + 1
+		findSums(lChild, side)
+		findSums(lChild+1, side)
+	}
+	findSums(1, "Left")
+	findSums(2, "Right")
+
+	if lsum > rsum {
+		return "Left"
+	} else if rsum > lsum {
+		return "Right"
+	}
+	return ""
 }
