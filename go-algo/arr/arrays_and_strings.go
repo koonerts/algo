@@ -4,8 +4,7 @@ import (
 	"container/heap"
 	"fmt"
 	"go-algo/collection"
-	mathext "go-algo/mathext"
-	"go-algo/slice"
+	"go-algo/mathext"
 	"math"
 	"sort"
 	"strconv"
@@ -1417,33 +1416,39 @@ func rotate(matrix [][]int) {
 	return -1
 }*/
 
-func mostCommonWord(paragraph string, banned []string) string {
+func MostCommonWord(paragraph string, banned []string) string {
 	t := true
 	split := map[byte]bool{'!': t, '?': t, '\'': t, ',': t, ';': t, '.': t, ' ': t}
-	cnts := map[string]int{}
-	maxWord, maxCnt := "", 0
-	paragraph = strings.ToLower(paragraph)
+
+	wordCnt := map[string]int{}
+	bannedSet := map[string]bool{}
+	for _, bword := range banned {
+		bannedSet[bword] = t
+	}
+
 	lo, hi := 0, 0
+	maxWord := ""
 	for hi < len(paragraph) {
-		if split[paragraph[hi]] || hi+1 == len(paragraph) {
-			if hi+1 == len(paragraph) {
+		if split[paragraph[hi]] || hi == len(paragraph)-1 {
+			if hi == len(paragraph)-1 && !split[paragraph[hi]] {
 				hi++
 			}
-			word := paragraph[lo:hi]
-			if word != "" && !slice.ContainsString(banned, word) {
-				cnts[word] += 1
-				if cnts[word] > maxCnt {
-					maxCnt = cnts[word]
+			word := strings.ToLower(paragraph[lo:hi])
+			if !bannedSet[word] {
+				wordCnt[word] += 1
+				if wordCnt[word] > wordCnt[maxWord] {
 					maxWord = word
 				}
 			}
-			hi++
-			lo = hi
+			lo = hi + 1
+			for lo < len(paragraph) && split[paragraph[lo]] {
+				lo++
+			}
+			hi = lo
 		} else {
 			hi++
 		}
 	}
-	fmt.Println(cnts)
 	return maxWord
 }
 
@@ -1620,8 +1625,8 @@ func FindMissingInt(A []int) int {
 		return 1
 	}
 	for i := range A {
-		if abs(A[i]) <= len(A) {
-			A[abs(A[i])-1] = -A[abs(A[i])-1]
+		if mathext.AbsInt(A[i]) <= len(A) {
+			A[mathext.AbsInt(A[i])-1] = -A[mathext.AbsInt(A[i])-1]
 		}
 	}
 	for i := range A {
@@ -1632,9 +1637,96 @@ func FindMissingInt(A []int) int {
 	return -1
 }
 
-func abs(num int) int {
-	if num < 0 {
-		return -num
+func MinTapeDiff(A []int) int {
+	totalSum := 0
+	for _, num := range A {
+		totalSum += num
 	}
-	return num
+
+	lSum, rSum := 0, totalSum
+	minDiff := 1<<31 - 1
+
+	for _, num := range A {
+		lSum += num
+		rSum -= num
+		minDiff = mathext.MinInt(minDiff, mathext.AbsInt(lSum-rSum))
+	}
+	return minDiff
 }
+
+func RepeatedString(s string, n int64) int64 {
+	if len(s) == 0 {
+		return 0
+	} else if len(s) == 1 {
+		if s[0] == 'a' {
+			return n
+		}
+		return 0
+	} else if int(n) < len(s) {
+		return getACount(s, int(n))
+	}
+
+	aCnt := getACount(s, len(s))
+	aCnt *= n / int64(len(s))
+	aCnt += getACount(s, int(n)%len(s))
+	return aCnt
+}
+
+func getACount(s string, hi int) int64 {
+	var aCnt int64
+	for i := 0; i < hi; i++ {
+		if s[i] == 'a' {
+			aCnt++
+		}
+	}
+	return aCnt
+}
+
+func RotateLeft(a []int32, d int32) []int32 {
+	n := len(a)
+	k := int(d) % n
+	if k == 0 {
+		return a
+	}
+
+	cntr, start, idx := 0, len(a)-1, len(a)-1
+	var prev = a[idx]
+	for cntr < len(a) {
+		nextIdx := mathext.Modulo(idx-k, n)
+		tmp := a[nextIdx]
+		a[nextIdx] = prev
+		prev = tmp
+		idx = nextIdx
+		cntr++
+		if idx == start {
+			idx--
+			prev = a[idx]
+			start = idx
+		}
+	}
+	return a
+}
+
+func ArrayManipulation(n int32, queries [][]int32) int64 {
+	if len(queries) == 0 {
+		return 0
+	}
+	if len(queries) == 1 {
+		return int64(queries[0][2])
+	}
+	vals := make([]int64, n)
+	var maxVal int64
+	for _, query := range queries {
+		vals[query[0]-1] += int64(query[2])
+		if query[1] < int32(len(vals)) {
+			vals[query[1]] -= int64(query[2])
+		}
+	}
+	var currVal int64
+	for _, val := range vals {
+		currVal += val
+		maxVal = mathext.MaxInt64(maxVal, currVal)
+	}
+	return maxVal
+}
+

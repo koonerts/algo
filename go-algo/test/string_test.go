@@ -26,3 +26,13 @@ func BenchmarkStringByteSlice(b *testing.B) {
 	}
 	_ = string(bslice)
 }
+
+func BenchmarkStringConcat(b *testing.B) {
+	s := "abcde"
+	s2 := "sdjsdbf"
+	var str string
+	for i := 0; i < b.N; i++ {
+		str += s
+		str += s2
+	}
+}
