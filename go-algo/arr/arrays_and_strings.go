@@ -4,8 +4,8 @@ import (
 	"container/heap"
 	"fmt"
 	"go-algo/collection"
-	math2 "go-algo/math"
-	"go-algo/slice"
+	"go-algo/mathext"
+	"go-algo/strext"
 	"math"
 	"sort"
 	"strconv"
@@ -195,7 +195,7 @@ func ApartmentHunting(blocks []Block, reqs []string) int {
 			if dist[i] == nil {
 				dist[i] = make(map[string]int)
 			}
-			dist[i][req] = math2.MinInt(up, down)
+			dist[i][req] = mathext.MinInt(up, down)
 		}
 	}
 
@@ -203,7 +203,7 @@ func ApartmentHunting(blocks []Block, reqs []string) int {
 	for i, d := range dist {
 		maxDistCurr := math.MinInt32
 		for _, val := range d {
-			maxDistCurr = math2.MaxInt(val, maxDistCurr)
+			maxDistCurr = mathext.MaxInt(val, maxDistCurr)
 		}
 		if maxDistCurr < minDistAll {
 			idx = i
@@ -274,11 +274,11 @@ func WaterArea(heights []int) int {
 	for lIdx < rIdx {
 		if heights[lIdx] < heights[rIdx] {
 			lIdx++
-			lWall = math2.MaxInt(lWall, heights[lIdx])
+			lWall = mathext.MaxInt(lWall, heights[lIdx])
 			area += lWall - heights[lIdx]
 		} else {
 			rIdx--
-			rWall = math2.MaxInt(rWall, heights[rIdx])
+			rWall = mathext.MaxInt(rWall, heights[rIdx])
 			area += rWall - heights[rIdx]
 		}
 	}
@@ -488,7 +488,7 @@ func MaxSumSubArraySizeK(nums []int, k int) (maxSum int) {
 			lo++
 		}
 		currSum += nums[hi]
-		maxSum = math2.MaxInt(maxSum, currSum)
+		maxSum = mathext.MaxInt(maxSum, currSum)
 		hi++
 	}
 
@@ -512,7 +512,7 @@ func LongestSubstringLengthWithKDistinct(text string, k int) (maxLen int) {
 		}
 
 		charFreq[text[hi]]++
-		maxLen = math2.MaxInt(hi-lo+1, maxLen)
+		maxLen = mathext.MaxInt(hi-lo+1, maxLen)
 		hi++
 	}
 	return
@@ -657,9 +657,9 @@ func lengthOfLongestSubstringWithoutDups(s string) (maxLen int) {
 	charSet := map[uint8]int{}
 	for hi < len(s) {
 		if _, ok := charSet[s[hi]]; ok {
-			lo = math2.MaxInt(lo, charSet[s[hi]]+1)
+			lo = mathext.MaxInt(lo, charSet[s[hi]]+1)
 		}
-		maxLen = math2.MaxInt(maxLen, hi-lo+1)
+		maxLen = mathext.MaxInt(maxLen, hi-lo+1)
 		charSet[s[hi]] = hi
 		hi++
 	}
@@ -877,7 +877,7 @@ func groupAnagrams(strs []string) (groups [][]string) {
 func addBinary(a string, b string) string {
 	i, j := len(a)-1, len(b)-1
 	carry := '0'
-	arr := make([]byte, math2.MaxInt(i+1, j+1)+1)
+	arr := make([]byte, mathext.MaxInt(i+1, j+1)+1)
 	for i >= 0 || j >= 0 {
 		iv, jv := '0', '0'
 		if i >= 0 && a[i] == '1' {
@@ -889,16 +889,16 @@ func addBinary(a string, b string) string {
 
 		result := iv + jv + carry
 		if result == '1'*3 {
-			arr[math2.MaxInt(i, j)+1] = '1'
+			arr[mathext.MaxInt(i, j)+1] = '1'
 			carry = '1'
 		} else if result == '1'*2+'0' {
-			arr[math2.MaxInt(i, j)+1] = '0'
+			arr[mathext.MaxInt(i, j)+1] = '0'
 			carry = '1'
 		} else if result == '1'+'0'*2 {
-			arr[math2.MaxInt(i, j)+1] = '1'
+			arr[mathext.MaxInt(i, j)+1] = '1'
 			carry = '0'
 		} else {
-			arr[math2.MaxInt(i, j)+1] = '0'
+			arr[mathext.MaxInt(i, j)+1] = '0'
 			carry = '0'
 		}
 
@@ -1039,7 +1039,7 @@ func lengthOfLongestSubstringKDistinct(s string, k int) (maxLen int) {
 				lo++
 			}
 		}
-		maxLen = math2.MaxInt(maxLen, hi-lo+1)
+		maxLen = mathext.MaxInt(maxLen, hi-lo+1)
 		hi++
 	}
 	return
@@ -1284,8 +1284,8 @@ func merge(intervals [][]int) [][]int {
 		if prev[end] < intervals[i][start] {
 			results = append(results, intervals[i])
 		} else {
-			prev[start] = math2.MinInt(prev[start], intervals[i][start])
-			prev[end] = math2.MaxInt(prev[end], intervals[i][end])
+			prev[start] = mathext.MinInt(prev[start], intervals[i][start])
+			prev[end] = mathext.MaxInt(prev[end], intervals[i][end])
 		}
 	}
 	return results
@@ -1417,33 +1417,28 @@ func rotate(matrix [][]int) {
 	return -1
 }*/
 
-func mostCommonWord(paragraph string, banned []string) string {
-	t := true
-	split := map[byte]bool{'!': t, '?': t, '\'': t, ',': t, ';': t, '.': t, ' ': t}
-	cnts := map[string]int{}
-	maxWord, maxCnt := "", 0
-	paragraph = strings.ToLower(paragraph)
-	lo, hi := 0, 0
-	for hi < len(paragraph) {
-		if split[paragraph[hi]] || hi+1 == len(paragraph) {
-			if hi+1 == len(paragraph) {
-				hi++
-			}
+func MostCommonWord(paragraph string, banned []string) string {
+	paragraph = strings.ToLower(string(strext.RemoveNonAlphaNumeric([]byte(paragraph))))
+	bannedSet := map[string]bool{}
+	wordCnt := map[string]int{}
+	maxWord, maxCount := "", 0
+	n := len(paragraph)
+	for _, word := range banned {
+		bannedSet[word] = true
+	}
+	for lo, hi := 0, 0; hi <= n; hi++ {
+		if hi == n || paragraph[hi] == ' ' {
 			word := paragraph[lo:hi]
-			if word != "" && !slice.ContainsString(banned, word) {
-				cnts[word] += 1
-				if cnts[word] > maxCnt {
-					maxCnt = cnts[word]
+			if !bannedSet[word] {
+				wordCnt[word] += 1
+				if wordCnt[word] > maxCount {
+					maxCount = wordCnt[word]
 					maxWord = word
 				}
 			}
-			hi++
-			lo = hi
-		} else {
-			hi++
+			lo = hi + 1
 		}
 	}
-	fmt.Println(cnts)
 	return maxWord
 }
 
@@ -1559,18 +1554,300 @@ func kClosestUsingSort(points [][]int, K int) [][]int {
 }
 
 func maxProfit(prices []int) int {
-	if len(prices) <= 1 {return 0}
+	if len(prices) <= 1 {
+		return 0
+	}
 	maxRight := prices[len(prices)-1]
 	maxP := 0
-	for i := len(prices)-2; i >= 0; i-- {
+	for i := len(prices) - 2; i >= 0; i-- {
 		if prices[i] > maxRight {
 			maxRight = prices[i]
 		}
-		if maxRight - prices[i] > maxP {
+		if maxRight-prices[i] > maxP {
 			maxP = maxRight - prices[i]
 		}
 	}
 	return maxP
+}
+
+func DivisibleSumPairs(n int32, k int32, ar []int32) int32 {
+	var ways int32
+	for i := range ar {
+		for j := i + 1; j < len(ar); j++ {
+			if float32(ar[i]+ar[j])/float32(k) == 1.0 {
+				ways++
+			}
+		}
+	}
+	return ways
+}
+
+func MaxBinaryGap(N int) int {
+	if N <= 4 {
+		return 0
+	}
+	biStr := strconv.FormatInt(int64(N), 2)
+	lo, hi, maxGap := 0, 0, 0
+	for hi < len(biStr) {
+		if hi > lo && biStr[lo] == '1' && biStr[hi] == '1' {
+			if hi-lo-1 > maxGap {
+				maxGap = hi - lo - 1
+			}
+			lo = hi
+			hi++
+		} else {
+			if biStr[lo] != '1' {
+				lo++
+			}
+			if hi <= lo {
+				hi++
+			}
+			if hi < len(biStr) && biStr[hi] != '1' {
+				hi++
+			}
+		}
+	}
+	return maxGap
+}
+
+func FindMissingInt(A []int) int {
+	if len(A) == 1 {
+		return 1
+	}
+	for i := range A {
+		if mathext.AbsInt(A[i]) <= len(A) {
+			A[mathext.AbsInt(A[i])-1] = -A[mathext.AbsInt(A[i])-1]
+		}
+	}
+	for i := range A {
+		if A[i] > 0 {
+			return i + 1
+		}
+	}
+	return -1
+}
+
+func MinTapeDiff(A []int) int {
+	totalSum := 0
+	for _, num := range A {
+		totalSum += num
+	}
+
+	lSum, rSum := 0, totalSum
+	minDiff := 1<<31 - 1
+
+	for _, num := range A {
+		lSum += num
+		rSum -= num
+		minDiff = mathext.MinInt(minDiff, mathext.AbsInt(lSum-rSum))
+	}
+	return minDiff
+}
+
+func RepeatedString(s string, n int64) int64 {
+	if len(s) == 0 {
+		return 0
+	} else if len(s) == 1 {
+		if s[0] == 'a' {
+			return n
+		}
+		return 0
+	} else if int(n) < len(s) {
+		return getACount(s, int(n))
+	}
+
+	aCnt := getACount(s, len(s))
+	aCnt *= n / int64(len(s))
+	aCnt += getACount(s, int(n)%len(s))
+	return aCnt
+}
+
+func getACount(s string, hi int) int64 {
+	var aCnt int64
+	for i := 0; i < hi; i++ {
+		if s[i] == 'a' {
+			aCnt++
+		}
+	}
+	return aCnt
+}
+
+func RotateLeft(a []int32, d int32) []int32 {
+	n := len(a)
+	k := int(d) % n
+	if k == 0 {
+		return a
+	}
+
+	cntr, start, idx := 0, len(a)-1, len(a)-1
+	var prev = a[idx]
+	for cntr < len(a) {
+		nextIdx := mathext.Modulo(idx-k, n)
+		tmp := a[nextIdx]
+		a[nextIdx] = prev
+		prev = tmp
+		idx = nextIdx
+		cntr++
+		if idx == start {
+			idx--
+			prev = a[idx]
+			start = idx
+		}
+	}
+	return a
+}
+
+func ArrayManipulation(n int32, queries [][]int32) int64 {
+	if len(queries) == 0 {
+		return 0
+	}
+	if len(queries) == 1 {
+		return int64(queries[0][2])
+	}
+	vals := make([]int64, n)
+	var maxVal int64
+	for _, query := range queries {
+		vals[query[0]-1] += int64(query[2])
+		if query[1] < int32(len(vals)) {
+			vals[query[1]] -= int64(query[2])
+		}
+	}
+	var currVal int64
+	for _, val := range vals {
+		currVal += val
+		maxVal = mathext.MaxInt64(maxVal, currVal)
+	}
+	return maxVal
+}
+
+func MinimumBribes(q []int32) {
+	var bribeCnt int32
+	for i := int32(len(q) - 1); i >= 0; i-- {
+		if q[i]-(i+1) > 2 {
+			fmt.Println("Too chaotic")
+			return
+		}
+		for j := mathext.MaxInt32(q[i]-2, 0); j < i; j++ {
+			if q[j] > q[i] {
+				bribeCnt++
+			}
+		}
+	}
+	fmt.Println(bribeCnt)
+}
+
+func IsValidSherlockString(s string) string {
+	charToFreqs := map[string]int{}
+
+	for i := range s {
+		charToFreqs[s[i:i+1]] += 1
+	}
+
+	maxFreq, minFreq := 0, 1<<31-1
+	freqToChars := map[int][]string{}
+	for c, v := range charToFreqs {
+		if v > maxFreq {
+			maxFreq = v
+		}
+		if v < minFreq {
+			minFreq = v
+		}
+		freqToChars[v] = append(freqToChars[v], c)
+	}
+	fmt.Println(freqToChars)
+	if len(freqToChars) == 1 {
+		return "YES"
+	} else if len(freqToChars) > 2 {
+		return "NO"
+	} else {
+		lMax, lMin := len(freqToChars[maxFreq]), len(freqToChars[minFreq])
+		if (lMax > 1 && lMin > 1) || (mathext.MinInt(lMax, lMin)+1 != mathext.MaxInt(lMax, lMin) && mathext.MinInt(lMax, lMin) > 1) {
+			return "NO"
+		} else if maxFreq-minFreq > 1 && lMin > 1 {
+			return "NO"
+		}
+		return "YES"
+	}
+}
+
+func SubStringsOfSizeKDistinct(s string, k int) []string {
+	idx_map := map[byte]int{}
+	lo, hi := 0, 0
+	resMap := map[string]struct{}{}
+	for hi < len(s) {
+		if _, ok := idx_map[s[hi]]; ok {
+			lo = mathext.MaxInt(lo, idx_map[s[hi]]+1)
+		}
+		for hi-lo+1 > k {
+			lo++
+		}
+		if hi-lo+1 == k {
+			resMap[s[lo:hi+1]] = struct{}{}
+		}
+		idx_map[s[hi]] = hi
+		hi++
+	}
+	resList := make([]string, 0, len(resMap))
+	for str := range resMap {
+		resList = append(resList, str)
+	}
+	return resList
+}
+
+func NumberOfItems(str string, ranges [][]int) (res []int) {
+	prefixSums := map[int]int{}
+	currSum := 0
+	for i := range str {
+		if str[i] == '|' {
+			prefixSums[i] = currSum
+		} else {
+			currSum += 1
+		}
+	}
+	leftBounds, rightBounds := make([]int, len(str)), make([]int, len(str))
+	lb, rb := -1, -1
+	n := len(str)
+	for i, j := 0, n-1; i < n; i, j = i+1, j-1 {
+
+		if str[i] == '|' {
+			lb = i
+		}
+		leftBounds[i] = lb
+
+		if str[j] == '|' {
+			rb = j
+		}
+		rightBounds[j] = rb
+	}
+
+	for _, r := range ranges {
+		start := rightBounds[r[0]]
+		end := leftBounds[r[1]]
+		if start < end && start != -1 && end != -1 {
+			res = append(res, prefixSums[end]-prefixSums[start])
+		}
+	}
+	return
+}
+
+func UtilizationScaling(avgs []int, numInstances int) int {
+
+	for i := 0; i < len(avgs); {
+		actionTaken := false
+		if avgs[i] < 25 && numInstances > 1 {
+			numInstances = int(math.Ceil(float64(numInstances) / 2))
+			i += 10
+			actionTaken = true
+		} else if avgs[i] > 60 && numInstances*2 < int(2*math.Pow(10, 8)) {
+			numInstances *= 2
+			i += 10
+			actionTaken = true
+		}
+		if !actionTaken {
+			i++
+		}
+	}
+	return numInstances
 }
 
 func IncrementCounters(N int, A []int) []int {

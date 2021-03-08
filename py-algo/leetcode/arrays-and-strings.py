@@ -1,6 +1,7 @@
 import collections
 import numpy as np
 import string
+from heapq import *
 
 def print_matrix(matrix):
     print(np.array(matrix))
@@ -885,5 +886,73 @@ class Solution:
             max_len = max(max_len, hi-lo+1)
         return max_len
 
+    def turnstile(self, num_worker: int, arr_time: list[int], direction: list[int]) -> list[int]:
 
-print(Solution().lengthOfLongestSubstringKDistinct("eceba", 2))
+        time_map = {i:[] for i in range(arr_time[-1]+2)}
+        LOAD, UNLOAD = 0, 1
+        for i, time in enumerate(arr_time):
+            time_map[time].append(i)
+
+        previously_used_action = (None, None)
+        res = [-1]*num_worker
+        for time, workers in time_map.items():
+            if len(workers) == 1:
+                res[workers[0]] = time
+                previously_used_action = (time, direction[workers[0]])
+            else:
+                prev_time, prev_action = previously_used_action
+                if prev_time is None or time-prev_time > 1:
+                    previously_used_action = self.add_to_dock(res, time_map, time, workers, direction, UNLOAD)
+                elif time-prev_time == 1:
+                    if prev_action == UNLOAD:
+                        previously_used_action = self.add_to_dock(res, time_map, time, workers, direction, UNLOAD)
+                    else:
+                        previously_used_action = self.add_to_dock(res, time_map, time, workers, direction, LOAD)
+        return res
+
+    def add_to_dock(self, res, time_map, time, workers, direction, action):
+        if workers:
+            worker_idx = 0
+            for i in range(len(workers)):
+                if direction[workers[i]] == action:
+                    worker_idx = i
+                    break
+            res[workers[worker_idx]] = time
+            previously_used_action = (time, direction[workers[worker_idx]])
+            for i, worker in enumerate(workers):
+                if i != worker_idx:
+                    time_map[time+1].append(worker)
+            return previously_used_action
+        return None, None
+
+
+def top_mentioned(k: int, keywords: list[str], reviews: list[str]) -> list[str]:
+    kw_freq = collections.defaultdict(lambda: 0)
+    heap = []
+    for _, review in enumerate(reviews):
+        words = [w for w in review.lower().translate(str.maketrans('', '', string.punctuation)).split(" ") if w in keywords]
+        for _, word in enumerate(words):
+            kw_freq[word] += 1
+
+    for word, count in kw_freq.items():
+        if len(heap) < k or (count > heap[0][0] or (count == heap[0][0] and word < heap[0][1])):
+            if len(heap) == k:
+                heappop(heap)
+            heappush(heap, (count, word))
+
+    print(kw_freq)
+    return [w[1] for w in heap]
+
+
+
+
+def num_pairs_divisible_by_60(times: list[int]) -> int:
+    complement = collections.Counter()
+    ans = 0
+    for t in times:
+        if (-t % 60) in complement:
+            ans += complement[-t % 60]
+        complement[t % 60] += 1
+    return ans
+
+[30,20,150,100,40]
