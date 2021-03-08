@@ -1572,3 +1572,29 @@ func maxProfit(prices []int) int {
 	}
 	return maxP
 }
+
+func IncrementCounters(N int, A []int) []int {
+	cntrs := make([]int, N)
+	maxCntr := 0
+	globalMax := 0
+	for i := range A {
+		if A[i] == N+1 {
+			globalMax = maxCntr
+		} else {
+			cntrs[A[i]-1] = max(cntrs[A[i]-1]+1, globalMax+1)
+			maxCntr = max(maxCntr, cntrs[A[i]-1])
+		}
+	}
+
+	for i := range cntrs {
+		if cntrs[i] < globalMax {
+			cntrs[i] = globalMax
+		}
+	}
+	return cntrs
+}
+
+func max(n1, n2 int) int {
+	if n1 >= n2 {return n1}
+	return n2
+}
