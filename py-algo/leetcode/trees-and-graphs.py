@@ -503,5 +503,23 @@ class Solution:
         return s1.isdisjoint(s2)
 
 
-res = Solution().isBipartite([[],[2,4,6],[1,4,8,9],[7,8],[1,2,8,9],[6,9],[1,5,7,8,9],[3,6,9],[2,3,4,6,9],[2,4,5,6,7,8]])
-print(res)
+class UnionFind:
+    def __init__(self):
+        self.f = {}
+
+    def find(self, x):
+        y = self.f.get(x, x)
+        if y != x:
+            self.f[x] = y = self.find(y)
+        return y
+
+    def union(self, x, y):
+        self.f[self.find(x)] = self.find(y)
+
+
+uf = UnionFind()
+uf.union(1,2)
+print(uf.find(1))
+print(uf.find(2))
+uf.union(1,4)
+uf.union(3,4)

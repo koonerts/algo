@@ -60,4 +60,7 @@ class Solution:
         pass
 
 
-print(Solution().canJump([2,3,1,1,4]))
+def number_of_options(prices_of_jeans: list[int], prices_of_shoes: list[int], prices_of_skirts: list[int], prices_of_tops: list[int], budget: int) -> int:
+    allPrices = [prices_of_jeans, prices_of_shoes, prices_of_skirts, prices_of_tops]
+    return 0
+

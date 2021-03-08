@@ -331,27 +331,25 @@ func rightSideView(root *TreeNode) (result []int) {
 	return
 }
 
-func numIslands(grid [][]byte) (cnt int) {
-	if len(grid) == 0 {
-		return 0
-	}
+func NumIslands(grid [][]int) (cnt int) {
+	if len(grid) == 0 {return}
 
-	var clearIsland func(i, j int)
-	clearIsland = func(i, j int) {
-		if 0 <= i && i < len(grid) && 0 <= j && j < len(grid[i]) && grid[i][j] == '1' {
-			grid[i][j] = '0'
-			clearIsland(i+1, j)
-			clearIsland(i-1, j)
-			clearIsland(i, j+1)
-			clearIsland(i, j-1)
+	var clearIsland func(x, y int)
+	clearIsland = func(x, y int) {
+		if x >= 0 && x < len(grid) && y >= 0 && y < len(grid[x]) && grid[x][y] == 1 {
+			grid[x][y] = 0
+			clearIsland(x-1, y)
+			clearIsland(x+1, y)
+			clearIsland(x, y-1)
+			clearIsland(x, y+1)
 		}
 	}
 
 	for i := range grid {
 		for j := range grid[i] {
-			if grid[i][j] == '1' {
+			if grid[i][j] == 1 {
+				clearIsland(i,j)
 				cnt++
-				clearIsland(i, j)
 			}
 		}
 	}
@@ -635,4 +633,19 @@ func BranchSumsLarger(arr []int64) string {
 		return "Right"
 	}
 	return ""
+}
+
+func RoadsAndLibraries(n int32, c_lib int32, c_road int32, cities [][]int32) int64 {
+	if c_road >= c_lib { return int64(c_lib*n) }
+	uf := collection.NewUnionFind(n)
+	for _, edge := range cities {
+		uf.Union(edge[0], edge[1])
+	}
+
+	var minCost int64
+	for _, root := range uf.GetDistinctRoots() {
+		minCost += int64(c_lib)
+		minCost += int64(c_road * (uf.GetSize(root)-1))
+	}
+	return minCost
 }

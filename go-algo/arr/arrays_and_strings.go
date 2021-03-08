@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"go-algo/collection"
 	"go-algo/mathext"
+	"go-algo/strext"
 	"math"
 	"sort"
 	"strconv"
@@ -1417,36 +1418,25 @@ func rotate(matrix [][]int) {
 }*/
 
 func MostCommonWord(paragraph string, banned []string) string {
-	t := true
-	split := map[byte]bool{'!': t, '?': t, '\'': t, ',': t, ';': t, '.': t, ' ': t}
-
-	wordCnt := map[string]int{}
+	paragraph = strings.ToLower(string(strext.RemoveNonAlphaNumeric([]byte(paragraph))))
 	bannedSet := map[string]bool{}
-	for _, bword := range banned {
-		bannedSet[bword] = t
+	wordCnt := map[string]int{}
+	maxWord, maxCount := "", 0
+	n := len(paragraph)
+	for _, word := range banned {
+		bannedSet[word] = true
 	}
-
-	lo, hi := 0, 0
-	maxWord := ""
-	for hi < len(paragraph) {
-		if split[paragraph[hi]] || hi == len(paragraph)-1 {
-			if hi == len(paragraph)-1 && !split[paragraph[hi]] {
-				hi++
-			}
-			word := strings.ToLower(paragraph[lo:hi])
+	for lo, hi := 0, 0; hi <= n; hi++ {
+		if hi == n || paragraph[hi] == ' ' {
+			word := paragraph[lo:hi]
 			if !bannedSet[word] {
 				wordCnt[word] += 1
-				if wordCnt[word] > wordCnt[maxWord] {
+				if wordCnt[word] > maxCount {
+					maxCount = wordCnt[word]
 					maxWord = word
 				}
 			}
 			lo = hi + 1
-			for lo < len(paragraph) && split[paragraph[lo]] {
-				lo++
-			}
-			hi = lo
-		} else {
-			hi++
 		}
 	}
 	return maxWord
@@ -1730,3 +1720,132 @@ func ArrayManipulation(n int32, queries [][]int32) int64 {
 	return maxVal
 }
 
+func MinimumBribes(q []int32) {
+	var bribeCnt int32
+	for i := int32(len(q) - 1); i >= 0; i-- {
+		if q[i]-(i+1) > 2 {
+			fmt.Println("Too chaotic")
+			return
+		}
+		for j := mathext.MaxInt32(q[i]-2, 0); j < i; j++ {
+			if q[j] > q[i] {
+				bribeCnt++
+			}
+		}
+	}
+	fmt.Println(bribeCnt)
+}
+
+func IsValidSherlockString(s string) string {
+	charToFreqs := map[string]int{}
+
+	for i := range s {
+		charToFreqs[s[i:i+1]] += 1
+	}
+
+	maxFreq, minFreq := 0, 1<<31-1
+	freqToChars := map[int][]string{}
+	for c, v := range charToFreqs {
+		if v > maxFreq {
+			maxFreq = v
+		}
+		if v < minFreq {
+			minFreq = v
+		}
+		freqToChars[v] = append(freqToChars[v], c)
+	}
+	fmt.Println(freqToChars)
+	if len(freqToChars) == 1 {
+		return "YES"
+	} else if len(freqToChars) > 2 {
+		return "NO"
+	} else {
+		lMax, lMin := len(freqToChars[maxFreq]), len(freqToChars[minFreq])
+		if (lMax > 1 && lMin > 1) || (mathext.MinInt(lMax, lMin)+1 != mathext.MaxInt(lMax, lMin) && mathext.MinInt(lMax, lMin) > 1) {
+			return "NO"
+		} else if maxFreq-minFreq > 1 && lMin > 1 {
+			return "NO"
+		}
+		return "YES"
+	}
+}
+
+func SubStringsOfSizeKDistinct(s string, k int) []string {
+	idx_map := map[byte]int{}
+	lo, hi := 0, 0
+	resMap := map[string]struct{}{}
+	for hi < len(s) {
+		if _, ok := idx_map[s[hi]]; ok {
+			lo = mathext.MaxInt(lo, idx_map[s[hi]]+1)
+		}
+		for hi-lo+1 > k {
+			lo++
+		}
+		if hi-lo+1 == k {
+			resMap[s[lo:hi+1]] = struct{}{}
+		}
+		idx_map[s[hi]] = hi
+		hi++
+	}
+	resList := make([]string, 0, len(resMap))
+	for str := range resMap {
+		resList = append(resList, str)
+	}
+	return resList
+}
+
+func NumberOfItems(str string, ranges [][]int) (res []int) {
+	prefixSums := map[int]int{}
+	currSum := 0
+	for i := range str {
+		if str[i] == '|' {
+			prefixSums[i] = currSum
+		} else {
+			currSum += 1
+		}
+	}
+	leftBounds, rightBounds := make([]int, len(str)), make([]int, len(str))
+	lb, rb := -1, -1
+	n := len(str)
+	for i, j := 0, n-1; i < n; i, j = i+1, j-1 {
+
+		if str[i] == '|' {
+			lb = i
+		}
+		leftBounds[i] = lb
+
+		if str[j] == '|' {
+			rb = j
+		}
+		rightBounds[j] = rb
+	}
+
+	for _, r := range ranges {
+		start := rightBounds[r[0]]
+		end := leftBounds[r[1]]
+		if start < end && start != -1 && end != -1 {
+			res = append(res, prefixSums[end]-prefixSums[start])
+		}
+	}
+	return
+}
+
+func UtilizationScaling(avgs []int, numInstances int) int {
+
+	for i := 0; i < len(avgs); {
+		actionTaken := false
+		if avgs[i] < 25 && numInstances > 1 {
+			numInstances = int(math.Ceil(float64(numInstances) / 2))
+			i += 10
+			actionTaken = true
+		} else if avgs[i] > 60 && numInstances*2 < int(2*math.Pow(10, 8)) {
+			numInstances *= 2
+			i += 10
+			actionTaken = true
+		}
+		if !actionTaken {
+			i++
+		}
+	}
+	return numInstances
+}

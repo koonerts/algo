@@ -6,23 +6,23 @@ import (
 )
 
 func MaxInt(nums ...int) int {
-	maxInt := nums[0]
+	max := nums[0]
 	for i := range nums {
-		if nums[i] > maxInt {
-			maxInt = nums[i]
+		if nums[i] > max {
+			max = nums[i]
 		}
 	}
-	return maxInt
+	return max
 }
 
 func MinInt(nums ...int) int {
-	minInt := nums[0]
+	min := nums[0]
 	for i := range nums {
-		if nums[i] < minInt {
-			minInt = nums[i]
+		if nums[i] < min {
+			min = nums[i]
 		}
 	}
-	return minInt
+	return min
 }
 
 func AbsInt(n int) int {
@@ -33,23 +33,23 @@ func AbsInt(n int) int {
 }
 
 func MaxInt32(nums ...int32) int32 {
-	minInt := nums[0]
+	max := nums[0]
 	for i := range nums {
-		if nums[i] < minInt {
-			minInt = nums[i]
+		if nums[i] > max {
+			max = nums[i]
 		}
 	}
-	return minInt
+	return max
 }
 
 func MinInt32(nums ...int32) int32 {
-	minInt := nums[0]
+	min := nums[0]
 	for i := range nums {
-		if nums[i] < minInt {
-			minInt = nums[i]
+		if nums[i] < min {
+			min = nums[i]
 		}
 	}
-	return minInt
+	return min
 }
 
 func AbsInt32(n int32) int32 {
@@ -60,23 +60,23 @@ func AbsInt32(n int32) int32 {
 }
 
 func MaxInt64(nums ...int64) int64 {
-	minInt := nums[0]
+	max := nums[0]
 	for i := range nums {
-		if nums[i] < minInt {
-			minInt = nums[i]
+		if nums[i] > max {
+			max = nums[i]
 		}
 	}
-	return minInt
+	return max
 }
 
 func MinInt64(nums ...int64) int64 {
-	minInt := nums[0]
+	min := nums[0]
 	for i := range nums {
-		if nums[i] < minInt {
-			minInt = nums[i]
+		if nums[i] < min {
+			min = nums[i]
 		}
 	}
-	return minInt
+	return min
 }
 
 func AbsInt64(n int64) int64 {

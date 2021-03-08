@@ -2,10 +2,24 @@ package main
 
 import (
 	"fmt"
-	"go-algo/arr"
+	"go-algo/collection"
+	"go-algo/tree"
 )
 
 func main() {
-	q := [][]int32{{1, 2, 100}, {2, 5, 100}, {3, 4, 100}}
-	fmt.Println(arr.ArrayManipulation(5, q))
+	uf := collection.NewUnionFind(5)
+	for _, edge := range [][]int32{{2,1}, {5,3}, {5,1}, {3,4}, {3,1}, {5,4}, {4,1}, {5,2}, {4,2}} {
+		uf.Union(edge[0], edge[1])
+	}
+	roots := uf.GetDistinctRoots()
+	print(roots)
+	print(uf.GetSize(roots[0]))
+	print(uf)
+
+	print(tree.RoadsAndLibraries(5, 92, 23, [][]int32{{2,1}, {5,3}, {5,1}, {3,4}, {3,1}, {5,4}, {4,1}, {5,2}, {4,2}}))
+}
+
+
+func print(i interface {}) {
+	fmt.Println(i)
 }

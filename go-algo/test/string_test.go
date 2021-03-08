@@ -36,3 +36,17 @@ func BenchmarkStringConcat(b *testing.B) {
 		str += s2
 	}
 }
+
+func BenchmarkByteToStringUsingConversion(b *testing.B) {
+	s := "abcde"
+	for i := 0; i < b.N; i++ {
+		_ = string(s[3])
+	}
+}
+
+func BenchmarkByteToStringUsingSlice(b *testing.B) {
+	s := "abcde"
+	for i := 0; i < b.N; i++ {
+		_ = s[3:4]
+	}
+}
