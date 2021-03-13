@@ -7,6 +7,21 @@ import (
 	"testing"
 )
 
+
+func BenchmarkSliceLiteralCreate(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		_ = []int{10000:0}
+	}
+}
+
+
+func BenchmarkSliceMakeCreate(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		_ = make([]int, 10000)
+	}
+}
+
+
 func BenchmarkSliceReverseSwap(b *testing.B) {
 	x := getIntSlice(1000)
 	b.ResetTimer()

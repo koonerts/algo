@@ -643,17 +643,16 @@ func longestPalindrome(s string) string {
 	return maxss
 }
 
-/*func wordBreak(s string, wordDict []string) (canSegment bool) {
-	if len(wordDict) == 0 {
-		return true
-	} else if len(s) == 0 {
-		return false
+/*func WaysToPermuteUnderLimit(p1, p2, p3, p4 []int, budget int) (ways int) {
+	allPrices := [][]int{p1, p2, p3, p4}
+	for i := range allPrices {
+		sort.Ints(allPrices[i])
 	}
 
-	var trySegment func(s string) bool
-	trySegment = func(s string) bool {
-		if s == "" {
-			return true
+	var tryPermute func(idx int)
+	tryPermute = func(idx int, remainingBudget int) {
+		if remainingBudget == 0 {
+
 		}
 	}
 

@@ -1121,20 +1121,34 @@ func validateIpv6Address(ipGroups []string) (isValid bool) {
 	return true
 }
 
-// TODO: Come back to
-func subarraySum(nums []int, k int) (cnt int) {
-	lo, hi := 0, 0
+func SubarraySum(nums []int, k int) (cnt int) {
+	sums := make([]int, len(nums))
 	sum := 0
-	for hi < len(nums) {
-		sum += nums[hi]
-		for (sum >= k && k >= 0) || (sum <= k && k < 0) && lo < len(nums) {
-			if sum == k {
+	for i, num := range nums {
+		sum += num
+		sums[i] = sum
+	}
+
+	for i := range nums {
+		for j := i+1; j < len(nums); j++ {
+
+		}
+	}
+	return
+}
+
+func SubarraySum2(nums []int, k int) (cnt int) {
+	sums := make([]int, len(nums)+1)
+	sums[0] = 0
+	for i, num := range nums {
+		sums[i+1] = sums[i]+num
+	}
+	for start := 0; start < len(nums); start++ {
+		for end := start + 1; end <= len(nums); end++ {
+			if sums[end] - sums[start] == k {
 				cnt++
 			}
-			sum -= nums[lo]
-			lo++
 		}
-		hi++
 	}
 	return
 }
@@ -1858,8 +1872,8 @@ func IncrementCounters(N int, A []int) []int {
 		if A[i] == N+1 {
 			globalMax = maxCntr
 		} else {
-			cntrs[A[i]-1] = max(cntrs[A[i]-1]+1, globalMax+1)
-			maxCntr = max(maxCntr, cntrs[A[i]-1])
+			cntrs[A[i]-1] = mathext.MaxInt(cntrs[A[i]-1]+1, globalMax+1)
+			maxCntr = mathext.MaxInt(maxCntr, cntrs[A[i]-1])
 		}
 	}
 
@@ -1871,7 +1885,55 @@ func IncrementCounters(N int, A []int) []int {
 	return cntrs
 }
 
-func max(n1, n2 int) int {
-	if n1 >= n2 {return n1}
-	return n2
+func SortedSquaredArray(array []int) []int {
+	idxPos := 0
+	for idxPos < len(array) && array[idxPos] < 0 {
+		idxPos++
+	}
+
+	res := make([]int, 0, len(array))
+	idxNeg := idxPos - 1
+	for idxNeg >= 0 || idxPos < len(array) {
+		if idxNeg < 0 {
+			res = append(res, array[idxPos]*array[idxPos])
+			idxPos++
+		} else if idxPos >= len(array) {
+			res = append(res, array[idxNeg]*array[idxNeg])
+			idxNeg--
+		} else {
+			if mathext.AbsInt(array[idxNeg]) < mathext.AbsInt(array[idxPos]) {
+				res = append(res, array[idxNeg]*array[idxNeg])
+				idxNeg--
+			} else {
+				res = append(res, array[idxPos]*array[idxPos])
+				idxPos++
+			}
+		}
+	}
+	return res
 }
+
+func MaxTripletProduct(A []int) int {
+	sort.Ints(A)
+	n := len(A)
+	mp1 := A[n-1] * A[n-2] * A[n-3]
+	mp2 := A[0] * A[1] * A[n-1]
+	return mathext.MaxInt(mp1, mp2)
+}
+
+func DiskIntersection(disks []int) (intersections int) {
+	return
+}
+
+func TriangleExists(points []int) (exists bool) {
+	sort.Ints(points)
+	for i := 0; i < len(points)-2; i++ {
+		if points[i]+points[i+1] > points[i+2] &&
+			points[i]+points[i+2] > points[i+1] &&
+			points[i+1]+points[i+2] > points[i] {
+			return true
+		}
+	}
+	return false
+}
+
