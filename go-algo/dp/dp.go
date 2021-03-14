@@ -643,18 +643,99 @@ func longestPalindrome(s string) string {
 	return maxss
 }
 
-/*func WaysToPermuteUnderLimit(p1, p2, p3, p4 []int, budget int) (ways int) {
+func WaysToPermuteUnderLimit(p1, p2, p3, p4 []int, budget int) (ways int) {
 	allPrices := [][]int{p1, p2, p3, p4}
 	for i := range allPrices {
 		sort.Ints(allPrices[i])
 	}
 
-	var tryPermute func(idx int)
-	tryPermute = func(idx int, remainingBudget int) {
+	var tryPermute func(idx, remainingBudget int)
+	tryPermute = func(idx, remainingBudget int) {
 		if remainingBudget == 0 {
 
 		}
 	}
-
+	tryPermute(0, budget)
 	return
-}*/
+}
+
+
+func NumberOfWaysToTraverseGraph(width int, height int) (ways int) {
+	dp := make([][]int, height)
+	for i := range dp {
+		dp[i] = make([]int, width)
+		for j := range dp[i] {
+			dp[i][j] = -1
+		}
+	}
+
+	var traverse func(x, y int) int
+	traverse = func(x, y int) int {
+		if x == 0 && y == 0 {
+			return 1
+		} else if x < 0 || y < 0 {
+			return 0
+		}
+
+		if dp[x][y] == -1 {
+			dp[x][y] = 0
+			dp[x][y] += traverse(x, y-1)
+			dp[x][y] += traverse(x-1, y)
+		}
+		return dp[x][y]
+	}
+	traverse(height-1, width-1)
+	return dp[height-1][width-1]
+}
+
+func NumberOfWaysToTraverseGraphTabulated(width, height int) (ways int) {
+	dp := make([][]int, height+1)
+	for i := range dp {
+		dp[i] = make([]int, width+1)
+	}
+	dp[1][1] = 1
+	for i := 1; i < height+1; i++ {
+		for j := 1; j < width+1; j++ {
+			if i == 1 && j == 1 {continue}
+			dp[i][j] = dp[i-1][j] + dp[i][j-1]
+		}
+	}
+	return dp[height][width]
+}
+
+func StaircaseTraversal(height int, maxSteps int) (ways int) {
+	if maxSteps <= 1 { return maxSteps }
+	dp := make([]int, height+1)
+
+	var traverse func(idx int) int
+	traverse = func(idx int) int {
+		if idx < 0 {
+			return 0
+		} else if idx == 0 {
+			return 1
+		}
+
+		if dp[idx] == 0 {
+			for step := maxSteps; step >= 1; step-- {
+				dp[idx] += traverse(idx-step)
+			}
+		}
+		return dp[idx]
+	}
+	traverse(height)
+	return dp[height]
+}
+
+func StaircaseTraversalTabulated(height, maxSteps int) (ways int) {
+	if maxSteps <= 1 { return maxSteps }
+	dp := make([]int, height+1)
+	dp[0] = 1
+	dp[1] = 1
+	for i := 2; i <= height; i++ {
+		for step := maxSteps; step >= 1; step-- {
+			if i-step < 0 { continue }
+			dp[i] += dp[i-step]
+		}
+	}
+	return dp[height]
+}

@@ -1122,18 +1122,30 @@ func validateIpv6Address(ipGroups []string) (isValid bool) {
 }
 
 func SubarraySum(nums []int, k int) (cnt int) {
-	sums := make([]int, len(nums))
+	lo, hi := 0, 0
 	sum := 0
-	for i, num := range nums {
-		sum += num
-		sums[i] = sum
-	}
-
-	for i := range nums {
-		for j := i+1; j < len(nums); j++ {
-
+	for hi < len(nums) {
+		sum += nums[hi]
+		for lo < len(nums) && lo <= hi && sum >= k {
+			if sum == k {
+				cnt++
+				for hi + 1 < len(nums) && nums[hi+1] == 0 {
+					cnt++
+					hi++
+				}
+			}
+			sum -= nums[lo]
+			lo++
 		}
+		hi++
 	}
+
+	for lo < len(nums) && sum < k && nums[lo] < 0 {
+		sum -= nums[lo]
+		lo++
+		if sum == k {cnt++}
+	}
+
 	return
 }
 
@@ -1956,4 +1968,17 @@ func GenerateDocument(characters string, document string) bool {
 	}
 
 	return true
+}
+
+func ValidStartingCity(distances []int, fuel []int, mpg int) int {
+	minIdx, minGas := 0, 0
+	gas := 0
+	for i := range distances {
+		if i == 0 {continue}
+		gas += fuel[i-1]*mpg - distances[i-1]
+		if gas < minGas {
+			minIdx, minGas = i, gas
+		}
+	}
+	return minIdx
 }
