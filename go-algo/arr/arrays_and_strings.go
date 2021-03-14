@@ -1937,3 +1937,23 @@ func TriangleExists(points []int) (exists bool) {
 	return false
 }
 
+func GenerateDocument(characters string, document string) bool {
+	freqC, freqD := map[byte]int{}, map[byte]int{}
+	for i := 0; i < len(characters) || i < len(document); i++ {
+		if i < len(characters) && characters[i] != ' ' {
+			freqC[characters[i]] += 1
+		}
+		if i < len(document) && document[i] != ' ' {
+			freqD[document[i]] += 1
+		}
+	}
+
+	if len(freqC) < len(freqD) {return false}
+	for char, cnt := range freqD {
+		if cnt >= freqC[char] {
+			return false
+		}
+	}
+
+	return true
+}

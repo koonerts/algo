@@ -2,11 +2,14 @@ package main
 
 import (
 	"fmt"
-	"go-algo/arr"
+	"go-algo/linkedlist"
 )
 
 func main() {
-	print(arr.SubarraySum2([]int{-1,-1,1}, 2))
+	head := linkedlist.CreateLinkedList([]int{1,1,1,3,4,4,4,5,6,6})
+	linkedlist.PrintLinkedList(head)
+	res := linkedlist.RemoveDuplicatesFromLinkedList(head)
+	linkedlist.PrintLinkedList(res)
 }
 
 func print(i interface {}) {

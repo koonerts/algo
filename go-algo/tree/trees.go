@@ -522,20 +522,6 @@ func FindKthLargestValueInBst(tree *BST, k int) int {
 	return (*ih)[0]
 }
 
-/*func ReconstructBst(preOrderTraversalValues []int) *BST {
-	if len(preOrderTraversalValues) == 0 {
-		return nil
-	}
-
-	var reconstruct func(idx, lo, hi int) *BST
-	reconstruct = func(idx, lo, hi int) *BST {
-		if idx >= len(preOrderTraversalValues) {
-			return nil
-		}
-
-	}
-}*/
-
 type ZigZagDirection int
 
 const (

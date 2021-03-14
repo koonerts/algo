@@ -18,7 +18,7 @@ type LinkedList struct {
 	Next  *LinkedList
 }
 
-func createListNodeList(vals []int) *ListNode {
+func CreateListNodeList(vals []int) *ListNode {
 	var head, prev *ListNode
 	for _, val := range vals {
 		node := &ListNode{val, nil}
@@ -30,6 +30,33 @@ func createListNodeList(vals []int) *ListNode {
 		prev = node
 	}
 	return head
+}
+
+func CreateLinkedList(vals []int) *LinkedList {
+	var head, prev *LinkedList
+	for _, val := range vals {
+		node := &LinkedList{val, nil}
+		if head == nil {
+			head = node
+		} else {
+			prev.Next = node
+		}
+		prev = node
+	}
+	return head
+}
+
+func PrintLinkedList(head *LinkedList) {
+	node := head
+	for node != nil {
+		fmt.Print(node.Value)
+		node = node.Next
+		if node != nil {
+			fmt.Print("->")
+		} else {
+			fmt.Println()
+		}
+	}
 }
 
 func PrintListNodeList(head *ListNode) {
@@ -280,5 +307,24 @@ func SumOfLinkedLists(l1 *LinkedList, l2 *LinkedList) *LinkedList {
 	if carryOver != 0 {
 		prev.Next = &LinkedList{Value: 1}
 	}
+	return head
+}
+
+func RemoveDuplicatesFromLinkedList(linkedList *LinkedList) *LinkedList {
+	if linkedList == nil { return linkedList }
+
+	head := linkedList
+	vis := map[int]bool{head.Value:true}
+	node, prev := head.Next, head
+	for node != nil {
+		if vis[node.Value] {
+			prev.Next = node.Next
+		} else {
+			prev = node
+		}
+		vis[node.Value] = true
+		node = node.Next
+	}
+
 	return head
 }
