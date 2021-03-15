@@ -6,8 +6,7 @@ import (
 )
 
 func main() {
-	print(arr.ValidStartingCity([]int{5, 25, 15, 10, 15}, []int{1, 2, 1, 0, 3}, 10))
-	print(arr.ValidStartingCity([]int{10, 20, 10, 15, 5, 15, 25}, []int{0, 2, 1, 0, 0, 1, 1}, 20))
+	print(arr.TestGroupScores([]string{"test1", "test2", "test3", "test4", "test5", "test10"}, []string{"ok", "ok", "fail", "ok", "ok", "fail"}))
 }
 
 func print(i ...interface{}) {

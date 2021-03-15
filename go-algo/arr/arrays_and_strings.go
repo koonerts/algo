@@ -1982,3 +1982,144 @@ func ValidStartingCity(distances []int, fuel []int, mpg int) int {
 	}
 	return minIdx
 }
+
+func ReverseWordsInString(str string) string {
+	sb := strings.Builder{}
+	sb.Grow(len(str))
+	for lo, hi := len(str)-1, len(str)-1; lo >= -1; lo-- {
+		if lo == -1 || str[lo] == ' ' {
+			if str[lo+1] != ' ' {
+				sb.WriteString(str[lo+1:hi+1])
+			}
+			if lo != -1 {sb.WriteByte(' ')}
+			hi = lo-1
+		}
+	}
+	return sb.String()
+}
+
+func FindMinMissingNumber(A []int) int {
+	i := 0
+	for i < len(A) {
+		if A[i] >= 1 && A[i] <= len(A) && A[i] != i+1 {
+			A[i], A[A[i]-1] = A[A[i]-1], A[i]
+		} else {
+			i++
+		}
+	}
+
+	for i, num := range A {
+		if i+1 != num {
+			return i+1
+		}
+	}
+	return len(A)+1
+}
+
+func GlobMatching(fileName, pattern string) bool {
+	if pattern == "*" || len(fileName) == 1 && pattern == "?" {
+		return true
+	}
+
+	wildCards := map[byte]bool{'*':true, '?':true}
+	fileIdx := 0
+	for patternIdx := 0; patternIdx < len(pattern); {
+		if !wildCards[pattern[patternIdx]] {
+			if fileName[fileIdx] != pattern[patternIdx] {
+				return false
+			}
+			fileIdx++
+			patternIdx++
+		} else {
+			if pattern[patternIdx] == '?' {
+				if fileIdx == len(fileName) {
+					return false
+				}
+				fileIdx++
+				patternIdx++
+			} else {
+				for patternIdx < len(pattern) && wildCards[pattern[patternIdx]] {
+					patternIdx++
+				}
+				if patternIdx == len(pattern) {
+					return true
+				}
+
+				for fileIdx < len(fileName) && fileName[fileIdx] != pattern[patternIdx] {
+					fileIdx++
+				}
+				if fileIdx == len(fileName) {
+					patternIdx++
+					for patternIdx < len(pattern) && pattern[patternIdx] == '*' {
+						patternIdx++
+					}
+					if patternIdx == len(pattern) {
+						return true
+					}
+					return false
+				} else {
+					patternIdx++
+					fileIdx++
+				}
+			}
+		}
+	}
+	if fileIdx < len(fileName) {
+		return false
+	}
+	return true
+}
+
+
+func MinDeletions(S string, C []int) (minCost int) {
+	if len(S) <= 1 { return 0}
+	stk := []int{0}
+	for i := 1; i < len(S); i++ {
+		if S[i] == S[stk[len(stk)-1]] {
+			if C[i] < C[stk[len(stk)-1]] {
+				minCost += C[i]
+			} else {
+				minCost += C[stk[len(stk)-1]]
+				stk = stk[:len(stk)-1]
+				stk = append(stk, i)
+			}
+		} else {
+			stk = append(stk, i)
+		}
+	}
+	return minCost
+}
+
+func TestGroupScores(T, R []string) (score int) {
+	testGroupIdx := 0
+	for testGroupIdx < len(T) && strext.IsAlpha(T[0][testGroupIdx]) {
+		testGroupIdx++
+	}
+
+	statusMap := map[string]bool{}
+	for i, test := range T {
+		testGroup := test[:testGroupIdx]
+		numIdxStart, numIdxEnd := testGroupIdx, testGroupIdx
+		for numIdxEnd < len(test) && strext.IsNumeric(test[numIdxEnd]) {
+			numIdxEnd++
+		}
+		testGroup += test[numIdxStart:numIdxEnd]
+		if status, ok := statusMap[testGroup]; ok && !status {
+			continue
+		}
+		status := R[i] == "ok"
+		statusMap[testGroup] = status
+	}
+	fmt.Println(statusMap)
+
+	passCnt := 0
+	for _, status := range statusMap {
+		if status {
+			passCnt++
+		}
+	}
+	s1, s2 := passCnt*100/len(statusMap) , passCnt * (100/len(statusMap))
+	fmt.Println(s1, s2, float32(passCnt)/float32(len(statusMap))*100)
+	return s2
+}
+

@@ -4,10 +4,7 @@ package strext
 func RemoveNonAlphaNumeric(bytes []byte) []byte {
 	n := 0
 	for i := range bytes {
-		if (bytes[i] >= 'a' && bytes[i] <= 'z') ||
-			(bytes[i] >= 'A' && bytes[i] <= 'Z') ||
-			(bytes[i] >= '0' && bytes[i] <= '9') ||
-			bytes[i] == ' ' {
+		if IsAlphaNumeric(bytes[i]) || bytes[i] == ' ' {
 			bytes[n] = bytes[i]
 			n++
 		} else if (bytes[i] == ',' || bytes[i] == '.') && i+1 < len(bytes) && bytes[i+1] != ' ' {
@@ -16,4 +13,16 @@ func RemoveNonAlphaNumeric(bytes []byte) []byte {
 		}
 	}
 	return bytes[:n]
+}
+
+func IsAlpha(b byte) bool {
+	return (b >= 'a' && b <= 'z') || (b >= 'A' && b <= 'Z')
+}
+
+func IsNumeric(b byte) bool {
+	return b >= '0' && b <= '9'
+}
+
+func IsAlphaNumeric(b byte) bool {
+	return IsAlpha(b) || IsNumeric(b)
 }

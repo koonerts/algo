@@ -8,6 +8,7 @@ import (
 	mathcstm "go-algo/mathext"
 	"go-algo/slice"
 	"math"
+	"sort"
 	"sync"
 )
 
@@ -634,4 +635,35 @@ func RoadsAndLibraries(n int32, c_lib int32, c_road int32, cities [][]int32) int
 		minCost += int64(c_road * (uf.GetSize(root)-1))
 	}
 	return minCost
+}
+
+func FindItinerary(tickets [][]string) []string {
+	adjMap := map[string][]string{}
+	for _, ticket := range tickets {
+		if _, ok := adjMap[ticket[0]]; !ok {
+			adjMap[ticket[0]] = []string{ticket[1]}
+		} else {
+			adjMap[ticket[0]] = append(adjMap[ticket[0]], ticket[1])
+		}
+	}
+	for city := range adjMap {
+		sort.Strings(adjMap[city])
+	}
+
+	res := []string{}
+	vis := map[string]bool{}
+	var traverse func(city string)
+	traverse = func(city string) {
+		res = append(res, city)
+		for _, toCity := range adjMap[city] {
+			flight := fmt.Sprintf("%s|%s", city, toCity)
+			if !vis[flight] {
+				vis[flight] = true
+				traverse(toCity)
+			}
+		}
+
+	}
+	traverse("JFK")
+	return res
 }

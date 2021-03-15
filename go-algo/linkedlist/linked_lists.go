@@ -328,3 +328,43 @@ func RemoveDuplicatesFromLinkedList(linkedList *LinkedList) *LinkedList {
 
 	return head
 }
+
+func ZipLinkedList(linkedList *LinkedList) *LinkedList {
+	if linkedList == nil || linkedList.Next == nil || linkedList.Next.Next == nil {
+		return linkedList
+	}
+
+	head := linkedList
+	node := head
+	llLen := 0
+	for node != nil {
+		llLen++
+		node = node.Next
+	}
+	k := llLen/2
+
+	node = head
+	for i := 0; i < k; i++ {
+		node = node.Next
+	}
+
+	var secondList, prev *LinkedList = node.Next, nil
+	node.Next = nil
+	for secondList != nil {
+		tmp := secondList.Next
+		secondList.Next = prev
+		prev = secondList
+		secondList = tmp
+	}
+
+	node, secondList = head, prev
+	for secondList != nil {
+		tmp := node.Next
+		tmp2 := secondList.Next
+		node.Next = secondList
+		secondList.Next = tmp
+		node = tmp
+		secondList = tmp2
+	}
+	return head
+}

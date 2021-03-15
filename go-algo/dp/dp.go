@@ -2,7 +2,7 @@ package dp
 
 import (
 	"fmt"
-	math2 "go-algo/mathext"
+	"go-algo/mathext"
 	"go-algo/slice"
 	"math"
 	"sort"
@@ -27,7 +27,7 @@ func knapsackZeroOne(weights []int, profits []int, capacity int) {
 			}
 
 			profitWithout := maxProfits[i-1][j]
-			maxProfits[i][j] = math2.MaxInt(profitWith, profitWithout)
+			maxProfits[i][j] = mathext.MaxInt(profitWith, profitWithout)
 		}
 	}
 	slice.PrintSlice(maxProfits)
@@ -65,7 +65,7 @@ func KnapsackZeroOneOptimized(weights []int, profits []int, capacity int) {
 			}
 
 			profitWithout := maxProfits[j-1]
-			maxProfits[j] = math2.MaxInt(profitWith, profitWithout)
+			maxProfits[j] = mathext.MaxInt(profitWith, profitWithout)
 		}
 	}
 	fmt.Println(maxProfits)
@@ -200,7 +200,7 @@ func KnapsackUnlimited(weights []int, profits []int, capacity int) int {
 			}
 
 			profitWithout := maxProfits[i-1][j]
-			maxProfits[i][j] = math2.MaxInt(profitWith, profitWithout)
+			maxProfits[i][j] = mathext.MaxInt(profitWith, profitWithout)
 		}
 	}
 	slice.PrintSlice(maxProfits)
@@ -222,7 +222,7 @@ func RodCuttingProfit(lengths []int, prices []int, maxLen int) (int, []int) {
 				profitWith = prices[i-1] + dp[i][j-lengths[i-1]]
 			}
 			profitWithout = dp[i-1][j]
-			dp[i][j] = math2.MaxInt(profitWith, profitWithout)
+			dp[i][j] = mathext.MaxInt(profitWith, profitWithout)
 		}
 	}
 
@@ -276,8 +276,8 @@ func MinCoinChainUnlimited(denoms []int, total int) int {
 					with = ways[j-denoms[i]] + 1
 				}
 
-				if math2.MinInt(without, with) != math.MaxInt32 {
-					ways[j] = math2.MinInt(without, with)
+				if mathext.MinInt(without, with) != math.MaxInt32 {
+					ways[j] = mathext.MinInt(without, with)
 				}
 			}
 		}
@@ -306,7 +306,7 @@ func MaxRibbonCut(lengths []int, n int) int {
 				with = cuts[j-lengths[i]] + 1
 			}
 
-			cuts[j] = math2.MaxInt(with, without)
+			cuts[j] = mathext.MaxInt(with, without)
 		}
 	}
 
@@ -342,7 +342,7 @@ func MinJumps(nums []int) int {
 			if dp[idx] == math.MaxInt32 {
 				for i := 1; i <= nums[idx]; i++ {
 					cnt := traverse(idx+i) + 1
-					dp[idx] = math2.MinInt(dp[idx], cnt)
+					dp[idx] = mathext.MinInt(dp[idx], cnt)
 				}
 			}
 			return dp[idx]
@@ -360,7 +360,7 @@ func MinJumpsTabulated(nums []int) int {
 
 	for i := range dp {
 		for j := 1; j <= nums[i] && j+i < len(nums); j++ {
-			dp[i+j] = math2.MinInt(dp[i+j], dp[i]+1)
+			dp[i+j] = mathext.MinInt(dp[i+j], dp[i]+1)
 		}
 	}
 	return dp[len(nums)-1]
@@ -372,7 +372,7 @@ func MaxStealProfit(profits []int) int {
 	dp[1] = profits[0]
 
 	for i := 2; i < len(dp); i++ {
-		dp[i] = math2.MaxInt(dp[i-1], profits[i-1]+dp[i-2])
+		dp[i] = mathext.MaxInt(dp[i-1], profits[i-1]+dp[i-2])
 	}
 	slice.PrintSlice(dp)
 	return dp[len(profits)]
@@ -390,7 +390,7 @@ func LongestPalindromicSubsequenceTabulated(text string) (maxLen int) {
 			if text[i] == text[j] {
 				dp[i][j] = 2 + dp[i+1][j-1]
 			} else {
-				dp[i][j] = math2.MaxInt(dp[i+1][j], dp[i][j-1])
+				dp[i][j] = mathext.MaxInt(dp[i+1][j], dp[i][j-1])
 			}
 		}
 	}
@@ -417,7 +417,7 @@ func LongestPalindromicSubsequenceRecursive(text string) int {
 				if text[lo] == text[hi] {
 					dp[lo][hi] = 2 + find(lo+1, hi-1)
 				} else {
-					dp[lo][hi] = math2.MaxInt(find(lo+1, hi), find(lo, hi-1))
+					dp[lo][hi] = mathext.MaxInt(find(lo+1, hi), find(lo, hi-1))
 				}
 			}
 
@@ -497,7 +497,7 @@ func LongestCommonSubstringLength(s1, s2 string) int {
 		for j := 1; j <= len(s2); j++ {
 			if s1[i-1] == s2[j-1] {
 				dp[i][j] = 1 + dp[i-1][j-1]
-				maxLen = math2.MaxInt(maxLen, dp[i][j])
+				maxLen = mathext.MaxInt(maxLen, dp[i][j])
 			}
 		}
 	}
@@ -518,9 +518,9 @@ func LongestCommonSubsequenceLength(s1, s2 string) int {
 			if s1[i-1] == s2[j-1] {
 				dp[i][j] = 1 + dp[i-1][j-1]
 			} else {
-				dp[i][j] = math2.MaxInt(dp[i-1][j], dp[i][j-1])
+				dp[i][j] = mathext.MaxInt(dp[i-1][j], dp[i][j-1])
 			}
-			maxLen = math2.MaxInt(maxLen, dp[i][j])
+			maxLen = mathext.MaxInt(maxLen, dp[i][j])
 		}
 	}
 	slice.PrintSlice(dp)
@@ -659,7 +659,6 @@ func WaysToPermuteUnderLimit(p1, p2, p3, p4 []int, budget int) (ways int) {
 	return
 }
 
-
 func NumberOfWaysToTraverseGraph(width int, height int) (ways int) {
 	dp := make([][]int, height)
 	for i := range dp {
@@ -696,7 +695,9 @@ func NumberOfWaysToTraverseGraphTabulated(width, height int) (ways int) {
 	dp[1][1] = 1
 	for i := 1; i < height+1; i++ {
 		for j := 1; j < width+1; j++ {
-			if i == 1 && j == 1 {continue}
+			if i == 1 && j == 1 {
+				continue
+			}
 			dp[i][j] = dp[i-1][j] + dp[i][j-1]
 		}
 	}
@@ -704,7 +705,9 @@ func NumberOfWaysToTraverseGraphTabulated(width, height int) (ways int) {
 }
 
 func StaircaseTraversal(height int, maxSteps int) (ways int) {
-	if maxSteps <= 1 { return maxSteps }
+	if maxSteps <= 1 {
+		return maxSteps
+	}
 	dp := make([]int, height+1)
 
 	var traverse func(idx int) int
@@ -717,7 +720,7 @@ func StaircaseTraversal(height int, maxSteps int) (ways int) {
 
 		if dp[idx] == 0 {
 			for step := maxSteps; step >= 1; step-- {
-				dp[idx] += traverse(idx-step)
+				dp[idx] += traverse(idx - step)
 			}
 		}
 		return dp[idx]
@@ -727,15 +730,29 @@ func StaircaseTraversal(height int, maxSteps int) (ways int) {
 }
 
 func StaircaseTraversalTabulated(height, maxSteps int) (ways int) {
-	if maxSteps <= 1 { return maxSteps }
+	if maxSteps <= 1 {
+		return maxSteps
+	}
 	dp := make([]int, height+1)
 	dp[0] = 1
 	dp[1] = 1
 	for i := 2; i <= height; i++ {
 		for step := maxSteps; step >= 1; step-- {
-			if i-step < 0 { continue }
+			if i-step < 0 {
+				continue
+			}
 			dp[i] += dp[i-step]
 		}
 	}
 	return dp[height]
 }
+
+func MaxProfitWithKTransactions(prices []int, k int) (maxProfit int) {
+	dp := make([][]int, k+1)
+	for i := range dp {
+		dp[i] = make([]int, len(prices))
+	}
+
+	return maxProfit
+}
+
