@@ -31,10 +31,6 @@ class TreeNode:
             current = current.next
 
 def traverse_using_recursion(root: TreeNode) -> list[list[int]]:
-    """
-    Given a binary tree, populate an array to represent its level-by-level traversal by using recursion.
-    You should populate the values of all nodes of each level from left to right in separate sub-arrays.
-    """
     result = []
     if not root: return result
 

@@ -1,3 +1,5 @@
+github.com/dghubble/trie v0.0.0-20201011220304-ed6d6b8add55 h1:3yKntgWb7KwnHd4nCVgCIUNQs4qRdua+jitRqGMxKys=
+github.com/dghubble/trie v0.0.0-20201011220304-ed6d6b8add55/go.mod h1:xNBeoT4V92/aNvuC3IJ2g59uxuKP4/kzvkpoHrb7v4A=
 github.com/theodesp/unionfind v0.0.0-20200112172429-2bf90fd5b8c5 h1:1dKIEUOsOeeK4N1GNeQmdsCR1OXoSrDaphIHjrg90tA=
 github.com/theodesp/unionfind v0.0.0-20200112172429-2bf90fd5b8c5/go.mod h1:1YbOQ/RED6w5UOYsaWLb346ayQhuDN5xE5Tv31r1n38=
 github.com/tidwall/gjson v1.6.8 h1:CTmXMClGYPAmln7652e69B7OLXfTi5ABcPPwjIWUv7w=

@@ -1,6 +1,9 @@
 package linkedlist
 
-import "fmt"
+import (
+	"fmt"
+	"go-algo/mathext"
+)
 
 type ListNode struct {
 	Val int
@@ -250,8 +253,7 @@ func reorderList(head *ListNode)  {
 }
 
 func reverseList(head *ListNode) *ListNode {
-	var prev *ListNode
-	node := head
+	var node, prev *ListNode = head, nil
 	for node != nil {
 		node.Next, prev, node = prev, node, node.Next
 	}
@@ -368,3 +370,74 @@ func ZipLinkedList(linkedList *LinkedList) *LinkedList {
 	}
 	return head
 }
+
+func FindCycleNode(head *ListNode) *ListNode {
+	if head == nil {
+		return nil
+	} else if head.Next == head {
+		return head
+	} else if head.Next == nil {
+		return nil
+	}
+
+	slow, fast := head, head
+	var intersectNode *ListNode
+	for fast.Next != nil && fast.Next.Next != nil {
+		slow = slow.Next
+		fast = fast.Next.Next
+		if fast == slow {
+			intersectNode = slow
+			break
+		}
+	}
+	if intersectNode == nil {
+		return nil
+	}
+
+	node := head
+	for slow != node {
+		slow = slow.Next
+		node = node.Next
+	}
+	return node
+}
+
+func GetIntersectionNode(headA, headB *ListNode) *ListNode {
+	if headA == nil || headB == nil || headA.Next == nil || headB.Next == nil {
+		return nil
+	}
+	aLen, bLen := 0, 0
+	nodeA, nodeB := headA, headB
+	for nodeA != nil || nodeB != nil {
+		if nodeA != nil {
+			aLen++
+			nodeA = nodeA.Next
+		}
+		if nodeB != nil {
+			bLen++
+			nodeB = nodeB.Next
+		}
+	}
+
+	var small, large *ListNode
+	if aLen >= bLen {
+		small, large = headB, headA
+	} else {
+		small, large = headA, headB
+	}
+
+	for i := 0; i < mathext.AbsInt(aLen-bLen); i++ {
+		large = large.Next
+	}
+
+	for small != nil {
+		if small.Next == large.Next {
+			return small.Next
+		}
+		small = small.Next
+		large = large.Next
+	}
+	return nil
+}
+
+

@@ -756,3 +756,32 @@ func MaxProfitWithKTransactions(prices []int, k int) (maxProfit int) {
 	return maxProfit
 }
 
+
+func WordBreak(s string, wordDict []string) bool {
+	dp := make([]bool, len(s)+1)
+	dp[0] = true
+
+	for i := 1; i < len(s)+1; i++ {
+		for _, word := range wordDict {
+			if i-len(word) >= 0 && s[i-len(word):i] == word && dp[i-len(word)] {
+				dp[i] = true
+				break
+			}
+		}
+	}
+	return dp[len(s)]
+}
+
+
+func RobHouses(nums []int) int {
+	if len(nums) <= 2 { return mathext.MaxInt(nums...) }
+
+	curr, prev, prevX2 := 0, nums[0], 0
+	for i := 1; i < len(nums); i++ {
+		curr = mathext.MaxInt(prev, prevX2+nums[i])
+		prevX2 = prev
+		prev = curr
+	}
+	return curr
+}
+
