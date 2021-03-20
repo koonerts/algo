@@ -403,7 +403,6 @@ func CalendarMatching(calendar1 []StringMeeting, dailyBounds1 StringMeeting,
 }
 
 type Direction int
-
 const (
 	Left Direction = iota + 1
 	Right
@@ -2122,4 +2121,3 @@ func TestGroupScores(T, R []string) (score int) {
 	fmt.Println(s1, s2, float32(passCnt)/float32(len(statusMap))*100)
 	return s2
 }
-

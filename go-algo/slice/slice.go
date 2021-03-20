@@ -24,6 +24,10 @@ func PrintSlice(iSlice interface{}) {
 		for _, value := range slice {
 			fmt.Println(value)
 		}
+	case [][]byte:
+		for _, value := range slice {
+			fmt.Println(value)
+		}
 	case []bool:
 		fmt.Println(slice)
 	case []string:
@@ -31,6 +35,8 @@ func PrintSlice(iSlice interface{}) {
 	case []int:
 		fmt.Println(slice)
 	case []float64:
+		fmt.Println(slice)
+	case []byte:
 		fmt.Println(slice)
 	}
 }
@@ -65,4 +71,3 @@ func ByteSliceToString(bs []byte) string {
 	// header being a prefix of the slice header!
 	return *(*string)(unsafe.Pointer(&bs))
 }
-

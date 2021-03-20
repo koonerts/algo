@@ -1,9 +1,5 @@
 package recursion
 
-import (
-	"sort"
-)
-
 func letterCombinations(digits string) (results []string) {
 	if digits == "" {
 		return
@@ -28,31 +24,29 @@ func letterCombinations(digits string) (results []string) {
 	return results
 }
 
-// TODO: Come back to
-func permute(nums []int) (results [][]int) {
-	var permuteRecursive func(i, j int, permutation []int)
-	permuteRecursive = func(i, j int, permutation []int) {
-		if len(permutation) == len(nums) {
-			results = append(results, permutation)
-			return
-		}
+func PermuteInts(nums []int) (results [][]int) {
+	if len(nums) <= 1 {return [][]int{nums}}
 
-		sort.Ints(nums)
-		if i > 0 && nums[i] == permutation[j] {
-			permuteRecursive(i+1, j+1, append(permutation, nums[i]))
-		} else {
-			for k := 0; k <= len(permutation); k++ {
-				cp := make([]int, len(permutation[:k]))
-				copy(cp, permutation[:k])
-				cp = append(cp, nums[i])
-				cp = append(cp, permutation[k:]...)
-				permuteRecursive(i+1, k, cp)
+	var permute func(idx int) [][]int
+	permute = func(idx int) [][]int {
+		if idx == 0 {
+			return [][]int{{nums[0]}}
+		}
+		permutations := permute(idx-1)
+		pLen := len(permutations)
+		var permutation []int
+		for i := 0; i < pLen; i++ {
+			permutation, permutations = permutations[0], permutations[1:]
+			for j := 0; j <= len(permutation); j++ {
+				newPermutation := make([]int, len(permutation))
+				copy(newPermutation, permutation)
+				newPermutation = append(newPermutation[:j], append([]int{nums[idx]}, newPermutation[j:]...)...)
+				permutations = append(permutations, newPermutation)
 			}
 		}
+		return permutations
 	}
-
-	permuteRecursive(0, 0, []int{})
-	return
+	return permute(len(nums)-1)
 }
 
 
@@ -79,3 +73,35 @@ func permute(nums []int) (results [][]int) {
 	}
 	backtrack(0, 0, 0, []string{})
 }*/
+
+func StringPermutations(s string) (results []string) {
+	if len(s) <= 1 {return []string{s}}
+
+	var permute func(idx int) []string
+	permute = func(idx int) []string {
+		if idx == 0 {
+			return []string{string(s[0])}
+		}
+
+		permutations := permute(idx-1)
+		pLen := len(permutations)
+		var permutation string
+		for i := 0; i < pLen; i++ {
+			permutation, permutations = permutations[0], permutations[1:]
+			for j := 0; j <= len(permutation); j++ {
+				permutations = append(permutations, permutation[0:j]+string(s[idx])+permutation[j:])
+			}
+		}
+		return permutations
+	}
+	return permute(len(s)-1)
+}
+
+
+func Fib(n int) int {
+	if n <= 1 {
+		return n
+	}
+
+	return Fib(n-1) + Fib(n-2)
+}

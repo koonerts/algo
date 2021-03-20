@@ -247,15 +247,54 @@ func CoinChangeUnlimited(denoms []int, total int) int {
 	ways := make([]int, total+1)
 	ways[0] = 1
 
-	for i := range denoms {
-		for j := 1; j <= total; j++ {
-			if j >= denoms[i] {
-				ways[j] += ways[j-denoms[i]]
-			}
+	for _, denom := range denoms {
+		for i := denom; i < len(ways); i++ {
+			ways[i] += ways[i-denom]
 		}
 	}
-	slice.PrintSlice(ways)
 	return ways[total]
+}
+
+type CakeInfo struct {
+	weight, profit int
+	profitPerLb    float64
+}
+
+func CakeThiefUnlimited(weightToProfits [][]int, cap int) (maxProfit int) {
+	r, c := len(weightToProfits), cap
+	dp := make([][]int, r+1)
+	for i := range dp {
+		dp[i] = make([]int, c+1)
+	}
+
+	for i := 1; i <= r; i++ {
+		for j := 1; j <= c; j++ {
+			itemWeight, itemProfit := weightToProfits[i-1][0], weightToProfits[i-1][1]
+			profitWith, profitWithout := 0, dp[i-1][j]
+			if itemWeight <= j {
+				profitWith = itemProfit + dp[i][j-itemWeight]
+			}
+			dp[i][j] = mathext.MaxInt(profitWith, profitWithout)
+		}
+	}
+	slice.PrintSlice(dp)
+	return dp[r][c]
+}
+
+func CakeThiefUnlimitedOpt(weightToProfits [][]int, cap int) (maxProfit int) {
+	dp := make([]int, cap+1)
+	weight, profit := 0, 1
+	for currCap := range dp {
+		if currCap == 0 {continue}
+		currentMaxProfit := 0
+		for _, item := range weightToProfits {
+			if item[weight] <= currCap {
+				currentMaxProfit = mathext.MaxInt(currentMaxProfit, item[profit] + dp[currCap-item[weight]])
+			}
+		}
+		dp[currCap] = currentMaxProfit
+	}
+	return dp[cap]
 }
 
 func MinCoinChainUnlimited(denoms []int, total int) int {
@@ -756,7 +795,6 @@ func MaxProfitWithKTransactions(prices []int, k int) (maxProfit int) {
 	return maxProfit
 }
 
-
 func WordBreak(s string, wordDict []string) bool {
 	dp := make([]bool, len(s)+1)
 	dp[0] = true
@@ -772,9 +810,10 @@ func WordBreak(s string, wordDict []string) bool {
 	return dp[len(s)]
 }
 
-
 func RobHouses(nums []int) int {
-	if len(nums) <= 2 { return mathext.MaxInt(nums...) }
+	if len(nums) <= 2 {
+		return mathext.MaxInt(nums...)
+	}
 
 	curr, prev, prevX2 := 0, nums[0], 0
 	for i := 1; i < len(nums); i++ {
@@ -785,3 +824,7 @@ func RobHouses(nums []int) int {
 	return curr
 }
 
+// TODO: Come back to
+func MaximalSquare(matrix [][]byte) int {
+	return -1
+}
