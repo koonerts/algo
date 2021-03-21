@@ -2,11 +2,15 @@ package main
 
 import (
 	"fmt"
-	"go-algo/dp"
+	"go-algo/arr"
 )
 
 func main() {
-	print(dp.CakeThiefUnlimitedOpt([][]int{{7,160}, {3,90}, {2,15}}, 20))
+	print(arr.IsValidParenthesis("()"))
+	print(arr.IsValidParenthesis("([)]"))
+	print(arr.IsValidParenthesis("()[]{}"))
+	print(arr.IsValidParenthesis("(]"))
+	print(arr.IsValidParenthesis("{[]}"))
 }
 
 func print(i ...interface{}) {

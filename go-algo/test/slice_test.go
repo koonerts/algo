@@ -8,6 +8,29 @@ import (
 )
 
 
+func BenchmarkSliceClearIterative(b *testing.B) {
+	x := []int{10000:0}
+	b.ResetTimer()
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		for i := range x {
+			x[i] = 0
+		}
+	}
+}
+
+func BenchmarkSliceClearMake(b *testing.B) {
+	x := []int{10000:0}
+	b.ResetTimer()
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		x = make([]int, 10000)
+	}
+	b.StopTimer()
+	_ = len(x)
+}
+
+
 func BenchmarkSliceLiteralCreate(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		_ = []int{10000:0}

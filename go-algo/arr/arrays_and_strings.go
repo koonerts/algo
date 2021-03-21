@@ -2121,3 +2121,62 @@ func TestGroupScores(T, R []string) (score int) {
 	fmt.Println(s1, s2, float32(passCnt)/float32(len(statusMap))*100)
 	return s2
 }
+
+
+func FindBinarySearchShiftedIdx(words []string) int {
+	lo, hi := 0, len(words)-1
+	for lo < hi {
+		mid := (lo+hi)/2
+		if words[mid] >= words[lo] {
+			lo = mid
+		} else {
+			hi = mid
+		}
+
+		if lo+1 == hi {
+			return hi
+		}
+	}
+	return -1
+}
+
+// TODO: Come back to
+func MultiplyMatrices(mat1 [][]int, mat2 [][]int) [][]int {
+	result := make([][]int, len(mat1))
+	return result
+}
+
+func MinDeletionCostNoRepeatedLetter(s string, cost []int) (minCost int) {
+	if len(s) <= 1 {return 0}
+	stk := []int{0}
+	for i := 1; i < len(s); i++ {
+		n := len(stk)
+		if s[i] != s[stk[n-1]] {
+			stk = append(stk, i)
+		} else {
+			if cost[i] <= cost[stk[n-1]] {
+				minCost += cost[i]
+			} else {
+				minCost += cost[stk[n-1]]
+				stk = stk[:n-1]
+				stk = append(stk, i)
+			}
+		}
+	}
+	return minCost
+}
+
+func IsValidParenthesis(s string) bool {
+	stk := []byte{}
+	brackets := map[byte]byte{')':'(', ']':'[', '}':'{'}
+	for i := range s {
+		if brackets[s[i]] != 0 {
+			n := len(stk)
+			if stk[n-1] != brackets[s[i]] {return false}
+			stk = stk[:n-1]
+		} else {
+			stk = append(stk, s[i])
+		}
+	}
+	return len(stk) == 0
+}
