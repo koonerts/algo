@@ -9,45 +9,92 @@ import (
 	"strconv"
 )
 
-func knapsackZeroOne(weights []int, profits []int, capacity int) {
-	rows := len(weights) + 1
-	cols := capacity + 1
-	maxProfits := make([][]int, rows)
-	for row := range maxProfits {
-		maxProfits[row] = make([]int, cols)
+func MinEditDistance(str1, str2 string) (minDist int) {
+	dp := make([][]int, len(str1)+1)
+	for i := range dp {
+		dp[i] = make([]int, len(str2)+1)
 	}
 
-	for i := 1; i < rows; i++ {
-		for j := 1; j < cols; j++ {
-			itemWeight, itemProfit := weights[i-1], profits[i-1]
-
-			profitWith := 0
-			if itemWeight <= j {
-				profitWith = itemProfit + maxProfits[i-1][j-itemWeight]
+	for i := 1; i <= len(str1); i++ {
+		for j := 1; j <= len(str2); j++ {
+			deletionCost := dp[i-1][j] + 1
+			insertionCost := dp[i][j-1] + 1
+			editCost := dp[i-1][j-1]
+			if str1[i-1] != str2[j-1] {
+				editCost++
 			}
-
-			profitWithout := maxProfits[i-1][j]
-			maxProfits[i][j] = mathext.MaxInt(profitWith, profitWithout)
+			dp[i][j] = mathext.MinInt(deletionCost, insertionCost, editCost)
 		}
 	}
-	slice.PrintSlice(maxProfits)
+	return dp[len(str1)][len(str2)]
+}
 
-	maxProfit := maxProfits[rows-1][cols-1]
-	fmt.Println(maxProfit)
+func MinEditDistanceOpt(str1, str2 string) (minDist int) {
+	dp := make([][]int, 2)
+	for i := range dp {
+		dp[i] = make([]int, len(str2)+1)
+	}
 
-	chosenItems := []int{}
-	currProfit, currCapacity := maxProfit, capacity
-	for i := rows - 1; i > 0; i-- {
-		if currProfit <= 0 || currCapacity <= 0 {
-			break
+	for i := 1; i <= len(str1); i++ {
+		for j := 1; j <= len(str2); j++ {
+			dp[1][j] = 0
+			deletionCost := dp[0][j] + 1
+			insertionCost := dp[1][j-1] + 1
+			editCost := dp[0][j-1]
+			if str1[i-1] != str2[j-1] {
+				editCost++
+			}
+			dp[1][j] = mathext.MinInt(deletionCost, insertionCost, editCost)
 		}
-		if currProfit != maxProfits[i-1][currCapacity] {
-			chosenItems = append(chosenItems, i-1)
-			currProfit -= profits[i-1]
-			currCapacity -= weights[i-1]
+		copy(dp[0], dp[1])
+	}
+	return dp[1][len(str2)]
+}
+
+func KnapsackZeroOne(weights []int, profits []int, capacity int) (maxProfit int) {
+	rows, cols := len(weights)+1, capacity+1
+	dp := make([][]int, rows)
+	for i := range dp {
+		dp[i] = make([]int, cols)
+		if i > 0 {
+			for j := range dp[i] {
+				dp[i][j] = -1
+			}
 		}
 	}
-	fmt.Println(chosenItems)
+
+	// row-1 == itemIdx
+	// col == currentCapacity
+	var findProfit func(row, col int) int
+	findProfit = func(row, col int) int {
+		if row <= 0 || col <= 0 {
+			return 0
+		}
+
+		if dp[row][col] == -1 {
+			itemWeight, itemProfit := weights[row-1], profits[row-1]
+			profitWith, profitWithout := 0, findProfit(row-1, col)
+			if col >= itemWeight {
+				profitWith = itemProfit + findProfit(row-1, col-itemWeight)
+			}
+			dp[row][col] = mathext.MaxInt(profitWith, profitWithout)
+		}
+		return dp[row][col]
+	}
+
+	maxProfit = findProfit(rows-1, cols-1)
+	var itemsChosen []int
+	currCap := cols - 1
+	currRow := rows - 1
+	for currCap > 0 && currRow > 0 {
+		if dp[currRow][currCap] != dp[currRow-1][currCap] && currCap-weights[currRow-1] >= 0 {
+			itemsChosen = append(itemsChosen, currRow-1)
+			currCap -= weights[currRow-1]
+		}
+		currRow--
+	}
+	fmt.Println(itemsChosen)
+	return maxProfit
 }
 
 func KnapsackZeroOneOptimized(weights []int, profits []int, capacity int) {
@@ -209,53 +256,107 @@ func KnapsackUnlimited(weights []int, profits []int, capacity int) int {
 	return maxProfit
 }
 
-func RodCuttingProfit(lengths []int, prices []int, maxLen int) (int, []int) {
+func RodCuttingProfit(lengths []int, prices []int, maxLen int) (maxProfit int, rodLengths []int) {
 	dp := make([][]int, len(lengths)+1)
 	for i := range dp {
 		dp[i] = make([]int, maxLen+1)
 	}
 
-	for i := 1; i < len(dp); i++ {
-		for j := 1; j <= maxLen; j++ {
-			profitWith, profitWithout := 0, 0
-			if lengths[i-1] <= j {
-				profitWith = prices[i-1] + dp[i][j-lengths[i-1]]
+	for rodIdx := 1; rodIdx < len(dp); rodIdx++ {
+		for currMaxLen := 1; currMaxLen < len(dp[0]); currMaxLen++ {
+			rodLen, rodProf := lengths[rodIdx-1], prices[rodIdx-1]
+			profWith, profWithout := 0, dp[rodIdx-1][currMaxLen]
+			if currMaxLen >= rodLen {
+				profWith = rodProf + dp[rodIdx-1][currMaxLen-rodLen]
 			}
-			profitWithout = dp[i-1][j]
-			dp[i][j] = mathext.MaxInt(profitWith, profitWithout)
+			dp[rodIdx][currMaxLen] = mathext.MaxInt(profWith, profWithout)
 		}
 	}
+	maxProfit = dp[len(dp)-1][len(dp[0])-1]
+	return maxProfit, rodLengths
+}
 
-	var rods []int
-	currProfit := dp[len(dp)-1][maxLen]
-	currLen := maxLen
-	i := maxLen
-
-	for i > 0 && currLen > 0 && currProfit > 0 {
-		if dp[i][currLen] != dp[i-1][currLen] {
-			rods = append(rods, lengths[i-1])
-			currProfit -= prices[i-1]
-			currLen -= lengths[i-1]
-		} else {
-			i--
-		}
+func RodCuttingProfitOpt(lengths []int, prices []int, maxLen int) (maxProfit int, rodLengths []int) {
+	dp := make([][]int, 2)
+	for i := range dp {
+		dp[i] = make([]int, maxLen+1)
 	}
-	return dp[len(dp)-1][maxLen], rods
+
+	for rodIdx := 1; rodIdx < len(dp); rodIdx++ {
+		for currMaxLen := 1; currMaxLen < len(dp[0]); currMaxLen++ {
+			dp[0][currMaxLen] = 0
+			rodLen, rodProf := lengths[rodIdx-1], prices[rodIdx-1]
+			profWith, profWithout := 0, dp[0][currMaxLen]
+			if currMaxLen >= rodLen {
+				profWith = rodProf + dp[0][currMaxLen-rodLen]
+			}
+			dp[1][currMaxLen] = mathext.MaxInt(profWith, profWithout)
+		}
+		copy(dp[0], dp[1])
+	}
+	maxProfit = dp[1][maxLen]
+	return maxProfit, rodLengths
 }
 
 func CoinChangeUnlimited(denoms []int, total int) int {
+	if total == 0 {
+		return 1
+	}
 	ways := make([]int, total+1)
 	ways[0] = 1
 
-	for i := range denoms {
-		for j := 1; j <= total; j++ {
-			if j >= denoms[i] {
-				ways[j] += ways[j-denoms[i]]
-			}
+	sort.Ints(denoms)
+	for _, denom := range denoms {
+		for currAmt := denom; currAmt <= total; currAmt++ {
+			ways[currAmt] += ways[currAmt-denom]
 		}
 	}
-	slice.PrintSlice(ways)
 	return ways[total]
+}
+
+type CakeInfo struct {
+	weight, profit int
+	profitPerLb    float64
+}
+
+func CakeThiefUnlimited(weightToProfits [][]int, cap int) (maxProfit int) {
+	r, c := len(weightToProfits), cap
+	dp := make([][]int, r+1)
+	for i := range dp {
+		dp[i] = make([]int, c+1)
+	}
+
+	for i := 1; i <= r; i++ {
+		for j := 1; j <= c; j++ {
+			itemWeight, itemProfit := weightToProfits[i-1][0], weightToProfits[i-1][1]
+			profitWith, profitWithout := 0, dp[i-1][j]
+			if itemWeight <= j {
+				profitWith = itemProfit + dp[i][j-itemWeight]
+			}
+			dp[i][j] = mathext.MaxInt(profitWith, profitWithout)
+		}
+	}
+	slice.PrintSlice(dp)
+	return dp[r][c]
+}
+
+func CakeThiefUnlimitedOpt(weightToProfits [][]int, cap int) (maxProfit int) {
+	dp := make([]int, cap+1)
+	weight, profit := 0, 1
+	for currCap := range dp {
+		if currCap == 0 {
+			continue
+		}
+
+		currentMaxProfit := 0
+		for _, item := range weightToProfits {
+			if item[weight] <= currCap {
+				currentMaxProfit = mathext.MaxInt(currentMaxProfit, item[profit]+dp[currCap-item[weight]])
+			}
+		}
+		dp[currCap] = currentMaxProfit
+	}
+	return dp[cap]
 }
 
 func MinCoinChainUnlimited(denoms []int, total int) int {
@@ -382,20 +483,45 @@ func LongestPalindromicSubsequenceTabulated(text string) (maxLen int) {
 	dp := make([][]int, len(text)+1)
 	for i := range dp {
 		dp[i] = make([]int, len(text)+1)
-		dp[i][i] = 1
+		if i > 0 {
+			dp[i][i] = 1
+		}
 	}
 
-	for i := len(text) - 1; i >= 0; i-- {
-		for j := i + 1; j < len(text); j++ {
-			if text[i] == text[j] {
+	for i := len(text); i >= 1; i-- {
+		for j := i + 1; j <= len(text); j++ {
+			if text[i-1] == text[j-1] {
 				dp[i][j] = 2 + dp[i+1][j-1]
 			} else {
 				dp[i][j] = mathext.MaxInt(dp[i+1][j], dp[i][j-1])
 			}
 		}
 	}
+	slice.PrintSlice(dp)
+	return dp[1][len(text)]
+}
 
-	return dp[0][len(text)-1]
+func LongestPalindromicSubsequenceTabulatedOpt(text string) (maxLen int) {
+	dp := make([][]int, 2)
+	for i := range dp {
+		dp[i] = make([]int, len(text)+1)
+	}
+
+	for i := len(text); i >= 1; i-- {
+		for j := i + 1; j <= len(text); j++ {
+			dp[1][j] = 0
+			if j == i+1 {
+				dp[1][j-1] += 1
+			}
+			if text[i-1] == text[j-1] {
+				dp[1][j] = 2 + dp[0][j-1]
+			} else {
+				dp[1][j] = mathext.MaxInt(dp[0][j], dp[1][j-1])
+			}
+		}
+		copy(dp[0], dp[1])
+	}
+	return dp[0][len(text)]
 }
 
 func LongestPalindromicSubsequenceRecursive(text string) int {
@@ -486,45 +612,60 @@ func MinDeleteCountToMakePalindrome(text string) (length int) {
 	return len(text) - LongestPalindromicSubsequenceTabulated(text)
 }
 
-func LongestCommonSubstringLength(s1, s2 string) int {
-	dp := make([][]int, len(s1)+1)
+func LongestCommonSubstringLength(s1, s2 string) (maxLen int) {
+	n1, n2 := len(s1), len(s2)
+	dp := make([][]int, 2)
 	for i := range dp {
-		dp[i] = make([]int, len(s2)+1)
+		dp[i] = make([]int, n2+1)
 	}
 
-	maxLen := 0
-	for i := 1; i <= len(s1); i++ {
-		for j := 1; j <= len(s2); j++ {
-			if s1[i-1] == s2[j-1] {
-				dp[i][j] = 1 + dp[i-1][j-1]
-				maxLen = mathext.MaxInt(maxLen, dp[i][j])
+	for s1Idx := 1; s1Idx <= n1; s1Idx++ {
+		for s2Idx := 1; s2Idx <= n2; s2Idx++ {
+			dp[1][s2Idx] = 0
+			if s1[s1Idx-1] == s2[s2Idx-1] {
+				dp[1][s2Idx] = 1 + dp[0][s2Idx-1]
+				maxLen = mathext.MaxInt(maxLen, dp[1][s2Idx])
 			}
 		}
+		copy(dp[0], dp[1])
 	}
-
-	slice.PrintSlice(dp)
 	return maxLen
 }
 
-func LongestCommonSubsequenceLength(s1, s2 string) int {
-	dp := make([][]int, len(s1)+1)
+func LongestCommonSubsequenceLength(s1, s2 string) (maxLen int) {
+	dp := make([][]int, 2)
+	dp[0] = make([]int, len(s2)+1)
+
+	for i := 1; i <= len(s1); i++ {
+		dp[1] = make([]int, len(s2)+1)
+		for j := 1; j <= len(s2); j++ {
+			if s1[i-1] == s2[j-1] {
+				dp[1][j] = 1 + dp[0][j-1]
+			}
+			dp[1][j] = mathext.MaxInt(dp[1][j], dp[0][j], dp[1][j-1])
+		}
+		dp[0] = dp[1]
+	}
+	return dp[1][len(s2)]
+}
+
+func LongestCommonSubsequenceLength2(s1, s2 string) (maxLen int) {
+	dp := make([][]int, 2)
 	for i := range dp {
 		dp[i] = make([]int, len(s2)+1)
 	}
 
-	maxLen := 0
 	for i := 1; i <= len(s1); i++ {
 		for j := 1; j <= len(s2); j++ {
+			dp[1][j] = 0
 			if s1[i-1] == s2[j-1] {
-				dp[i][j] = 1 + dp[i-1][j-1]
-			} else {
-				dp[i][j] = mathext.MaxInt(dp[i-1][j], dp[i][j-1])
+				dp[1][j] = 1 + dp[0][j-1]
 			}
-			maxLen = mathext.MaxInt(maxLen, dp[i][j])
+			dp[1][j] = mathext.MaxInt(dp[1][j], dp[0][j], dp[1][j-1])
 		}
+		copy(dp[0], dp[1])
 	}
-	slice.PrintSlice(dp)
-	return maxLen
+	return dp[1][len(s2)]
 }
 
 func LongestCommonSubsequence(s1 string, s2 string) string {
@@ -587,7 +728,7 @@ func MaxSumIncreasingSubsequence(array []int) (maxSum int, nums []int) {
 	return
 }
 
-func decodeWays(s string) (ways int) {
+func DecodeWays(s string) (ways int) {
 	if len(s) == 0 || s[0] == '0' {
 		return
 	}
@@ -615,7 +756,7 @@ func decodeWays(s string) (ways int) {
 	return dp[len(s)-1]
 }
 
-func longestPalindrome(s string) string {
+func LongestPalindrome(s string) string {
 	if len(s) <= 1 {
 		return s
 	}
@@ -756,3 +897,188 @@ func MaxProfitWithKTransactions(prices []int, k int) (maxProfit int) {
 	return maxProfit
 }
 
+func WordBreak(s string, wordDict []string) bool {
+	dp := make([]bool, len(s)+1)
+	dp[0] = true
+
+	for i := 1; i < len(s)+1; i++ {
+		for _, word := range wordDict {
+			if i-len(word) >= 0 && s[i-len(word):i] == word && dp[i-len(word)] {
+				dp[i] = true
+				break
+			}
+		}
+	}
+	return dp[len(s)]
+}
+
+func RobHouses(nums []int) int {
+	if len(nums) <= 2 {
+		return mathext.MaxInt(nums...)
+	}
+
+	curr, prev, prevX2 := 0, nums[0], 0
+	for i := 1; i < len(nums); i++ {
+		curr = mathext.MaxInt(prev, prevX2+nums[i])
+		prevX2 = prev
+		prev = curr
+	}
+	return curr
+}
+
+// TODO: Come back to
+func MaximalSquare(matrix [][]byte) int {
+	return -1
+}
+
+func CatalanNumber(n int) uint64 {
+	catNums := make([]uint64, n+1)
+	catNums[0] = 1
+
+	for j := 1; j <= n; j++ {
+		var num uint64
+		for i := 0; i < j; i++ {
+			num += catNums[i] * catNums[j-1-i]
+		}
+		catNums[j] = num
+	}
+	return catNums[n]
+}
+
+func MaxWeightedSchedule(schedule [][]int) (maxUtility int) {
+	start, end, util := 0, 1, 2
+	maxEndTime := 0
+	for _, class := range schedule {
+		maxEndTime = mathext.MaxInt(maxEndTime, class[end])
+	}
+
+	n := len(schedule)
+	dp := make([][]int, n+1)
+	for i := range dp {
+		dp[i] = make([]int, maxEndTime+1)
+	}
+
+	for scIdx := 1; scIdx <= n; scIdx++ {
+		for currTime := 1; currTime < len(dp[0]); currTime++ {
+			class := schedule[scIdx-1]
+			utilityWith, utilityWithout := 0, dp[scIdx-1][currTime]
+			if class[end] <= currTime {
+				utilityWith = class[util] + dp[scIdx-1][class[start]]
+			}
+			dp[scIdx][currTime] = mathext.MaxInt(utilityWith, utilityWithout)
+		}
+	}
+	fmt.Println(dp[n])
+	return dp[n][len(dp[0])-1]
+}
+
+func MaxWeightedScheduleOpt(schedule [][]int) (maxUtility int) {
+	start, end, util := 0, 1, 2
+	maxEndTime := 0
+	for _, class := range schedule {
+		maxEndTime = mathext.MaxInt(maxEndTime, class[end])
+	}
+
+	dp := make([]int, maxEndTime+1)
+	n := len(schedule)
+	for scIdx := 0; scIdx < n; scIdx++ {
+		//for currTime := 1; currTime <= maxEndTime; currTime++ {
+		for currTime := maxEndTime; currTime >= 1; currTime-- {
+			class := schedule[scIdx]
+			utilityWith, utilityWithout := 0, dp[currTime]
+			if class[end] <= currTime {
+				utilityWith = class[util] + dp[class[start]]
+			}
+			dp[currTime] = mathext.MaxInt(utilityWith, utilityWithout)
+		}
+	}
+	fmt.Println(dp)
+	return dp[maxEndTime]
+}
+
+func MinMatrixMultiplications(dims []int) (minCnt int) {
+	dp := make([][]int, len(dims))
+	for i := range dp {
+		dp[i] = make([]int, len(dims))
+	}
+
+	for l := 2; l < len(dims); l++ {
+		for i := 1; i < len(dims)-l+1; i++ {
+			j := i + l - 1
+			dp[i][j] = 1<<31 - 1
+			for cut := i; cut < j; cut++ {
+				cost := dp[i][cut] + dp[cut+1][j] + (dims[i-1] * dims[cut] * dims[j])
+				dp[i][j] = mathext.MinInt(cost, dp[i][j])
+			}
+		}
+	}
+	slice.PrintSlice(dp)
+	return
+}
+
+func MinPathSum(grid [][]int) (maxSum int) {
+	sums := make([][]int, len(grid))
+	for i := range sums {
+		sums[i] = make([]int, len(grid[i]))
+		copy(sums[i], grid[i])
+	}
+
+	for i := range sums {
+		for j := range sums[i] {
+			if i == 0 && j == 0 {
+				continue
+			}
+			if i == 0 {
+				sums[i][j] += sums[i][j-1]
+				continue
+			}
+			if j == 0 {
+				sums[i][j] += sums[i-1][j]
+				continue
+			}
+			sums[i][j] += mathext.MinInt(sums[i-1][j], sums[i][j-1])
+		}
+	}
+	n, m := len(sums), len(sums[0])
+	return sums[n-1][m-1]
+}
+
+func MinPathSumOpt(grid [][]int) (maxSum int) {
+	sums := make([]int, len(grid))
+	for i := range grid {
+		for j := range grid[i] {
+			if i == 0 && j == 0 {
+				sums[j] = grid[i][j]
+				continue
+			}
+			if i == 0 {
+				sums[j] += grid[i][j-1] + sums[j-1]
+				continue
+			}
+			if j == 0 {
+				sums[j] += grid[i-1][j]
+				continue
+			}
+			sums[j] += mathext.MinInt(grid[i-1][j], grid[i][j-1])
+		}
+	}
+	n := len(sums)
+	return sums[n-1]
+}
+
+func LongestIncreasingSubsequence(nums []int) (maxLen int) {
+	dp := make([]int, len(nums))
+	for i := range dp {
+		dp[i] = 1
+	}
+
+	for i := 1; i < len(nums); i++ {
+		for j := 0; j < i; j++ {
+			if nums[i] > nums[j] && dp[i] <= dp[j] {
+				dp[i] = 1 + dp[j]
+				maxLen = mathext.MaxInt(maxLen, dp[i])
+			}
+		}
+	}
+	return maxLen
+}

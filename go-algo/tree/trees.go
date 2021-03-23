@@ -308,53 +308,33 @@ func cloneGraph(node *Node) *Node {
 	return clone(node)
 }
 
-func rightSideView(root *TreeNode) (result []int) {
+func rightSideView(root *TreeNode) (results []int) {
 	if root == nil {
-		return nil
+		return results
+	} else if root.IsLeaf() {
+		results = append(results, root.Val)
+		return results
 	}
-	stk := []*TreeNode{root}
-	for len(stk) > 0 {
-		levelLength := len(stk)
-		for i := 0; i < levelLength; i++ {
-			node := stk[0]
-			stk = stk[1:]
+
+	que := []*TreeNode{root}
+	var node *TreeNode
+	for len(que) > 0 {
+		qLen := len(que)
+		for i := 0; i < qLen; i++ {
+			node, que = que[0], que[1:]
 			if node.Left != nil {
-				stk = append(stk, node.Left)
+				que = append(que, node.Left)
 			}
 			if node.Right != nil {
-				stk = append(stk, node.Right)
+				que = append(que, node.Right)
 			}
-			if i == levelLength-1 {
-				result = append(result, node.Val)
-			}
-		}
-	}
-	return
-}
-
-func NumIslands(grid [][]int) (cnt int) {
-	if len(grid) == 0 {return}
-
-	var clearIsland func(x, y int)
-	clearIsland = func(x, y int) {
-		if x >= 0 && x < len(grid) && y >= 0 && y < len(grid[x]) && grid[x][y] == 1 {
-			grid[x][y] = 0
-			clearIsland(x-1, y)
-			clearIsland(x+1, y)
-			clearIsland(x, y-1)
-			clearIsland(x, y+1)
-		}
-	}
-
-	for i := range grid {
-		for j := range grid[i] {
-			if grid[i][j] == 1 {
-				clearIsland(i,j)
-				cnt++
+			if i == qLen-1 {
+				results = append(results, node.Val)
 			}
 		}
 	}
-	return
+
+	return results
 }
 
 type AncestorTreeNode struct {
@@ -666,4 +646,37 @@ func FindItinerary(tickets [][]string) []string {
 	}
 	traverse("JFK")
 	return res
+}
+
+func CanFinish(numCourses int, prerequisites [][]int) bool {
+	inDegree, adjMap := map[int]int{}, map[int][]int{}
+	for i := 0; i < numCourses; i++ {
+		inDegree[i] = 0
+		adjMap[i] = []int{}
+	}
+	for _, preReq := range prerequisites {
+		inDegree[preReq[0]] += 1
+		adjMap[preReq[1]] = append(adjMap[preReq[1]], preReq[0])
+	}
+
+	que := []int{}
+	for course := range inDegree {
+		if inDegree[course] == 0 {
+			que = append(que, course)
+		}
+	}
+
+	finishedCourses := 0
+	var course int
+	for len(que) > 0 {
+		finishedCourses++
+		course, que = que[0], que[1:]
+		for _, child := range adjMap[course] {
+			inDegree[child] -= 1
+			if inDegree[child] == 0 {
+				que = append(que, child)
+			}
+		}
+	}
+	return finishedCourses == numCourses
 }
