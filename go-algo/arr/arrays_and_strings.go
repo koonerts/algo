@@ -13,6 +13,117 @@ import (
 	"time"
 )
 
+
+var solution = func(read4 func([]byte) int) func([]byte, int) int {
+	// implement read below.
+	buf2 := []byte{}
+	idx := 0
+	return func(buf []byte, n int) int {
+		if n == 0 {return 0}
+		totalCnt := 0
+		for {
+			readCnt := read4(buf2)
+			totalCnt += readCnt
+			if readCnt == 0 || totalCnt > n {break}
+		}
+
+		if len(buf2)-idx > n {
+			buf = append(buf, buf2[idx:idx+n]...)
+			idx += n
+		} else {
+			buf = append(buf, buf2[idx:]...)
+			idx = len(buf2)
+		}
+		return len(buf)
+	}
+}
+
+func AddBinary(a string, b string) string {
+	if a == "0" {return b}
+	if b == "0" {return a}
+
+	resBytes := make([]byte, 0, mathext.MaxInt(len(a), len(b)) + 1)
+	var carry int
+	for i, j := len(a)-1, len(b)-1; i >= 0 || j >= 0; i, j = i-1, j-1 {
+		var aVal, bVal int
+		if i >= 0 {
+			aVal = int(a[i] - '0')
+		}
+		if j >= 0 {
+			bVal = int(b[j] - '0')
+		}
+		val := aVal+bVal+carry
+		valStr := strconv.Itoa(val%2)
+		resBytes = append(resBytes, valStr...)
+		if val > 1 {
+			carry = 1
+		} else {
+			carry = 0
+		}
+	}
+	if carry == 1 {
+		resBytes = append(resBytes, '1')
+	}
+	for i, j := 0, len(resBytes)-1; i < j; i, j = i+1, j-1 {
+		resBytes[i], resBytes[j] = resBytes[j], resBytes[i]
+	}
+	return string(resBytes)
+}
+
+type NumToStringInfo struct {
+	digitMap, teenthsMap, tenthsMap map[int]string
+}
+func NewNumToStringInfo() NumToStringInfo {
+	digitMap := map[int]string{0:"Zero", 1:"One", 2:"Two", 3:"Three", 4:"Four", 5:"Five", 6:"Six", 7:"Seven", 8:"Eight", 9:"Nine"}
+	teenthsMap := map[int]string{10:"Ten", 11:"Eleven", 12:"Twelve", 13:"Thirteen", 14:"Fourteen", 15:"Fifteen", 16:"Sixteen", 17:"Seventeen", 18:"Eighteen", 19:"NineTeen"}
+	tenthsMap := map[int]string{20:"Twenty", 30:"Thirty", 40:"Fourty", 50:"Fifty", 60:"Sixty", 70:"Seventy", 80:"Eighty", 90:"Ninety"}
+	return NumToStringInfo{digitMap, teenthsMap, tenthsMap}
+}
+
+func NumberToWords(num int) string {
+	info := NewNumToStringInfo()
+	if num < 10 {return info.digitMap[num]}
+	if num < 20 {return info.teenthsMap[num]}
+	res := ""
+	for num > 0 {
+		if num >= 1_000_000_000 {
+			res += info.ThreeDigitToStr(num/1_000_000_000) + " Billion "
+			num %= 1_000_000_000
+		} else if num >= 1_000_000 {
+			res += info.ThreeDigitToStr(num/1_000_000) + " Million "
+			num %= 1_000_000
+		} else if num >= 1_000 {
+			res += info.ThreeDigitToStr(num/1_000) + " Thousand "
+			num %= 1_000
+		} else {
+			res += info.ThreeDigitToStr(num)
+			num %= num
+		}
+	}
+	return res
+}
+
+func (info NumToStringInfo) TwoDigitToStr(num int) string {
+	if num == 0 {
+		return ""
+	} else if num < 10 {
+		return info.digitMap[num]
+	} else if num < 20 {
+		return info.teenthsMap[num]
+	} else {
+		digitStr := ""
+		if num%10 > 0 {digitStr = " " + info.digitMap[num%10]}
+		return info.tenthsMap[num/10 * 10] + digitStr
+	}
+}
+
+func (info NumToStringInfo) ThreeDigitToStr(num int) string {
+	if num < 100 {
+		return info.TwoDigitToStr(num)
+	}
+	return info.digitMap[num/100] + " Hundred " + info.TwoDigitToStr(num%100)
+}
+
 func IsNumeric(s string) bool {
 	_, err := strconv.ParseFloat(s, 64)
 	return err == nil
@@ -1122,47 +1233,16 @@ func validateIpv6Address(ipGroups []string) (isValid bool) {
 }
 
 func SubarraySum(nums []int, k int) (cnt int) {
-	lo, hi := 0, 0
+	numFreq := map[int]int{0:1}
 	sum := 0
-	for hi < len(nums) {
-		sum += nums[hi]
-		for lo < len(nums) && lo <= hi && sum >= k {
-			if sum == k {
-				cnt++
-				for hi + 1 < len(nums) && nums[hi+1] == 0 {
-					cnt++
-					hi++
-				}
-			}
-			sum -= nums[lo]
-			lo++
+	for i := 0; i < len(nums); i++ {
+		sum += nums[i]
+		if numFreq[sum-k] > 0 {
+			cnt += numFreq[sum-k]
 		}
-		hi++
+		numFreq[sum] += 1
 	}
-
-	for lo < len(nums) && sum < k && nums[lo] < 0 {
-		sum -= nums[lo]
-		lo++
-		if sum == k {cnt++}
-	}
-
-	return
-}
-
-func SubarraySum2(nums []int, k int) (cnt int) {
-	sums := make([]int, len(nums)+1)
-	sums[0] = 0
-	for i, num := range nums {
-		sums[i+1] = sums[i]+num
-	}
-	for start := 0; start < len(nums); start++ {
-		for end := start + 1; end <= len(nums); end++ {
-			if sums[end] - sums[start] == k {
-				cnt++
-			}
-		}
-	}
-	return
+	return cnt
 }
 
 func validPalindrome(s string) bool {
