@@ -9,7 +9,6 @@ import (
 	"strconv"
 )
 
-
 func MinEditDistance(str1, str2 string) (minDist int) {
 	dp := make([][]int, len(str1)+1)
 	for i := range dp {
@@ -18,16 +17,17 @@ func MinEditDistance(str1, str2 string) (minDist int) {
 
 	for i := 1; i <= len(str1); i++ {
 		for j := 1; j <= len(str2); j++ {
-			deletionCost := dp[i-1][j]+1
-			insertionCost := dp[i][j-1]+1
+			deletionCost := dp[i-1][j] + 1
+			insertionCost := dp[i][j-1] + 1
 			editCost := dp[i-1][j-1]
-			if str1[i-1] != str2[j-1] {editCost++}
+			if str1[i-1] != str2[j-1] {
+				editCost++
+			}
 			dp[i][j] = mathext.MinInt(deletionCost, insertionCost, editCost)
 		}
 	}
 	return dp[len(str1)][len(str2)]
 }
-
 
 func MinEditDistanceOpt(str1, str2 string) (minDist int) {
 	dp := make([][]int, 2)
@@ -38,17 +38,18 @@ func MinEditDistanceOpt(str1, str2 string) (minDist int) {
 	for i := 1; i <= len(str1); i++ {
 		for j := 1; j <= len(str2); j++ {
 			dp[1][j] = 0
-			deletionCost := dp[0][j]+1
-			insertionCost := dp[1][j-1]+1
+			deletionCost := dp[0][j] + 1
+			insertionCost := dp[1][j-1] + 1
 			editCost := dp[0][j-1]
-			if str1[i-1] != str2[j-1] {editCost++}
+			if str1[i-1] != str2[j-1] {
+				editCost++
+			}
 			dp[1][j] = mathext.MinInt(deletionCost, insertionCost, editCost)
 		}
 		copy(dp[0], dp[1])
 	}
 	return dp[1][len(str2)]
 }
-
 
 func KnapsackZeroOne(weights []int, profits []int, capacity int) (maxProfit int) {
 	rows, cols := len(weights)+1, capacity+1
@@ -346,6 +347,7 @@ func CakeThiefUnlimitedOpt(weightToProfits [][]int, cap int) (maxProfit int) {
 		if currCap == 0 {
 			continue
 		}
+
 		currentMaxProfit := 0
 		for _, item := range weightToProfits {
 			if item[weight] <= currCap {
@@ -486,9 +488,8 @@ func LongestPalindromicSubsequenceTabulated(text string) (maxLen int) {
 		}
 	}
 
-
 	for i := len(text); i >= 1; i-- {
-		for j := i+1; j <= len(text); j++ {
+		for j := i + 1; j <= len(text); j++ {
 			if text[i-1] == text[j-1] {
 				dp[i][j] = 2 + dp[i+1][j-1]
 			} else {
@@ -507,9 +508,11 @@ func LongestPalindromicSubsequenceTabulatedOpt(text string) (maxLen int) {
 	}
 
 	for i := len(text); i >= 1; i-- {
-		for j := i+1; j <= len(text); j++ {
+		for j := i + 1; j <= len(text); j++ {
 			dp[1][j] = 0
-			if j == i+1 {dp[1][j-1] += 1}
+			if j == i+1 {
+				dp[1][j-1] += 1
+			}
 			if text[i-1] == text[j-1] {
 				dp[1][j] = 2 + dp[0][j-1]
 			} else {
@@ -725,7 +728,7 @@ func MaxSumIncreasingSubsequence(array []int) (maxSum int, nums []int) {
 	return
 }
 
-func decodeWays(s string) (ways int) {
+func DecodeWays(s string) (ways int) {
 	if len(s) == 0 || s[0] == '0' {
 		return
 	}
@@ -753,7 +756,7 @@ func decodeWays(s string) (ways int) {
 	return dp[len(s)-1]
 }
 
-func longestPalindrome(s string) string {
+func LongestPalindrome(s string) string {
 	if len(s) <= 1 {
 		return s
 	}
@@ -1013,9 +1016,69 @@ func MinMatrixMultiplications(dims []int) (minCnt int) {
 	return
 }
 
-func getMultiplicationInfo(r1, c1, r2, c2 int) (rows, cols, numOps int) {
-	if c1 != r2 {
-		return -1, -1, 1<<31 - 1
+func MinPathSum(grid [][]int) (maxSum int) {
+	sums := make([][]int, len(grid))
+	for i := range sums {
+		sums[i] = make([]int, len(grid[i]))
+		copy(sums[i], grid[i])
 	}
-	return r1, c2, c1 * c2 * r1
+
+	for i := range sums {
+		for j := range sums[i] {
+			if i == 0 && j == 0 {
+				continue
+			}
+			if i == 0 {
+				sums[i][j] += sums[i][j-1]
+				continue
+			}
+			if j == 0 {
+				sums[i][j] += sums[i-1][j]
+				continue
+			}
+			sums[i][j] += mathext.MinInt(sums[i-1][j], sums[i][j-1])
+		}
+	}
+	n, m := len(sums), len(sums[0])
+	return sums[n-1][m-1]
+}
+
+func MinPathSumOpt(grid [][]int) (maxSum int) {
+	sums := make([]int, len(grid))
+	for i := range grid {
+		for j := range grid[i] {
+			if i == 0 && j == 0 {
+				sums[j] = grid[i][j]
+				continue
+			}
+			if i == 0 {
+				sums[j] += grid[i][j-1] + sums[j-1]
+				continue
+			}
+			if j == 0 {
+				sums[j] += grid[i-1][j]
+				continue
+			}
+			sums[j] += mathext.MinInt(grid[i-1][j], grid[i][j-1])
+		}
+	}
+	n := len(sums)
+	return sums[n-1]
+}
+
+func LongestIncreasingSubsequence(nums []int) (maxLen int) {
+	dp := make([]int, len(nums))
+	for i := range dp {
+		dp[i] = 1
+	}
+
+	for i := 1; i < len(nums); i++ {
+		for j := 0; j < i; j++ {
+			if nums[i] > nums[j] && dp[i] <= dp[j] {
+				dp[i] = 1 + dp[j]
+				maxLen = mathext.MaxInt(maxLen, dp[i])
+			}
+		}
+	}
+	return maxLen
 }

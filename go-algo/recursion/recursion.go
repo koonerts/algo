@@ -1,5 +1,7 @@
 package recursion
 
+import "go-algo/mathext"
+
 func letterCombinations(digits string) (results []string) {
 	if digits == "" {
 		return
@@ -11,16 +13,17 @@ func letterCombinations(digits string) (results []string) {
 
 	var permute func(digitIdx int, permutation []byte)
 	permute = func(digitIdx int, permutation []byte) {
-		if len(permutation) == len(digits) {
+		if digitIdx == len(digits) {
 			results = append(results, string(permutation))
 			return
 		}
 
 		for i := range digitMap[digits[digitIdx]] {
-			permute(digitIdx+1, append(permutation, digitMap[digits[digitIdx]][i]))
+			permutation[digitIdx] = digitMap[digits[digitIdx]][i]
+			permute(digitIdx+1, permutation)
 		}
 	}
-	permute(0, []byte{})
+	permute(0, make([]byte, len(digits)))
 	return results
 }
 
@@ -104,4 +107,48 @@ func Fib(n int) int {
 	}
 
 	return Fib(n-1) + Fib(n-2)
+}
+
+func MaxConcatLengthWithUniqueChars(arr []string) (maxLen int) {
+	var dfs func(idx int, currStr string)
+	dfs = func(idx int, currStr string) {
+		uniqCnt := getUniqueCharacterCount(currStr)
+		maxLen = mathext.MaxInt(maxLen, uniqCnt)
+		if idx >= len(arr) {
+			return
+		}
+		dfs(idx+1, currStr+arr[idx])
+		dfs(idx+1, currStr)
+	}
+	dfs(0, "")
+	return maxLen
+}
+
+func getUniqueCharacterCount(str string) int {
+	chars := make([]byte, 26)
+	cnt := 0
+	for i := range str {
+		if chars[str[i]-'a'] != 0 {return -1}
+		chars[str[i]-'a'] += 1
+		cnt += 1
+	}
+	return cnt
+}
+
+func ShortestPalindrome(str string) string {
+	n := len(str)
+	i := 0
+	for j := n - 1; j >= 0; j-- {
+		if str[i] == str[j] {
+			i++
+		}
+	}
+	if i == n {
+		return str
+	}
+	rev := []byte(str[i:])
+	for j, k := 0, len(rev)-1; j < k; j, k = j+1, k-1 {
+		rev[j], rev[k] = rev[k], rev[j]
+	}
+	return string(rev) + ShortestPalindrome(str[:i]) + str[i:]
 }

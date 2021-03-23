@@ -13,6 +13,87 @@ import (
 	"time"
 )
 
+func MinRemoveToMakeValid(s string) string {
+	b := []byte(s)
+	balance := 0
+	n := 0
+	for i := range b {
+		if b[i] == '(' {balance++}
+		if b[i] == ')' {balance--}
+		if balance >= 0 {
+			b[n] = b[i]
+			n++
+		} else {
+			balance++
+		}
+	}
+	b = b[:n]
+
+	if balance > 0 {
+		stk := []int{}
+		for i := range b {
+			if b[i] == '(' {
+				stk = append(stk, i)
+			} else if b[i] == ')' {
+				n = len(stk)
+				stk = stk[:n-1]
+			}
+		}
+		n = 0
+		for i := range b {
+			if len(stk) == 0 || i != stk[0] {
+				b[n] = b[i]
+				n++
+			} else if i == stk[0] {
+				stk = stk[1:]
+			}
+		}
+		b = b[:n]
+	}
+
+	return string(b)
+}
+
+func IsAlienSorted(words []string, order string) bool {
+	if len(words) == 1 {return true}
+	orderDict := map[byte]int{}
+	for i := range order {
+		orderDict[order[i]] = i
+	}
+	for i := 1; i < len(words); i++ {
+		if !isLess(words[i-1], words[i], orderDict) {
+			return false
+		}
+	}
+	return true
+}
+
+func isLess(w1, w2 string, orderDict map[byte]int) bool {
+	for i := 0; i < len(w1) || i < len(w2); i++ {
+		if i >= len(w2) {return false}
+		if i >= len(w1) {return true}
+		if w1[i] == w2[i] {continue}
+		if orderDict[w1[i]] < orderDict[w2[i]] {return true}
+		if orderDict[w1[i]] > orderDict[w2[i]] {return false}
+	}
+	return false
+}
+
+// TODO: Come back to
+/*func LeastInterval(tasks []byte, n int) int {
+	taskCnts := make([]int, 26)
+	for i := range tasks {
+		taskCnts[tasks[i]-'A']++
+	}
+	sort.Ints(taskCnts)
+	cnt := 0
+	taskIdx := 0
+	for cnt < len(tasks) {
+		for taskCnts
+	}
+	return -1
+}*/
+
 func IsNumeric(s string) bool {
 	_, err := strconv.ParseFloat(s, 64)
 	return err == nil
@@ -403,6 +484,7 @@ func CalendarMatching(calendar1 []StringMeeting, dailyBounds1 StringMeeting,
 }
 
 type Direction int
+
 const (
 	Left Direction = iota + 1
 	Right
@@ -1128,7 +1210,7 @@ func SubarraySum(nums []int, k int) (cnt int) {
 		for lo < len(nums) && lo <= hi && sum >= k {
 			if sum == k {
 				cnt++
-				for hi + 1 < len(nums) && nums[hi+1] == 0 {
+				for hi+1 < len(nums) && nums[hi+1] == 0 {
 					cnt++
 					hi++
 				}
@@ -1142,7 +1224,9 @@ func SubarraySum(nums []int, k int) (cnt int) {
 	for lo < len(nums) && sum < k && nums[lo] < 0 {
 		sum -= nums[lo]
 		lo++
-		if sum == k {cnt++}
+		if sum == k {
+			cnt++
+		}
 	}
 
 	return
@@ -1152,11 +1236,11 @@ func SubarraySum2(nums []int, k int) (cnt int) {
 	sums := make([]int, len(nums)+1)
 	sums[0] = 0
 	for i, num := range nums {
-		sums[i+1] = sums[i]+num
+		sums[i+1] = sums[i] + num
 	}
 	for start := 0; start < len(nums); start++ {
 		for end := start + 1; end <= len(nums); end++ {
-			if sums[end] - sums[start] == k {
+			if sums[end]-sums[start] == k {
 				cnt++
 			}
 		}
@@ -1427,8 +1511,40 @@ func productExceptSelf(nums []int) []int {
 	return results
 }
 
-func rotate(matrix [][]int) {
+func RotateMatrix(matrix [][]int) {
+	n := len(matrix[0])
+	for i := 0; i < (n+1)/2; i++ {
+		for j := 0; j < n/2; j++ {
+			botLeftRow, botLeftCol := n-1-j, i
+			botRightRow, botRightCol := n-1-i, n-j-i
+			topLeftRow, topLeftCol := i, j
+			topRightRow, topRightCol := j, n-1-i
 
+			temp := matrix[botLeftRow][botLeftCol]
+			matrix[botLeftRow][botLeftCol] = matrix[botRightRow][botRightCol]
+			matrix[botRightRow][botRightCol] = matrix[topRightRow][topRightCol]
+			matrix[topRightRow][topRightCol] = matrix[topLeftRow][topLeftCol]
+			matrix[topLeftRow][topLeftCol] = temp
+		}
+	}
+}
+
+func RotateMatrix2(matrix [][]int) {
+	n := len(matrix[0])
+
+	// Transpose: reverse across diagonal
+	for i := 0; i < n; i++ {
+		for j := i; j < n; j++ {
+			matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+		}
+	}
+
+	// Reverse: reverse each row
+	for i := 0; i < n; i++ {
+		for j, k := 0, n-1; j < k; j, k = j+1, k-1 {
+			matrix[i][j], matrix[i][k] = matrix[i][k], matrix[i][j]
+		}
+	}
 }
 
 /*func strStr(haystack string, needle string) int {
@@ -1959,7 +2075,9 @@ func GenerateDocument(characters string, document string) bool {
 		}
 	}
 
-	if len(freqC) < len(freqD) {return false}
+	if len(freqC) < len(freqD) {
+		return false
+	}
 	for char, cnt := range freqD {
 		if cnt >= freqC[char] {
 			return false
@@ -1973,7 +2091,9 @@ func ValidStartingCity(distances []int, fuel []int, mpg int) int {
 	minIdx, minGas := 0, 0
 	gas := 0
 	for i := range distances {
-		if i == 0 {continue}
+		if i == 0 {
+			continue
+		}
 		gas += fuel[i-1]*mpg - distances[i-1]
 		if gas < minGas {
 			minIdx, minGas = i, gas
@@ -1988,10 +2108,12 @@ func ReverseWordsInString(str string) string {
 	for lo, hi := len(str)-1, len(str)-1; lo >= -1; lo-- {
 		if lo == -1 || str[lo] == ' ' {
 			if str[lo+1] != ' ' {
-				sb.WriteString(str[lo+1:hi+1])
+				sb.WriteString(str[lo+1 : hi+1])
 			}
-			if lo != -1 {sb.WriteByte(' ')}
-			hi = lo-1
+			if lo != -1 {
+				sb.WriteByte(' ')
+			}
+			hi = lo - 1
 		}
 	}
 	return sb.String()
@@ -2009,10 +2131,10 @@ func FindMinMissingNumber(A []int) int {
 
 	for i, num := range A {
 		if i+1 != num {
-			return i+1
+			return i + 1
 		}
 	}
-	return len(A)+1
+	return len(A) + 1
 }
 
 func GlobMatching(fileName, pattern string) bool {
@@ -2020,7 +2142,7 @@ func GlobMatching(fileName, pattern string) bool {
 		return true
 	}
 
-	wildCards := map[byte]bool{'*':true, '?':true}
+	wildCards := map[byte]bool{'*': true, '?': true}
 	fileIdx := 0
 	for patternIdx := 0; patternIdx < len(pattern); {
 		if !wildCards[pattern[patternIdx]] {
@@ -2069,9 +2191,10 @@ func GlobMatching(fileName, pattern string) bool {
 	return true
 }
 
-
 func MinDeletions(S string, C []int) (minCost int) {
-	if len(S) <= 1 { return 0}
+	if len(S) <= 1 {
+		return 0
+	}
 	stk := []int{0}
 	for i := 1; i < len(S); i++ {
 		if S[i] == S[stk[len(stk)-1]] {
@@ -2117,16 +2240,15 @@ func TestGroupScores(T, R []string) (score int) {
 			passCnt++
 		}
 	}
-	s1, s2 := passCnt*100/len(statusMap) , passCnt * (100/len(statusMap))
+	s1, s2 := passCnt*100/len(statusMap), passCnt*(100/len(statusMap))
 	fmt.Println(s1, s2, float32(passCnt)/float32(len(statusMap))*100)
 	return s2
 }
 
-
 func FindBinarySearchShiftedIdx(words []string) int {
 	lo, hi := 0, len(words)-1
 	for lo < hi {
-		mid := (lo+hi)/2
+		mid := (lo + hi) / 2
 		if words[mid] >= words[lo] {
 			lo = mid
 		} else {
@@ -2147,7 +2269,9 @@ func MultiplyMatrices(mat1 [][]int, mat2 [][]int) [][]int {
 }
 
 func MinDeletionCostNoRepeatedLetter(s string, cost []int) (minCost int) {
-	if len(s) <= 1 {return 0}
+	if len(s) <= 1 {
+		return 0
+	}
 	stk := []int{0}
 	for i := 1; i < len(s); i++ {
 		n := len(stk)
@@ -2168,15 +2292,250 @@ func MinDeletionCostNoRepeatedLetter(s string, cost []int) (minCost int) {
 
 func IsValidParenthesis(s string) bool {
 	stk := []byte{}
-	brackets := map[byte]byte{')':'(', ']':'[', '}':'{'}
+	brackets := map[byte]byte{')': '(', ']': '[', '}': '{'}
 	for i := range s {
 		if brackets[s[i]] != 0 {
 			n := len(stk)
-			if stk[n-1] != brackets[s[i]] {return false}
+			if stk[n-1] != brackets[s[i]] {
+				return false
+			}
 			stk = stk[:n-1]
 		} else {
 			stk = append(stk, s[i])
 		}
 	}
 	return len(stk) == 0
+}
+
+func NumIslands(grid [][]byte) (cnt int) {
+	visited, que := map[int]bool{}, []int{}
+	rows, cols := len(grid), len(grid[0])
+	directions := [][]int{{0, 1}, {0, -1}, {1, 0}, {-1, 0}}
+	var point int
+
+	for i := 0; i < rows; i++ {
+		for j := 0; j < cols; j++ {
+			if grid[i][j] == '1' && !visited[i*cols+j] {
+				cnt++
+				que = append(que, i*cols+j)
+				for len(que) > 0 {
+					point, que = que[0], que[1:]
+					r, c := point/cols, point%cols
+					for _, dir := range directions {
+						newR, newC := r+dir[0], c+dir[1]
+						if newR >= 0 && newC >= 0 && newR < rows && newC < cols &&
+							grid[newR][newC] == '1' && !visited[newR*cols+newC] {
+							que = append(que, newR*cols+newC)
+							visited[newR*cols+newC] = true
+						}
+					}
+				}
+			}
+		}
+	}
+	return cnt
+}
+
+type CharFreq struct {
+	char byte
+	freq int
+}
+type CharFreqMaxHeap []CharFreq
+
+func (cfh CharFreqMaxHeap) Len() int              { return len(cfh) }
+func (cfh CharFreqMaxHeap) Less(i, j int) bool    { return cfh[i].freq > cfh[j].freq }
+func (cfh CharFreqMaxHeap) Swap(i, j int)         { cfh[i], cfh[j] = cfh[j], cfh[i] }
+func (cfh *CharFreqMaxHeap) Push(val interface{}) { *cfh = append(*cfh, val.(CharFreq)) }
+func (cfh *CharFreqMaxHeap) Pop() interface{} {
+	n := cfh.Len()
+	item := (*cfh)[n-1]
+	*cfh = (*cfh)[:n-1]
+	return item
+}
+func (cfh *CharFreqMaxHeap) Heapify() {
+	heap.Init(cfh)
+}
+func (cfh *CharFreqMaxHeap) HeapPush(val CharFreq) {
+	heap.Push(cfh, val)
+}
+func (cfh *CharFreqMaxHeap) HeapPop() CharFreq {
+	return (heap.Pop(cfh)).(CharFreq)
+}
+
+func ReOrganizeString(str string) (reOrgStr string) {
+	reOrgBytes := []byte{}
+	charFreqMap := map[byte]int{}
+	for i := range str {
+		charFreqMap[str[i]] += 1
+	}
+	maxHeap := CharFreqMaxHeap{}
+	for char := range charFreqMap {
+		maxHeap.HeapPush(CharFreq{
+			char: char,
+			freq: charFreqMap[char],
+		})
+	}
+
+	for len(maxHeap) > 1 {
+		c1, c2 := maxHeap.HeapPop(), maxHeap.HeapPop()
+		bLen := len(reOrgBytes)
+		if bLen == 0 || c1.char != reOrgBytes[bLen-1] {
+			reOrgBytes = append(reOrgBytes, c1.char)
+			c1.freq--
+		} else if bLen == 0 || c2.char != reOrgBytes[bLen-1] {
+			reOrgBytes = append(reOrgBytes, c2.char)
+			c2.freq--
+		} else {
+			return ""
+		}
+		if c1.freq > 0 {
+			maxHeap.HeapPush(c1)
+		}
+		if c2.freq > 0 {
+			maxHeap.HeapPush(c2)
+		}
+	}
+
+	if len(maxHeap) == 1 {
+		bLen := len(reOrgBytes)
+		if (bLen > 0 && maxHeap[0].char == reOrgBytes[bLen-1]) || maxHeap[0].freq > 1 {
+			return ""
+		}
+		reOrgBytes = append(reOrgBytes, maxHeap[0].char)
+	}
+	return string(reOrgBytes)
+}
+
+func MaxSubArray(nums []int) int {
+	if len(nums) == 0 {
+		return 0
+	}
+	if len(nums) == 1 {
+		return nums[0]
+	}
+	var idx int
+	currSum, maxSum := 0, -1<<31-1
+	for idx < len(nums) {
+		currSum += nums[idx]
+		maxSum = mathext.MaxInt(maxSum, currSum)
+		idx++
+		if currSum < 0 {
+			currSum = 0
+		}
+	}
+	return maxSum
+}
+
+func MaxBalloons(text string) (cnt int) {
+	balloonMap := map[byte]int{'b': 0, 'a': 0, 'l': 0, 'o': 0, 'n': 0}
+	for i := range text {
+		if _, ok := balloonMap[text[i]]; ok {
+			balloonMap[text[i]] += 1
+		}
+	}
+
+	minSingles, minDoubles := 1<<31-1, 1<<31-1
+	for char := range balloonMap {
+		if char == 'b' || char == 'a' || char == 'n' {
+			minSingles = mathext.MinInt(minSingles, balloonMap[char])
+		} else {
+			minDoubles = mathext.MinInt(minDoubles, balloonMap[char])
+		}
+	}
+
+	if minSingles == 0 || minDoubles < 2 {
+		return 0
+	} else if minDoubles <= 2*minSingles {
+		return minDoubles / 2
+	} else {
+		return minSingles
+	}
+}
+
+func SumZero(n int) []int {
+	if n == 1 {
+		return []int{0}
+	}
+
+	sum := 0
+	result := make([]int, n)
+	for i := 0; i < n; i++ {
+		result[i] = i + 1
+		sum += i + 1
+	}
+	sum -= result[n-1]
+	result[n-1] = -sum
+	return result
+}
+
+func FirstMissingPositive(nums []int) int {
+	oneExists := false
+	for i := range nums {
+		if !oneExists && nums[i] == 1 {
+			oneExists = true
+		}
+		if nums[i] <= 0 || nums[i] > len(nums)+1 {
+			nums[i] = 1
+		}
+	}
+
+	if !oneExists {
+		return 1
+	}
+
+	for i := range nums {
+		if abs(nums[i])-1 < len(nums) && nums[abs(nums[i])-1] > 0 {
+			nums[abs(nums[i])-1] = -nums[abs(nums[i])-1]
+		}
+	}
+
+	for i := range nums {
+		if nums[i] > 0 {
+			return i + 1
+		}
+	}
+	return len(nums) + 1
+}
+
+func abs(n int) int {
+	if n < 0 {
+		return -n
+	}
+	return n
+}
+
+func SearchMatrix(matrix [][]int, target int) bool {
+	rows, cols := len(matrix), len(matrix[0])
+	x, y := 0, cols-1
+	for {
+		if x < 0 || y < 0 || x >= rows || y >= cols {
+			break
+		}
+		if target == matrix[x][y] {
+			return true
+		}
+
+		if target < matrix[x][y] {
+			y--
+		} else if target > matrix[x][y] {
+			x++
+		}
+	}
+	return false
+}
+
+func CountAndSay(n int) string {
+	if n == 0 {return "10"}
+	nStr := strconv.FormatInt(int64(n), 10)
+	res := ""
+	lo, hi := 0, 1
+	for hi < len(nStr) {
+		if nStr[hi] != nStr[hi-1] || hi == len(nStr)-1 {
+			if hi == len(nStr)-1 {hi++}
+			res += fmt.Sprintf("%d%s", hi-lo, nStr[hi-1:hi])
+			lo = hi
+		}
+		hi++
+	}
+	return res
 }

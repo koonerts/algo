@@ -440,4 +440,25 @@ func GetIntersectionNode(headA, headB *ListNode) *ListNode {
 	return nil
 }
 
+/*func MergeKLists(lists []*ListNode) *ListNode {
+	lnh := collection.ListNodeHeap{}
+	for i := range lists {
+		lnh.HeapPush(lists[i])
+	}
 
+	var node, prev, head *ListNode
+	for lnh.Len() > 0 {
+		node = lnh.HeapPop()
+		if head == nil {
+			head = node
+		}
+		if prev != nil {
+			prev.Next = node
+		}
+		prev = node
+		if node.Next != nil {
+			lnh.HeapPush(node.Next)
+		}
+	}
+	return head
+}*/

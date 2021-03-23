@@ -14,7 +14,7 @@ type TrieNode struct {
 }
 
 
-func Constructor() Trie {
+func NewTrie() Trie {
 	return Trie{root: &TrieNode{}}
 }
 
