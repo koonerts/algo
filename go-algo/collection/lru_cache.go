@@ -15,7 +15,7 @@ type LRUCache struct {
 	capacity   int
 }
 
-func Constructor(capacity int) LRUCache {
+func NewLRUCache(capacity int) LRUCache {
 	ll := list.New()
 	head := ll.PushFront(&LRUCacheItem{-1,-1})
 	tail := ll.PushBack(&LRUCacheItem{-1,-1})

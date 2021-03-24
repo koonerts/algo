@@ -729,31 +729,23 @@ func MaxSumIncreasingSubsequence(array []int) (maxSum int, nums []int) {
 }
 
 func DecodeWays(s string) (ways int) {
-	if len(s) == 0 || s[0] == '0' {
-		return
-	}
+	if s[0] == '0' {return 0}
+	if len(s) == 1 {return 1}
 
-	dp := make([]int, len(s))
+	dp := make([]int, len(s)+1)
 	dp[0] = 1
-	for i := 1; i < len(s); i++ {
-		if s[i] != '0' {
+	dp[1] = 1
+
+	for i := 2; i <= len(s); i++ {
+		if s[i-1] != '0' {
 			dp[i] = dp[i-1]
 		}
-
-		twoDig, _ := strconv.Atoi(s[i-1 : i+1])
+		twoDig, _ := strconv.Atoi(s[i-2:i])
 		if twoDig >= 10 && twoDig <= 26 {
-			if i == 1 {
-				if s[i] == '0' {
-					dp[i] = 1
-				} else {
-					dp[i] = 2
-				}
-			} else {
-				dp[i] += dp[i-2]
-			}
+			dp[i] += dp[i-2]
 		}
 	}
-	return dp[len(s)-1]
+	return dp[len(s)]
 }
 
 func LongestPalindrome(s string) string {

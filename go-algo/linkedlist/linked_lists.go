@@ -95,45 +95,32 @@ func printNodeList(head *NodeRnd) {
 }
 
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
-	if l1.Val == 0 && l1.Next == nil {
-		return l2
-	} else if l2.Val == 0 && l2.Next == nil {
-		return l1
-	}
+	if l1 == nil || (l1.Val == 0 && l1.Next == nil) {return l2}
+	if l2 == nil || (l2.Val == 0 && l2.Next == nil) {return l1}
 
-	var returnHead, prev *ListNode
-	carry := 0
+	var head, prev *ListNode
 	n1, n2 := l1, l2
+	carry := 0
 	for n1 != nil || n2 != nil {
-		var n1Val, n2Val int
-		if n1 != nil {
-			n1Val = n1.Val
+		n1val, n2val := 0, 0
+		if n1 != nil {n1val = n1.Val}
+		if n2 != nil {n2val = n2.Val}
+		val := n1val + n2val + carry
+		carry = val/10
+		val %= 10
+		node := &ListNode{Val:val}
+		if head == nil {
+			head = node
 		}
-		if n2 != nil {
-			n2Val = n2.Val
-		}
-
-		sum := n1Val+n2Val+carry
-		carry = sum/10
-		node := &ListNode{sum%10, nil}
-		if returnHead == nil {
-			returnHead = node
-		} else {
+		if prev != nil {
 			prev.Next = node
 		}
-
 		prev = node
-		if n1 != nil {
-			n1 = n1.Next
-		}
-		if n2 != nil {
-			n2 = n2.Next
-		}
 	}
 	if carry == 1 {
-		prev.Next = &ListNode{1, nil}
+		prev.Next = &ListNode{Val:1}
 	}
-	return returnHead
+	return head
 }
 
 func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {

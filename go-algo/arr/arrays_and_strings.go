@@ -13,7 +13,70 @@ import (
 	"time"
 )
 
+type PaddedWord struct {
+	word []byte
+	wordEndIdx int
+}
+func FullJustify(words []string, maxWidth int) []string {
+	results := []string{}
+	lo, hi := 0, 0
+	currLen := 0
+	for hi < len(words) {
+		currLen += len(words[hi])+1
+		if currLen >= maxWidth || hi == len(words)-1 {
+			if currLen > maxWidth {
+				currLen -= len(words[hi])+1
+				hi--
+			}
+			paddedWords := make([]PaddedWord, hi-lo+1)
+			for i := range paddedWords {
+				b := make([]byte, len(words[lo])+1)
+				pw := PaddedWord{word: b, wordEndIdx: len(b)-2}
+				for j := range words[lo] {
+					pw.word[j] = words[lo][j]
+				}
+				pw.word[len(pw.word)-1] = ' '
+				paddedWords[i] = pw
+				lo++
+			}
 
+			if hi != len(words)-1 {
+				i := 0
+				canEvenlyDistribute := (maxWidth-currLen)%len(paddedWords) == 0
+				n := len(paddedWords)
+				if !canEvenlyDistribute {
+					paddedWords[0].word = append(paddedWords[0].word, ' ')
+					paddedWords[n-1].word = paddedWords[n-1].word[:len(paddedWords[n-1].word)-1]
+					n--
+					i++
+				}
+
+				for currLen < maxWidth {
+					i %= n
+					paddedWords[i].word = append(paddedWords[i].word, ' ')
+					currLen++
+					i++
+				}
+			}
+
+			sentenceBytes := make([]byte, 0, maxWidth)
+			for i := 0; i < len(paddedWords); i++ {
+				for j := 0; j < len(paddedWords[i].word); j++ {
+					sentenceBytes = append(sentenceBytes, paddedWords[i].word[j])
+				}
+			}
+			results = append(results, string(sentenceBytes))
+			currLen = 0
+		}
+
+		hi++
+	}
+	if len(results[len(results)-1]) < maxWidth {
+		results[len(results)-1] = results[len(results)-1] + strings.Repeat(" ", maxWidth-len(results[len(results)-1]))
+	}
+
+	return results
+}
 
 
 var solution = func(read4 func([]byte) int) func([]byte, int) int {
@@ -224,19 +287,20 @@ func isLess(w1, w2 string, orderDict map[byte]int) bool {
 }
 
 // TODO: Come back to
-/*func LeastInterval(tasks []byte, n int) int {
+func LeastInterval(tasks []byte, n int) (time int) {
 	taskCnts := make([]int, 26)
 	for i := range tasks {
 		taskCnts[tasks[i]-'A']++
 	}
 	sort.Ints(taskCnts)
-	cnt := 0
-	taskIdx := 0
-	for cnt < len(tasks) {
-		for taskCnts
+
+	maxIdleTime := (taskCnts[25]-1) * n
+	for i := 24; i >= 0; i-- {
+		maxIdleTime -= mathext.MinInt(taskCnts[25]-1, taskCnts[i])
 	}
-	return -1
-}*/
+	maxIdleTime = mathext.MaxInt(0, maxIdleTime)
+	return time + len(tasks)
+}
 
 func IsNumeric(s string) bool {
 	_, err := strconv.ParseFloat(s, 64)
@@ -877,18 +941,19 @@ func NonConstructibleChange(coins []int) (change int) {
 	return
 }
 
-func lengthOfLongestSubstringWithoutDups(s string) (maxLen int) {
+func LengthOfLongestSubstringWithoutDups(s string) (maxLen int) {
+	charIdxMap := map[byte]int{}
 	lo, hi := 0, 0
-	charSet := map[uint8]int{}
 	for hi < len(s) {
-		if _, ok := charSet[s[hi]]; ok {
-			lo = mathext.MaxInt(lo, charSet[s[hi]]+1)
+		if idx, ok := charIdxMap[s[hi]]; ok {
+			lo = mathext.MaxInt(lo, idx+1)
+			charIdxMap[s[lo]] = lo
 		}
-		maxLen = mathext.MaxInt(maxLen, hi-lo+1)
-		charSet[s[hi]] = hi
+		charIdxMap[s[hi]] = hi
+		maxLen = mathext.MaxInt(hi-lo+1)
 		hi++
 	}
-	return
+	return maxLen
 }
 
 func myAtoi(s string) (val int) {

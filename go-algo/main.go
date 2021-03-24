@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
-	"go-algo/arr"
+	"go-algo/dp"
 )
 
 func main() {
-	printLine(arr.MinRemoveToMakeValid("))(("))
+	printLine(dp.DecodeWays("226"))
 }
 
 func printLine(i ...interface{}) {
