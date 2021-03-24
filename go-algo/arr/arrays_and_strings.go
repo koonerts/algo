@@ -13,6 +13,9 @@ import (
 	"time"
 )
 
+
+
+
 var solution = func(read4 func([]byte) int) func([]byte, int) int {
 	// implement read below.
 	buf2 := []byte{}
