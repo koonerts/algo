@@ -94,6 +94,30 @@ func printNodeList(head *NodeRnd) {
 	}
 }
 
+
+func OddEvenList(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil || head.Next.Next == nil {return head}
+
+	even, evenHead := head, head
+	odd, oddHead := even.Next, even.Next
+
+	var prevEven, prevOdd *ListNode
+	for even != nil || odd != nil {
+		if prevEven != nil {prevEven.Next = even}
+		if prevOdd != nil {prevOdd.Next = odd}
+
+		prevEven = even
+		prevOdd = odd
+		for i := 0; i < 2; i ++ {
+			if even != nil {even = even.Next}
+			if odd != nil {odd = odd.Next}
+		}
+	}
+	if prevEven != nil {prevEven.Next = oddHead}
+	return evenHead
+}
+
+
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	if l1 == nil || (l1.Val == 0 && l1.Next == nil) {return l2}
 	if l2 == nil || (l2.Val == 0 && l2.Next == nil) {return l1}

@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"go-algo/collection"
-	mathcstm "go-algo/mathext"
+	"go-algo/mathext"
 	"go-algo/slice"
 	"math"
 	"sort"
@@ -40,6 +40,26 @@ type TreeNode struct {
 type Node struct {
 	Val       int
 	Neighbors []*Node
+}
+
+func PruneTree(root *TreeNode) *TreeNode {
+	if root == nil {return root}
+	if root.IsLeaf() && root.Val == 0 {return nil}
+
+	var containsOne func(node *TreeNode) bool
+	containsOne = func(node *TreeNode) bool {
+		if node == nil {return false}
+
+		keepLeft := containsOne(node.Left)
+		keepRight := containsOne(node.Right)
+
+		if !keepLeft {node.Left = nil}
+		if !keepRight {node.Right = nil}
+		return node.Val == 1  || keepLeft || keepRight
+	}
+	hasNodes := containsOne(root)
+	if hasNodes {return root}
+	return nil
 }
 
 func CreateTreeNode(vals []int) *TreeNode {
@@ -226,8 +246,8 @@ func findDepth(node *BinaryTree, maxDiameter *int) (depth int) {
 	} else {
 		lDepth := findDepth(node.Left, maxDiameter) + 1
 		rDepth := findDepth(node.Right, maxDiameter) + 1
-		*maxDiameter = mathcstm.MaxInt(*maxDiameter, lDepth+rDepth-1)
-		return mathcstm.MaxInt(lDepth, rDepth)
+		*maxDiameter = mathext.MaxInt(*maxDiameter, lDepth+rDepth-1)
+		return mathext.MaxInt(lDepth, rDepth)
 	}
 }
 
@@ -275,11 +295,11 @@ func maxPathSum(root *TreeNode) int {
 			return 0
 		}
 
-		leftSum := mathcstm.MaxInt(depthSum(node.Left), 0)
-		rightSum := mathcstm.MaxInt(depthSum(node.Right), 0)
+		leftSum := mathext.MaxInt(depthSum(node.Left), 0)
+		rightSum := mathext.MaxInt(depthSum(node.Right), 0)
 		totalSum := leftSum + rightSum + node.Val
-		maxSum = mathcstm.MaxInt(maxSum, totalSum)
-		return mathcstm.MaxInt(0, mathcstm.MaxInt(leftSum+node.Val, rightSum+node.Val))
+		maxSum = mathext.MaxInt(maxSum, totalSum)
+		return mathext.MaxInt(0, mathext.MaxInt(leftSum+node.Val, rightSum+node.Val))
 	}
 	depthSum(root)
 	return maxSum
@@ -444,7 +464,7 @@ type VertTreeNode struct {
 	col  int
 }
 
-func verticalOrder(root *TreeNode) [][]int {
+func VerticalOrder(root *TreeNode) [][]int {
 	if root == nil {
 		return [][]int{}
 	}
@@ -459,7 +479,7 @@ func verticalOrder(root *TreeNode) [][]int {
 		levelLength := len(q)
 		for i := 0; i < levelLength; i++ {
 			vertNode, q = q[0], q[1:]
-			minCol, maxCol = mathcstm.MinInt(minCol, vertNode.col), mathcstm.MaxInt(maxCol, vertNode.col)
+			minCol, maxCol = mathext.MinInt(minCol, vertNode.col), mathext.MaxInt(maxCol, vertNode.col)
 
 			/*if nodeMap[vertNode.col] == nil {
 				nodeMap[vertNode.col] = &[]int{}
@@ -481,6 +501,42 @@ func verticalOrder(root *TreeNode) [][]int {
 
 	return results
 }
+
+func VerticalOrder2(root *TreeNode) [][]int {
+	if root == nil {return [][]int{}}
+
+	nodeMap := map[int][]int{}
+	q := []VertTreeNode{VertTreeNode{root, 0}}
+	var vertNode VertTreeNode
+	for len(q) > 0 {
+		levelLength := len(q)
+		for i := 0; i < levelLength; i++ {
+			vertNode, q = q[0], q[1:]
+			nodeMap[vertNode.col] = append(nodeMap[vertNode.col], vertNode.node.Val)
+			if vertNode.node.Left != nil {
+				q = append(q, VertTreeNode{vertNode.node.Left, vertNode.col - 1})
+			}
+			if vertNode.node.Right != nil {
+				q = append(q, VertTreeNode{vertNode.node.Right, vertNode.col + 1})
+			}
+		}
+	}
+
+	keys := make([]int, 0, len(nodeMap))
+	for key := range nodeMap {
+		keys = append(keys, key)
+	}
+
+	sort.Ints(keys)
+	res := make([][]int, len(keys))
+	i := 0
+	for _, key := range keys {
+		res[i] = nodeMap[key]
+		i++
+	}
+	return res
+}
+
 
 func FindKthLargestValueInBst(tree *BST, k int) int {
 	stk := []*BST{}
@@ -552,10 +608,10 @@ func HeightBalancedBinaryTree(tree *BinaryTree) bool {
 		} else {
 			left := depth(node.Left)
 			right := depth(node.Right)
-			if mathcstm.AbsInt(left-right) > 1 {
+			if mathext.AbsInt(left-right) > 1 {
 				isBalanced = false
 			}
-			return mathcstm.MaxInt(left, right) + 1
+			return mathext.MaxInt(left, right) + 1
 		}
 	}
 	depth(tree)

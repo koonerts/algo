@@ -13,6 +13,81 @@ import (
 	"time"
 )
 
+
+func RemoveInvalidParentheses(s string) (results []string) {
+	
+	return results
+}
+
+func LicenseKeyFormatting(S string, K int) string {
+	sb := strings.Builder{}
+	sb.Grow(len(S))
+	S = strings.ToUpper(S)
+	S = strings.Replace(S, "-", "", -1)
+
+	cnt := 0
+	for i := len(S)-1; i >= 0; {
+		if cnt > 0 && cnt % K == 0 {
+			sb.WriteByte('-')
+			cnt = 0
+		} else {
+			sb.WriteByte(S[i])
+			i--
+			cnt++
+		}
+	}
+	S = sb.String()
+	bytes := make([]byte, 0, len(S))
+	for i := len(S)-1; i >= 0; i-- {
+		bytes = append(bytes, S[i])
+	}
+	return string(bytes)
+}
+
+func WordPattern(pattern string, s string) bool {
+	patternMap := map[byte]int{}
+	sMap := map[string]int{}
+	sList := strings.Split(s, " ")
+
+	if len(pattern) != len(sList) {
+		return false
+	}
+
+	for i := 0; i < len(pattern); i++ {
+		pIdx, okP := patternMap[pattern[i]]
+		sIdx, okS := sMap[sList[i]]
+
+		if okP != okS || (okP && okS && pIdx != sIdx) {
+			return false
+		} else if !okP && !okS {
+			patternMap[pattern[i]] = i
+			sMap[sList[i]] = i
+		}
+	}
+	return true
+}
+
+func SummaryRanges(nums []int) []string {
+	if len(nums) == 0 {return []string{}}
+	if len(nums) == 1 {return []string{strconv.Itoa(nums[0])}}
+
+	ranges := []string{}
+	lo, hi := 0, 1
+	for hi <= len(nums) {
+		if hi == len(nums) || nums[hi] != nums[hi-1]+1 {
+			if hi-1 == lo {
+				ranges = append(ranges, strconv.Itoa(nums[lo]))
+			} else {
+				ranges = append(ranges, fmt.Sprintf("%d->%d", nums[lo], nums[hi-1]))
+			}
+			lo = hi
+		}
+		hi++
+	}
+	return ranges
+}
+
+
 type PaddedWord struct {
 	word []byte
 	wordEndIdx int
