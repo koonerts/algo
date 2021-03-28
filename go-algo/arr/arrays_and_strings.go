@@ -68,6 +68,16 @@ func AlmostIncreasingSequence(nums []int) bool {
 	return true
 }
 
+func maxArithmeticLength(a []int, b []int) int {
+	diffs := map[int]struct{}{}
+	for i := range a {
+		if i == 0 {continue}
+		diffs[a[i]-a[i-1]] = struct{}{}
+	}
+
+}
+
+
 func RemoveInvalidParentheses(s string) (results []string) {
 	
 	return results
@@ -2165,6 +2175,23 @@ func ArrayManipulation(n int32, queries [][]int32) int64 {
 	return maxVal
 }
 
+func MinCost(s string, cost []int) int {
+	curSum, curMax, res := 0, 0, 0
+	for i := 0; i < len(s); i++ {
+		if i > 0 && s[i] != s[i - 1] {
+			res += curSum - curMax
+			curSum, curMax = 0, 0
+		}
+		curSum += cost[i]
+		curMax = max(curMax, cost[i])
+	}
+	return res + curSum - curMax
+}
+
+func max(a, b int) int {
+	if a > b { return a }
+	return b
+}
 func MinimumBribes(q []int32) {
 	var bribeCnt int32
 	for i := int32(len(q) - 1); i >= 0; i-- {

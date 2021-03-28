@@ -717,8 +717,18 @@ def mergeSort(array):
     return array
 
 
-print(mergeSort([8, 5, 2, 9, 5, 6, 3]))
 # result = calendarMatching([["9:00", "10:30"], ["12:00", "13:00"], ["16:00", "18:00"]], ["9:00", "20:00"],
 #                           [["10:00", "11:30"], ["12:30", "14:30"], ["14:30", "15:00"], ["16:00", "17:00"]], ["10:00", "18:30"],
 #                           45)
 # print(result)
+
+def fib(n):
+    if n <= 0:
+        return 0
+    elif n == 1:
+        return 0
+    elif n == 2:
+        return 1
+    return n + fib(n-2)
+
+print(fib(0), fib(1), fib(2), fib(3), fib(4))
