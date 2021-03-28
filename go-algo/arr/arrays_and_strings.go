@@ -14,6 +14,60 @@ import (
 )
 
 
+func IsNumber(str string) bool {
+	for i := range str {
+		if str[i] == '+' || str[i] == '-' {
+			if i > 0 {return false}
+		} else if str[i] == 'e' || str[i] == 'E' {
+			if !validateE(str, i) {return false}
+		} else if str[i] == '.' {
+			if !validateDecimal(str, i) {return false}
+		} else {
+			if !isNumerical(str[i]) {return false}
+		}
+	}
+	return true
+}
+
+func validateE(str string, idx int) bool {
+	prevIsNumerical := idx > 0 && isNumerical(str[idx-1])
+	nextIsNumerical := idx < len(str)-1 && isNumerical(str[idx+1])
+	if !prevIsNumerical && idx > 0 && str[idx-1] == '.' {
+		prevIsNumerical = validateDecimal(str, idx-1)
+	}
+	if !nextIsNumerical && idx < len(str)-1 && str[idx+1] == '.' {
+		nextIsNumerical = validateDecimal(str, idx+1)
+	}
+	return prevIsNumerical && nextIsNumerical
+}
+
+func validateDecimal(str string, idx int) bool {
+	prevIsNumerical := idx > 0 && isNumerical(str[idx-1])
+	nextIsNumerical := idx < len(str)-1 && isNumerical(str[idx+1])
+	return prevIsNumerical || nextIsNumerical
+}
+
+func isNumerical(b byte) bool {
+	return b >= '0' && b <= '9'
+}
+
+
+func AlmostIncreasingSequence(nums []int) bool {
+	prev, cnt := 0, 0
+	for i := 1; i < len(nums); i++ {
+		if nums[i] > prev {
+			prev = i
+		} else {
+			if cnt == 1 {return false}
+			if prev-1 >= 0 && nums[prev-1] < nums[i] {
+				prev = i
+			}
+			cnt++
+		}
+	}
+	return true
+}
+
 func RemoveInvalidParentheses(s string) (results []string) {
 	
 	return results

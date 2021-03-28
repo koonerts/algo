@@ -31,9 +31,9 @@ func (wd *WordDictionary) AddWord(word string)  {
 	prev.isEnd = true
 }
 
-
+// TODO:
 func (wd *WordDictionary) Search(word string) bool {
-
+	return false
 }
 
 

@@ -42,6 +42,8 @@ type Node struct {
 	Neighbors []*Node
 }
 
+
+
 func PruneTree(root *TreeNode) *TreeNode {
 	if root == nil {return root}
 	if root.IsLeaf() && root.Val == 0 {return nil}
@@ -658,7 +660,7 @@ func BranchSumsLarger(arr []int64) string {
 	return ""
 }
 
-func RoadsAndLibraries(n int32, c_lib int32, c_road int32, cities [][]int32) int64 {
+/*func RoadsAndLibraries(n int32, c_lib int32, c_road int32, cities [][]int32) int64 {
 	if c_road >= c_lib { return int64(c_lib*n) }
 	uf := collection.NewUnionFind(n)
 	for _, edge := range cities {
@@ -671,7 +673,7 @@ func RoadsAndLibraries(n int32, c_lib int32, c_road int32, cities [][]int32) int
 		minCost += int64(c_road * (uf.GetSize(root)-1))
 	}
 	return minCost
-}
+}*/
 
 func FindItinerary(tickets [][]string) []string {
 	adjMap := map[string][]string{}
@@ -736,3 +738,32 @@ func CanFinish(numCourses int, prerequisites [][]int) bool {
 	}
 	return finishedCourses == numCourses
 }
+
+func NumIslands2(m int, n int, positions [][]int) []int {
+	uf := collection.NewUnionFind()
+	islandsCounts := []int{}
+	directions := [][]int{{0,-1}, {0,1}, {-1,0}, {1,0}}
+	for _, pos := range positions {
+		posHash := pos[0]*n + pos[1]
+		if !uf.Insert(posHash) {
+			islandsCounts = append(islandsCounts, uf.GetConnectionComponents())
+			continue
+		}
+		uf.Union(posHash, posHash)
+		for _, dir := range directions {
+			newX, newY := pos[0]+dir[0], pos[1]+dir[1]
+			islandNode := uf.Find(newX*n + newY)
+			if newX < 0 || newY < 0 || newX >= m || newY >= n || islandNode == -1 {
+				continue
+			}
+			uf.Union(posHash, islandNode)
+		}
+		islandsCounts = append(islandsCounts, uf.GetConnectionComponents())
+	}
+	return islandsCounts
+}
+
+
+
+
+

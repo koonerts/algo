@@ -6,4 +6,8 @@
         <RootNamespace>csharp_algo</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="ServiceStack.Text.Core" Version="5.10.4" />
+    </ItemGroup>
+
 </Project>
