@@ -164,6 +164,49 @@ func CreateBST(jsonStr string) *BST {
 	return root
 }
 
+
+func CalcEquation(equations [][]string, values []float64, queries [][]string) []float64 {
+	eqMap := map[string]map[string]float64{}
+	for i, eq := range equations {
+		if eqMap[eq[0]] == nil {eqMap[eq[0]] = map[string]float64{}}
+		if eqMap[eq[1]] == nil {eqMap[eq[1]] = map[string]float64{}}
+		eqMap[eq[0]][eq[1]] = values[i]
+		eqMap[eq[1]][eq[0]] = 1/values[i]
+	}
+
+
+	var dfs func(from, to string, currProduct float64, visited map[string]bool) float64
+	dfs = func(from, to string, currProduct float64, visited map[string]bool) float64 {
+		visited[from] = true
+		var retVal float64 = -1
+		if val, ok := eqMap[from][to]; ok {
+			retVal =  currProduct*val
+		} else {
+			for neighbor, weight := range eqMap[from] {
+				if visited[neighbor] {continue}
+				retVal = dfs(neighbor, to, currProduct*weight, visited)
+				if retVal != -1 {break}
+			}
+		}
+		visited[from] = false
+		return retVal
+	}
+
+	results := make([]float64, 0, len(queries))
+	for _, query := range queries {
+		if eqMap[query[0]] == nil || eqMap[query[1]] == nil {
+			results = append(results, -1)
+		} else if query[0] == query[1] {
+			results = append(results, 1)
+		} else {
+			vis := map[string]bool{}
+			results = append(results, dfs(query[0], query[1], 1, vis))
+		}
+	}
+	return results
+}
+
+
 func (tree *BST) FindClosestValue(target int) int {
 	closest := math.MaxInt32
 	var traverse func(node *BST)
@@ -677,32 +720,38 @@ func BranchSumsLarger(arr []int64) string {
 
 func FindItinerary(tickets [][]string) []string {
 	adjMap := map[string][]string{}
+	pathCnt := 0
 	for _, ticket := range tickets {
 		if _, ok := adjMap[ticket[0]]; !ok {
 			adjMap[ticket[0]] = []string{ticket[1]}
 		} else {
 			adjMap[ticket[0]] = append(adjMap[ticket[0]], ticket[1])
 		}
+		pathCnt++
 	}
+
+	vis := map[string][]bool{}
 	for city := range adjMap {
 		sort.Strings(adjMap[city])
+		vis[city] = make([]bool, len(adjMap[city]))
 	}
+	res := make([]string, pathCnt+1)
+	res[0] = "JFK"
 
-	res := []string{}
-	vis := map[string]bool{}
-	var traverse func(city string)
-	traverse = func(city string) {
-		res = append(res, city)
-		for _, toCity := range adjMap[city] {
-			flight := fmt.Sprintf("%s|%s", city, toCity)
-			if !vis[flight] {
-				vis[flight] = true
-				traverse(toCity)
-			}
+	var dfs func(currCity string, idx int)
+	dfs = func(currCity string, idx int) {
+		for i, toCity := range adjMap[currCity] {
+			if vis[currCity][i] {continue}
+			vis[currCity][i] = true
+			res[idx] = toCity
+			dfs(toCity, idx+1)
+			if res[pathCnt] != "" {break}
+			res[idx] = ""
+			vis[currCity][i] = false
 		}
-
 	}
-	traverse("JFK")
+
+	dfs("JFK", 1)
 	return res
 }
 

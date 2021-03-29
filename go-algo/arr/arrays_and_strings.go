@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"go-algo/collection"
 	"go-algo/mathext"
+	"go-algo/slice"
 	"go-algo/strext"
 	"math"
 	"sort"
@@ -13,17 +14,193 @@ import (
 	"time"
 )
 
+func IntervalIntersection(aList [][]int, bList [][]int) (results [][]int) {
+	if len(aList) == 0 || len(bList) == 0 {
+		return results
+	}
+
+	for i, j := 0, 0; i < len(aList) && j < len(bList); {
+		lo := mathext.MaxInt(aList[i][0], bList[j][0])
+		hi := mathext.MaxInt(aList[i][1], bList[j][1])
+		if lo <= hi {
+			results = append(results, []int{lo, hi})
+		}
+
+		if aList[i][1] < bList[j][1] {
+			i++
+		} else {
+			j++
+		}
+	}
+	return results
+}
+
+func MinIncrementForUnique(A []int) int {
+	if len(A) <= 1 {
+		return 0
+	}
+	sort.Ints(A)
+	s, ans := A[0], 0
+	for i := range A {
+		ans += mathext.MaxInt(0, s-A[i])
+		s = mathext.MaxInt(s+1, A[i]+1)
+	}
+	return ans
+}
+
+/*func Calculator(s string) int {
+	stk := []string{}
+	i := 0
+	for i < len(s) {
+		if s[i] != '/' && s[i] != '*' {
+			stk = append(stk, string(s[i]))
+			i++
+		} else {
+			num1, _ := strconv.Atoi(stk[len(stk)-1])
+			stk = stk[:len(stk)-1]
+			num2, _ := strconv.Atoi(string(s[i+1]))
+			if s[i] == '*' {
+				stk = append(stk, strconv.Itoa(num1*num2))
+			}
+			if s[i] == '/' {
+				stk = append(stk, strconv.Itoa(num1/num2))
+			}
+			i += 2
+		}
+	}
+	if len(stk) == 1 {
+		val, _ := strconv.Atoi(stk[0])
+		return val
+	} else {
+		i = 1
+		result := 0
+		for i < len(stk) {
+			num1, _ := strconv.Atoi(stk[i-1])
+			num2, _ := strconv.Atoi(stk[i+1])
+			if stk[i] == "+" {
+				result += num1 + num2
+			}
+			if stk[i] == "-" {
+				result += num1 - num2
+			}
+			i += 2
+		}
+		return result
+	}
+}*/
+
+func PairsGreaterThanZ(nums []int, z int) int {
+	prevIdx := -1
+	var result [][]int
+	for i := range nums {
+		hiIdx := len(nums) - 1
+		if prevIdx != -1 {
+			hiIdx = prevIdx - 1
+		}
+		leftIdx := -1
+		if i+1 != hiIdx {
+			leftIdx = BinarySearchLeftRange(nums, i+1, hiIdx, z-nums[i])
+		}
+		if leftIdx != -1 {
+			for j := leftIdx; j <= hiIdx; j++ {
+				result = append(result, []int{nums[i], nums[j]})
+			}
+		}
+		if prevIdx != -1 {
+			for j := prevIdx; j < len(nums); j++ {
+				result = append(result, []int{nums[i], nums[j]})
+			}
+		}
+		prevIdx = leftIdx
+	}
+	fmt.Println(result)
+	return len(result)
+}
+
+func PairsGreaterThanZ2(nums []int, z int) (cnt int) {
+	lo, hi := 0, len(nums)-1
+	for lo < hi {
+		if nums[lo]+nums[hi] >= z {
+			cnt += hi - lo
+			hi--
+		} else {
+			lo++
+		}
+	}
+	return cnt
+}
+
+func BinarySearchLeftRange(nums []int, lo, hi, targ int) int {
+	idx := -1
+	for lo <= hi {
+		mid := (lo + hi) / 2
+		if nums[mid] == targ {
+			return mid
+		} else if nums[mid] < targ {
+			lo = mid + 1
+		} else {
+			hi = mid - 1
+			idx = mid
+		}
+	}
+	return idx
+}
+
+func BoundedSquareSum(nums1, nums2 []int, lo, hi int) int {
+
+	return -1
+}
+
+func IntersectionSizeTwo(intervals [][]int) int {
+	sort.Slice(intervals, func(i, j int) bool {
+		return intervals[i][1] <= intervals[j][1] && intervals[i][0] >= intervals[j][0]
+	})
+
+	ans, lo, hi := 0, -1, -1
+	for _, iv := range intervals {
+		if iv[0] <= lo {
+			continue
+		}
+		if lo < iv[0] {
+			ans++
+			if hi != iv[1] {
+				lo, hi = hi, iv[1]
+			} else {
+				lo, hi = iv[1]-1, iv[1]
+			}
+		}
+		if iv[0] > hi {
+			ans += 2
+			lo, hi = iv[1]-1, iv[1]
+		}
+	}
+	return ans
+}
+
+// TODO:
+func FindLadders(beginWord string, endWord string, wordList []string) [][]string {
+
+	return nil
+}
 
 func IsNumber(str string) bool {
 	for i := range str {
 		if str[i] == '+' || str[i] == '-' {
-			if i > 0 {return false}
+			if i > 0 {
+				return false
+			}
 		} else if str[i] == 'e' || str[i] == 'E' {
-			if !validateE(str, i) {return false}
+			if !validateE(str, i) {
+				return false
+			}
 		} else if str[i] == '.' {
-			if !validateDecimal(str, i) {return false}
+			if !validateDecimal(str, i) {
+				return false
+			}
 		} else {
-			if !isNumerical(str[i]) {return false}
+			if !isNumerical(str[i]) {
+				return false
+			}
 		}
 	}
 	return true
@@ -51,14 +228,15 @@ func isNumerical(b byte) bool {
 	return b >= '0' && b <= '9'
 }
 
-
 func AlmostIncreasingSequence(nums []int) bool {
 	prev, cnt := 0, 0
 	for i := 1; i < len(nums); i++ {
 		if nums[i] > prev {
 			prev = i
 		} else {
-			if cnt == 1 {return false}
+			if cnt == 1 {
+				return false
+			}
 			if prev-1 >= 0 && nums[prev-1] < nums[i] {
 				prev = i
 			}
@@ -68,18 +246,14 @@ func AlmostIncreasingSequence(nums []int) bool {
 	return true
 }
 
+// TODO
 func maxArithmeticLength(a []int, b []int) int {
-	diffs := map[int]struct{}{}
-	for i := range a {
-		if i == 0 {continue}
-		diffs[a[i]-a[i-1]] = struct{}{}
-	}
 
+	return -1
 }
 
-
 func RemoveInvalidParentheses(s string) (results []string) {
-	
+
 	return results
 }
 
@@ -90,8 +264,8 @@ func LicenseKeyFormatting(S string, K int) string {
 	S = strings.Replace(S, "-", "", -1)
 
 	cnt := 0
-	for i := len(S)-1; i >= 0; {
-		if cnt > 0 && cnt % K == 0 {
+	for i := len(S) - 1; i >= 0; {
+		if cnt > 0 && cnt%K == 0 {
 			sb.WriteByte('-')
 			cnt = 0
 		} else {
@@ -102,7 +276,7 @@ func LicenseKeyFormatting(S string, K int) string {
 	}
 	S = sb.String()
 	bytes := make([]byte, 0, len(S))
-	for i := len(S)-1; i >= 0; i-- {
+	for i := len(S) - 1; i >= 0; i-- {
 		bytes = append(bytes, S[i])
 	}
 	return string(bytes)
@@ -132,8 +306,12 @@ func WordPattern(pattern string, s string) bool {
 }
 
 func SummaryRanges(nums []int) []string {
-	if len(nums) == 0 {return []string{}}
-	if len(nums) == 1 {return []string{strconv.Itoa(nums[0])}}
+	if len(nums) == 0 {
+		return []string{}
+	}
+	if len(nums) == 1 {
+		return []string{strconv.Itoa(nums[0])}
+	}
 
 	ranges := []string{}
 	lo, hi := 0, 1
@@ -151,26 +329,26 @@ func SummaryRanges(nums []int) []string {
 	return ranges
 }
 
-
 type PaddedWord struct {
-	word []byte
+	word       []byte
 	wordEndIdx int
 }
+
 func FullJustify(words []string, maxWidth int) []string {
 	results := []string{}
 	lo, hi := 0, 0
 	currLen := 0
 	for hi < len(words) {
-		currLen += len(words[hi])+1
+		currLen += len(words[hi]) + 1
 		if currLen >= maxWidth || hi == len(words)-1 {
 			if currLen > maxWidth {
-				currLen -= len(words[hi])+1
+				currLen -= len(words[hi]) + 1
 				hi--
 			}
 			paddedWords := make([]PaddedWord, hi-lo+1)
 			for i := range paddedWords {
 				b := make([]byte, len(words[lo])+1)
-				pw := PaddedWord{word: b, wordEndIdx: len(b)-2}
+				pw := PaddedWord{word: b, wordEndIdx: len(b) - 2}
 				for j := range words[lo] {
 					pw.word[j] = words[lo][j]
 				}
@@ -216,7 +394,6 @@ func FullJustify(words []string, maxWidth int) []string {
 
 	return results
 }
-
 
 var solution = func(read4 func([]byte) int) func([]byte, int) int {
 	// implement read below.
@@ -433,7 +610,7 @@ func LeastInterval(tasks []byte, n int) (time int) {
 	}
 	sort.Ints(taskCnts)
 
-	maxIdleTime := (taskCnts[25]-1) * n
+	maxIdleTime := (taskCnts[25] - 1) * n
 	for i := 24; i >= 0; i-- {
 		maxIdleTime -= mathext.MinInt(taskCnts[25]-1, taskCnts[i])
 	}
@@ -1089,7 +1266,7 @@ func LengthOfLongestSubstringWithoutDups(s string) (maxLen int) {
 			charIdxMap[s[lo]] = lo
 		}
 		charIdxMap[s[hi]] = hi
-		maxLen = mathext.MaxInt(hi-lo+1)
+		maxLen = mathext.MaxInt(hi - lo + 1)
 		hi++
 	}
 	return maxLen
@@ -1861,6 +2038,68 @@ func RotateMatrix2(matrix [][]int) {
 	}
 }
 
+func RotateMatrixNoDiagonals(matrix [][]int) {
+	diag1 := make([]int, len(matrix))
+	diag2 := make([]int, len(matrix))
+	x1, y1, x2, y2 := 0, 0, 0, len(matrix)-1
+	for i := range diag1 {
+		diag1[i] = matrix[x1][y1]
+		diag2[i] = matrix[x2][y2]
+		x1++
+		y1++
+		x2++
+		y2--
+	}
+	slice.PrintSlice(matrix)
+	RotateMatrix2(matrix)
+
+	x1, y1, x2, y2 = 0, 0, 0, len(matrix)-1
+	for i := range diag1 {
+		matrix[x1][y1] = diag1[i]
+		matrix[x2][y2] = diag2[i]
+		x1++
+		y1++
+		x2++
+		y2--
+	}
+	fmt.Println()
+	slice.PrintSlice(matrix)
+}
+
+func RotateMatrixNoDiagonals2(matrix [][]int) {
+	n := len(matrix[0])
+
+	// Transpose: reverse across diagonal
+	x1, y1, x2, y2 := 0, 0, 0, len(matrix)-1
+	for i := 0; i < n; i++ {
+		for j := i; j < n; j++ {
+			if (i == x1 && j == y1) || (i == x2 && j == y2) {
+				continue
+			}
+			matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+		}
+		x1++
+		y1++
+		x2++
+		y2--
+	}
+
+	// Reverse: reverse each row
+	x1, y1, x2, y2 = 0, 0, 0, len(matrix)-1
+	for i := 0; i < n; i++ {
+		for j, k := 0, n-1; j < k; j, k = j+1, k-1 {
+			if (i == x1 && j == y1) || (i == x2 && j == y2) || (i == x1 && k == y1) || (i == x2 && k == y2) {
+				continue
+			}
+			matrix[i][j], matrix[i][k] = matrix[i][k], matrix[i][j]
+		}
+		x1++
+		y1++
+		x2++
+		y2--
+	}
+}
+
 /*func strStr(haystack string, needle string) int {
 	if needle == "" {return 0}
 	else if len(needle) > len(haystack) {return -1}
@@ -1871,6 +2110,60 @@ func RotateMatrix2(matrix [][]int) {
 	}
 	return -1
 }*/
+
+
+type BeautyMatrix struct {
+	matrix [][]int
+	n, beauty int
+}
+
+func NewBeautyMatrix(n int) BeautyMatrix {
+	matrix := make([][]int, 0, n)
+	return BeautyMatrix{matrix:matrix, n:n}
+}
+
+func BeautyOfAMatrix(matrix [][]int, k int) [][]int {
+	nk := len(matrix)/k
+	bmList := make([]BeautyMatrix, 0, len(matrix))
+
+	for i := 0; i < nk; i++ {
+		for j := 0; j < nk; j++ {
+			bm := NewBeautyMatrix(nk)
+			digits := make([]int, nk*nk+1)
+
+			r, c := i*nk, j*nk
+			for l := 0; l < nk; l++ {
+				bm.matrix = append(bm.matrix, matrix[r][c:c+nk])
+				for _, num := range bm.matrix[len(bm.matrix)-1] {
+					digits[num-1]++
+				}
+				r++
+			}
+			for i := range digits {
+				if digits[i] == 0 {
+					bm.beauty = i+1
+					break
+				}
+			}
+			bmList = append(bmList, bm)
+		}
+	}
+
+	sort.SliceStable(bmList, func(i, j int) bool {
+		return bmList[i].beauty < bmList[j].beauty
+	})
+
+	retMatrix := make([][]int, len(matrix))
+
+	for i := range bmList {
+		idx := (i/k) * nk
+		for j := range bmList[i].matrix {
+			retMatrix[idx] = append(retMatrix[idx], bmList[i].matrix[j]...)
+			idx++
+		}
+	}
+	return retMatrix
+}
 
 func MostCommonWord(paragraph string, banned []string) string {
 	paragraph = strings.ToLower(string(strext.RemoveNonAlphaNumeric([]byte(paragraph))))
@@ -2178,7 +2471,7 @@ func ArrayManipulation(n int32, queries [][]int32) int64 {
 func MinCost(s string, cost []int) int {
 	curSum, curMax, res := 0, 0, 0
 	for i := 0; i < len(s); i++ {
-		if i > 0 && s[i] != s[i - 1] {
+		if i > 0 && s[i] != s[i-1] {
 			res += curSum - curMax
 			curSum, curMax = 0, 0
 		}
@@ -2189,7 +2482,9 @@ func MinCost(s string, cost []int) int {
 }
 
 func max(a, b int) int {
-	if a > b { return a }
+	if a > b {
+		return a
+	}
 	return b
 }
 func MinimumBribes(q []int32) {
