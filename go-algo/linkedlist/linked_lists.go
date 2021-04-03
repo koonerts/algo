@@ -118,6 +118,29 @@ func OddEvenList(head *ListNode) *ListNode {
 }
 
 
+func insertBefore(nodePtr, newNode *ListNode) {
+	// deep-copy nodePtr and beyond to nodePtrCopy
+	var nodePtrCopy, prev *ListNode
+	iterPtr := nodePtr // copy pointer to iter so we don't alter original pointer
+	for iterPtr != nil {
+		node := &ListNode{Val: iterPtr.Val}
+		if nodePtrCopy == nil {
+			nodePtrCopy = node
+		}
+		if prev != nil {
+			prev.Next = node
+		}
+		prev = node
+		iterPtr = iterPtr.Next
+	}
+
+	// replace underlying node value at *nodePtr to requested node
+	*nodePtr = *newNode
+
+	// have nodePtr now point to our nodePtrCopy
+	nodePtr.Next = nodePtrCopy
+}
+
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	if l1 == nil || (l1.Val == 0 && l1.Next == nil) {return l2}
 	if l2 == nil || (l2.Val == 0 && l2.Next == nil) {return l1}

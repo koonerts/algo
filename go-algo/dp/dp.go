@@ -9,6 +9,34 @@ import (
 	"strconv"
 )
 
+func FindTargetSumWays(nums []int, S int) int {
+	sum := 0
+	for _, num := range nums {
+		sum += num
+	}
+	if S > sum || S < -sum {return 0}
+
+	dp := make([][]int, len(nums))
+	for i := range dp {
+		dp[i] = make([]int, sum*2 + 1)
+	}
+	dp[0][nums[0]+sum] += 1
+	dp[0][-nums[0]+sum] += 1
+
+	for i := range dp {
+		if i == 0 {continue}
+		for j := -sum; j <= sum; j++ {
+			if dp[i-1][j+sum] != 0 {
+				n := nums[i]
+				dp[i][j+sum+n] += dp[i-1][j+sum]
+				dp[i][j+sum-n] += dp[i-1][j+sum]
+			}
+		}
+	}
+	slice.PrintSlice(dp)
+	return dp[len(nums)-1][S+sum]
+}
+
 func MinEditDistance(str1, str2 string) (minDist int) {
 	dp := make([][]int, len(str1)+1)
 	for i := range dp {
@@ -889,7 +917,7 @@ func MaxProfitWithKTransactions(prices []int, k int) (maxProfit int) {
 	return maxProfit
 }
 
-func WordBreak(s string, wordDict []string) bool {
+func WordBreakWays(s string, wordDict []string) bool {
 	dp := make([]bool, len(s)+1)
 	dp[0] = true
 
@@ -902,6 +930,11 @@ func WordBreak(s string, wordDict []string) bool {
 		}
 	}
 	return dp[len(s)]
+}
+
+func WordBreak(s string, wordDict []string) []string {
+	// memo := map[string]string{}
+	return nil
 }
 
 func RobHouses(nums []int) int {

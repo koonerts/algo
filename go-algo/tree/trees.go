@@ -38,29 +38,435 @@ type TreeNode struct {
 }
 
 type Node struct {
-	Val       int
-	Neighbors []*Node
+	Val        int
+	ChildNodes []*Node
 }
 
+type AccountNode struct {
+	name, email string
+}
 
+type AccountUnionFind struct {
+	roots map[string]AccountNode
+	sizes map[string]int
+}
+
+type ColorNode struct {
+	Color      string
+	ChildNodes []*ColorNode
+}
+
+func EqualColoredRoots(root *ColorNode) []*ColorNode {
+	results := []*ColorNode{}
+	var dfs func(node *ColorNode) (red, blue, black int)
+	dfs = func(node *ColorNode) (red, blue, black int) {
+		if node == nil {
+			return 0, 0, 0
+		}
+
+		redCnt, blueCnt, blackCnt := 0, 0, 0
+		for _, childNode := range node.ChildNodes {
+			childRed, childBlue, childBlack := dfs(childNode)
+			redCnt += childRed
+			blueCnt += childBlue
+			blackCnt += childBlack
+		}
+		if node.Color == "RED" {
+			redCnt++
+		}
+		if node.Color == "BLUE" {
+			blueCnt++
+		}
+		if node.Color == "BLACK" {
+			blackCnt++
+		}
+		if redCnt == blueCnt && redCnt == blackCnt {
+			results = append(results, node)
+		}
+
+		return redCnt, blueCnt, blackCnt
+	}
+	dfs(root)
+	return results
+}
+
+func NewAccountUnionFind() *AccountUnionFind {
+	return &AccountUnionFind{map[string]AccountNode{}, map[string]int{}}
+}
+
+func (auf *AccountUnionFind) insert(p AccountNode) {
+	auf.roots[p.email] = p
+	auf.sizes[p.email] += 1
+}
+
+func (auf *AccountUnionFind) Union(p, q AccountNode) {
+	proot, qroot := auf.Find(p.email), auf.Find(q.email)
+	if proot.email == "" {
+		auf.insert(p)
+		proot = p
+	}
+	if qroot.email == "" {
+		auf.insert(q)
+		qroot = q
+	}
+
+	if proot == qroot {
+		return
+	}
+	if auf.sizes[proot.email] >= auf.sizes[qroot.email] {
+		auf.roots[qroot.email] = proot
+		auf.sizes[proot.email] += auf.sizes[qroot.email]
+	} else {
+		auf.roots[proot.email] = qroot
+		auf.sizes[qroot.email] += auf.sizes[proot.email]
+	}
+}
+
+func (auf *AccountUnionFind) Find(email string) AccountNode {
+	if _, ok := auf.roots[email]; !ok {
+		return AccountNode{email: ""}
+	}
+
+	f := auf.roots[email]
+	for f != auf.roots[f.email] {
+		auf.roots[f.email] = auf.roots[auf.roots[f.email].email]
+		f = auf.roots[f.email]
+	}
+	return f
+}
+
+func AccountsMerge(accounts [][]string) [][]string {
+	accM := map[string]AccountNode{}
+	auf := NewAccountUnionFind()
+	for _, acc := range accounts {
+		name := acc[0]
+		parentAcc := acc[1]
+		for i := 1; i < len(acc); i++ {
+			accNode := auf.Find(acc[i])
+			if accNode.email == "" {
+				accNode = AccountNode{name: name, email: acc[i]}
+				accM[accNode.email] = accNode
+				auf.Union(accM[parentAcc], accNode)
+				continue
+			}
+			auf.Union(accM[parentAcc], accNode)
+		}
+	}
+
+	rootToChildren := map[AccountNode][]string{}
+	for _, accountNode := range accM {
+		root := auf.Find(accountNode.email)
+		if _, ok := rootToChildren[root]; !ok {
+			rootToChildren[root] = []string{root.name, root.email}
+			if root != accountNode {
+				rootToChildren[root] = append(rootToChildren[root], accountNode.email)
+			}
+			continue
+		}
+		rootToChildren[root] = append(rootToChildren[root], accountNode.email)
+	}
+
+	res := make([][]string, 0, len(rootToChildren))
+	for _, lst := range rootToChildren {
+		sort.Strings(lst[1:])
+		n := 1
+		for i := 1; i < len(lst); i++ {
+			if lst[i] != lst[i-1] {
+				lst[n] = lst[i]
+				n++
+			}
+		}
+		lst = lst[:n]
+		res = append(res, lst)
+	}
+	return res
+}
+
+type Direction int
+
+const (
+	North Direction = iota + 1
+	West
+	East
+	South
+)
+
+func IsRobotBounded(instructions string) bool {
+	x, y, dir := 0, 0, North
+	for i := 0; i < 4; i++ {
+		for j := range instructions {
+			if instructions[j] == 'G' {
+				x, y = getNextCoordinates(x, y, dir)
+			} else {
+				dir = turnRobot(dir, instructions[j])
+			}
+		}
+	}
+	return x == 0 && y == 0
+}
+
+func turnRobot(currDir Direction, instruction byte) Direction {
+	if instruction == 'L' {
+		if currDir == North {
+			return West
+		}
+		if currDir == West {
+			return South
+		}
+		if currDir == South {
+			return East
+		}
+		if currDir == East {
+			return North
+		}
+	} else if instruction == 'R' {
+		if currDir == North {
+			return East
+		}
+		if currDir == East {
+			return South
+		}
+		if currDir == South {
+			return West
+		}
+		if currDir == West {
+			return North
+		}
+	}
+	return currDir
+}
+
+func getNextCoordinates(x, y int, currDir Direction) (int, int) {
+	if currDir == North {
+		return x, y + 1
+	} else if currDir == West {
+		return x - 1, y
+	} else if currDir == East {
+		return x + 1, y
+	} else {
+		return x, y - 1
+	}
+}
+
+func ShortestDistanceToAllBuildings(grid [][]int) int {
+	buildings := []int{}
+	dirs := [][]int{{0, 1}, {1, 0}, {0, -1}, {-1, 0}}
+
+	cols := len(grid[0])
+	for i := range grid {
+		for j := range grid[0] {
+			point := i*cols + j
+			if grid[i][j] == 1 {
+				buildings = append(buildings, point)
+			}
+		}
+	}
+
+	minSteps := 1<<31 - 1
+	minDistPoint := []int{-1, -1}
+	dists := make([][]int, len(grid))
+	for i := range dists {
+		dists[i] = make([]int, cols)
+	}
+
+	for i := range buildings {
+		r, c := buildings[i]/cols, buildings[i]%cols
+		que := [][]int{{r, c}}
+		seen := map[int]bool{}
+		buildingReachedCnt := 0
+		for len(que) > 0 {
+			point := que[0]
+			que = que[1:]
+			for _, dir := range dirs {
+				newX, newY := point[0]+dir[0], point[1]+dir[1]
+
+				if !(newX >= 0 && newY >= 0 && newX < len(grid) && newY < cols) || grid[newX][newY] == 2 {
+					continue
+				}
+
+				hash := newX*cols + newY
+				if seen[hash] {
+					continue
+				}
+				seen[hash] = true
+				if grid[newX][newY] == 1 {
+					buildingReachedCnt++
+					continue
+				}
+
+				dists[newX][newY] += dists[point[0]][point[1]] + 1
+				que = append(que, []int{newX, newY})
+				if i == len(buildings)-1 {
+					if dists[newX][newY] < minSteps {
+						minSteps = dists[newX][newY]
+						minDistPoint[0], minDistPoint[1] = newX, newY
+					}
+				}
+			}
+		}
+
+		if buildingReachedCnt != len(buildings) {
+			return -1
+		}
+	}
+	if minDistPoint[0] == -1 {
+		return -1
+	}
+
+	dist := 0
+	for i := range buildings {
+		r, c := buildings[i]/cols, buildings[i]%cols
+		dist += getDist(r, c, minDistPoint[0], minDistPoint[1])
+	}
+	return dist
+}
+
+func getDist(x1, y1, x2, y2 int) int {
+	return mathext.AbsInt(x1-x2) + mathext.AbsInt(y1-y2)
+}
+
+func RemoveInvalidParentheses(s string) []string {
+	visited := map[string]bool{}
+	que := []string{s}
+	visited[s] = true
+	found := false
+	results := []string{}
+
+	var isValid = func(expr string) bool {
+		count := 0
+		for i := range expr {
+			ch := expr[i]
+			if ch != '(' && ch != ')' {
+				continue
+			} else if ch == '(' {
+				count++
+			} else if ch == ')' {
+				count--
+				if count < 0 {
+					return false
+				}
+			}
+		}
+		return count == 0
+	}
+
+	var expr string
+	for len(que) > 0 {
+		expr, que = que[0], que[1:]
+		if isValid(expr) {
+			results = append(results, expr)
+			found = true
+		}
+		if found {
+			continue
+		}
+		for i := range expr {
+			ch := expr[i]
+			if ch != '(' && ch != ')' {
+				continue
+			}
+			candidate := expr[:i] + expr[i+1:]
+			if !visited[candidate] {
+				que = append(que, candidate)
+				visited[candidate] = true
+			}
+		}
+	}
+	if len(results) == 0 {
+		results = append(results, "")
+	}
+	return results
+}
+
+func RangeSumBST(root *TreeNode, low int, high int) int {
+	sum := 0
+	stk := []*TreeNode{root}
+	var node *TreeNode
+	for len(stk) > 0 {
+		n := len(stk)
+		node, stk = stk[n-1], stk[:n-1]
+		if low <= node.Val && node.Val <= high {
+			sum += node.Val
+		}
+		if low < node.Val && node.Left != nil {
+			stk = append(stk, node.Left)
+		}
+		if node.Val < high && node.Right != nil {
+			stk = append(stk, node.Right)
+		}
+	}
+	return sum
+}
+
+func TreeToDoublyList(root *TreeNode) *TreeNode {
+	if root == nil {
+		return nil
+	} else if root.Left == nil && root.Right == nil {
+		root.Left = root
+		root.Right = root
+		return root
+	}
+
+	stk := []*TreeNode{}
+	node := root
+	var head, prev *TreeNode
+
+	for node != nil || len(stk) > 0 {
+		for node != nil {
+			stk = append(stk, node)
+			node = node.Left
+		}
+
+		n := len(stk)
+		node, stk = stk[n-1], stk[:n-1]
+		if head == nil {
+			head = node
+		}
+
+		if prev != nil {
+			prev.Right = node
+			node.Left = prev
+		}
+
+		prev = node
+		node = node.Right
+	}
+	if head != nil && prev != nil && prev != head {
+		head.Left = prev
+		prev.Right = head
+	}
+	return head
+}
 
 func PruneTree(root *TreeNode) *TreeNode {
-	if root == nil {return root}
-	if root.IsLeaf() && root.Val == 0 {return nil}
+	if root == nil {
+		return root
+	}
+	if root.IsLeaf() && root.Val == 0 {
+		return nil
+	}
 
 	var containsOne func(node *TreeNode) bool
 	containsOne = func(node *TreeNode) bool {
-		if node == nil {return false}
+		if node == nil {
+			return false
+		}
 
 		keepLeft := containsOne(node.Left)
 		keepRight := containsOne(node.Right)
 
-		if !keepLeft {node.Left = nil}
-		if !keepRight {node.Right = nil}
-		return node.Val == 1  || keepLeft || keepRight
+		if !keepLeft {
+			node.Left = nil
+		}
+		if !keepRight {
+			node.Right = nil
+		}
+		return node.Val == 1 || keepLeft || keepRight
 	}
 	hasNodes := containsOne(root)
-	if hasNodes {return root}
+	if hasNodes {
+		return root
+	}
 	return nil
 }
 
@@ -164,28 +570,34 @@ func CreateBST(jsonStr string) *BST {
 	return root
 }
 
-
 func CalcEquation(equations [][]string, values []float64, queries [][]string) []float64 {
 	eqMap := map[string]map[string]float64{}
 	for i, eq := range equations {
-		if eqMap[eq[0]] == nil {eqMap[eq[0]] = map[string]float64{}}
-		if eqMap[eq[1]] == nil {eqMap[eq[1]] = map[string]float64{}}
+		if eqMap[eq[0]] == nil {
+			eqMap[eq[0]] = map[string]float64{}
+		}
+		if eqMap[eq[1]] == nil {
+			eqMap[eq[1]] = map[string]float64{}
+		}
 		eqMap[eq[0]][eq[1]] = values[i]
-		eqMap[eq[1]][eq[0]] = 1/values[i]
+		eqMap[eq[1]][eq[0]] = 1 / values[i]
 	}
-
 
 	var dfs func(from, to string, currProduct float64, visited map[string]bool) float64
 	dfs = func(from, to string, currProduct float64, visited map[string]bool) float64 {
 		visited[from] = true
 		var retVal float64 = -1
 		if val, ok := eqMap[from][to]; ok {
-			retVal =  currProduct*val
+			retVal = currProduct * val
 		} else {
 			for neighbor, weight := range eqMap[from] {
-				if visited[neighbor] {continue}
+				if visited[neighbor] {
+					continue
+				}
 				retVal = dfs(neighbor, to, currProduct*weight, visited)
-				if retVal != -1 {break}
+				if retVal != -1 {
+					break
+				}
 			}
 		}
 		visited[from] = false
@@ -205,7 +617,6 @@ func CalcEquation(equations [][]string, values []float64, queries [][]string) []
 	}
 	return results
 }
-
 
 func (tree *BST) FindClosestValue(target int) int {
 	closest := math.MaxInt32
@@ -363,9 +774,9 @@ func cloneGraph(node *Node) *Node {
 
 		cpy := &Node{node.Val, nil}
 		nodeMap[node] = cpy
-		if len(node.Neighbors) > 0 {
-			for i := range node.Neighbors {
-				cpy.Neighbors = append(cpy.Neighbors, clone(node.Neighbors[i]))
+		if len(node.ChildNodes) > 0 {
+			for i := range node.ChildNodes {
+				cpy.ChildNodes = append(cpy.ChildNodes, clone(node.ChildNodes[i]))
 			}
 		}
 		return cpy
@@ -407,43 +818,26 @@ type AncestorTreeNode struct {
 }
 
 func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
-	stk := []*TreeNode{root}
-	levelOrder := make([]*TreeNode, 0)
-	var node *TreeNode
-	pIdx, qIdx, nIdx := -1, -1, 0
-	for len(stk) > 0 {
-		levelLen := len(stk)
-		for i := 0; i < levelLen; i++ {
-			node, stk = stk[0], stk[1:]
-			levelOrder = append(levelOrder, node)
-			if pIdx == -1 && node == p {
-				pIdx = nIdx
-			}
-			if qIdx == -1 && node == q {
-				qIdx = nIdx
-			}
-			if pIdx != -1 && qIdx != -1 {
-				break
-			}
-			if node != nil {
-				stk = append(stk, node.Left)
-				stk = append(stk, node.Right)
-			}
-			nIdx++
+	var ancestor *TreeNode
+	var traverse func(node *TreeNode) int
+	traverse = func(node *TreeNode) int {
+		if node == nil {
+			return 0
 		}
-		if pIdx != -1 && qIdx != -1 {
-			break
-		}
-	}
 
-	for pIdx != qIdx {
-		if pIdx > qIdx {
-			pIdx = (pIdx - 1) / 2
-		} else {
-			qIdx = (qIdx - 1) / 2
+		l, r := traverse(node.Left), traverse(node.Right)
+		curr := 0
+		if node == p || node == q {
+			curr = 1
 		}
+		if l+r+curr >= 2 {
+			ancestor = node
+		}
+
+		return curr
 	}
-	return levelOrder[pIdx]
+	traverse(root)
+	return ancestor
 }
 
 func getTreeNode(root *TreeNode, val int) (returnNode *TreeNode) {
@@ -548,7 +942,9 @@ func VerticalOrder(root *TreeNode) [][]int {
 }
 
 func VerticalOrder2(root *TreeNode) [][]int {
-	if root == nil {return [][]int{}}
+	if root == nil {
+		return [][]int{}
+	}
 
 	nodeMap := map[int][]int{}
 	q := []VertTreeNode{VertTreeNode{root, 0}}
@@ -581,7 +977,6 @@ func VerticalOrder2(root *TreeNode) [][]int {
 	}
 	return res
 }
-
 
 func FindKthLargestValueInBst(tree *BST, k int) int {
 	stk := []*BST{}
@@ -705,7 +1100,7 @@ func BranchSumsLarger(arr []int64) string {
 
 /*func RoadsAndLibraries(n int32, c_lib int32, c_road int32, cities [][]int32) int64 {
 	if c_road >= c_lib { return int64(c_lib*n) }
-	uf := collection.NewUnionFind(n)
+	uf := collection.NewUnionFindMap(n)
 	for _, edge := range cities {
 		uf.Union(edge[0], edge[1])
 	}
@@ -741,11 +1136,15 @@ func FindItinerary(tickets [][]string) []string {
 	var dfs func(currCity string, idx int)
 	dfs = func(currCity string, idx int) {
 		for i, toCity := range adjMap[currCity] {
-			if vis[currCity][i] {continue}
+			if vis[currCity][i] {
+				continue
+			}
 			vis[currCity][i] = true
 			res[idx] = toCity
 			dfs(toCity, idx+1)
-			if res[pathCnt] != "" {break}
+			if res[pathCnt] != "" {
+				break
+			}
 			res[idx] = ""
 			vis[currCity][i] = false
 		}
@@ -789,9 +1188,9 @@ func CanFinish(numCourses int, prerequisites [][]int) bool {
 }
 
 func NumIslands2(m int, n int, positions [][]int) []int {
-	uf := collection.NewUnionFind()
+	uf := collection.NewUnionFindMap()
 	islandsCounts := []int{}
-	directions := [][]int{{0,-1}, {0,1}, {-1,0}, {1,0}}
+	directions := [][]int{{0, -1}, {0, 1}, {-1, 0}, {1, 0}}
 	for _, pos := range positions {
 		posHash := pos[0]*n + pos[1]
 		if !uf.Insert(posHash) {
@@ -811,8 +1210,3 @@ func NumIslands2(m int, n int, positions [][]int) []int {
 	}
 	return islandsCounts
 }
-
-
-
-
-

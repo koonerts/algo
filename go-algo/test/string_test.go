@@ -2,11 +2,15 @@ package test
 
 import (
 	"github.com/google/uuid"
+	"lab.nexedi.com/kirr/go123/xfmt"
 	"go-algo/mathext"
 	"sort"
 	"strings"
 	"testing"
 )
+
+
+
 
 func BenchmarkLinearSearchString(b *testing.B) {
 	uuids := make([]string, 1_000_000)
@@ -49,14 +53,36 @@ func BenchmarkBinarySearchString(b *testing.B) {
 }
 
 func BenchmarkStringBuilder(b *testing.B) {
-	s := "abcde"
-	s2 := "sdjsdbf"
+	b.ReportAllocs()
+	bytes := []byte("data")
+	s1 := "hello"
+	s2 := "world"
+	var c byte = ' '
 	var bl strings.Builder
+	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		bl.WriteString(s)
+		bl.WriteString(s1)
+		bl.WriteByte(c)
 		bl.WriteString(s2)
+		for j := range bytes {
+			bl.WriteByte(bytes[j])
+		}
 	}
 	_ = bl.String()
+}
+
+func BenchmarkBuffer(b *testing.B) {
+	b.ReportAllocs()
+	bytes := []byte("data")
+	s1 := "hello"
+	s2 := "world"
+	var c byte = ' '
+	buf := xfmt.Buffer{}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		buf.S(s1).Cb(c).S(s2).Xb(bytes)
+	}
+	_ = buf.Bytes()
 }
 
 func BenchmarkStringByteSlice(b *testing.B) {

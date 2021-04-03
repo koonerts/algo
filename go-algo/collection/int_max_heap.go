@@ -1,5 +1,6 @@
 package collection
 
+
 type IntMaxHeap []int
 
 func (imh IntMaxHeap) Len() int           { return len(imh) }

@@ -1,5 +1,6 @@
 from functools import lru_cache
 from typing import List
+from collections import defaultdict
 
 class Solution:
     def climbStairs(self, n: int) -> int:
@@ -101,4 +102,51 @@ def number_of_options(prices_of_jeans: List[int], prices_of_shoes: List[int], pr
     return search(n, budget)
 
 
-print(number_of_options([2,3], [4], [2,3], [1,2], 10))
+def wordBreak(s: str, wordDict: List[str]) -> List[str]:
+    wordSet = set(wordDict)
+    # table to map a string to its corresponding words break
+    # {string: [['word1', 'word2'...], ['word3', 'word4', ...]]}
+    memo = defaultdict(list)
+
+    #@lru_cache(maxsize=None)    # alternative memoization solution
+    def _wordBreak_topdown(s):
+        """ return list of word lists """
+        if not s:
+            return [[]]  # list of empty list
+
+        if s in memo:
+            # returned the cached solution directly.
+            return memo[s]
+
+        for endIndex in range(1, len(s)+1):
+            word = s[:endIndex]
+            if word in wordSet:
+                # move forwards to break the postfix into words
+                for subsentence in _wordBreak_topdown(s[endIndex:]):
+                    print(word, subsentence)
+                    memo[s].append([word] + subsentence)
+        return memo[s]
+
+    # break the input string into lists of words list
+    _wordBreak_topdown(s)
+
+    print(memo)
+    # chain up the lists of words into sentences.
+    return [" ".join(words) for words in memo[s]]
+
+
+def longestArithSeqLength(A):
+    ret = 1
+    def maxSeqHelper(d):
+        memo, ans = dict(), 1
+        for num in A:
+            if num-d in memo: memo[num] = memo[num-d] + 1
+            else: memo[num] = 1
+            ans = max(ans, memo[num])
+        print(memo)
+        return ans
+
+    for d in range(-500, 501): ret = max(ret, maxSeqHelper(d))
+    return ret
+
+print(longestArithSeqLength([3,6,9,12]))

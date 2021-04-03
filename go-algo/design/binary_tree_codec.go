@@ -10,7 +10,7 @@ type Codec struct {
 	NilIndexMap map[int]bool
 }
 
-func Constructor() Codec {
+func NewCodec() Codec {
 	return Codec{}
 }
 

@@ -21,5 +21,15 @@ namespace csharp_algo
                 row.Println();
             }
         }
+
+        public static bool IsLowerAlpha(this char c)
+        {
+            return c is >= 'a' and <= 'z';
+        }
+
+        public static bool IsNumeric(this char c)
+        {
+            return c is >= '0' and <= '9';
+        }
     }
 }

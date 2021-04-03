@@ -14,6 +14,280 @@ import (
 	"time"
 )
 
+
+/*func MaximumSwap(num int) int {
+	numStr := strconv.Itoa(num)
+	numMap := map[int]int{}
+	for i := range numStr {
+		digit, _ := strconv.Atoi(string(numStr[i]))
+		numMap[i] = digit
+	}
+	for i := range numStr {
+		for d := 9; d > numMap[i]; d-- {
+			if val, ok := numMap[d]; ok && val > i {
+				numMap[i], numMap[]
+			}
+		}
+	}
+}*/
+
+
+func RestoreIpAddresses(s string) (results []string) {
+	var backtrack func(ipRanges []string, idx int)
+	backtrack = func(ipRanges []string, idx int) {
+		if len(ipRanges) == 4 {
+			if idx == len(s) {
+				results = append(results, strings.Join(ipRanges, "."))
+			}
+			return
+		}
+
+		for i := idx; i < mathext.MinInt(idx+3, len(s)); i++ {
+			if s[idx] == '0' && i > idx {
+				continue
+			}
+			num, _ := strconv.Atoi(s[idx:i+1])
+			if 0 <= num && num <= 255 {
+				fmt.Println(append(ipRanges, s[idx:i+1]))
+				backtrack(append(ipRanges, s[idx:i+1]), i+1)
+			}
+		}
+	}
+	backtrack([]string{}, 0)
+	return results
+}
+
+
+func MyPow(x float64, n int) float64 {
+	if n < 0 {
+		x = 1/float64(n)
+		n = -n
+	}
+	var ans float64 = 1
+	var curr float64 = x
+	for i := n; i > 0; i /= 2 {
+		if i % 2 == 1 {
+			ans = ans * curr
+		}
+		curr = curr*curr
+	}
+	return ans
+}
+
+func GenerateParenthesis(n int) []string {
+	if n == 0 {
+		return []string{}
+	}
+	if n == 1 {
+		return []string{"()"}
+	}
+
+	que := []ParenInfo{{
+		parenList: []byte{'('},
+		openCnt:   1,
+		closedCnt: 0,
+	}}
+
+	results := []string{}
+	var pi ParenInfo
+	for len(que) > 0 {
+		pi, que = que[0], que[1:]
+		if pi.openCnt == n {
+			if pi.closedCnt == n {
+				results = append(results, string(pi.parenList))
+			} else {
+				closed := pi
+				closed.closedCnt++
+				closed.parenList = getByteSliceCopy(pi.parenList)
+				closed.parenList = append(closed.parenList, ')')
+				que = append(que, closed)
+			}
+		} else if pi.openCnt == pi.closedCnt {
+			open := pi
+			open.openCnt++
+			open.parenList = getByteSliceCopy(pi.parenList)
+			open.parenList = append(open.parenList, '(')
+			que = append(que, open)
+		} else {
+			open := pi
+			open.openCnt++
+			open.parenList = getByteSliceCopy(pi.parenList)
+			open.parenList = append(open.parenList, '(')
+			que = append(que, open)
+
+			closed := pi
+			closed.closedCnt++
+			closed.parenList = getByteSliceCopy(pi.parenList)
+			closed.parenList = append(closed.parenList, ')')
+			que = append(que, closed)
+		}
+	}
+	return results
+}
+
+func CombinationSum(candidates []int, target int) (results [][]int) {
+	sort.Ints(candidates)
+	var backtrack func(remaining, idx int, nums []int)
+	backtrack = func(remaining, idx int, nums []int) {
+		if remaining == 0 {
+			results = append(results, getIntSliceCopy(nums))
+			return
+		} else if remaining < 0 {
+			return
+		}
+
+		for ; idx < len(candidates); idx++ {
+			nums = append(nums, candidates[idx])
+			backtrack(remaining - candidates[idx], idx, nums)
+			nums = nums[:len(nums)-1]
+		}
+	}
+	backtrack(target, 0, []int{})
+	return results
+}
+
+func getIntSliceCopy(nums []int) []int {
+	nums2 := make([]int, len(nums))
+	copy(nums2, nums)
+	return nums2
+}
+
+func getByteSliceCopy(b []byte) []byte {
+	b2 := make([]byte, len(b))
+	copy(b2, b)
+	return b2
+}
+
+type ParenInfo struct {
+	parenList          []byte
+	openCnt, closedCnt int
+}
+
+func MaxSlidingWindow(nums []int, k int) []int {
+	maxHeap := collection.IntWithIndexMaxHeap{}
+	results := []int{}
+	for i := 0; i < k; i++ {
+		maxHeap.HeapPush(collection.IntWithIndex{Idx: i, Val: nums[i]})
+	}
+	results = append(results, maxHeap[0].Val)
+
+	for i := k; i < len(nums); i++ {
+		for maxHeap.Len() > 0 && i-maxHeap[0].Idx+1 > k {
+			maxHeap.HeapPop()
+		}
+		maxHeap.HeapPush(collection.IntWithIndex{Idx: i, Val: nums[i]})
+		results = append(results, maxHeap[0].Val)
+	}
+	return results
+}
+
+func IsValidSudoku(board [][]byte) bool {
+	rows, cols, box := make([]map[byte]bool, len(board)), make([]map[byte]bool, len(board)), make([]map[byte]bool, len(board))
+	for i := range board {
+		for j := range board[i] {
+			val := board[i][j]
+			if val == '.' {
+				continue
+			}
+			boxId := (i/3)*3 + j/3
+
+			if rows[i] == nil {
+				rows[i] = map[byte]bool{}
+			}
+			if cols[j] == nil {
+				cols[j] = map[byte]bool{}
+			}
+			if box[boxId] == nil {
+				box[boxId] = map[byte]bool{}
+			}
+
+			if rows[i][val] {
+				return false
+			}
+			if cols[j][val] {
+				return false
+			}
+			if box[boxId][val] {
+				return false
+			}
+
+			rows[i][val] = true
+			cols[j][val] = true
+			box[boxId][val] = true
+		}
+	}
+	return true
+}
+
+func IsAdmissibleOverpayment(prices []float64, notes []string, x float64) bool {
+	var sum float64
+	for i, price := range prices {
+		sum += price - GetInStorePrice(price, notes[i])
+	}
+	return sum <= x
+}
+
+func GetInStorePrice(icPrice float64, note string) float64 {
+	percentIdx := strings.Index(note, "%")
+	if percentIdx == -1 {
+		return icPrice
+	}
+	isHigher := strings.Index(note, "higher") != -1
+	percentage, _ := strconv.ParseFloat(note[:percentIdx], 64)
+	percentage /= 100
+	icPrice *= 1 / percentage
+	multiplier := 1 / percentage
+	if isHigher {
+		multiplier += 1
+	} else {
+		multiplier -= 1
+	}
+	return icPrice / multiplier
+}
+
+func GetSum(a int, b int) int {
+	fmt.Printf("a: %d, %s | b: %d, %s \n", a, strconv.FormatInt(int64(a), 2), b, strconv.FormatInt(int64(b), 2))
+	for b != 0 {
+		a, b = a^b, (a&b)<<1
+		fmt.Printf("a: %d, %s | b: %d, %s \n", a, strconv.FormatInt(int64(a), 2), b, strconv.FormatInt(int64(b), 2))
+	}
+	return a
+}
+
+func GetSum2(a int, b int) int {
+	x, y := mathext.AbsInt(a), mathext.AbsInt(b)
+	if x < y {
+		return GetSum2(y, x)
+	}
+	sign := -1
+	if a > 0 {
+		sign = 1
+	}
+	if a*b >= 0 {
+		for y > 0 {
+			x, y = x^y, (x&y)<<1
+		}
+	} else {
+		for y > 0 {
+			x, y = x^y, ((^x)&y)<<1
+		}
+	}
+	return x * sign
+}
+
+func ArrayChange(arr []int) (cnt int) {
+	max := arr[0]
+	for i := 1; i < len(arr); i++ {
+		if arr[i] <= arr[i-1] {
+			max++
+			cnt += max - arr[i]
+		} else {
+			max = arr[i]
+		}
+	}
+	return cnt
+}
+
 func IntervalIntersection(aList [][]int, bList [][]int) (results [][]int) {
 	if len(aList) == 0 || len(bList) == 0 {
 		return results
@@ -69,8 +343,8 @@ func MinIncrementForUnique(A []int) int {
 		}
 	}
 	if len(stk) == 1 {
-		val, _ := strconv.Atoi(stk[0])
-		return val
+		parenList, _ := strconv.Atoi(stk[0])
+		return parenList
 	} else {
 		i = 1
 		result := 0
@@ -250,11 +524,6 @@ func AlmostIncreasingSequence(nums []int) bool {
 func maxArithmeticLength(a []int, b []int) int {
 
 	return -1
-}
-
-func RemoveInvalidParentheses(s string) (results []string) {
-
-	return results
 }
 
 func LicenseKeyFormatting(S string, K int) string {
@@ -494,30 +763,30 @@ func NumberToWords(num int) string {
 			num %= num
 		}
 	}
-	return res
+	return strings.TrimSpace(res)
 }
 
 func (info NumToStringInfo) TwoDigitToStr(num int) string {
-	if num == 0 {
-		return ""
-	} else if num < 10 {
-		return info.digitMap[num]
+	result := ""
+	if 0 < num && num < 10 {
+		result = info.digitMap[num]
 	} else if num < 20 {
-		return info.teenthsMap[num]
+		result = info.teenthsMap[num]
 	} else {
 		digitStr := ""
 		if num%10 > 0 {
 			digitStr = " " + info.digitMap[num%10]
 		}
-		return info.tenthsMap[num/10*10] + digitStr
+		result = info.tenthsMap[num/10*10] + digitStr
 	}
+	return strings.TrimSpace(result)
 }
 
 func (info NumToStringInfo) ThreeDigitToStr(num int) string {
 	if num < 100 {
 		return info.TwoDigitToStr(num)
 	}
-	return info.digitMap[num/100] + " Hundred " + info.TwoDigitToStr(num%100)
+	return strings.TrimSpace(info.digitMap[num/100] + " Hundred " + info.TwoDigitToStr(num%100))
 }
 
 func MinRemoveToMakeValid(s string) string {
@@ -1013,7 +1282,49 @@ const (
 	Left Direction = iota + 1
 	Right
 	Down
+	Up
 )
+
+type TrafficDirection int
+
+const (
+	Horizontal TrafficDirection = iota
+	Vertical
+	LeftToDown
+	RightToDown
+	TopToRight
+	TopToLeft
+)
+
+// TODO
+func CanTraverse(matrix [][]int) bool {
+	return false
+}
+
+func FindPairsSummingToK(a []int, m int, k int) int {
+	cnt := 0
+	numMap := map[int][]int{a[0]: {0}}
+
+	lo, hi := 0, 1
+	for hi < len(a) {
+		if hi-lo+1 > m {
+			numMap[a[lo]] = numMap[a[lo]][1:]
+			if len(numMap[a[lo]]) == 0 {
+				delete(numMap, a[lo])
+			}
+			lo++
+		}
+
+		if len(numMap[k-a[hi]]) > 0 {
+			for _, idx := range numMap[k-a[hi]] {
+				cnt += m / (hi - idx)
+			}
+		}
+		numMap[a[hi]] = append(numMap[a[hi]], hi)
+		hi++
+	}
+	return cnt
+}
 
 func WaterfallStreams(array [][]float64, source int) []float64 {
 	flow(array, 0, source, 100, Down)
@@ -2111,19 +2422,18 @@ func RotateMatrixNoDiagonals2(matrix [][]int) {
 	return -1
 }*/
 
-
 type BeautyMatrix struct {
-	matrix [][]int
+	matrix    [][]int
 	n, beauty int
 }
 
 func NewBeautyMatrix(n int) BeautyMatrix {
 	matrix := make([][]int, 0, n)
-	return BeautyMatrix{matrix:matrix, n:n}
+	return BeautyMatrix{matrix: matrix, n: n}
 }
 
 func BeautyOfAMatrix(matrix [][]int, k int) [][]int {
-	nk := len(matrix)/k
+	nk := len(matrix) / k
 	bmList := make([]BeautyMatrix, 0, len(matrix))
 
 	for i := 0; i < nk; i++ {
@@ -2141,7 +2451,7 @@ func BeautyOfAMatrix(matrix [][]int, k int) [][]int {
 			}
 			for i := range digits {
 				if digits[i] == 0 {
-					bm.beauty = i+1
+					bm.beauty = i + 1
 					break
 				}
 			}
@@ -2156,7 +2466,7 @@ func BeautyOfAMatrix(matrix [][]int, k int) [][]int {
 	retMatrix := make([][]int, len(matrix))
 
 	for i := range bmList {
-		idx := (i/k) * nk
+		idx := (i / k) * nk
 		for j := range bmList[i].matrix {
 			retMatrix[idx] = append(retMatrix[idx], bmList[i].matrix[j]...)
 			idx++

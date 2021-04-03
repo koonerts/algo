@@ -26,3 +26,4 @@ func IsNumeric(b byte) bool {
 func IsAlphaNumeric(b byte) bool {
 	return IsAlpha(b) || IsNumeric(b)
 }
+
