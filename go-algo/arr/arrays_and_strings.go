@@ -56,8 +56,6 @@ func LanguagesHeaders(headerStr string) []string {
 		[]string{"desc", "desc", "asc"}))
 */
 
- */
-
 
 /*func LanguagesHeaders2(headerStr string) []string {
 	t := true
