@@ -4,6 +4,8 @@ github.com/dghubble/trie v0.0.0-20201011220304-ed6d6b8add55 h1:3yKntgWb7KwnHd4nC
 github.com/dghubble/trie v0.0.0-20201011220304-ed6d6b8add55/go.mod h1:xNBeoT4V92/aNvuC3IJ2g59uxuKP4/kzvkpoHrb7v4A=
 github.com/google/uuid v1.2.0 h1:qJYtXnJRWmpe7m/3XlyhrsLrEURqHRM2kxzoxXqyUDs=
 github.com/google/uuid v1.2.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/itroot/keysort v0.1.1 h1:cqy4l6smDUNp+gNmTAMvI4+fIfulBCs0mPTGbYCXcNM=
+github.com/itroot/keysort v0.1.1/go.mod h1:VnfUw7oPiTG1Jfq2Pf2ejT8xLEz8PzbombFSV3sPPKA=
 github.com/kylelemons/godebug v1.1.0/go.mod h1:9/0rRGxNHcop5bhtWyNeEfOS8JIWk580+fNqagV/RAw=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/tidwall/gjson v1.6.8 h1:CTmXMClGYPAmln7652e69B7OLXfTi5ABcPPwjIWUv7w=

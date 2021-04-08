@@ -3,6 +3,7 @@ package arr
 import (
 	"container/heap"
 	"fmt"
+	"github.com/itroot/keysort"
 	"go-algo/collection"
 	"go-algo/ext/fmtext"
 	"go-algo/ext/mathext"
@@ -16,12 +17,106 @@ import (
 	"time"
 )
 
+
+func NextServerNumber(serverIds []int) int {
+	if len(serverIds) == 0 {return 1}
+
+	serverSet := map[int]bool{}
+	maxId := -1<<31
+	for _, sId := range serverIds {
+		serverSet[sId] = true
+		maxId = mathext.MaxInt(maxId, sId)
+	}
+	for i := 1; i <= maxId; i++ {
+		if !serverSet[i] {
+			return i
+		}
+	}
+	return maxId+1
+}
+
+
+type DbRow map[string]int
+func (r DbRow) Less(r2 DbRow, col string) bool {
+	return r[col] < r2[col]
+}
+func (r DbRow) Greater(r2 DbRow, col string) bool {
+	return !r.Less(r2, col)
+}
+func GetComparator(col, order string) func(r1, r2 DbRow) int {
+	return func(r1, r2 DbRow) int {
+		if r1[col] == r2[col] {
+			return 0
+		}
+		if (order == "asc" && r1.Less(r2, col)) || (order == "desc" && r1.Greater(r2, col)) {
+			return -1
+		}
+		return 1
+	}
+}
+
+func MinByColumnOrderComparator(table []map[string]int, col, order string) map[string]int {
+	if len(table) == 0 {
+		return nil
+	}
+
+	returnRow := table[0]
+	for i := 1; i < len(table); i++ {
+		row := table[i]
+		compareFunc := GetComparator(col, order)
+		if compareFunc(row, returnRow) == -1 {
+			returnRow = row
+		}
+	}
+	return returnRow
+}
+
+
+func MinByColumnsOrderedComparator(table []map[string]int, cols, orders []string) map[string]int {
+	if len(table) == 0 {
+		return nil
+	}
+
+	returnRow := table[0]
+	for i := 1; i < len(table); i++ {
+		row := table[i]
+		for j := range cols {
+			col, order := cols[j], orders[j]
+			comparator := GetComparator(col, order)
+			compareResult := comparator(row, returnRow)
+			if compareResult == 0 {continue}
+			if compareResult == 1 {break}
+			returnRow = row
+			break
+		}
+	}
+	return returnRow
+}
+
+
+func MinByColumnOrder(table []map[string]int, col, order string) map[string]int {
+	if len(table) == 0 {
+		return nil
+	}
+
+	returnRow := table[0]
+	for i := 1; i < len(table); i++ {
+		row := table[i]
+		if order == "asc" && DbRow(row).Less(returnRow, col) {
+			returnRow = row
+		}
+		if order == "desc" && DbRow(row).Greater(returnRow, col) {
+			returnRow = row
+		}
+	}
+	return returnRow
+}
+
+
 func MinByColumns(table []map[string]int, columns []string) map[string]int {
 	minRow := table[0]
-	for i, row := range table {
-		if i == 0 {
-			continue
-		}
+	for i := 1; i < len(table); i++ {
+		row := table[i]
 		for _, col := range columns {
 			if minRow[col] == row[col] {
 				continue
@@ -47,6 +142,18 @@ func MinByColumns2(table []map[string]int, columns []string) map[string]int {
 			}
 		}
 		return false
+	})
+	return table[0]
+}
+
+func MinByColumns3(table []map[string]int, columns []string) map[string]int {
+	keysort.Sort(table, func(i int) keysort.Sortable {
+		e := table[i]
+		keys := make([]interface{}, len(columns))
+		for j := range columns {
+			keys[j] = e[columns[j]]
+		}
+		return keysort.Sequence(keys)
 	})
 	return table[0]
 }

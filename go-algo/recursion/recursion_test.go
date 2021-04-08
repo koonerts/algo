@@ -4,8 +4,8 @@ package recursion
 import (
 	"fmt"
 	"sort"
+	"testing"
 )
-import "testing"
 
 func TestStringPermutations(t *testing.T) {
 	var tests = []struct {
