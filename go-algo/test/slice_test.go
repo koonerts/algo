@@ -2,7 +2,7 @@ package test
 
 import (
 	"errors"
-	"go-algo/slice"
+	"go-algo/ext/sliceext"
 	"reflect"
 	"testing"
 )
@@ -50,7 +50,7 @@ func BenchmarkSliceReverseSwap(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		slice.ReverseSlice(x)
+		sliceext.ReverseSlice(x)
 	}
 }
 
@@ -68,7 +68,7 @@ func BenchmarkSliceReverseIntSlice(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		slice.ReverseIntSlice(x)
+		sliceext.ReverseIntSlice(x)
 	}
 }
 
@@ -141,7 +141,7 @@ func getIntSlice(n int) []int {
 func reverseUsingInterface(data interface{}) {
 	value := reflect.ValueOf(data)
 	if value.Kind() != reflect.Slice {
-		panic(errors.New("data must be a slice type"))
+		panic(errors.New("data must be a sliceext type"))
 	}
 	valueLen := value.Len()
 	for i := 0; i <= int((valueLen-1)/2); i++ {

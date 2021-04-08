@@ -1,4 +1,4 @@
-package slice
+package sliceext
 
 import (
 	"fmt"
@@ -64,13 +64,11 @@ func ReverseIntSlice(data []int) {
 	}
 }
 
-
-
-// Is used when you really want to convert a slice of bytes to a string without incurring overhead.
-// It is only safe to use if you really know the byte slice is not going to change in the lifetime of the string.
+// Is used when you really want to convert a sliceext of bytes to a string without incurring overhead.
+// It is only safe to use if you really know the byte sliceext is not going to change in the lifetime of the string.
 type ByteSlice []byte
 func (bs ByteSlice) StringNoAlloc() string {
 	// This is copied from runtime. It relies on the string
-	// header being a prefix of the slice header!
+	// header being a prefix of the sliceext header!
 	return *(*string)(unsafe.Pointer(&bs))
 }

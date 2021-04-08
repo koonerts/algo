@@ -1,6 +1,7 @@
+from collections import defaultdict
 from functools import lru_cache
 from typing import List
-from collections import defaultdict
+
 
 class Solution:
     def climbStairs(self, n: int) -> int:
@@ -11,14 +12,15 @@ class Solution:
                 return n
             else:
                 if n not in memo:
-                    memo[n] = traverse(n-1) + traverse(n-2)
+                    memo[n] = traverse(n - 1) + traverse(n - 2)
                 return memo[n]
+
         return traverse(n)
 
     def max_profit_brute_force(self, prices: list[int]) -> int:
         max_profit = 0
         for i, price in enumerate(prices):
-            for j in range(i+1, len(prices)):
+            for j in range(i + 1, len(prices)):
                 if prices[j] - price > max_profit:
                     max_profit = prices[j] - price
         return max_profit
@@ -31,17 +33,18 @@ class Solution:
                 return 0
             else:
                 if i not in memo:
-                    robbed_result = nums[i] + traverse(i-2)
-                    skipped_result = traverse(i-1)
+                    robbed_result = nums[i] + traverse(i - 2)
+                    skipped_result = traverse(i - 1)
                     memo[i] = max(robbed_result, skipped_result)
                 return memo[i]
-        return traverse(len(nums)-1)
+
+        return traverse(len(nums) - 1)
 
     def canJump(self, nums: list[int]) -> bool:
         if len(nums) <= 1: return True
 
-        target_index = len(nums)-1
-        left_index = len(nums)-2
+        target_index = len(nums) - 1
+        left_index = len(nums) - 2
 
         while left_index >= 0:
             dist = target_index - left_index
@@ -63,7 +66,7 @@ class Solution:
         pass
 
 
-def number_of_options(prices_of_jeans: List[int], prices_of_shoes: List[int], prices_of_skirts: List[int], prices_of_tops: List[int], budget: int) -> int:
+def number_of_options(prices_of_jeans: list[int], prices_of_shoes: list[int], prices_of_skirts: list[int], prices_of_tops: list[int], budget: int) -> int:
     all_prices = [prices_of_jeans, prices_of_shoes, prices_of_skirts, prices_of_tops]
     n = len(all_prices)
     for prices in all_prices:
@@ -79,6 +82,7 @@ def number_of_options(prices_of_jeans: List[int], prices_of_shoes: List[int], pr
 
     print(ranges)
     print(combs)
+
     @lru_cache(None)
     def search(item: int, budget: int) -> int:
         prices = all_prices[item - 1]
@@ -95,10 +99,9 @@ def number_of_options(prices_of_jeans: List[int], prices_of_shoes: List[int], pr
                 # enough for all combinations
                 ways += combs[item - 1]
                 continue
-            # persistent scan optimization
-
             ways += search(item - 1, left)
         return ways
+
     return search(n, budget)
 
 
@@ -108,17 +111,16 @@ def wordBreak(s: str, wordDict: List[str]) -> List[str]:
     # {string: [['word1', 'word2'...], ['word3', 'word4', ...]]}
     memo = defaultdict(list)
 
-    #@lru_cache(maxsize=None)    # alternative memoization solution
+    # @lru_cache(maxsize=None)    # alternative memoization solution
     def _wordBreak_topdown(s):
         """ return list of word lists """
         if not s:
             return [[]]  # list of empty list
 
         if s in memo:
-            # returned the cached solution directly.
             return memo[s]
 
-        for endIndex in range(1, len(s)+1):
+        for endIndex in range(1, len(s) + 1):
             word = s[:endIndex]
             if word in wordSet:
                 # move forwards to break the postfix into words
@@ -137,11 +139,14 @@ def wordBreak(s: str, wordDict: List[str]) -> List[str]:
 
 def longestArithSeqLength(A):
     ret = 1
+
     def maxSeqHelper(d):
         memo, ans = dict(), 1
         for num in A:
-            if num-d in memo: memo[num] = memo[num-d] + 1
-            else: memo[num] = 1
+            if num - d in memo:
+                memo[num] = memo[num - d] + 1
+            else:
+                memo[num] = 1
             ans = max(ans, memo[num])
         print(memo)
         return ans
@@ -149,4 +154,29 @@ def longestArithSeqLength(A):
     for d in range(-500, 501): ret = max(ret, maxSeqHelper(d))
     return ret
 
-print(longestArithSeqLength([3,6,9,12]))
+
+from collections import deque
+
+primes = set()
+
+for a in range(2, 1000):
+
+    if all(a % p != 0 for p in primes):
+        primes.add(a)
+
+
+def split_primes(input_str: str) -> int:
+    dp = deque([1], maxlen=3)
+    for i in range(1, len(input_str) + 1):
+        lst = []
+        for n, count in zip(range(len(dp), 0, -1), dp):
+            print(f'count:{count}', f'n:{n}', f'input_str[i - n]:{input_str[i - n]}', f'int(input_str[i - n:i]):{int(input_str[i - n:i])}')
+            if input_str[i - n] != '0' and int(input_str[i - n:i]) in primes:
+                lst.append(count)
+
+        print(f'lst:{lst}')
+        dp.append(sum(lst))
+    return dp[-1]
+
+
+print(split_primes("31173"))

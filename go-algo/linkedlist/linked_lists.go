@@ -2,7 +2,7 @@ package linkedlist
 
 import (
 	"fmt"
-	"go-algo/mathext"
+	"go-algo/ext/mathext"
 )
 
 type ListNode struct {

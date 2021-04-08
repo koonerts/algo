@@ -2,8 +2,8 @@ package test
 
 import (
 	"github.com/google/uuid"
+	"go-algo/ext/mathext"
 	"lab.nexedi.com/kirr/go123/xfmt"
-	"go-algo/mathext"
 	"sort"
 	"strings"
 	"testing"

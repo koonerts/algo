@@ -4,16 +4,96 @@ import (
 	"container/heap"
 	"fmt"
 	"go-algo/collection"
-	"go-algo/mathext"
-	"go-algo/slice"
-	"go-algo/strext"
+	"go-algo/ext/fmtext"
+	"go-algo/ext/mathext"
+	"go-algo/ext/sliceext"
+	"go-algo/ext/strext"
 	"math"
+	"regexp"
 	"sort"
 	"strconv"
 	"strings"
 	"time"
 )
 
+func MinByColumns(table []map[string]int, columns []string) map[string]int {
+	minRow := table[0]
+	for i, row := range table {
+		if i == 0 {
+			continue
+		}
+		for _, col := range columns {
+			if minRow[col] == row[col] {
+				continue
+			}
+			if row[col] < minRow[col] {
+				minRow = row
+				break
+			}
+		}
+	}
+	return minRow
+}
+
+func MinByColumns2(table []map[string]int, columns []string) map[string]int {
+	sort.Slice(table, func(i, j int) bool {
+		for _, col := range columns {
+			if table[i][col] == table[j][col] {
+				continue
+			} else if table[i][col] < table[j][col] {
+				return true
+			} else {
+				return false
+			}
+		}
+		return false
+	})
+	return table[0]
+}
+
+// TODO
+// tStr := `["CHARGE:card_country=US&currency=USD&amount=250&ip_country=CA","ALLOW:amount>100ANDamount<250","BLOCK:currency=EUR"]`
+func IsTransactionAllowed(transactionStr string) (isAllowed bool) {
+	chargeRegex := regexp.MustCompile("CHARGE:([\\w+&=]+)")
+	// idx - 0:full-match, 1:everything upto next "
+	chargeList := chargeRegex.FindStringSubmatch(transactionStr)
+	chargeParamsList := strings.Split(chargeList[1], "&")
+	paramsMap := map[string]string{}
+	for _, paramStr := range chargeParamsList {
+		eqIdx := strings.Index(paramStr, "=")
+		if eqIdx > 0 {
+			paramsMap[paramStr[:eqIdx]] = paramStr[eqIdx+1:]
+		}
+	}
+
+	allowRegex := regexp.MustCompile("ALLOW:(\\w+)([<>=]+)(\\d+|\\w+)(AND|OR)?(\\w+)?([<>=]+)?(\\d+|\\w+)?")
+	// idx - 0:full-match, 1:param, 2:op, 3:val, (optional)4:AND|OR, (optional)5:param, (optional)6:op, (optional)7:val
+	allowList := allowRegex.FindStringSubmatch(transactionStr)
+
+	if len(allowList) > 0 {
+
+	}
+
+	fmtext.PrintSyn(paramsMap)
+	fmtext.PrintSyn(allowList)
+	return isAllowed
+}
+
+func evalParam(paramsMap map[string]string, param, op, val string) bool {
+	if strext.IsNumeric(val[0]) {
+		return evalParamInt(paramsMap, param, op, val)
+	}
+	return false
+}
+
+func evalParamInt(paramsMap map[string]string, param, op, val string) bool {
+	return false
+}
+
+func FindMaxLength(nums []int) (maxLen int) {
+
+	return maxLen
+}
 
 /*func MaximumSwap(num int) int {
 	numStr := strconv.Itoa(num)
@@ -31,6 +111,45 @@ import (
 	}
 }*/
 
+func FizzBuzz(n int) {
+	for i := 1; i <= n; i++ {
+		result := ""
+		if i%3 == 0 {
+			result += "Fizz"
+		}
+		if i%5 == 0 {
+			result += "Buzz"
+		}
+		if result == "" {
+			result = strconv.Itoa(i)
+		}
+		fmt.Println(result)
+	}
+}
+
+func CountPrimes(n int) int {
+	isPrime := make([]bool, n)
+	for i := 2; i < n; i++ {
+		isPrime[i] = true
+	}
+
+	for i := 2; i*i < n; i++ {
+		if !isPrime[i] {
+			continue
+		}
+		for j := i * i; j < n; j += i {
+			isPrime[j] = false
+		}
+	}
+
+	cnt := 0
+	for i := 2; i < n; i++ {
+		if isPrime[i] {
+			cnt++
+		}
+	}
+	return cnt
+}
 
 func RestoreIpAddresses(s string) (results []string) {
 	var backtrack func(ipRanges []string, idx int)
@@ -46,7 +165,7 @@ func RestoreIpAddresses(s string) (results []string) {
 			if s[idx] == '0' && i > idx {
 				continue
 			}
-			num, _ := strconv.Atoi(s[idx:i+1])
+			num, _ := strconv.Atoi(s[idx : i+1])
 			if 0 <= num && num <= 255 {
 				fmt.Println(append(ipRanges, s[idx:i+1]))
 				backtrack(append(ipRanges, s[idx:i+1]), i+1)
@@ -57,19 +176,18 @@ func RestoreIpAddresses(s string) (results []string) {
 	return results
 }
 
-
 func MyPow(x float64, n int) float64 {
 	if n < 0 {
-		x = 1/float64(n)
+		x = 1 / float64(n)
 		n = -n
 	}
 	var ans float64 = 1
 	var curr float64 = x
 	for i := n; i > 0; i /= 2 {
-		if i % 2 == 1 {
+		if i%2 == 1 {
 			ans = ans * curr
 		}
-		curr = curr*curr
+		curr = curr * curr
 	}
 	return ans
 }
@@ -138,7 +256,7 @@ func CombinationSum(candidates []int, target int) (results [][]int) {
 
 		for ; idx < len(candidates); idx++ {
 			nums = append(nums, candidates[idx])
-			backtrack(remaining - candidates[idx], idx, nums)
+			backtrack(remaining-candidates[idx], idx, nums)
 			nums = nums[:len(nums)-1]
 		}
 	}
@@ -472,7 +590,7 @@ func IsNumber(str string) bool {
 				return false
 			}
 		} else {
-			if !isNumerical(str[i]) {
+			if !strext.IsNumeric(str[i]) {
 				return false
 			}
 		}
@@ -481,8 +599,8 @@ func IsNumber(str string) bool {
 }
 
 func validateE(str string, idx int) bool {
-	prevIsNumerical := idx > 0 && isNumerical(str[idx-1])
-	nextIsNumerical := idx < len(str)-1 && isNumerical(str[idx+1])
+	prevIsNumerical := idx > 0 && strext.IsNumeric(str[idx-1])
+	nextIsNumerical := idx < len(str)-1 && strext.IsNumeric(str[idx+1])
 	if !prevIsNumerical && idx > 0 && str[idx-1] == '.' {
 		prevIsNumerical = validateDecimal(str, idx-1)
 	}
@@ -493,13 +611,9 @@ func validateE(str string, idx int) bool {
 }
 
 func validateDecimal(str string, idx int) bool {
-	prevIsNumerical := idx > 0 && isNumerical(str[idx-1])
-	nextIsNumerical := idx < len(str)-1 && isNumerical(str[idx+1])
+	prevIsNumerical := idx > 0 && strext.IsNumeric(str[idx-1])
+	nextIsNumerical := idx < len(str)-1 && strext.IsNumeric(str[idx+1])
 	return prevIsNumerical || nextIsNumerical
-}
-
-func isNumerical(b byte) bool {
-	return b >= '0' && b <= '9'
 }
 
 func AlmostIncreasingSequence(nums []int) bool {
@@ -2361,7 +2475,7 @@ func RotateMatrixNoDiagonals(matrix [][]int) {
 		x2++
 		y2--
 	}
-	slice.PrintSlice(matrix)
+	sliceext.PrintSlice(matrix)
 	RotateMatrix2(matrix)
 
 	x1, y1, x2, y2 = 0, 0, 0, len(matrix)-1
@@ -2374,7 +2488,7 @@ func RotateMatrixNoDiagonals(matrix [][]int) {
 		y2--
 	}
 	fmt.Println()
-	slice.PrintSlice(matrix)
+	sliceext.PrintSlice(matrix)
 }
 
 func RotateMatrixNoDiagonals2(matrix [][]int) {

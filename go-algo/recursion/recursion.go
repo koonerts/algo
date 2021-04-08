@@ -1,6 +1,6 @@
 package recursion
 
-import "go-algo/mathext"
+import "go-algo/ext/mathext"
 
 func letterCombinations(digits string) (results []string) {
 	if digits == "" {

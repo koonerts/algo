@@ -2,23 +2,20 @@ package main
 
 import (
 	"fmt"
+	"go-algo/arr"
 )
 
 func main() {
-	var x []int
-	x = append(x, 1)
-	fmt.Println(x)
-}
-
-
-func printLine(i ...interface{}) {
-	fmt.Println(i...)
-}
-
-func printSyntax(i ...interface{}) {
-	fmt.Printf("%#v\n", i...)
-}
-
-func describe(i interface{}) {
-	fmt.Printf("(%v, %T)\n", i, i)
+	fmt.Println(arr.MinByColumns([]map[string]int{{"a": 1, "b": 2, "c": 3}, {"a": 10}}, []string{"a"}))
+	fmt.Println(arr.MinByColumns([]map[string]int{{"a": 1, "b": 2, "c": 3}, {"a": 10}}, []string{"b"}))
+	fmt.Println(arr.MinByColumns([]map[string]int{
+		{"x": 1, "y": 2, "z": 3},
+		{"x": 1, "y": 2, "z": 2},
+		{"x": 1, "y": 2, "z": 4}},
+		[]string{"x", "y", "z"}))
+	fmt.Println(arr.MinByColumns2([]map[string]int{
+		{"x": 1, "y": 2, "z": 3},
+		{"x": 1, "y": 2, "z": 2},
+		{"x": 1, "y": 2, "z": 4}},
+		[]string{"x", "y", "z"}))
 }

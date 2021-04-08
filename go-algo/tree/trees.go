@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"go-algo/collection"
-	"go-algo/mathext"
-	"go-algo/slice"
+	"go-algo/ext/mathext"
+	"go-algo/ext/sliceext"
 	"math"
 	"sort"
 	"sync"
@@ -1029,7 +1029,7 @@ func zigzagLevelOrder(root *TreeNode) [][]int {
 			}
 		}
 		if zdir == RightToLeft {
-			slice.ReverseIntSlice(levelResults)
+			sliceext.ReverseIntSlice(levelResults)
 		}
 		results = append(results, levelResults)
 		zdir *= -1

@@ -2,8 +2,8 @@ package dp
 
 import (
 	"fmt"
-	"go-algo/mathext"
-	"go-algo/slice"
+	"go-algo/ext/mathext"
+	"go-algo/ext/sliceext"
 	"math"
 	"sort"
 	"strconv"
@@ -14,17 +14,21 @@ func FindTargetSumWays(nums []int, S int) int {
 	for _, num := range nums {
 		sum += num
 	}
-	if S > sum || S < -sum {return 0}
+	if S > sum || S < -sum {
+		return 0
+	}
 
 	dp := make([][]int, len(nums))
 	for i := range dp {
-		dp[i] = make([]int, sum*2 + 1)
+		dp[i] = make([]int, sum*2+1)
 	}
 	dp[0][nums[0]+sum] += 1
 	dp[0][-nums[0]+sum] += 1
 
 	for i := range dp {
-		if i == 0 {continue}
+		if i == 0 {
+			continue
+		}
 		for j := -sum; j <= sum; j++ {
 			if dp[i-1][j+sum] != 0 {
 				n := nums[i]
@@ -33,7 +37,7 @@ func FindTargetSumWays(nums []int, S int) int {
 			}
 		}
 	}
-	slice.PrintSlice(dp)
+	sliceext.PrintSlice(dp)
 	return dp[len(nums)-1][S+sum]
 }
 
@@ -167,7 +171,7 @@ func CanPartitionEqualSubsets(nums []int) bool {
 			}
 		}
 	}
-	slice.PrintSlice(dp)
+	sliceext.PrintSlice(dp)
 	fmt.Println()
 
 	for i := 1; i < rows; i++ {
@@ -183,7 +187,7 @@ func CanPartitionEqualSubsets(nums []int) bool {
 			}
 		}
 	}
-	slice.PrintSlice(dp)
+	sliceext.PrintSlice(dp)
 	return dp[rows-1][cols-1]
 }
 
@@ -198,7 +202,7 @@ func CanPartitionTargetSubsets(nums []int, target int) bool {
 			}
 		}
 	}
-	slice.PrintSlice(dp)
+	sliceext.PrintSlice(dp)
 	return dp[target]
 }
 
@@ -224,7 +228,7 @@ func MinimumSubsetDiffPartition(nums []int) int {
 			}
 		}
 	}
-	slice.PrintSlice(dp)
+	sliceext.PrintSlice(dp)
 
 	var canPartitionNum int
 	for i := len(dp) - 1; i >= 0; i-- {
@@ -253,7 +257,7 @@ func CountSubsets(nums []int, target int) int {
 			}
 		}
 	}
-	slice.PrintSlice(dp)
+	sliceext.PrintSlice(dp)
 	return dp[target]
 }
 
@@ -278,7 +282,7 @@ func KnapsackUnlimited(weights []int, profits []int, capacity int) int {
 			maxProfits[i][j] = mathext.MaxInt(profitWith, profitWithout)
 		}
 	}
-	slice.PrintSlice(maxProfits)
+	sliceext.PrintSlice(maxProfits)
 
 	maxProfit := maxProfits[rows-1][cols-1]
 	return maxProfit
@@ -342,6 +346,22 @@ func CoinChangeUnlimited(denoms []int, total int) int {
 	return ways[total]
 }
 
+func MinCoinChangeUnlimited(denoms []int, total int) int {
+	if total == 0 {
+		return 1
+	}
+	ways := make([]int, total+1)
+	ways[0] = 1
+
+	sort.Ints(denoms)
+	for _, denom := range denoms {
+		for currAmt := denom; currAmt <= total; currAmt++ {
+			ways[currAmt] += ways[currAmt-denom]
+		}
+	}
+	return ways[total]
+}
+
 type CakeInfo struct {
 	weight, profit int
 	profitPerLb    float64
@@ -364,7 +384,7 @@ func CakeThiefUnlimited(weightToProfits [][]int, cap int) (maxProfit int) {
 			dp[i][j] = mathext.MaxInt(profitWith, profitWithout)
 		}
 	}
-	slice.PrintSlice(dp)
+	sliceext.PrintSlice(dp)
 	return dp[r][c]
 }
 
@@ -388,30 +408,29 @@ func CakeThiefUnlimitedOpt(weightToProfits [][]int, cap int) (maxProfit int) {
 }
 
 func MinCoinChainUnlimited(denoms []int, total int) int {
+	MaxInt32 := 1<<31-1
 	ways := make([]int, total+1)
 	for i := range ways {
-		if i == 0 {
-			ways[i] = 0
-		} else {
-			ways[i] = math.MaxInt32
-		}
+		ways[i] = MaxInt32
 	}
+	ways[0] = 0
 
 	for i := range denoms {
 		for j := 1; j <= total; j++ {
 			if j >= denoms[i] {
-				without, with := ways[j], math.MaxInt32
-				if ways[j-denoms[i]] != math.MaxInt32 {
+				without, with := ways[j], MaxInt32
+				if ways[j-denoms[i]] != MaxInt32 {
 					with = ways[j-denoms[i]] + 1
 				}
 
-				if mathext.MinInt(without, with) != math.MaxInt32 {
-					ways[j] = mathext.MinInt(without, with)
-				}
+				ways[j] = mathext.MinInt(without, with)
 			}
 		}
 	}
-	slice.PrintSlice(ways)
+
+	if ways[total] == MaxInt32 {
+		return -1
+	}
 	return ways[total]
 }
 
@@ -439,7 +458,7 @@ func MaxRibbonCut(lengths []int, n int) int {
 		}
 	}
 
-	slice.PrintSlice(cuts)
+	sliceext.PrintSlice(cuts)
 	return cuts[n]
 }
 
@@ -503,7 +522,7 @@ func MaxStealProfit(profits []int) int {
 	for i := 2; i < len(dp); i++ {
 		dp[i] = mathext.MaxInt(dp[i-1], profits[i-1]+dp[i-2])
 	}
-	slice.PrintSlice(dp)
+	sliceext.PrintSlice(dp)
 	return dp[len(profits)]
 }
 
@@ -525,7 +544,7 @@ func LongestPalindromicSubsequenceTabulated(text string) (maxLen int) {
 			}
 		}
 	}
-	slice.PrintSlice(dp)
+	sliceext.PrintSlice(dp)
 	return dp[1][len(text)]
 }
 
@@ -606,7 +625,7 @@ func LongestPalindromicSubstring(text string) (int, string) {
 			}
 		}
 	}
-	slice.PrintSlice(dp)
+	sliceext.PrintSlice(dp)
 	return maxSsLen, maxSs
 }
 
@@ -632,7 +651,7 @@ func PalindromicSubstringCount(text string) int {
 			}
 		}
 	}
-	slice.PrintSlice(dp)
+	sliceext.PrintSlice(dp)
 	return cnt
 }
 
@@ -751,14 +770,18 @@ func MaxSumIncreasingSubsequence(array []int) (maxSum int, nums []int) {
 		nums = append(nums, array[maxIdx])
 		maxIdx = indexes[maxIdx]
 	}
-	slice.ReverseSlice(nums)
+	sliceext.ReverseSlice(nums)
 
 	return
 }
 
 func DecodeWays(s string) (ways int) {
-	if s[0] == '0' {return 0}
-	if len(s) == 1 {return 1}
+	if s[0] == '0' {
+		return 0
+	}
+	if len(s) == 1 {
+		return 1
+	}
 
 	dp := make([]int, len(s)+1)
 	dp[0] = 1
@@ -768,7 +791,7 @@ func DecodeWays(s string) (ways int) {
 		if s[i-1] != '0' {
 			dp[i] = dp[i-1]
 		}
-		twoDig, _ := strconv.Atoi(s[i-2:i])
+		twoDig, _ := strconv.Atoi(s[i-2 : i])
 		if twoDig >= 10 && twoDig <= 26 {
 			dp[i] += dp[i-2]
 		}
@@ -1037,7 +1060,7 @@ func MinMatrixMultiplications(dims []int) (minCnt int) {
 			}
 		}
 	}
-	slice.PrintSlice(dp)
+	sliceext.PrintSlice(dp)
 	return
 }
 
@@ -1106,4 +1129,50 @@ func LongestIncreasingSubsequence(nums []int) (maxLen int) {
 		}
 	}
 	return maxLen
+}
+
+// TODO: Come back to
+func NumberOfCombinationsLessThanOrEqualToLimit(p1, p2, p3, p4 []int, limit int) (cnt int) {
+	allPrices := [][]int{p1, p2, p3, p4}
+	for i := range allPrices {
+		sort.Ints(allPrices[i])
+	}
+
+	return cnt
+}
+
+
+func FindAllConcatenatedWordsInADict(words []string) []string {
+	sort.Slice(words, func(i, j int) bool {
+		return len(words[i]) < len(words[j])
+	})
+	result := make([]string, 0)
+	usedWords := make(map[string]struct{})
+	for i := 0; i < len(words); i++ {
+		if canForm(words[i], usedWords) {
+			result = append(result, words[i])
+		}
+		usedWords[words[i]] = struct{}{}
+	}
+	return result
+}
+
+func canForm(s string, words map[string]struct{}) bool {
+	if len(words) == 0 {
+		return false
+	}
+	dp := make([]bool, len(s)+1)
+	dp[0] = true
+	for i := 1; i <= len(s); i++ {
+		for j := i - 1; j >= 0; j-- {
+			if !dp[j] {
+				continue
+			}
+			if _, ok := words[s[j:i]]; ok {
+				dp[i] = true
+				break
+			}
+		}
+	}
+	return dp[len(s)]
 }
