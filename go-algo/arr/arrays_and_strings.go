@@ -17,6 +17,64 @@ import (
 	"time"
 )
 
+func LanguagesHeaders(headerStr string) []string {
+	t := true
+	headersMap := map[string]bool{"en-US":t, "en-CA":t, "en-GB":t}
+	reqHeaders := strings.Split(headerStr, ",")
+	retHeaders := make([]string, 0, len(reqHeaders))
+	for _, reqHead := range reqHeaders {
+		if headersMap[reqHead] {
+			retHeaders = append(retHeaders, reqHead)
+		}
+	}
+	return retHeaders
+}
+
+/*
+	fmt.Println(arr.MinByColumnOrder([]map[string]int{{"a": 1, "b": 2, "c": 3}, {"a": 10}}, "a", "asc"))
+	fmt.Println(arr.MinByColumnOrder([]map[string]int{{"a": 1, "b": 2, "c": 3}, {"a": 10}}, "a", "desc"))
+	fmt.Println(arr.MinByColumnOrder([]map[string]int{{"a": 1, "b": 2, "c": 3}, {"a": 10}}, "b", "asc"))
+	fmt.Println(arr.MinByColumnOrder([]map[string]int{{"a": 1, "b": 2, "c": 3}, {"a": 10}}, "b", "desc"))
+	fmt.Println()
+	fmt.Println(arr.MinByColumnOrderComparator([]map[string]int{{"a": 1, "b": 2, "c": 3}, {"a": 10}}, "a", "asc"))
+	fmt.Println(arr.MinByColumnOrderComparator([]map[string]int{{"a": 1, "b": 2, "c": 3}, {"a": 10}}, "a", "desc"))
+	fmt.Println(arr.MinByColumnOrderComparator([]map[string]int{{"a": 1, "b": 2, "c": 3}, {"a": 10}}, "b", "asc"))
+	fmt.Println(arr.MinByColumnOrderComparator([]map[string]int{{"a": 1, "b": 2, "c": 3}, {"a": 10}}, "b", "desc"))
+
+	fmt.Println(arr.MinByColumnsOrderedComparator([]map[string]int{
+		{"x": 1, "y": 2, "z": 3},
+		{"x": 1, "y": 2, "z": 2},
+		{"x": 1, "y": 2, "z": 4}},
+		[]string{"x", "y", "z"},
+		[]string{"asc", "asc", "desc"}))
+
+	fmt.Println(arr.MinByColumnsOrderedComparator([]map[string]int{
+		{"x": 1, "y": 2, "z": 3},
+		{"x": 1, "y": 2, "z": 2},
+		{"x": 1, "y": 2, "z": 4}},
+		[]string{"x", "y", "z"},
+		[]string{"desc", "desc", "asc"}))
+*/
+
+ */
+
+
+/*func LanguagesHeaders2(headerStr string) []string {
+	t := true
+	headersMap := map[string]bool{"en-US":t, "en-CA":t, "en-GB":t}
+	reqHeaders := strings.Split(headerStr, ",")
+	retHeaders := make([]string, 0, len(reqHeaders))
+	for _, reqHead := range reqHeaders {
+		if headersMap[reqHead] {
+			retHeaders = append(retHeaders, reqHead)
+		} else {
+			for header := range headersMap {
+				if strings.Index(header, )
+			}
+		}
+	}
+	return retHeaders
+}*/
 
 func NextServerNumber(serverIds []int) int {
 	if len(serverIds) == 0 {return 1}
