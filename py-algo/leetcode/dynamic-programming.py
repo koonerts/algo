@@ -66,45 +66,6 @@ class Solution:
         pass
 
 
-def number_of_options(prices_of_jeans: list[int], prices_of_shoes: list[int], prices_of_skirts: list[int], prices_of_tops: list[int], budget: int) -> int:
-    all_prices = [prices_of_jeans, prices_of_shoes, prices_of_skirts, prices_of_tops]
-    n = len(all_prices)
-    for prices in all_prices:
-        prices.sort()
-    # cost of (lowest, highest) combination
-    ranges = [(0, 0)]
-    # number of all combinations, ignoring budget
-    combs = [1]
-    for prices in all_prices:
-        low, high = ranges[-1]
-        ranges.append((prices[0] + low, prices[-1] + high))
-        combs.append(len(prices) * combs[-1])
-
-    print(ranges)
-    print(combs)
-
-    @lru_cache(None)
-    def search(item: int, budget: int) -> int:
-        prices = all_prices[item - 1]
-        low, high = ranges[item - 1]
-        ways = 0
-        for price in prices:
-            left = budget - price
-            # extreme case optimization
-            if left < low:
-                # not enough for cheapest combination, so 0 options;
-                # same for higher `price`, so break
-                break
-            if left >= high:
-                # enough for all combinations
-                ways += combs[item - 1]
-                continue
-            ways += search(item - 1, left)
-        return ways
-
-    return search(n, budget)
-
-
 def wordBreak(s: str, wordDict: List[str]) -> List[str]:
     wordSet = set(wordDict)
     # table to map a string to its corresponding words break
@@ -177,6 +138,36 @@ def split_primes(input_str: str) -> int:
         print(f'lst:{lst}')
         dp.append(sum(lst))
     return dp[-1]
+
+
+def number_of_options(a, b, c, d, target):
+    sources = [a, b, c, d]
+
+    @lru_cache(None)
+    def dfs(count, i):
+        if count > target: return 0
+
+        if i == 4:
+            return 1
+
+        return sum([dfs(count + sources[i][j], i + 1) for j in range(len(sources[i]))])
+
+    return dfs(0, 0)
+
+
+def number_of_options2(a, b, c, d, target):
+    sources = [a, b, c, d]
+    dp = [[0] * (target + 1) for _ in range(5)]
+    dp[4][0] = 1
+
+    for i in range(3, -1, -1):
+        for j in range(target + 1)[::-1]:
+            if dp[i + 1][j]:
+                for v in sources[i]:
+                    if j + v <= target:
+                        dp[i][v + j] += dp[i + 1][j]
+
+    return sum(dp[0])
 
 
 print(split_primes("31173"))

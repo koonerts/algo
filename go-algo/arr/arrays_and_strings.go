@@ -7,7 +7,6 @@ import (
 	"go-algo/collection"
 	"go-algo/ext/fmtext"
 	"go-algo/ext/mathext"
-	"go-algo/ext/sliceext"
 	"go-algo/ext/strext"
 	"math"
 	"regexp"
@@ -17,62 +16,147 @@ import (
 	"time"
 )
 
-func LanguagesHeaders(headerStr string) []string {
-	t := true
-	headersMap := map[string]bool{"en-US":t, "en-CA":t, "en-GB":t}
-	reqHeaders := strings.Split(headerStr, ",")
-	retHeaders := make([]string, 0, len(reqHeaders))
-	for _, reqHead := range reqHeaders {
-		if headersMap[reqHead] {
-			retHeaders = append(retHeaders, reqHead)
+
+func ShortestDistToStore(houses, stores []int) (closestStores []int) {
+	sort.Ints(stores)
+	n := len(stores)
+	houseToStore := map[int]int{}
+
+	var binarySearchClosest func(house int) (closestStore int)
+	binarySearchClosest = func(house int) (closestStore int) {
+		closest := stores[0]
+		lo, hi := 0, n-1
+		for lo <= hi {
+			mid := (lo+hi)/2
+			store := stores[mid]
+			if store == house {
+				closest = store
+				break
+			} else if store < house {
+				lo = mid+1
+			} else {
+				hi = mid-1
+			}
+
+			if store == closest && store < closest {
+				closest = store
+			} else if mathext.AbsInt(store-house) < mathext.AbsInt(closest-house) {
+				closest = store
+			}
+		}
+		return closest
+	}
+
+
+	for _, house := range houses {
+		if store, ok := houseToStore[house]; ok {
+			closestStores = append(closestStores, store)
+		} else {
+			closestStore := binarySearchClosest(house)
+			houseToStore[house] = closestStore
+			closestStores = append(closestStores, closestStore)
 		}
 	}
-	return retHeaders
+
+	return closestStores
 }
 
-/*
-	fmt.Println(arr.MinByColumnOrder([]map[string]int{{"a": 1, "b": 2, "c": 3}, {"a": 10}}, "a", "asc"))
-	fmt.Println(arr.MinByColumnOrder([]map[string]int{{"a": 1, "b": 2, "c": 3}, {"a": 10}}, "a", "desc"))
-	fmt.Println(arr.MinByColumnOrder([]map[string]int{{"a": 1, "b": 2, "c": 3}, {"a": 10}}, "b", "asc"))
-	fmt.Println(arr.MinByColumnOrder([]map[string]int{{"a": 1, "b": 2, "c": 3}, {"a": 10}}, "b", "desc"))
-	fmt.Println()
-	fmt.Println(arr.MinByColumnOrderComparator([]map[string]int{{"a": 1, "b": 2, "c": 3}, {"a": 10}}, "a", "asc"))
-	fmt.Println(arr.MinByColumnOrderComparator([]map[string]int{{"a": 1, "b": 2, "c": 3}, {"a": 10}}, "a", "desc"))
-	fmt.Println(arr.MinByColumnOrderComparator([]map[string]int{{"a": 1, "b": 2, "c": 3}, {"a": 10}}, "b", "asc"))
-	fmt.Println(arr.MinByColumnOrderComparator([]map[string]int{{"a": 1, "b": 2, "c": 3}, {"a": 10}}, "b", "desc"))
 
-	fmt.Println(arr.MinByColumnsOrderedComparator([]map[string]int{
-		{"x": 1, "y": 2, "z": 3},
-		{"x": 1, "y": 2, "z": 2},
-		{"x": 1, "y": 2, "z": 4}},
-		[]string{"x", "y", "z"},
-		[]string{"asc", "asc", "desc"}))
+func TotalFruit(trees []int) int {
+	if len(trees) == 0 {
+		return 0
+	}
 
-	fmt.Println(arr.MinByColumnsOrderedComparator([]map[string]int{
-		{"x": 1, "y": 2, "z": 3},
-		{"x": 1, "y": 2, "z": 2},
-		{"x": 1, "y": 2, "z": 4}},
-		[]string{"x", "y", "z"},
-		[]string{"desc", "desc", "asc"}))
-*/
+	treeIdxs := map[int]int{}
+	maxFruit := -1<<31
+	lo := 0
+	for hi, tree := range trees {
+		if _, ok := treeIdxs[tree]; !ok && len(treeIdxs) == 2 {
+			removedTree := -1
+			for rt := range treeIdxs {
+				if rt != trees[hi-1] {
+					removedTree = rt
+					break
+				}
+			}
+			lo = treeIdxs[removedTree] + 1
+			delete(treeIdxs, removedTree)
+		}
+
+		treeIdxs[tree] = hi
+		maxFruit = mathext.MaxInt(maxFruit, hi-lo+1)
+	}
+	return maxFruit
+}
 
 
-/*func LanguagesHeaders2(headerStr string) []string {
-	t := true
-	headersMap := map[string]bool{"en-US":t, "en-CA":t, "en-GB":t}
-	reqHeaders := strings.Split(headerStr, ",")
-	retHeaders := make([]string, 0, len(reqHeaders))
-	for _, reqHead := range reqHeaders {
-		if headersMap[reqHead] {
-			retHeaders = append(retHeaders, reqHead)
-		} else {
-			for header := range headersMap {
-				if strings.Index(header, )
+func NumUniqueEmails(emails []string) (cnt int) {
+	domainToLocal := map[string]map[string]struct{}{}
+	for i := range emails {
+		emailParts := strings.Split(emails[i], "@")
+		plusIdx := strings.Index(emailParts[0], "+")
+		if plusIdx == 0 {
+			continue
+		} else if plusIdx > 0 {
+			emailParts[0] = emailParts[0][:plusIdx]
+		}
+		emailParts[0] = strings.ReplaceAll(emailParts[0], ".", "")
+		if domainToLocal[emailParts[1]] == nil {
+			domainToLocal[emailParts[1]] = map[string]struct{}{}
+		}
+		domainToLocal[emailParts[1]][emailParts[0]] = struct{}{}
+	}
+	for domain := range domainToLocal {
+		cnt += len(domainToLocal[domain])
+	}
+	return cnt
+}
+
+func ParseAcceptLanguage(reqHeaders string, acceptedHeaders []string) []string {
+	reqHeaders = strings.ReplaceAll(reqHeaders, " ", "")
+	reqHeadList := strings.Split(reqHeaders, ",")
+
+	langToAcceptHeaderMap := map[string][]string{}
+	acceptHeaderSet := map[string]bool{}
+	for _, ah := range acceptedHeaders {
+		ahGroup := strings.Split(ah, "-")
+		langToAcceptHeaderMap[ahGroup[0]] = append(langToAcceptHeaderMap[ahGroup[0]], ah)
+		acceptHeaderSet[ah] = true
+	}
+
+	retSet := map[string]bool{}
+	for _, rh := range reqHeadList {
+		if acceptHeaderSet[rh] {
+			retSet[rh] = true
+		} else if len(langToAcceptHeaderMap[rh]) > 0 {
+			for _, ah := range langToAcceptHeaderMap[rh] {
+				retSet[ah] = true
+			}
+		} else if strings.Index(rh, "*") >= 0 {
+			rhPattern := strings.ReplaceAll(rh, "*", ".*")
+			n := len(rhPattern)
+			if rhPattern[0] != '.' {rhPattern = "^" + rhPattern}
+			if rhPattern[n-1] != '*' {rhPattern += "$"}
+
+			for _, ah := range acceptedHeaders {
+				if !retSet[ah] {
+					isMatch, _ := regexp.MatchString(rhPattern, ah)
+					if isMatch {
+						retSet[ah] = true
+					}
+				}
 			}
 		}
 	}
-	return retHeaders
-}*/
+
+	retList := make([]string, 0, len(retSet))
+	for _, ah := range acceptedHeaders {
+		if retSet[ah] {
+			retList = append(retList, ah)
+		}
+	}
+	return retList
+}
 
 func NextServerNumber(serverIds []int) int {
 	if len(serverIds) == 0 {return 1}
@@ -628,19 +712,19 @@ func MinIncrementForUnique(A []int) int {
 		return parenList
 	} else {
 		i = 1
-		result := 0
+		expectedResult := 0
 		for i < len(stk) {
 			num1, _ := strconv.Atoi(stk[i-1])
 			num2, _ := strconv.Atoi(stk[i+1])
 			if stk[i] == "+" {
-				result += num1 + num2
+				expectedResult += num1 + num2
 			}
 			if stk[i] == "-" {
-				result += num1 - num2
+				expectedResult += num1 - num2
 			}
 			i += 2
 		}
-		return result
+		return expectedResult
 	}
 }*/
 
@@ -804,28 +888,21 @@ func maxArithmeticLength(a []int, b []int) int {
 }
 
 func LicenseKeyFormatting(S string, K int) string {
-	sb := strings.Builder{}
-	sb.Grow(len(S))
-	S = strings.ToUpper(S)
-	S = strings.Replace(S, "-", "", -1)
-
-	cnt := 0
-	for i := len(S) - 1; i >= 0; {
-		if cnt > 0 && cnt%K == 0 {
-			sb.WriteByte('-')
-			cnt = 0
-		} else {
-			sb.WriteByte(S[i])
-			i--
-			cnt++
+	b := make([]byte, 0, len(S))
+	S = strings.ToUpper(strings.ReplaceAll(S, "-", ""))
+	dashCnt := 0
+	for i := len(S)-1; i >= 0; i-- {
+		if dashCnt == K {
+			b = append(b, '-')
+			dashCnt = 0
 		}
+		b = append(b, S[i])
+		dashCnt++
 	}
-	S = sb.String()
-	bytes := make([]byte, 0, len(S))
-	for i := len(S) - 1; i >= 0; i-- {
-		bytes = append(bytes, S[i])
+	for i, j := 0, len(b)-1; i < j; i, j = i+1, j-1 {
+		b[i], b[j] = b[j], b[i]
 	}
-	return string(bytes)
+	return string(b)
 }
 
 func WordPattern(pattern string, s string) bool {
@@ -2638,7 +2715,7 @@ func RotateMatrixNoDiagonals(matrix [][]int) {
 		x2++
 		y2--
 	}
-	sliceext.PrintSlice(matrix)
+	fmtext.PrintSlice(matrix)
 	RotateMatrix2(matrix)
 
 	x1, y1, x2, y2 = 0, 0, 0, len(matrix)-1
@@ -2651,7 +2728,7 @@ func RotateMatrixNoDiagonals(matrix [][]int) {
 		y2--
 	}
 	fmt.Println()
-	sliceext.PrintSlice(matrix)
+	fmtext.PrintSlice(matrix)
 }
 
 func RotateMatrixNoDiagonals2(matrix [][]int) {

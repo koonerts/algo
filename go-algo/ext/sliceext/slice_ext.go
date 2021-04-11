@@ -1,45 +1,9 @@
 package sliceext
 
 import (
-	"fmt"
 	"reflect"
 	"unsafe"
 )
-
-func PrintSlice(iSlice interface{}) {
-	switch slice := iSlice.(type) {
-	case [][]bool:
-		for _, value := range slice {
-			fmt.Println(value)
-		}
-	case [][]string:
-		for _, value := range slice {
-			fmt.Println(value)
-		}
-	case [][]int:
-		for _, value := range slice {
-			fmt.Println(value)
-		}
-	case [][]float64:
-		for _, value := range slice {
-			fmt.Println(value)
-		}
-	case [][]byte:
-		for _, value := range slice {
-			fmt.Println(value)
-		}
-	case []bool:
-		fmt.Println(slice)
-	case []string:
-		fmt.Println(slice)
-	case []int:
-		fmt.Println(slice)
-	case []float64:
-		fmt.Println(slice)
-	case []byte:
-		fmt.Println(slice)
-	}
-}
 
 func ContainsString(s []string, val string) bool {
 	for i := range s {

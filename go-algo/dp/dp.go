@@ -2,6 +2,7 @@ package dp
 
 import (
 	"fmt"
+	"go-algo/ext/fmtext"
 	"go-algo/ext/mathext"
 	"go-algo/ext/sliceext"
 	"math"
@@ -37,7 +38,7 @@ func FindTargetSumWays(nums []int, S int) int {
 			}
 		}
 	}
-	sliceext.PrintSlice(dp)
+	fmtext.PrintSlice(dp)
 	return dp[len(nums)-1][S+sum]
 }
 
@@ -171,7 +172,7 @@ func CanPartitionEqualSubsets(nums []int) bool {
 			}
 		}
 	}
-	sliceext.PrintSlice(dp)
+	fmtext.PrintSlice(dp)
 	fmt.Println()
 
 	for i := 1; i < rows; i++ {
@@ -187,7 +188,7 @@ func CanPartitionEqualSubsets(nums []int) bool {
 			}
 		}
 	}
-	sliceext.PrintSlice(dp)
+	fmtext.PrintSlice(dp)
 	return dp[rows-1][cols-1]
 }
 
@@ -202,7 +203,7 @@ func CanPartitionTargetSubsets(nums []int, target int) bool {
 			}
 		}
 	}
-	sliceext.PrintSlice(dp)
+	fmtext.PrintSlice(dp)
 	return dp[target]
 }
 
@@ -228,7 +229,7 @@ func MinimumSubsetDiffPartition(nums []int) int {
 			}
 		}
 	}
-	sliceext.PrintSlice(dp)
+	fmtext.PrintSlice(dp)
 
 	var canPartitionNum int
 	for i := len(dp) - 1; i >= 0; i-- {
@@ -257,7 +258,7 @@ func CountSubsets(nums []int, target int) int {
 			}
 		}
 	}
-	sliceext.PrintSlice(dp)
+	fmtext.PrintSlice(dp)
 	return dp[target]
 }
 
@@ -282,7 +283,7 @@ func KnapsackUnlimited(weights []int, profits []int, capacity int) int {
 			maxProfits[i][j] = mathext.MaxInt(profitWith, profitWithout)
 		}
 	}
-	sliceext.PrintSlice(maxProfits)
+	fmtext.PrintSlice(maxProfits)
 
 	maxProfit := maxProfits[rows-1][cols-1]
 	return maxProfit
@@ -384,7 +385,7 @@ func CakeThiefUnlimited(weightToProfits [][]int, cap int) (maxProfit int) {
 			dp[i][j] = mathext.MaxInt(profitWith, profitWithout)
 		}
 	}
-	sliceext.PrintSlice(dp)
+	fmtext.PrintSlice(dp)
 	return dp[r][c]
 }
 
@@ -458,7 +459,7 @@ func MaxRibbonCut(lengths []int, n int) int {
 		}
 	}
 
-	sliceext.PrintSlice(cuts)
+	fmtext.PrintSlice(cuts)
 	return cuts[n]
 }
 
@@ -522,7 +523,7 @@ func MaxStealProfit(profits []int) int {
 	for i := 2; i < len(dp); i++ {
 		dp[i] = mathext.MaxInt(dp[i-1], profits[i-1]+dp[i-2])
 	}
-	sliceext.PrintSlice(dp)
+	fmtext.PrintSlice(dp)
 	return dp[len(profits)]
 }
 
@@ -544,7 +545,7 @@ func LongestPalindromicSubsequenceTabulated(text string) (maxLen int) {
 			}
 		}
 	}
-	sliceext.PrintSlice(dp)
+	fmtext.PrintSlice(dp)
 	return dp[1][len(text)]
 }
 
@@ -625,7 +626,7 @@ func LongestPalindromicSubstring(text string) (int, string) {
 			}
 		}
 	}
-	sliceext.PrintSlice(dp)
+	fmtext.PrintSlice(dp)
 	return maxSsLen, maxSs
 }
 
@@ -651,7 +652,7 @@ func PalindromicSubstringCount(text string) int {
 			}
 		}
 	}
-	sliceext.PrintSlice(dp)
+	fmtext.PrintSlice(dp)
 	return cnt
 }
 
@@ -1060,7 +1061,7 @@ func MinMatrixMultiplications(dims []int) (minCnt int) {
 			}
 		}
 	}
-	sliceext.PrintSlice(dp)
+	fmtext.PrintSlice(dp)
 	return
 }
 

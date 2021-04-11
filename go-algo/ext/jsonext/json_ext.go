@@ -2,7 +2,6 @@ package jsonext
 
 import (
 	"encoding/json"
-	"fmt"
 	_ "github.com/tidwall/gjson"
 )
 
@@ -34,12 +33,4 @@ func StrToByteMatrix(str string) [][]byte {
 		}
 	}
 	return byteMatrix
-}
-
-func PrettyPrint(v interface{}) (err error) {
-	b, err := json.MarshalIndent(v, "", "  ")
-	if err == nil {
-		fmt.Println(string(b))
-	}
-	return
 }

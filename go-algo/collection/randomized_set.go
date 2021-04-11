@@ -1,57 +1,46 @@
 package collection
 
-import "math/rand"
+import (
+	"math/rand"
+	"time"
+)
 
 type RandomizedSet struct {
-	Kvp  map[int]int
-	Vals []int
+	set  map[int]int
+	nums []int
 }
-
 
 /** Initialize your data structure here. */
-func NewRandomizedSet() RandomizedSet {
-	return RandomizedSet{Kvp: map[int]int{}, Vals:[]int{}}
+func Constructor() RandomizedSet {
+	return RandomizedSet{map[int]int{}, []int{}}
 }
-
 
 /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
 func (rs *RandomizedSet) Insert(val int) bool {
-	if _, ok := rs.Kvp[val]; ok {
+	if _, ok := rs.set[val]; ok {
 		return false
-	} else {
-		rs.Vals = append(rs.Vals, val)
-		rs.Kvp[val] = len(rs.Vals)-1
-		return true
 	}
+	rs.nums = append(rs.nums, val)
+	rs.set[val] = len(rs.nums) - 1
+	return true
 }
-
 
 /** Removes a value from the set. Returns true if the set contained the specified element. */
 func (rs *RandomizedSet) Remove(val int) bool {
-	if idx, ok := rs.Kvp[val]; !ok {
-		return false
-	} else {
-		n := len(rs.Vals)
-		rs.Kvp[rs.Vals[n-1]] = idx
-		delete(rs.Kvp, val)
-		rs.Vals[idx], rs.Vals[n-1] = rs.Vals[n-1], rs.Vals[idx]
-		rs.Vals = rs.Vals[:n-1]
+	if idx, ok := rs.set[val]; ok {
+		n := len(rs.nums)
+		rs.set[rs.nums[n-1]] = idx
+		delete(rs.set, val)
+		rs.nums[idx], rs.nums[n-1] = rs.nums[n-1], rs.nums[idx]
+		rs.nums = rs.nums[:n-1]
 		return true
 	}
+	return false
 }
 
 
 /** Get a random element from the set. */
 func (rs *RandomizedSet) GetRandom() int {
-	i := rand.Intn(len(rs.Vals))
-	return rs.Vals[i]
+	rand.Seed(time.Now().UnixNano())
+	return rs.nums[rand.Intn(len(rs.nums))]
 }
-
-
-/**
- * Your RandomizedSet object will be instantiated and called as such:
- * obj := NewLRUCache();
- * param_1 := obj.Insert(val);
- * param_2 := obj.Remove(val);
- * param_3 := obj.GetRandom();
- */
