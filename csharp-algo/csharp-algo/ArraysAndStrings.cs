@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace csharp_algo
 {
@@ -105,27 +106,37 @@ namespace csharp_algo
 
         public int MaxLengthUniqueConcat(IList<string> arr)
         {
+            if (arr.Count == 0) return 0;
+            if (arr.Count == 1) return arr[0].Length;
+
             var charSets = new List<HashSet<char>>(arr.Count);
             foreach (var str in arr)
             {
-                charSets.Add(new HashSet<char>());
-                foreach (var c in str)
+                var charSet = new HashSet<char>();
+                foreach (var ch in str)
                 {
-                    charSets[^1].Add(c);
+                    if (charSet.Contains(ch))
+                    {
+                        charSet.Clear();
+                        break;
+                    }
+
+                    charSet.Add(ch);
                 }
+                charSets.Add(charSet);
             }
 
-            var maxLen = 0;
-            void dfs(int idx, HashSet<char> currSet)
+            int maxLen = 0;
+            void dfs(int idx, HashSet<char> currCharSet)
             {
-                maxLen = Math.Max(maxLen, currSet.Count);
-                if (idx >= arr.Count)
+                maxLen = Math.Max(maxLen, currCharSet.Count);
+                if (idx >= charSets.Count)
                     return;
-                if (!currSet.Overlaps(charSets[idx]))
-                    dfs(idx + 1, currSet.Union(charSets[idx]).ToHashSet());
-                dfs(idx + 1, currSet);
-            }
 
+                if (!currCharSet.Overlaps(charSets[idx]))
+                    dfs(idx + 1, currCharSet.Union(charSets[idx]).ToHashSet());
+                dfs(idx + 1, currCharSet);
+            }
             dfs(0, new HashSet<char>());
             return maxLen;
         }
@@ -159,5 +170,92 @@ namespace csharp_algo
             return (passedCount*100)/statusMap.Count;
         }
 
+        public int[] SumZero(int n)
+        {
+            var result = new List<int>(n);
+            var sum = 0;
+            for (var i = 1; i <= n; i++)
+            {
+                result.Add(i);
+                sum += i;
+            }
+
+            result[^1] = -(sum - result[^1]);
+            return result.ToArray();
+        }
+
+        public int FirstMissingPositive(int[] nums)
+        {
+            bool oneExists = false;
+            for (var i = 0; i < nums.Length; i++)
+            {
+                if (!oneExists && nums[i] == 1)
+                    oneExists = true;
+                if (nums[i] <= 0 || nums[i] > nums.Length)
+                {
+                    nums[i] = 1;
+                }
+            }
+
+            if (!oneExists)
+                return 1;
+
+            for (var i = 0; i < nums.Length; i++)
+            {
+                if (nums[Math.Abs(nums[i]) - 1] > 0)
+                    nums[Math.Abs(nums[i]) - 1] = -nums[Math.Abs(nums[i]) - 1];
+            }
+
+            for (var i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] > 0)
+                    return i + 1;
+            }
+            return nums.Length+1;
+        }
+
+        public int MinPathSum(int[][] grid)
+        {
+            for (var i = 0; i < grid.Length; i++)
+            {
+                for (var j = 0; j < grid[i].Length; j++)
+                {
+                    if (i == 0 && j > 0)
+                        grid[i][j] += grid[i][j - 1];
+                    else if (i > 0 && j == 0)
+                        grid[i][j] += grid[i - 1][j];
+                    else if (i > 0 && j > 0)
+                        grid[i][j] += Math.Min(grid[i][j - 1], grid[i - 1][j]);
+                }
+            }
+
+            return grid[^1][^1];
+        }
+
+        public String CountAndSay(int n) {
+            if(n==1) return "1";
+            string ans = "1";
+            for(int i=2; i<=n; i++){
+                ans = f(ans);
+            }
+            return ans;
+        }
+
+        private string f(string s){
+            char ch = s[0];
+            int count = 1;
+            StringBuilder sb = new();
+            for (var i = 1; i < s.Length; i++){
+                if (s[i] != ch) {
+                    sb.Append(count).Append(ch);
+                    ch = s[i];
+                    count = 1;
+                } else {
+                    count++;
+                }
+            }
+            sb.Append(count).Append(ch);
+            return sb.ToString();
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using csharp_algo.Collections;
 
@@ -9,17 +10,19 @@ namespace csharp_algo
     {
         static void Main(string[] args)
         {
-            var result = new ArraysAndStrings().TestGroupScores(
-                new[] { "codility1", "codility3", "codility50", "codility4b", "codility4a" },
-                new[] { "Wrong answer", "OK", "OK", "Runtime error", "OK" }
-                );
-
-            Println(result);
+            Println(new ArraysAndStrings().CountAndSay(4));
         }
 
         static void Println(object? val)
         {
             Console.WriteLine(val);
         }
+    }
+
+    public sealed class Singleton
+    {
+        private static readonly Lazy<Singleton> lazy = new(() => new Singleton());
+        private Singleton() { }
+        public static Singleton Instance => lazy.Value;
     }
 }

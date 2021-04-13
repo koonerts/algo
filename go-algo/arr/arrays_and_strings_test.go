@@ -1,12 +1,37 @@
 package arr
 
-
 import (
 	"fmt"
+	"math/rand"
 	"reflect"
 	"testing"
 )
 
+func BenchmarkMergeSort(b *testing.B) {
+	x := make([]int, 1000000)
+	for i := 0; i < len(x); i++ {
+		x[i] = i
+	}
+	rand.Shuffle(len(x), func(i, j int) {x[i], x[j] = x[j], x[i]})
+	b.ResetTimer()
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		_ = MergeSort(x)
+	}
+}
+
+func BenchmarkMergeSortConcurrent(b *testing.B) {
+	x := make([]int, 1000000)
+	for i := 0; i < len(x); i++ {
+		x[i] = i
+	}
+	rand.Shuffle(len(x), func(i, j int) {x[i], x[j] = x[j], x[i]})
+	b.ResetTimer()
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		_ = MergeSortConcurrent(x)
+	}
+}
 
 func TestShortestDistToStore(t *testing.T) {
 	tests := []struct {

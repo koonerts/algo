@@ -40,9 +40,11 @@ inputloop:
 			log.Println("right")
 		case Left:
 			log.Println("left")
-		default:
+		case CtrlC:
 			log.Println("exiting")
 			break inputloop
+		default:
+			log.Println(b)
 		}
 	}
 }

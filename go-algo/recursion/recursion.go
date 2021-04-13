@@ -2,7 +2,7 @@ package recursion
 
 import "go-algo/ext/mathext"
 
-func letterCombinations(digits string) (results []string) {
+func LetterCombinations(digits string) (results []string) {
 	if digits == "" {
 		return
 	}

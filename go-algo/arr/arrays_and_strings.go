@@ -17,6 +17,92 @@ import (
 )
 
 
+func FindMedianSortedArrays(nums1 []int, nums2 []int) float64 {
+	n1, n2 := len(nums1), len(nums2)
+	if n2 < n1 {
+		return FindMedianSortedArrays(nums2, nums1)
+	}
+
+	n := n1 + n2
+	start, end := 0, n1-1
+
+	for {
+		p1 := (start + end)/2
+		p2 := (n+1)/2 - p1
+		n1Lo, n1Hi := -1<<31, 1<<31-1
+		n2Lo, n2Hi := -1<<31, 1<<31-1
+		if p1-1 >= 0 { n1Lo = nums1[p1-1] }
+		if p1 < n1 { n1Hi = nums1[p1] }
+		if p2-1 >= 0 { n2Lo = nums2[p2-1] }
+		if p2 < n2 { n2Hi = nums2[p2] }
+
+		if n1Lo <= n2Hi && n2Lo <= n1Hi {
+			maxOfLo := float64(mathext.MaxInt(n1Lo, n2Lo))
+			if n % 2 == 1 {
+				return maxOfLo
+			}
+			minOfHi := float64(mathext.MinInt(n1Hi, n2Hi))
+			return maxOfLo + minOfHi/2
+		} else if n1Lo > n2Hi {
+			end = p1-1
+		} else {
+			start = p1+1
+		}
+	}
+}
+
+
+
+func MergeSortConcurrent(data [] int) [] int {
+	if len(data) <= 1 {
+		return data
+	}
+	done := make(chan bool)
+	mid := len(data)/2
+	var left, right [] int
+
+	go func(){
+		left = MergeSortConcurrent(data[:mid])
+		done <- true
+	}()
+	go func(){
+		right = MergeSortConcurrent(data[mid:])
+		done <- true
+	}()
+	<-done
+	<-done
+	return merge(left,right)
+}
+
+func MergeSort(data [] int) [] int {
+	if len(data) <= 1 {
+		return data
+	}
+
+	mid := len(data)/2
+	left := MergeSort(data[:mid])
+	right := MergeSort(data[mid:])
+	return merge(left,right)
+}
+
+func merge(left, right []int) []int {
+	merged := make([]int, 0, len(left)+len(right))
+	for len(left) > 0 || len(right) > 0 {
+		if len(left) == 0 {
+			return append(merged, right...)
+		} else if len(right) == 0 {
+			return append(merged, left...)
+		} else if left[0] < right[0] {
+			merged = append(merged, left[0])
+			left = left[1:]
+		} else {
+			merged = append(merged, right[0])
+			right = right[1:]
+		}
+	}
+	return merged
+}
+
 func ShortestDistToStore(houses, stores []int) (closestStores []int) {
 	sort.Ints(stores)
 	n := len(stores)
@@ -27,15 +113,15 @@ func ShortestDistToStore(houses, stores []int) (closestStores []int) {
 		closest := stores[0]
 		lo, hi := 0, n-1
 		for lo <= hi {
-			mid := (lo+hi)/2
+			mid := (lo + hi) / 2
 			store := stores[mid]
 			if store == house {
 				closest = store
 				break
 			} else if store < house {
-				lo = mid+1
+				lo = mid + 1
 			} else {
-				hi = mid-1
+				hi = mid - 1
 			}
 
 			if store == closest && store < closest {
@@ -46,7 +132,6 @@ func ShortestDistToStore(houses, stores []int) (closestStores []int) {
 		}
 		return closest
 	}
-
 
 	for _, house := range houses {
 		if store, ok := houseToStore[house]; ok {
@@ -61,14 +146,13 @@ func ShortestDistToStore(houses, stores []int) (closestStores []int) {
 	return closestStores
 }
 
-
 func TotalFruit(trees []int) int {
 	if len(trees) == 0 {
 		return 0
 	}
 
 	treeIdxs := map[int]int{}
-	maxFruit := -1<<31
+	maxFruit := -1 << 31
 	lo := 0
 	for hi, tree := range trees {
 		if _, ok := treeIdxs[tree]; !ok && len(treeIdxs) == 2 {
@@ -88,7 +172,6 @@ func TotalFruit(trees []int) int {
 	}
 	return maxFruit
 }
-
 
 func NumUniqueEmails(emails []string) (cnt int) {
 	domainToLocal := map[string]map[string]struct{}{}
@@ -135,8 +218,12 @@ func ParseAcceptLanguage(reqHeaders string, acceptedHeaders []string) []string {
 		} else if strings.Index(rh, "*") >= 0 {
 			rhPattern := strings.ReplaceAll(rh, "*", ".*")
 			n := len(rhPattern)
-			if rhPattern[0] != '.' {rhPattern = "^" + rhPattern}
-			if rhPattern[n-1] != '*' {rhPattern += "$"}
+			if rhPattern[0] != '.' {
+				rhPattern = "^" + rhPattern
+			}
+			if rhPattern[n-1] != '*' {
+				rhPattern += "$"
+			}
 
 			for _, ah := range acceptedHeaders {
 				if !retSet[ah] {
@@ -159,10 +246,12 @@ func ParseAcceptLanguage(reqHeaders string, acceptedHeaders []string) []string {
 }
 
 func NextServerNumber(serverIds []int) int {
-	if len(serverIds) == 0 {return 1}
+	if len(serverIds) == 0 {
+		return 1
+	}
 
 	serverSet := map[int]bool{}
-	maxId := -1<<31
+	maxId := -1 << 31
 	for _, sId := range serverIds {
 		serverSet[sId] = true
 		maxId = mathext.MaxInt(maxId, sId)
@@ -172,11 +261,11 @@ func NextServerNumber(serverIds []int) int {
 			return i
 		}
 	}
-	return maxId+1
+	return maxId + 1
 }
 
-
 type DbRow map[string]int
+
 func (r DbRow) Less(r2 DbRow, col string) bool {
 	return r[col] < r2[col]
 }
@@ -211,7 +300,6 @@ func MinByColumnOrderComparator(table []map[string]int, col, order string) map[s
 	return returnRow
 }
 
-
 func MinByColumnsOrderedComparator(table []map[string]int, cols, orders []string) map[string]int {
 	if len(table) == 0 {
 		return nil
@@ -224,15 +312,18 @@ func MinByColumnsOrderedComparator(table []map[string]int, cols, orders []string
 			col, order := cols[j], orders[j]
 			comparator := GetComparator(col, order)
 			compareResult := comparator(row, returnRow)
-			if compareResult == 0 {continue}
-			if compareResult == 1 {break}
+			if compareResult == 0 {
+				continue
+			}
+			if compareResult == 1 {
+				break
+			}
 			returnRow = row
 			break
 		}
 	}
 	return returnRow
 }
-
 
 func MinByColumnOrder(table []map[string]int, col, order string) map[string]int {
 	if len(table) == 0 {
@@ -251,7 +342,6 @@ func MinByColumnOrder(table []map[string]int, col, order string) map[string]int 
 	}
 	return returnRow
 }
-
 
 func MinByColumns(table []map[string]int, columns []string) map[string]int {
 	minRow := table[0]
@@ -891,7 +981,7 @@ func LicenseKeyFormatting(S string, K int) string {
 	b := make([]byte, 0, len(S))
 	S = strings.ToUpper(strings.ReplaceAll(S, "-", ""))
 	dashCnt := 0
-	for i := len(S)-1; i >= 0; i-- {
+	for i := len(S) - 1; i >= 0; i-- {
 		if dashCnt == K {
 			b = append(b, '-')
 			dashCnt = 0
@@ -2533,7 +2623,7 @@ func searchRange(nums []int, target int) []int {
 	return results
 }
 
-func merge(intervals [][]int) [][]int {
+func MergeIntervals(intervals [][]int) [][]int {
 	if len(intervals) <= 1 {
 		return intervals
 	}
