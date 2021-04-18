@@ -406,12 +406,11 @@ func ZipLinkedList(linkedList *LinkedList) *LinkedList {
 }
 
 func FindCycleNode(head *ListNode) *ListNode {
-	if head == nil {
+	if head == nil || head.Next == nil {
 		return nil
-	} else if head.Next == head {
+	}
+	if head.Next == head {
 		return head
-	} else if head.Next == nil {
-		return nil
 	}
 
 	slow, fast := head, head
@@ -429,9 +428,9 @@ func FindCycleNode(head *ListNode) *ListNode {
 	}
 
 	node := head
-	for slow != node {
-		slow = slow.Next
+	for node != intersectNode {
 		node = node.Next
+		intersectNode = intersectNode.Next
 	}
 	return node
 }
@@ -487,11 +486,11 @@ func GetIntersectionNode(headA, headB *ListNode) *ListNode {
 			head = node
 		}
 		if prev != nil {
-			prev.Next = node
+			prev.next = node
 		}
 		prev = node
-		if node.Next != nil {
-			lnh.HeapPush(node.Next)
+		if node.next != nil {
+			lnh.HeapPush(node.next)
 		}
 	}
 	return head

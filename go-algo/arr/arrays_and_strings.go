@@ -17,6 +17,99 @@ import (
 )
 
 
+type Direction int
+const (
+	Left Direction = iota + 1
+	Right
+	Down
+	Up
+)
+
+func MinDifficulty(jobDifficulty []int, d int) (minDiff int) {
+	n := len(jobDifficulty)
+	if n < d { return -1 }
+	sort.Ints(jobDifficulty)
+	i := 0
+	for d > 1 && i < n-1 {
+		minDiff += jobDifficulty[i]
+		i++
+		d--
+	}
+
+	minDiff += jobDifficulty[n-1]
+	return minDiff
+}
+
+func SpiralOrder(matrix [][]int) []int {
+	m, n := len(matrix), len(matrix[0])
+	total := m*n
+	xTop, xBot := 0, m-1
+	yLeft, yRight := 0, n-1
+	x, y := 0, 0
+	dir := Right
+	result := make([]int, 0, total)
+	for len(result) < total {
+		for dir == Right {
+			result = append(result, matrix[x][y])
+			if y == yRight {
+				xTop++
+				x++
+				dir = changeDirection(dir)
+				break
+			}
+			y++
+		}
+		if len(result) == total { break }
+
+		for dir == Down {
+			result = append(result, matrix[x][y])
+			if x == xBot {
+				yRight--
+				y--
+				dir = changeDirection(dir)
+				break
+			}
+			x++
+		}
+		if len(result) == total { break }
+
+		for dir == Left {
+			result = append(result, matrix[x][y])
+			if y == yLeft {
+				xBot--
+				x--
+				dir = changeDirection(dir)
+				break
+			}
+			y--
+		}
+		if len(result) == total { break }
+
+		for dir == Up {
+			result = append(result, matrix[x][y])
+			if x == xTop {
+				yLeft++
+				y++
+				dir = changeDirection(dir)
+				break
+			}
+			x--
+		}
+		if len(result) == total { break }
+
+	}
+	return result
+}
+
+func changeDirection(dir Direction) Direction {
+	switch dir {
+	case Right: return Down
+	case Down: return Left
+	case Left: return Up
+	default: return Right
+	}
+}
+
 func FindMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 	n1, n2 := len(nums1), len(nums2)
 	if n2 < n1 {
@@ -1720,14 +1813,6 @@ func CalendarMatching(calendar1 []StringMeeting, dailyBounds1 StringMeeting,
 	return openingsStringMeetings
 }
 
-type Direction int
-
-const (
-	Left Direction = iota + 1
-	Right
-	Down
-	Up
-)
 
 type TrafficDirection int
 
@@ -2775,21 +2860,31 @@ func RotateMatrix(matrix [][]int) {
 	}
 }
 
-func RotateMatrix2(matrix [][]int) {
-	n := len(matrix[0])
-
-	// Transpose: reverse across diagonal
-	for i := 0; i < n; i++ {
+func RotateMatrixRight(matrix [][]int) {
+	n := len(matrix)
+	for i := range matrix {
 		for j := i; j < n; j++ {
 			matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
 		}
 	}
 
-	// Reverse: reverse each row
-	for i := 0; i < n; i++ {
-		for j, k := 0, n-1; j < k; j, k = j+1, k-1 {
+	for i := range matrix {
+		for j, k := 0, len(matrix[i])-1; j < k; j, k = j+1, k-1 {
 			matrix[i][j], matrix[i][k] = matrix[i][k], matrix[i][j]
 		}
+	}
+}
+
+func RotateMatrixLeft(matrix [][]int) {
+	n := len(matrix)
+	for i := range matrix {
+		for j := i; j < n; j++ {
+			matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+		}
+	}
+
+	for i, j := 0, len(matrix)-1; i < j; i, j = i+1, j-1 {
+		matrix[i], matrix[j] = matrix[j], matrix[i]
 	}
 }
 
@@ -2806,7 +2901,7 @@ func RotateMatrixNoDiagonals(matrix [][]int) {
 		y2--
 	}
 	fmtext.PrintSlice(matrix)
-	RotateMatrix2(matrix)
+	RotateMatrixRight(matrix)
 
 	x1, y1, x2, y2 = 0, 0, 0, len(matrix)-1
 	for i := range diag1 {
@@ -2854,6 +2949,8 @@ func RotateMatrixNoDiagonals2(matrix [][]int) {
 		y2--
 	}
 }
+
+
 
 /*func strStr(haystack string, needle string) int {
 	if needle == "" {return 0}
