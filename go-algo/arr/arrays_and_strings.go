@@ -1202,30 +1202,25 @@ func FullJustify(words []string, maxWidth int) []string {
 }
 
 var solution = func(read4 func([]byte) int) func([]byte, int) int {
-	// implement read below.
-	buf2 := []byte{}
-	idx := 0
-	return func(buf []byte, n int) int {
-		if n == 0 {
-			return 0
-		}
-		totalCnt := 0
-		for {
-			readCnt := read4(buf2)
-			totalCnt += readCnt
-			if readCnt == 0 || totalCnt > n {
-				break
-			}
-		}
+	buf4 := make([]byte, 4)
+	size, pos := 0, 0
 
-		if len(buf2)-idx > n {
-			buf = append(buf, buf2[idx:idx+n]...)
-			idx += n
-		} else {
-			buf = append(buf, buf2[idx:]...)
-			idx = len(buf2)
+	// implement read below.
+	return func(buf []byte, n int) int {
+		cnt := 0
+		for cnt < n {
+			if pos == size {
+				pos = 0
+				size = read4(buf4)
+				if size == 0 {
+					return cnt
+				}
+			}
+			buf[cnt] = buf4[pos]
+			pos++
+			cnt++
 		}
-		return len(buf)
+		return cnt
 	}
 }
 
@@ -1265,66 +1260,70 @@ func AddBinary(a string, b string) string {
 	return string(resBytes)
 }
 
-type NumToStringInfo struct {
-	digitMap, teenthsMap, tenthsMap map[int]string
-}
 
-func NewNumToStringInfo() NumToStringInfo {
-	digitMap := map[int]string{0: "Zero", 1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"}
-	teenthsMap := map[int]string{10: "Ten", 11: "Eleven", 12: "Twelve", 13: "Thirteen", 14: "Fourteen", 15: "Fifteen", 16: "Sixteen", 17: "Seventeen", 18: "Eighteen", 19: "NineTeen"}
-	tenthsMap := map[int]string{20: "Twenty", 30: "Thirty", 40: "Fourty", 50: "Fifty", 60: "Sixty", 70: "Seventy", 80: "Eighty", 90: "Ninety"}
-	return NumToStringInfo{digitMap, teenthsMap, tenthsMap}
-}
 
 func NumberToWords(num int) string {
-	info := NewNumToStringInfo()
-	if num < 10 {
-		return info.digitMap[num]
+	if num == 0 { return "Zero" }
+
+	digits := map[int]string{0:"Zero", 1:"One", 2:"Two", 3:"Three", 4:"Four", 5:"Five", 6:"Six", 7:"Seven", 8:"Eight", 9:"Nine"}
+	teens := map[int]string{10:"Ten", 11:"Eleven", 12:"Twelve", 13:"Thirteen", 14:"Fourteen", 15:"Fifteen", 16:"Sixteen", 17:"Seventeen", 18:"Eighteen", 19:"Nineteen"}
+	tens := map[int]string{20:"Twenty", 30:"Thirty", 40:"Forty", 50:"Fifty", 60:"Sixty", 70:"Seventy", 80:"Eighty", 90:"Ninety"}
+	BILLION, MILLION, THOUSAND := 1000000000, 1000000, 1000
+
+	var twoDigToStr = func(num int) string {
+		if num < 20 {
+			str := digits[num]
+			if str == "" { str = teens[num] }
+			return str
+		}
+
+		tensStr := tens[num/10 * 10]
+		digitsStr := digits[num%10]
+		if digitsStr != "Zero" && digitsStr != "" {
+			tensStr += " " + digitsStr
+		}
+		return tensStr
 	}
-	if num < 20 {
-		return info.teenthsMap[num]
+
+	var threeDigToStr = func(num int) string {
+		hundredsStr := digits[num/100] + " Hundred"
+		tensStr := twoDigToStr(num%100)
+		if tensStr != "" && tensStr != "Zero" {
+			hundredsStr += " " + tensStr
+		}
+		return hundredsStr
 	}
+
+	var digToStr = func(num int) string {
+		str := ""
+		if num < 100 {
+			str = twoDigToStr(num)
+		} else {
+			str = threeDigToStr(num)
+		}
+		return str
+	}
+
 	res := ""
 	for num > 0 {
-		if num >= 1_000_000_000 {
-			res += info.ThreeDigitToStr(num/1_000_000_000) + " Billion "
-			num %= 1_000_000_000
-		} else if num >= 1_000_000 {
-			res += info.ThreeDigitToStr(num/1_000_000) + " Million "
-			num %= 1_000_000
-		} else if num >= 1_000 {
-			res += info.ThreeDigitToStr(num/1_000) + " Thousand "
-			num %= 1_000
-		} else {
-			res += info.ThreeDigitToStr(num)
-			num %= num
+		switch {
+		case num >= BILLION:
+			res += fmt.Sprintf(" %s Billion", digToStr(num/BILLION))
+			num %= BILLION
+		case num >= MILLION:
+			res += fmt.Sprintf(" %s Million", digToStr(num/MILLION))
+			num %= MILLION
+		case num >= THOUSAND:
+			res += fmt.Sprintf(" %s Thousand", digToStr(num/THOUSAND))
+			num %= THOUSAND
+		default:
+			res += " " + digToStr(num)
+			num = 0
 		}
 	}
 	return strings.TrimSpace(res)
 }
 
-func (info NumToStringInfo) TwoDigitToStr(num int) string {
-	result := ""
-	if 0 < num && num < 10 {
-		result = info.digitMap[num]
-	} else if num < 20 {
-		result = info.teenthsMap[num]
-	} else {
-		digitStr := ""
-		if num%10 > 0 {
-			digitStr = " " + info.digitMap[num%10]
-		}
-		result = info.tenthsMap[num/10*10] + digitStr
-	}
-	return strings.TrimSpace(result)
-}
-
-func (info NumToStringInfo) ThreeDigitToStr(num int) string {
-	if num < 100 {
-		return info.TwoDigitToStr(num)
-	}
-	return strings.TrimSpace(info.digitMap[num/100] + " Hundred " + info.TwoDigitToStr(num%100))
-}
 
 func MinRemoveToMakeValid(s string) string {
 	b := []byte(s)

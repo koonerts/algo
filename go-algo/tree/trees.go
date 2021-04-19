@@ -350,16 +350,7 @@ func RemoveInvalidParentheses(s string) []string {
 		return count == 0
 	}
 
-	var expr string
-	for len(que) > 0 {
-		expr, que = que[0], que[1:]
-		if isValid(expr) {
-			results = append(results, expr)
-			found = true
-		}
-		if found {
-			continue
-		}
+	var appendCandidates = func(expr string) {
 		for i := range expr {
 			ch := expr[i]
 			if ch != '(' && ch != ')' {
@@ -372,6 +363,19 @@ func RemoveInvalidParentheses(s string) []string {
 			}
 		}
 	}
+
+	var expr string
+	for len(que) > 0 {
+		expr, que = que[0], que[1:]
+		if isValid(expr) {
+			results = append(results, expr)
+			found = true
+		}
+		if !found {
+			appendCandidates(expr)
+		}
+	}
+
 	if len(results) == 0 {
 		results = append(results, "")
 	}
