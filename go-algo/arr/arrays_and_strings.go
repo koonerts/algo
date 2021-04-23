@@ -4019,3 +4019,53 @@ func CountAndSay(n int) string {
 	}
 	return res
 }
+
+
+func generateMatrix(A int ) [][]int {
+	arr := make([][]int, A)
+	for i := range arr {
+		arr[i] = make([]int, A)
+	}
+	topBound, botBound := 0, A-1
+	leftBound, rightBound := 0, A-1
+	x, y := 0, 0
+	var dir Direction = Right
+
+	for i := 1; i <= A*A; i++ {
+		arr[x][y] = i
+		if dir == Right {
+			if y == rightBound {
+				x++
+				topBound++
+				dir = Down
+				continue
+			}
+			y++
+		} else if dir == Down {
+			if x == botBound {
+				y--
+				rightBound--
+				dir = Left
+				continue
+			}
+			x++
+		} else if dir == Left {
+			if y == leftBound {
+				x--
+				botBound--
+				dir = Up
+				continue
+			}
+			y--
+		} else if dir == Up {
+			if x == topBound {
+				y++
+				leftBound++
+				dir = Right
+				continue
+			}
+			x--
+		}
+	}
+	return arr
+}
