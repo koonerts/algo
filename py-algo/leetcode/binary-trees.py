@@ -210,7 +210,8 @@ class Solution:
         """
 
         def build(bound=None):
-            if not inorder or inorder[-1] == bound: return None
+            if not inorder or inorder[-1] == bound:
+                return None
             root = TreeNode(postorder.pop())
             root.right = build(root.val)
             inorder.pop()
@@ -236,7 +237,8 @@ class Solution:
         """
 
         def build(bound=None):
-            if not inorder or inorder[0] == bound: return None
+            if not inorder or inorder[0] == bound:
+                return None
             root = TreeNode(preorder.pop(0))
             root.left = build(root.val)
             inorder.pop(0)

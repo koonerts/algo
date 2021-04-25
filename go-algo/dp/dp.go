@@ -47,6 +47,12 @@ func MinEditDistance(str1, str2 string) (minDist int) {
 	for i := range dp {
 		dp[i] = make([]int, len(str2)+1)
 	}
+	for i := range dp {
+		dp[i][0] = i
+	}
+	for j := range dp[0] {
+		dp[0][j] = j
+	}
 
 	for i := 1; i <= len(str1); i++ {
 		for j := 1; j <= len(str2); j++ {
@@ -409,7 +415,7 @@ func CakeThiefUnlimitedOpt(weightToProfits [][]int, cap int) (maxProfit int) {
 }
 
 func MinCoinChainUnlimited(denoms []int, total int) int {
-	MaxInt32 := 1<<31-1
+	MaxInt32 := 1<<31 - 1
 	ways := make([]int, total+1)
 	for i := range ways {
 		ways[i] = MaxInt32
@@ -994,6 +1000,14 @@ func CatalanNumber(n int) uint64 {
 	return catNums[n]
 }
 
+func CatalanNumberOpt(n int) int {
+	c := 1
+	for i := 0; i < n; i++ {
+		c = c * 2 * (2*i + 1) / (i + 2)
+	}
+	return c
+}
+
 func MaxWeightedSchedule(schedule [][]int) (maxUtility int) {
 	start, end, util := 0, 1, 2
 	maxEndTime := 0
@@ -1142,7 +1156,6 @@ func NumberOfCombinationsLessThanOrEqualToLimit(p1, p2, p3, p4 []int, limit int)
 	return cnt
 }
 
-
 func FindAllConcatenatedWordsInADict(words []string) []string {
 	sort.Slice(words, func(i, j int) bool {
 		return len(words[i]) < len(words[j])
@@ -1177,3 +1190,62 @@ func canForm(s string, words map[string]struct{}) bool {
 	}
 	return dp[len(s)]
 }
+
+func NumberOfWaysToSplitStringIntoPrimes(str string) int {
+	sieve := createSieve(1000)
+	l := len(str)
+	dp := make([]int, l+1)
+	dp[0] = 1
+
+	for i := 1; i <= l; i++ {
+		n1, _ := strconv.Atoi(string(str[i-1]))
+		if sieve[n1] {
+			dp[i] = dp[i-1]
+		}
+
+		if i-2 >= 0 {
+			n2, _ := strconv.Atoi(str[i-2 : i])
+			if str[i-2] != '0' && sieve[n2] {
+				dp[i] += dp[i-2]
+			}
+		}
+
+		if i-3 >= 0 {
+			n3, _ := strconv.Atoi(str[i-3 : i])
+			if str[i-3] != '0' && sieve[n3] {
+				dp[i] += dp[i-3]
+			}
+		}
+	}
+
+	return dp[l]
+}
+
+func createSieve(n int) map[int]bool {
+	sieve := map[int]bool{}
+	for i := 2; i <= n; i++ {
+		sieve[i] = true
+	}
+
+	for i := 2; i*i <= n; i++ {
+		if !sieve[i] {
+			continue
+		}
+
+		for j := i * i; j <= n; j += i {
+			delete(sieve, j)
+		}
+	}
+	return sieve
+}
+
+/*func KnightProbability(n, k, r, c int) float32 {
+	dirs := [][]int{{-2,-1}, {-1,-2}, {1,-2}, {2,-1}, {2,1}, {1,2}, {-1,2}, {-2,1}}
+	dp := make([][][]float32, n)
+	for i := range dp {
+		dp[i] = make([][]float32, n)
+		for j := range dp[i] {
+			dp[i][j] = make([]float32, k+1)
+		}
+	}
+}*/

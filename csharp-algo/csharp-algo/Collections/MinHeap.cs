@@ -20,6 +20,11 @@ namespace csharp_algo.Collections
             Heapify();
         }
 
+        public List<T> Values()
+        {
+            return _heap;
+        }
+
         public void Heapify()
         {
             for (var i = _heap.Count / 2; i >= 0; i--)

@@ -56,6 +56,39 @@ type ColorNode struct {
 	ChildNodes []*ColorNode
 }
 
+func BuildTreePre(inOrder, preOrder []int) *TreeNode {
+	var build func(bound int) *TreeNode
+	build = func(bound int) *TreeNode {
+		if len(inOrder) == 0 || inOrder[0] == bound {
+			return nil
+		}
+		root := &TreeNode{Val: preOrder[0]}
+		preOrder = preOrder[1:]
+		root.Left = build(root.Val)
+		inOrder = inOrder[1:]
+		root.Right = build(bound)
+		return root
+	}
+	return build(-1<<31)
+}
+
+func BuildTreePost(inOrder, postOrder []int) *TreeNode {
+	var build func(bound int) *TreeNode
+	build = func(bound int) *TreeNode {
+		lenIn, lenPost := len(inOrder), len(postOrder)
+		if lenIn == 0 || inOrder[lenIn-1] == bound {
+			return nil
+		}
+		root := &TreeNode{Val: postOrder[lenPost-1]}
+		postOrder = postOrder[:lenPost-1]
+		root.Right = build(root.Val)
+		inOrder = inOrder[:lenIn-1]
+		root.Left = build(bound)
+		return root
+	}
+	return build(-1<<31)
+}
+
 func EqualColoredRoots(root *ColorNode) []*ColorNode {
 	results := []*ColorNode{}
 	var dfs func(node *ColorNode) (red, blue, black int)
@@ -1213,4 +1246,8 @@ func NumIslands2(m int, n int, positions [][]int) []int {
 		islandsCounts = append(islandsCounts, uf.GetConnectionComponents())
 	}
 	return islandsCounts
+}
+
+func FindMostFrequent(root *BST) int {
+	return -1
 }

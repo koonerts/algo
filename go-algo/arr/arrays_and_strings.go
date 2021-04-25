@@ -16,8 +16,8 @@ import (
 	"time"
 )
 
-
 type Direction int
+
 const (
 	Left Direction = iota + 1
 	Right
@@ -25,9 +25,413 @@ const (
 	Up
 )
 
+func nonRepeatingCharacters(str string) string {
+	b := []byte{}
+	freq := map[byte]int{}
+	que := []byte{}
+
+	for i := range str {
+		freq[str[i]] += 1
+		if freq[str[i]] == 1 {
+			que = append(que, str[i])
+		}
+
+		for len(que) > 0 && freq[que[0]] >= 2 {
+			que = que[1:]
+		}
+
+		if len(que) > 0 {
+			b = append(b, que[0])
+		} else {
+			b = append(b, '#')
+		}
+	}
+	return string(b)
+}
+
+func slidingMaximum(nums []int , k int) []int {
+	que := []int{}
+	lo, hi := 0, 0
+	res := []int{}
+	for hi < len(nums) {
+		if hi-lo+1 > k {
+			if que[0] == nums[lo] {
+				que = que[1:]
+			}
+			lo++
+		}
+
+		for len(que) > 0 && nums[hi] > que[len(que)-1] {
+			que = que[:len(que)-1]
+		}
+
+		que = append(que, nums[hi])
+		if hi-lo+1 == k {
+			res = append(res, que[0])
+		}
+		hi++
+	}
+	return res
+}
+
+func prevSmaller(nums []int) []int {
+	stk := []int{}
+	res := []int{}
+
+	for i, num := range nums {
+		for len(stk) > 0 && stk[len(stk)-1] >= num {
+			stk = stk[:len(stk)-1]
+		}
+
+		if i == 0 || len(stk) == 0 {
+			res = append(res, -1)
+		} else {
+			res = append(res, stk[len(stk)-1])
+		}
+		stk = append(stk, num)
+	}
+	return res
+}
+
+func isPalindrome(A string ) int {
+	reg := regexp.MustCompile("[\\w]+")
+	str := strings.ToLower(strings.Join(reg.FindAllString(A, -1), ""))
+	for i, j := 0, len(str)-1; i < j; i, j = i+1, j-1 {
+		if str[i] != str[j] {
+			return 0
+		}
+	}
+	return 1
+}
+
+func ConcentricMatrix(n int) [][]int {
+	l := 2*n - 1
+	matrix := [][]int{}
+	for i := 1; i <= l; i++ {
+		row := []int{}
+		for j := 1; j <= l; j++ {
+			row = append(row, mathext.MaxInt(mathext.AbsInt(n-i)+1, mathext.AbsInt(n-j)+1))
+		}
+		matrix = append(matrix, row)
+	}
+	return matrix
+}
+
+func RearrangeArr(nums []int) []int {
+	n:= len(nums)
+	for i := range nums {
+		nums[i] += (nums[nums[i]]%n) * n
+	}
+
+	fmt.Println(nums)
+	for i := range nums {
+		nums[i] /= n
+	}
+	return nums
+}
+
+func ReverseInt(n int) int {
+	isNeg := n < 0
+	if isNeg {
+		n = -n
+	}
+
+	rev := 0
+	for n > 0 {
+		lastDig := n % 10
+		rev = rev*10 + lastDig
+		n /= 10
+	}
+
+	if isNeg {
+		rev = -rev
+	}
+	if rev > 1<<31 - 1 || rev < -1<<31 {
+		rev = 0
+	}
+	return rev
+}
+
+func PossibleSubsets(strList []string) {
+	n := len(strList)
+	for i := 0; i < (1 << n); i++ {
+		for j := 0; j < n; j++ {
+			if (i & (1 << j)) > 0 {
+				fmt.Print(strList[j] + " ")
+			}
+		}
+		fmt.Println()
+	}
+}
+
+type Interval struct {
+	start, end int
+}
+
+func CanSchedule(schedule []Interval, job Interval) (canInsert bool) {
+	if len(schedule) == 0 {
+		return true
+	}
+
+	// sort by start
+	sort.Slice(schedule, func(i, j int) bool {
+		return schedule[i].start < schedule[j].start
+	})
+
+	lo, hi := 0, len(schedule)-1
+	for lo <= hi {
+		mid := (hi + lo) / 2
+		if canInsertBeforeMid(schedule, job, mid) || canInsertAfterMid(schedule, job, mid) {
+			return true
+		} else if job.start < schedule[mid].start {
+			hi = mid - 1
+		} else {
+			lo = mid + 1
+		}
+	}
+	return false
+}
+
+func canInsertBeforeMid(schedule []Interval, job Interval, mid int) bool {
+	return job.end <= schedule[mid].start && (mid == 0 || schedule[mid-1].end <= job.start)
+}
+
+func canInsertAfterMid(schedule []Interval, job Interval, mid int) bool {
+	return job.start >= schedule[mid].end && (mid == len(schedule)-1 || schedule[mid+1].start >= job.end)
+}
+
+func SumHammingDistance(nums []int) int {
+	sumHammingDist := 0
+	for i := range nums {
+		for j := i + 1; j < len(nums); j++ {
+			xor := nums[i] ^ nums[j]
+			cnt := 0
+			for xor > 0 {
+				cnt++
+				xor = xor & (xor - 1)
+			}
+
+			sumHammingDist += cnt * 2
+		}
+	}
+	return sumHammingDist % 1000000007
+}
+
+func PrimeSum(n int) []int {
+	primes := make([]bool, n+1)
+	for i := range primes {
+		primes[i] = true
+	}
+	primes[0], primes[1] = false, false
+
+	for i := 2; i*i <= n; i++ {
+		if !primes[i] {
+			continue
+		}
+
+		for j := i * i; j <= n; j += i {
+			primes[j] = false
+		}
+	}
+
+	res := []int{-1, -1}
+	for i, j := 0, len(primes)-1; i <= j; {
+		skip := false
+		if !primes[i] {
+			i++
+			skip = true
+		}
+		if !primes[j] {
+			j--
+			skip = true
+		}
+		if skip {
+			continue
+		}
+
+		sum := i + j
+		if sum == n {
+			res[0], res[1] = i, j
+			break
+		} else if sum > n {
+			j--
+		} else {
+			i++
+		}
+	}
+
+	return res
+}
+
+func FindDigitsInBinary(n int) string {
+	if n == 0 {
+		return "0"
+	}
+
+	b := []string{}
+	for n > 0 {
+		b = append(b, strconv.Itoa(n%2))
+		n /= 2
+	}
+	for i, j := 0, len(b)-1; i < j; i, j = i+1, j-1 {
+		b[i], b[j] = b[j], b[i]
+	}
+	return strings.Join(b, "")
+}
+
+func Sieve(n int) []int {
+	primes := map[int]bool{}
+	for i := 2; i <= n; i++ {
+		primes[i] = true
+	}
+
+	for i := 3; i*i <= n; i++ {
+		if i%2 == 0 {
+			primes[i] = false
+		}
+	}
+
+	for i := 2; i <= n; i++ {
+		for f := 2; i*f <= n; f++ {
+			primes[i*f] = false
+		}
+	}
+
+	res := []int{}
+	for i := 2; i <= n; i++ {
+		if primes[i] {
+			res = append(res, i)
+		}
+	}
+	return res
+}
+
+func ValidateStackSequences(pushed []int, popped []int) bool {
+	stk := []int{}
+	for _, num := range pushed {
+		stk = append(stk, num)
+		for len(popped) > 0 && len(stk) > 0 && stk[len(stk)-1] == popped[0] {
+			stk = stk[:len(stk)-1]
+			popped = popped[1:]
+		}
+	}
+	return len(popped) == 0
+}
+
+// TODO
+func FindIndexExtraChar(str1, str2 string) int {
+	return -1
+}
+
+func IsRectangleOverlap(rec1 []int, rec2 []int) bool {
+	if rec1[0] == rec1[2] || rec1[1] == rec1[3] || rec2[0] == rec2[2] || rec2[1] == rec2[3] {
+		return false
+	}
+	if rec1[0] >= rec2[2] || rec2[0] >= rec1[2] {
+		return false
+	}
+	if rec1[1] >= rec2[3] || rec2[1] >= rec1[3] {
+		return false
+	}
+	return true
+}
+
+func countOfAtoms(formula string) string {
+	stk := []byte{}
+	i := 0
+	for i < len(formula) {
+		b := formula[i]
+		if b != ')' {
+			stk = append(stk, b)
+			i++
+			continue
+		}
+	}
+
+	return ""
+}
+
+func coverPoints(A []int, B []int) int {
+	if len(A) == 0 || len(B) == 0 || len(A) != len(B) {
+		return 0
+	}
+	cnt := 0
+	x, y := A[0], B[0]
+	n := len(A)
+	for i := 1; i < n; i++ {
+		x2, y2 := A[i], B[i]
+		d1, d2 := mathext.AbsInt(x-x2), mathext.AbsInt(y-y2)
+		cnt += d1 + d2
+		if x != x2 && y != y2 {
+			cnt -= mathext.MinInt(d1, d2)
+		}
+		x, y = x2, y2
+	}
+	return cnt
+}
+
+func MaxSubArrayLen(nums []int, k int) int {
+	maxLen := 0
+	sumLens := map[int]int{}
+	sum := 0
+	for i, num := range nums {
+		sum += num
+		if sum == k {
+			maxLen = i + 1
+		} else if loIdx, ok := sumLens[sum-k]; ok {
+			maxLen = mathext.MaxInt(maxLen, i-loIdx)
+		}
+
+		if _, ok := sumLens[sum]; !ok {
+			sumLens[sum] = i
+		}
+	}
+
+	return maxLen
+}
+
+// TODO:
+func AddOperators(num string, target int) (results []string) {
+	if len(num) == 0 {
+		return results
+	}
+
+	n := len(num)
+	var dfs func(idx, currentVal int, str string)
+	dfs = func(idx, currentVal int, str string) {
+		currNum, _ := strconv.Atoi(string(num[idx]))
+		newStrMulti := str + "*" + string(num[idx])
+		newStrPlus := str + "+" + string(num[idx])
+		newStrMinus := str + "-" + string(num[idx])
+
+		if idx == n-1 {
+			if currentVal*currNum == target {
+				results = append(results, newStrMulti)
+			}
+			if currentVal+currNum == target {
+				results = append(results, newStrPlus)
+			}
+			if currentVal-currNum == target {
+				results = append(results, newStrMinus)
+			}
+			return
+		}
+
+		dfs(idx+1, currentVal*currNum, newStrMulti)
+		dfs(idx+1, currentVal+currNum, newStrPlus)
+		dfs(idx+1, currentVal-currNum, newStrMinus)
+	}
+
+	initVal, _ := strconv.Atoi(string(num[0]))
+	dfs(1, initVal, string(num[0]))
+	return results
+}
+
 func MinDifficulty(jobDifficulty []int, d int) (minDiff int) {
 	n := len(jobDifficulty)
-	if n < d { return -1 }
+	if n < d {
+		return -1
+	}
 	sort.Ints(jobDifficulty)
 	i := 0
 	for d > 1 && i < n-1 {
@@ -42,7 +446,7 @@ func MinDifficulty(jobDifficulty []int, d int) (minDiff int) {
 
 func SpiralOrder(matrix [][]int) []int {
 	m, n := len(matrix), len(matrix[0])
-	total := m*n
+	total := m * n
 	xTop, xBot := 0, m-1
 	yLeft, yRight := 0, n-1
 	x, y := 0, 0
@@ -59,7 +463,9 @@ func SpiralOrder(matrix [][]int) []int {
 			}
 			y++
 		}
-		if len(result) == total { break }
+		if len(result) == total {
+			break
+		}
 
 		for dir == Down {
 			result = append(result, matrix[x][y])
@@ -71,7 +477,9 @@ func SpiralOrder(matrix [][]int) []int {
 			}
 			x++
 		}
-		if len(result) == total { break }
+		if len(result) == total {
+			break
+		}
 
 		for dir == Left {
 			result = append(result, matrix[x][y])
@@ -83,7 +491,9 @@ func SpiralOrder(matrix [][]int) []int {
 			}
 			y--
 		}
-		if len(result) == total { break }
+		if len(result) == total {
+			break
+		}
 
 		for dir == Up {
 			result = append(result, matrix[x][y])
@@ -95,7 +505,9 @@ func SpiralOrder(matrix [][]int) []int {
 			}
 			x--
 		}
-		if len(result) == total { break }
+		if len(result) == total {
+			break
+		}
 
 	}
 	return result
@@ -103,10 +515,14 @@ func SpiralOrder(matrix [][]int) []int {
 
 func changeDirection(dir Direction) Direction {
 	switch dir {
-	case Right: return Down
-	case Down: return Left
-	case Left: return Up
-	default: return Right
+	case Right:
+		return Down
+	case Down:
+		return Left
+	case Left:
+		return Up
+	default:
+		return Right
 	}
 }
 
@@ -120,62 +536,63 @@ func FindMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 	start, end := 0, n1-1
 
 	for {
-		p1 := (start + end)/2
-		p2 := (n+1)/2 - p1
+		p1 := start + end
+		if p1 > 0 {
+			p1 /= 2
+		}
+		p2 := ((n+1)/2) - (p1+2)
 		n1Lo, n1Hi := -1<<31, 1<<31-1
 		n2Lo, n2Hi := -1<<31, 1<<31-1
-		if p1-1 >= 0 { n1Lo = nums1[p1-1] }
-		if p1 < n1 { n1Hi = nums1[p1] }
-		if p2-1 >= 0 { n2Lo = nums2[p2-1] }
-		if p2 < n2 { n2Hi = nums2[p2] }
+		if p1 >= 0 { n1Lo = nums1[p1] }
+		if p2 >= 0 { n2Lo = nums2[p2] }
+		if p1+1 < len(nums1) { n1Hi = nums1[p1+1] }
+		if p2+1 < len(nums2) { n2Hi = nums2[p2+1] }
 
 		if n1Lo <= n2Hi && n2Lo <= n1Hi {
 			maxOfLo := float64(mathext.MaxInt(n1Lo, n2Lo))
-			if n % 2 == 1 {
+			if n%2 == 1 {
 				return maxOfLo
 			}
 			minOfHi := float64(mathext.MinInt(n1Hi, n2Hi))
-			return maxOfLo + minOfHi/2
+			return (maxOfLo + minOfHi)/2
 		} else if n1Lo > n2Hi {
-			end = p1-1
+			end = p1 - 1
 		} else {
-			start = p1+1
+			start = p1 + 1
 		}
 	}
 }
 
-
-
-func MergeSortConcurrent(data [] int) [] int {
+func MergeSortConcurrent(data []int) []int {
 	if len(data) <= 1 {
 		return data
 	}
 	done := make(chan bool)
-	mid := len(data)/2
-	var left, right [] int
+	mid := len(data) / 2
+	var left, right []int
 
-	go func(){
+	go func() {
 		left = MergeSortConcurrent(data[:mid])
 		done <- true
 	}()
-	go func(){
+	go func() {
 		right = MergeSortConcurrent(data[mid:])
 		done <- true
 	}()
 	<-done
 	<-done
-	return merge(left,right)
+	return merge(left, right)
 }
 
-func MergeSort(data [] int) [] int {
+func MergeSort(data []int) []int {
 	if len(data) <= 1 {
 		return data
 	}
 
-	mid := len(data)/2
+	mid := len(data) / 2
 	left := MergeSort(data[:mid])
 	right := MergeSort(data[mid:])
-	return merge(left,right)
+	return merge(left, right)
 }
 
 func merge(left, right []int) []int {
@@ -612,7 +1029,7 @@ func MyPow(x float64, n int) float64 {
 		n = -n
 	}
 	var ans float64 = 1
-	var curr float64 = x
+	var curr = x
 	for i := n; i > 0; i /= 2 {
 		if i%2 == 1 {
 			ans = ans * curr
@@ -1232,52 +1649,70 @@ func AddBinary(a string, b string) string {
 		return a
 	}
 
-	resBytes := make([]byte, 0, mathext.MaxInt(len(a), len(b))+1)
-	var carry int
-	for i, j := len(a)-1, len(b)-1; i >= 0 || j >= 0; i, j = i-1, j-1 {
-		var aVal, bVal int
-		if i >= 0 {
-			aVal = int(a[i] - '0')
+	if len(a) < len(b) {
+		a = strings.Repeat("0", len(b)-len(a)) + a
+	}
+	if len(b) < len(a) {
+		b = strings.Repeat("0", len(a)-len(b)) + b
+	}
+
+	res := make([]byte, 0, len(a)+1)
+	carry := false
+	for i := len(a) - 1; i >= 0; i-- {
+		sum := 0
+		if carry {
+			sum++
 		}
-		if j >= 0 {
-			bVal = int(b[j] - '0')
+		if a[i] == '1' {
+			sum++
 		}
-		val := aVal + bVal + carry
-		valStr := strconv.Itoa(val % 2)
-		resBytes = append(resBytes, valStr...)
-		if val > 1 {
-			carry = 1
-		} else {
-			carry = 0
+		if b[i] == '1' {
+			sum++
+		}
+		switch sum {
+		case 3:
+			res = append(res, '1')
+			carry = true
+		case 2:
+			res = append(res, '0')
+			carry = true
+		case 1:
+			res = append(res, '1')
+			carry = false
+		default:
+			res = append(res, '0')
+			carry = false
 		}
 	}
-	if carry == 1 {
-		resBytes = append(resBytes, '1')
+	if carry {
+		res = append(res, '1')
 	}
-	for i, j := 0, len(resBytes)-1; i < j; i, j = i+1, j-1 {
-		resBytes[i], resBytes[j] = resBytes[j], resBytes[i]
+	for i, j := 0, len(res)-1; i < j; i, j = i+1, j-1 {
+		res[i], res[j] = res[j], res[i]
 	}
-	return string(resBytes)
+	return string(res)
 }
 
-
-
 func NumberToWords(num int) string {
-	if num == 0 { return "Zero" }
+	if num == 0 {
+		return "Zero"
+	}
 
-	digits := map[int]string{0:"Zero", 1:"One", 2:"Two", 3:"Three", 4:"Four", 5:"Five", 6:"Six", 7:"Seven", 8:"Eight", 9:"Nine"}
-	teens := map[int]string{10:"Ten", 11:"Eleven", 12:"Twelve", 13:"Thirteen", 14:"Fourteen", 15:"Fifteen", 16:"Sixteen", 17:"Seventeen", 18:"Eighteen", 19:"Nineteen"}
-	tens := map[int]string{20:"Twenty", 30:"Thirty", 40:"Forty", 50:"Fifty", 60:"Sixty", 70:"Seventy", 80:"Eighty", 90:"Ninety"}
+	digits := map[int]string{0: "Zero", 1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"}
+	teens := map[int]string{10: "Ten", 11: "Eleven", 12: "Twelve", 13: "Thirteen", 14: "Fourteen", 15: "Fifteen", 16: "Sixteen", 17: "Seventeen", 18: "Eighteen", 19: "Nineteen"}
+	tens := map[int]string{20: "Twenty", 30: "Thirty", 40: "Forty", 50: "Fifty", 60: "Sixty", 70: "Seventy", 80: "Eighty", 90: "Ninety"}
 	BILLION, MILLION, THOUSAND := 1000000000, 1000000, 1000
 
 	var twoDigToStr = func(num int) string {
 		if num < 20 {
 			str := digits[num]
-			if str == "" { str = teens[num] }
+			if str == "" {
+				str = teens[num]
+			}
 			return str
 		}
 
-		tensStr := tens[num/10 * 10]
+		tensStr := tens[num/10*10]
 		digitsStr := digits[num%10]
 		if digitsStr != "Zero" && digitsStr != "" {
 			tensStr += " " + digitsStr
@@ -1287,7 +1722,7 @@ func NumberToWords(num int) string {
 
 	var threeDigToStr = func(num int) string {
 		hundredsStr := digits[num/100] + " Hundred"
-		tensStr := twoDigToStr(num%100)
+		tensStr := twoDigToStr(num % 100)
 		if tensStr != "" && tensStr != "Zero" {
 			hundredsStr += " " + tensStr
 		}
@@ -1324,50 +1759,35 @@ func NumberToWords(num int) string {
 	return strings.TrimSpace(res)
 }
 
+type ParenthInfo struct {
+	balance int
+	str     string
+}
 
 func MinRemoveToMakeValid(s string) string {
 	b := []byte(s)
-	balance := 0
-	n := 0
-	for i := range b {
-		if b[i] == '(' {
-			balance++
-		}
-		if b[i] == ')' {
-			balance--
-		}
-		if balance >= 0 {
-			b[n] = b[i]
-			n++
-		} else {
-			balance++
-		}
-	}
-	b = b[:n]
+	openParStk := []int{}
 
-	if balance > 0 {
-		stk := []int{}
-		for i := range b {
-			if b[i] == '(' {
-				stk = append(stk, i)
-			} else if b[i] == ')' {
-				n = len(stk)
-				stk = stk[:n-1]
+	for i, ch := range s {
+		if ch == '(' {
+			openParStk = append(openParStk, i)
+		} else if ch == ')' {
+			if len(openParStk) > 0 {
+				openParStk = openParStk[:len(openParStk)-1]
+			} else {
+				b[i] = '-'
 			}
 		}
-		n = 0
-		for i := range b {
-			if len(stk) == 0 || i != stk[0] {
-				b[n] = b[i]
-				n++
-			} else if i == stk[0] {
-				stk = stk[1:]
-			}
-		}
-		b = b[:n]
 	}
 
-	return string(b)
+	n := len(openParStk)
+	var idx int
+	for n > 0 {
+		idx, openParStk = openParStk[n-1], openParStk[:n-1]
+		b[idx] = '-'
+		n = len(openParStk)
+	}
+	return strings.ReplaceAll(string(b), "-", "")
 }
 
 func IsAlienSorted(words []string, order string) bool {
@@ -1407,20 +1827,21 @@ func isLess(w1, w2 string, orderDict map[byte]int) bool {
 	return false
 }
 
-// TODO: Come back to
 func LeastInterval(tasks []byte, n int) (time int) {
-	taskCnts := make([]int, 26)
-	for i := range tasks {
-		taskCnts[tasks[i]-'A']++
+	taskCnt := make([]int, 26)
+	for _, task := range tasks {
+		taskCnt[task-'A']++
 	}
-	sort.Ints(taskCnts)
 
-	maxIdleTime := (taskCnts[25] - 1) * n
-	for i := 24; i >= 0; i-- {
-		maxIdleTime -= mathext.MinInt(taskCnts[25]-1, taskCnts[i])
+	sort.Ints(taskCnt)
+	maxFreq := taskCnt[25]
+	idleTime := (maxFreq - 1) * n
+
+	for i := 24; i >= 0 && taskCnt[i] > 0; i-- {
+		idleTime -= mathext.MinInt(taskCnt[i], maxFreq-1)
 	}
-	maxIdleTime = mathext.MaxInt(0, maxIdleTime)
-	return time + len(tasks)
+
+	return mathext.MaxInt(idleTime, 0) + len(tasks)
 }
 
 func IsNumeric(s string) bool {
@@ -1811,7 +2232,6 @@ func CalendarMatching(calendar1 []StringMeeting, dailyBounds1 StringMeeting,
 	fmt.Println(blocked)
 	return openingsStringMeetings
 }
-
 
 type TrafficDirection int
 
@@ -2247,6 +2667,38 @@ func nextPermutation(nums []int) {
 	return
 }
 
+func NextPermutation2(A []int) []int {
+	if len(A) <= 1 {
+		return A
+	}
+
+	idx := -1
+	for i := len(A) - 2; i >= 0; i-- {
+		if A[i] < A[i+1] {
+			idx = i
+			break
+		}
+	}
+
+	if idx == -1 {
+		sort.Ints(A)
+		return A
+	}
+
+	for i := idx + 1; i < len(A); i++ {
+		if A[idx] <= A[i] && (i == len(A)-1 || A[idx] > A[i+1]) {
+			A[idx], A[i] = A[i], A[idx]
+			break
+		}
+	}
+
+	for i, j := idx+1, len(A)-1; i < j; i, j = i+1, j-1 {
+		A[i], A[j] = A[j], A[i]
+	}
+
+	return A
+}
+
 func multiplyStrings(num1 string, num2 string) string {
 	if num1 == "0" || num2 == "0" {
 		return "0"
@@ -2566,14 +3018,15 @@ func validateIpv6Address(ipGroups []string) (isValid bool) {
 	return true
 }
 
-func SubarraySum(nums []int, k int) (cnt int) {
-	numFreq := map[int]int{0: 1}
+func SubarraySumEqualsK(nums []int, k int) (cnt int) {
+	sumFreq := map[int]int{0: 1}
 	sum := 0
-	for i := 0; i < len(nums); i++ {
-		sum += nums[i]
-		if numFreq[sum-k] > 0 {
-			cnt += numFreq[sum-k]
+	for _, num := range nums {
+		sum += num
+		if freq, ok := sumFreq[sum-k]; ok {
+			cnt += freq
 		}
+		sumFreq[sum] += 1
 	}
 	return cnt
 }
@@ -2606,32 +3059,30 @@ func validPalindrome(s string) bool {
 	return true
 }
 
-// TODO: Come back to and improve time complexity
-func divide(dividend int, divisor int) (cnt int) {
-	isNegative := false
+func Divide(dividend int, divisor int) (cnt int) {
+	neg1, neg2 := false, false
 	if dividend < 0 {
-		isNegative = !isNegative
+		neg1 = true
 		dividend = -dividend
 	}
 	if divisor < 0 {
-		isNegative = !isNegative
+		neg2 = true
 		divisor = -divisor
 	}
+	isNeg := neg1 != neg2
 
 	for dividend >= divisor {
-		cnt++
-		dividend -= divisor
+		shift := 0
+		for (1<<(shift+1))*divisor <= dividend {
+			shift++
+		}
+		cnt += 1 << shift
+		dividend -= (1 << shift) * divisor
 	}
-
-	if isNegative {
+	if isNeg {
 		cnt = -cnt
 	}
-	if cnt < -1<<31 {
-		cnt = -1 << 31
-	} else if cnt > 1<<31-1 {
-		cnt = 1<<31 - 1
-	}
-	return
+	return cnt
 }
 
 func binarySearchSifted(nums []int, target int) int {
@@ -2948,8 +3399,6 @@ func RotateMatrixNoDiagonals2(matrix [][]int) {
 		y2--
 	}
 }
-
-
 
 /*func strStr(haystack string, needle string) int {
 	if needle == "" {return 0}
@@ -3960,8 +4409,8 @@ func FirstMissingPositive(nums []int) int {
 	}
 
 	for i := range nums {
-		if abs(nums[i])-1 < len(nums) && nums[abs(nums[i])-1] > 0 {
-			nums[abs(nums[i])-1] = -nums[abs(nums[i])-1]
+		if mathext.AbsInt(nums[i])-1 < len(nums) && nums[mathext.AbsInt(nums[i])-1] > 0 {
+			nums[mathext.AbsInt(nums[i])-1] = -nums[mathext.AbsInt(nums[i])-1]
 		}
 	}
 
@@ -3973,12 +4422,6 @@ func FirstMissingPositive(nums []int) int {
 	return len(nums) + 1
 }
 
-func abs(n int) int {
-	if n < 0 {
-		return -n
-	}
-	return n
-}
 
 func SearchMatrix(matrix [][]int, target int) bool {
 	rows, cols := len(matrix), len(matrix[0])

@@ -1,12 +1,61 @@
-﻿using System;
+﻿#nullable disable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using csharp_algo.Collections;
 
 namespace csharp_algo
 {
     public class ArraysAndStrings
     {
+        public string ShortestPalindrome(string s) {
+            var n = s.Length;
+            var i = 0;
+            for (var j = n-1; j >= 0; j--) {
+                if (s[i] == s[j])
+                    i++;
+            }
+
+            if (i == n)
+                return s;
+
+            var rev = s.Substring(i).ToCharArray();
+            Array.Reverse(rev);
+            return new string(rev) + ShortestPalindrome(s[..i]) + s[i..];
+        }
+
+        public IList<string> TopKFrequent(string[] words, int k)
+        {
+            var freqMap = new Dictionary<string, int>();
+            foreach (var word in words)
+            {
+                if (freqMap.ContainsKey(word))
+                    freqMap[word] += 1;
+                else
+                    freqMap[word] = 1;
+            }
+
+            var mh = new MinHeap<WordInfo>();
+            foreach (var kvp in freqMap)
+            {
+                if (mh.Count < k)
+                    mh.Push(new WordInfo(kvp.Key, kvp.Value));
+                else if (kvp.Value > mh.Peek().Freq)
+                {
+                    mh.Pop();
+                    mh.Push(new WordInfo(kvp.Key, kvp.Value));
+                }
+            }
+
+            var retList = new List<string>(k);
+            foreach (var wi in mh.Values())
+            {
+                retList.Add(wi.Word);
+            }
+            return retList;
+        }
+
         public bool IsAlienSorted(string[] words, string order)
         {
             if (words.Length <= 1) return true;
@@ -52,8 +101,9 @@ namespace csharp_algo
             {
                 balFreq[c - 'a']++;
             }
-            var minSingles = 1<<31-1;
-            var minDoubles = 1<<31-1;
+
+            var minSingles = 1 << 31 - 1;
+            var minDoubles = 1 << 31 - 1;
             var singles = new[] { 'b' - 'a', 'a' - 'a', 'n' - 'a' };
             var doubles = new[] { 'l' - 'a', 'o' - 'a' };
             for (var i = 0; i < balFreq.Length; i++)
@@ -123,10 +173,12 @@ namespace csharp_algo
 
                     charSet.Add(ch);
                 }
+
                 charSets.Add(charSet);
             }
 
             int maxLen = 0;
+
             void dfs(int idx, HashSet<char> currCharSet)
             {
                 maxLen = Math.Max(maxLen, currCharSet.Count);
@@ -137,11 +189,13 @@ namespace csharp_algo
                     dfs(idx + 1, currCharSet.Union(charSets[idx]).ToHashSet());
                 dfs(idx + 1, currCharSet);
             }
+
             dfs(0, new HashSet<char>());
             return maxLen;
         }
 
-        public int TestGroupScores(string[] T, string[] R) {
+        public int TestGroupScores(string[] T, string[] R)
+        {
             int testGroupIdx = 0;
             while (testGroupIdx < T[0].Length && T[0][testGroupIdx].IsLowerAlpha())
                 testGroupIdx++;
@@ -167,7 +221,8 @@ namespace csharp_algo
                 if (kvp.Value == true)
                     passedCount++;
             }
-            return (passedCount*100)/statusMap.Count;
+
+            return (passedCount * 100) / statusMap.Count;
         }
 
         public int[] SumZero(int n)
@@ -211,7 +266,8 @@ namespace csharp_algo
                 if (nums[i] > 0)
                     return i + 1;
             }
-            return nums.Length+1;
+
+            return nums.Length + 1;
         }
 
         public int MinPathSum(int[][] grid)
@@ -232,30 +288,77 @@ namespace csharp_algo
             return grid[^1][^1];
         }
 
-        public String CountAndSay(int n) {
-            if(n==1) return "1";
+        public String CountAndSay(int n)
+        {
+            if (n == 1) return "1";
             string ans = "1";
-            for(int i=2; i<=n; i++){
+            for (int i = 2; i <= n; i++)
+            {
                 ans = f(ans);
             }
+
             return ans;
         }
 
-        private string f(string s){
+        private string f(string s)
+        {
             char ch = s[0];
             int count = 1;
             StringBuilder sb = new();
-            for (var i = 1; i < s.Length; i++){
-                if (s[i] != ch) {
+            for (var i = 1; i < s.Length; i++)
+            {
+                if (s[i] != ch)
+                {
                     sb.Append(count).Append(ch);
                     ch = s[i];
                     count = 1;
-                } else {
+                }
+                else
+                {
                     count++;
                 }
             }
+
             sb.Append(count).Append(ch);
             return sb.ToString();
+        }
+
+        public void MoveZeroes(int[] nums)
+        {
+            int zeroPtr = 0, nonZeroPtr = 0;
+            while (nonZeroPtr < nums.Length && zeroPtr < nums.Length)
+            {
+                if (zeroPtr < nums.Length && nums[zeroPtr] != 0)
+                    zeroPtr++;
+                if (nonZeroPtr < nums.Length && nums[nonZeroPtr] == 0)
+                    nonZeroPtr++;
+                if (zeroPtr > nonZeroPtr)
+                    nonZeroPtr = zeroPtr + 1;
+
+                if (zeroPtr < nums.Length && nonZeroPtr < nums.Length && nums[zeroPtr] == 0 && nums[nonZeroPtr] != 0)
+                {
+                    nums[zeroPtr] = nums[nonZeroPtr];
+                    nums[nonZeroPtr] = 0;
+                    zeroPtr++;
+                    nonZeroPtr++;
+                }
+            }
+        }
+    }
+
+    public class WordInfo : IComparable<WordInfo>
+    {
+        public WordInfo(string word, int freq)
+        {
+            Freq = freq;
+            Word = word;
+        }
+
+        public int Freq { get; set; }
+        public string Word { get; set; }
+        public int CompareTo(WordInfo other)
+        {
+            return Freq.CompareTo(other.Freq);
         }
     }
 }

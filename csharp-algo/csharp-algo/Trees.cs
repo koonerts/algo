@@ -1,10 +1,45 @@
-﻿using System;
+﻿#nullable disable
+using System;
 using System.Collections.Generic;
 
 namespace csharp_algo
 {
     public class Trees
     {
+        public class TreeNode
+        {
+            public int val;
+            public TreeNode left;
+            public TreeNode right;
+
+            public TreeNode(int val = 0, TreeNode left = null, TreeNode right = null)
+            {
+                this.val = val;
+                this.left = left;
+                this.right = right;
+            }
+        }
+
+        public int MaxPathSum(TreeNode root)
+        {
+            var maxSum = -1 << 31;
+            int dfs(TreeNode node)
+            {
+                if (node == null)
+                    return 0;
+
+                var leftSum = Math.Max(dfs(node.left), 0);
+                var rightSum = Math.Max(dfs(node.right), 0);
+                var totalSum = leftSum + rightSum + node.val;
+                maxSum = Math.Max(maxSum, totalSum);
+                return Math.Max(Math.Max(leftSum, rightSum) + node.val, 0);
+            }
+
+            dfs(root);
+            return maxSum;
+        }
+
+
         public char[][] UpdateBoard(char[][] board, int[] click)
         {
             var val = board[click[0]][click[1]];

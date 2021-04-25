@@ -19,12 +19,12 @@ namespace csharp_algo
         }
     }
 
-    /*public sealed class Singleton
+    public sealed class Singleton
     {
         private static readonly Lazy<Singleton> lazy = new(() => new Singleton());
         private Singleton() { }
         public static Singleton Instance => lazy.Value;
-    }*/
+    }
 
     public class FizzBuzz
     {
@@ -34,7 +34,7 @@ namespace csharp_algo
 
         public FizzBuzz(int n)
         {
-            this._n = n;
+            _n = n;
         }
 
         private void SyncRun(Func<int, bool> condition, Action<int> action)
