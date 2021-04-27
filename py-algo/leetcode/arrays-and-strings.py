@@ -6,9 +6,19 @@ from heapq import *
 def print_matrix(matrix):
     print(np.array(matrix))
 
+
 class Solution:
 
-
+    def evalRPN(self, arr):
+        stk = []
+        ops = {'+', '*', '/', '-'}
+        for i, val in enumerate(arr):
+            if val in ops:
+                n1, n2 = stk.pop(), stk.pop()
+                stk.append(str(eval(n2 + val + n1)))
+            else:
+                stk.append(val)
+        return int(float(stk[-1]))
 
     def removeDuplicates(self, nums: list[int]) -> int:
         if not nums:
