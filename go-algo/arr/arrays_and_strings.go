@@ -49,7 +49,7 @@ func nonRepeatingCharacters(str string) string {
 	return string(b)
 }
 
-func slidingMaximum(nums []int , k int) []int {
+func slidingMaximum(nums []int, k int) []int {
 	que := []int{}
 	lo, hi := 0, 0
 	res := []int{}
@@ -93,7 +93,7 @@ func prevSmaller(nums []int) []int {
 	return res
 }
 
-func isPalindrome(A string ) int {
+func isPalindrome(A string) int {
 	reg := regexp.MustCompile("[\\w]+")
 	str := strings.ToLower(strings.Join(reg.FindAllString(A, -1), ""))
 	for i, j := 0, len(str)-1; i < j; i, j = i+1, j-1 {
@@ -118,9 +118,9 @@ func ConcentricMatrix(n int) [][]int {
 }
 
 func RearrangeArr(nums []int) []int {
-	n:= len(nums)
+	n := len(nums)
 	for i := range nums {
-		nums[i] += (nums[nums[i]]%n) * n
+		nums[i] += (nums[nums[i]] % n) * n
 	}
 
 	fmt.Println(nums)
@@ -146,7 +146,7 @@ func ReverseInt(n int) int {
 	if isNeg {
 		rev = -rev
 	}
-	if rev > 1<<31 - 1 || rev < -1<<31 {
+	if rev > 1<<31-1 || rev < -1<<31 {
 		rev = 0
 	}
 	return rev
@@ -540,13 +540,21 @@ func FindMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 		if p1 > 0 {
 			p1 /= 2
 		}
-		p2 := ((n+1)/2) - (p1+2)
+		p2 := ((n + 1) / 2) - (p1 + 2)
 		n1Lo, n1Hi := -1<<31, 1<<31-1
 		n2Lo, n2Hi := -1<<31, 1<<31-1
-		if p1 >= 0 { n1Lo = nums1[p1] }
-		if p2 >= 0 { n2Lo = nums2[p2] }
-		if p1+1 < len(nums1) { n1Hi = nums1[p1+1] }
-		if p2+1 < len(nums2) { n2Hi = nums2[p2+1] }
+		if p1 >= 0 {
+			n1Lo = nums1[p1]
+		}
+		if p2 >= 0 {
+			n2Lo = nums2[p2]
+		}
+		if p1+1 < len(nums1) {
+			n1Hi = nums1[p1+1]
+		}
+		if p2+1 < len(nums2) {
+			n2Hi = nums2[p2+1]
+		}
 
 		if n1Lo <= n2Hi && n2Lo <= n1Hi {
 			maxOfLo := float64(mathext.MaxInt(n1Lo, n2Lo))
@@ -554,7 +562,7 @@ func FindMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 				return maxOfLo
 			}
 			minOfHi := float64(mathext.MinInt(n1Hi, n2Hi))
-			return (maxOfLo + minOfHi)/2
+			return (maxOfLo + minOfHi) / 2
 		} else if n1Lo > n2Hi {
 			end = p1 - 1
 		} else {
@@ -1108,6 +1116,55 @@ func CombinationSum(candidates []int, target int) (results [][]int) {
 		}
 	}
 	backtrack(target, 0, []int{})
+	return results
+}
+
+func combinationSum2(nums []int, target int) (results [][]int) {
+	n := len(nums)
+	sort.Ints(nums)
+	var traverse func(idx, remaining int, arr []int)
+	traverse = func(idx, remaining int, arr []int) {
+		if remaining == 0 {
+			temp := make([]int, len(arr))
+			copy(temp, arr)
+			results = append(results, temp)
+			return
+		} else if idx >= n || remaining < 0 {
+			return
+		}
+
+		for j := idx; j < n; {
+			arr = append(arr, nums[j])
+			traverse(j+1, remaining-nums[j], arr)
+			arr = arr[:len(arr)-1]
+			j++
+			for j > 0 && j < n && nums[j] == nums[j-1] {
+				j++
+			}
+		}
+	}
+	traverse(0, target, []int{})
+	return results
+}
+
+func combine(n, k int) [][]int {
+	results := [][]int{}
+	var traverse func(num int, arr []int)
+	traverse = func(num int, arr []int) {
+		if len(arr) == k {
+			temp := make([]int, k)
+			copy(temp, arr)
+			results = append(results, temp)
+			return
+		}
+
+		for i := num; i <= n; i++ {
+			arr = append(arr, i)
+			traverse(i+1, arr)
+			arr = arr[:len(arr)-1]
+		}
+	}
+	traverse(1, []int{})
 	return results
 }
 
@@ -4422,7 +4479,6 @@ func FirstMissingPositive(nums []int) int {
 	return len(nums) + 1
 }
 
-
 func SearchMatrix(matrix [][]int, target int) bool {
 	rows, cols := len(matrix), len(matrix[0])
 	x, y := 0, cols-1
@@ -4463,8 +4519,7 @@ func CountAndSay(n int) string {
 	return res
 }
 
-
-func generateMatrix(A int ) [][]int {
+func generateMatrix(A int) [][]int {
 	arr := make([][]int, A)
 	for i := range arr {
 		arr[i] = make([]int, A)
