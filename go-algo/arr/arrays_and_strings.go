@@ -9,6 +9,7 @@ import (
 	"go-algo/ext/mathext"
 	"go-algo/ext/strext"
 	"math"
+	"math/rand"
 	"regexp"
 	"sort"
 	"strconv"
@@ -24,6 +25,164 @@ const (
 	Down
 	Up
 )
+
+type Point struct {
+	x, y int
+}
+
+
+func LongestConsecutive(nums []int) int {
+	if len(nums) == 0 { return 0 }
+	numSet := map[int]bool{}
+	for _, num := range nums {
+		numSet[num] = true
+	}
+
+	maxConsec := 1
+	for num := range numSet {
+		if !numSet[num-1] {
+			l := 1
+			for numSet[num+1] {
+				l++
+				num += 1
+			}
+			maxConsec = mathext.MaxInt(maxConsec, l)
+		}
+	}
+	return maxConsec
+}
+
+
+
+func Subsets(nums []int) [][]int {
+	results := [][]int{}
+	sort.Ints(nums)
+	var traverse func(idx int, set []int)
+	traverse = func(idx int, set []int) {
+		temp := make([]int, len(set))
+		copy(temp, set)
+		results = append(results, temp)
+		for j := idx; j < len(nums); j++ {
+			set = append(set, nums[j])
+			traverse(j+1, set)
+			set = set[:len(set)-1]
+		}
+	}
+	traverse(0, []int{})
+	return results
+}
+
+func NextGreater(nums []int) []int {
+	n := len(nums)
+	results := make([]int, n)
+	stk := []int{}
+	for i := n - 1; i >= 0; i-- {
+		for len(stk) > 0 && stk[len(stk)-1] <= nums[i] {
+			stk = stk[:len(stk)-1]
+		}
+
+		val := -1
+		if len(stk) > 0 {
+			val = stk[len(stk)-1]
+		}
+		results[i] = val
+		stk = append(stk, nums[i])
+	}
+	return results
+}
+
+func topKFrequent(nums []int, k int) []int {
+	freqMap := map[int]int{}
+	keys := []int{}
+	for _, num := range nums {
+		freqMap[num] += 1
+		if freqMap[num] == 1 {
+			keys = append(keys, num)
+		}
+	}
+
+	var partition func(left, right, pivotIdx int) int
+	partition = func(left, right, pivotIdx int) int {
+		pivotFreq := freqMap[keys[pivotIdx]]
+		keys[pivotIdx], keys[right] = keys[right], keys[pivotIdx]
+
+		newPivotIdx := left
+		for i := left; i < right; i++ {
+			if freqMap[keys[i]] < pivotFreq {
+				keys[newPivotIdx], keys[i] = keys[i], keys[newPivotIdx]
+				newPivotIdx++
+			}
+		}
+
+		keys[newPivotIdx], keys[right] = keys[right], keys[newPivotIdx]
+		return newPivotIdx
+	}
+
+	var quickSelect func(left, right, kthSmallestIdx int)
+	quickSelect = func(left, right, kthSmallestIdx int) {
+		if left == right {
+			return
+		}
+
+		rand.Seed(time.Now().UnixNano())
+		pivotIdx := rand.Intn((right+1)-left) + left
+		pivotIdx = partition(left, right, pivotIdx)
+
+		if kthSmallestIdx == pivotIdx {
+			return
+		} else if kthSmallestIdx < pivotIdx {
+			quickSelect(left, pivotIdx-1, kthSmallestIdx)
+		} else {
+			quickSelect(pivotIdx+1, right, kthSmallestIdx)
+		}
+	}
+
+	n := len(nums)
+	quickSelect(0, n-1, n-k)
+	return keys[n-k:]
+}
+
+func MinimumAreaRectangle(points [][]int) int {
+	pointSet := map[Point]bool{}
+	for _, point := range points {
+		pointSet[Point{point[0], point[1]}] = true
+	}
+
+	minArea := 1<<31 - 1
+	for i := 0; i < len(points); i++ {
+		for j := i + 1; j < len(points); j++ {
+			p1 := Point{points[i][0], points[i][1]}
+			p2 := Point{points[j][0], points[j][1]}
+			if p1.x == p2.x || p1.y == p2.y {
+				continue
+			} else if !pointSet[Point{p1.x, p2.y}] || !pointSet[Point{p2.x, p1.y}] {
+				continue
+			}
+
+			area := mathext.AbsInt(p1.x-p2.x) * mathext.AbsInt(p1.y-p2.y)
+			minArea = mathext.MinInt(minArea, area)
+		}
+	}
+	return minArea
+}
+
+func comb(n, k int) int {
+	memo := map[int]map[int]int{}
+	var helper func(n, k int) int
+	helper = func(n, k int) int {
+		if n == 0 || k == 0 {
+			return 1
+		}
+		if memo[n] == nil {
+			memo[n] = map[int]int{}
+		}
+		if _, ok := memo[n][k]; !ok {
+			memo[n][k] = helper(n-1, k) + helper(n, k-1)
+		}
+		return memo[n][k]
+	}
+	return helper(n, k)
+}
 
 func nonRepeatingCharacters(str string) string {
 	b := []byte{}
@@ -1110,6 +1269,7 @@ func CombinationSum(candidates []int, target int) (results [][]int) {
 		}
 
 		for ; idx < len(candidates); idx++ {
+			if idx > 0 && nums[idx] == nums[idx-1] {continue}
 			nums = append(nums, candidates[idx])
 			backtrack(remaining-candidates[idx], idx, nums)
 			nums = nums[:len(nums)-1]
@@ -1165,6 +1325,28 @@ func combine(n, k int) [][]int {
 		}
 	}
 	traverse(1, []int{})
+	return results
+}
+
+func CombinationSum2(candidates []int, target int) (results [][]int) {
+	sort.Ints(candidates)
+	var backtrack func(remaining, idx int, nums []int)
+	backtrack = func(remaining, idx int, nums []int) {
+		if remaining == 0 {
+			results = append(results, getIntSliceCopy(nums))
+			return
+		} else if remaining < 0 {
+			return
+		}
+
+		for ; idx < len(candidates); idx++ {
+			if idx > 0 && nums[idx] == nums[idx-1] {continue}
+			nums = append(nums, candidates[idx])
+			backtrack(remaining-candidates[idx], idx+1, nums)
+			nums = nums[:len(nums)-1]
+		}
+	}
+	backtrack(target, 0, []int{})
 	return results
 }
 

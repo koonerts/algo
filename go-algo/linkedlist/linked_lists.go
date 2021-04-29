@@ -473,6 +473,37 @@ func GetIntersectionNode(headA, headB *ListNode) *ListNode {
 	return nil
 }
 
+
+func Subtract(root *ListNode) *ListNode {
+	if root == nil { return nil }
+	n := 0
+	node := root
+	for node != nil {
+		n++
+		node = node.Next
+	}
+
+	mid := (n-1)/2
+	midNode := root
+	for i := 0; i < mid; i++ {
+		midNode = midNode.Next
+	}
+	midNext := midNode.Next
+	midNode.Next = nil
+	reversedNode := reverseList(midNext)
+
+	node = root
+	reverseIterator := reversedNode
+	for reverseIterator != nil {
+		node.Val = reverseIterator.Val - node.Val
+		node = node.Next
+		reverseIterator = reverseIterator.Next
+	}
+	midNext = reverseList(reversedNode)
+	midNode.Next = midNext
+	return root
+}
+
 /*func MergeKLists(lists []*ListNode) *ListNode {
 	lnh := collection.ListNodeHeap{}
 	for i := range lists {

@@ -1,3 +1,9 @@
+import numpy as np
+
+
+def print_slice(arr):
+    print(np.array(arr))
+
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
@@ -15,7 +21,88 @@ class ListNode:
 
         print(vals)
 
+
 class Solution:
+
+    def solveSudoku(self, board):
+        Solution.board = board
+        Solution.rows = [[False for _ in range(9)] for _ in range(9)]
+        Solution.cols = [[False for _ in range(9)] for _ in range(9)]
+        Solution.boxes = [[False for _ in range(9)] for _ in range(9)]
+
+        def can_place(row, col, val):
+            return not Solution.rows[row][val-1] and not Solution.cols[col][val-1] and not Solution.boxes[row//3 * 3 + col//3][val-1]
+
+        def place(row, col, val):
+            val = int(val)
+            Solution.rows[row][val-1] = True
+            Solution.cols[col][val-1] = True
+            Solution.boxes[row//3 * 3 + col//3][val-1] = True
+            Solution.board[row][col] = str(val)
+
+        def remove(row, col):
+            val = int(Solution.board[row][col])
+            Solution.rows[row][val-1] = False
+            Solution.cols[col][val-1] = False
+            Solution.boxes[row//3 * 3 + col//3][val-1] = False
+            Solution.board[row][col] = '.'
+
+        for i in range(9):
+            for j in range(9):
+                if Solution.board[i][j] != '.':
+                    place(i, j, Solution.board[i][j])
+
+        def dfs(row, col):
+            if row >= 8 and col >= 9:
+                return True
+            elif col >= 9:
+                return dfs(row+1, 0)
+            elif Solution.board[row][col] != '.':
+                return dfs(row, col+1)
+
+            for i in range(1, 10):
+                if can_place(row, col, i):
+                    place(row, col, i)
+                    is_solved = dfs(row, col+1)
+                    if is_solved:
+                        return True
+                    remove(row, col)
+            return False
+
+        dfs(0, 0)
+
+
+    def partition(self, s):
+        results = []
+        n = len(s)
+
+        def isPalindrome(str_val):
+            if len(str_val) == 0:
+                return False
+            lo, hi = 0, len(str_val)-1
+            while lo < hi:
+                if str_val[lo] != str_val[hi]:
+                    return False
+                lo += 1
+                hi -= 1
+            return True
+
+        def dfs(idx, curr_str, curr_path):
+            if idx >= len(s) and curr_str == '':
+                results.append(curr_path.copy())
+                return
+            elif idx >= len(s):
+                return
+
+            for i in range(idx+1, n+1):
+                if isPalindrome(s[idx:i]):
+                    curr_path.append(curr_str + s[idx:i])
+                    dfs(i, '', curr_path)
+                    curr_path.pop()
+
+        dfs(0, "", [])
+        return results
+
 
     def reverseString(self, s: list[str]) -> None:
         """
@@ -120,4 +207,5 @@ class Solution:
         return result
 
 
-print(Solution().totalNQueens(4))
+board = [["5","3",".",".","7",".",".",".","."],["6",".",".","1","9","5",".",".","."],[".","9","8",".",".",".",".","6","."],["8",".",".",".","6",".",".",".","3"],["4",".",".","8",".","3",".",".","1"],["7",".",".",".","2",".",".",".","6"],[".","6",".",".",".",".","2","8","."],[".",".",".","4","1","9",".",".","5"],[".",".",".",".","8",".",".","7","9"]]
+print(Solution().solveSudoku(board))

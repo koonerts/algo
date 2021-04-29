@@ -41,7 +41,7 @@ func (lru *LRUCache) Get(key int) int {
 func (lru *LRUCache) Put(key int, value int) {
 	elem := lru.cache[key]
 	if elem == nil {
-		elem := lru.kvList.InsertAfter(&LRUCacheItem{key, value}, lru.head)
+		elem = lru.kvList.InsertAfter(&LRUCacheItem{key, value}, lru.head)
 		lru.cache[key] = elem
 		lru.size++
 

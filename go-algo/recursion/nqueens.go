@@ -1,96 +1,73 @@
 package recursion
 
-type UnsafeInfo struct {
-	rows, cols, diag1, diag2 map[int]bool
-}
-func NewUnsafeInfo() *UnsafeInfo {
-	return &UnsafeInfo{
-		rows:  map[int]bool{},
-		cols:  map[int]bool{},
-		diag1: map[int]bool{},
-		diag2: map[int]bool{},
-	}
+
+type nQueens struct {
+	board [][]byte
+	n int
+	rows, cols []bool
+	diag1, diag2 map[int]bool
+	solutions [][]string
 }
 
-func isSafe(usi *UnsafeInfo, x, y int) bool {
-	if usi.rows[x] || usi.cols[y] || usi.diag1[x-y] || usi.diag2[x+y] {
-		return false
-	}
-	return true
-}
-
-func placeQueen(board [][]string, usi *UnsafeInfo, x, y int) bool {
-	if board != nil {
-		board[x][y] = "q"
-	}
-	usi.rows[x] = true
-	usi.cols[y] = true
-	usi.diag1[x-y] = true
-	usi.diag2[x+y] = true
-	return true
-}
-
-func removeQueen(board [][]string, usi *UnsafeInfo, x, y int) bool {
-	if board != nil {
-		board[x][y] = "-"
-	}
-	usi.rows[x] = false
-	usi.cols[y] = false
-	usi.diag1[x-y] = false
-	usi.diag2[x+y] = false
-	return false
-}
-
-func PlaceQueens(board [][]string) (placedBoards [][][]string) {
-	usi := NewUnsafeInfo()
-	var place func(x int) bool
-	place = func(x int) bool {
-		if x >= len(board) {
-			boardCopy := make([][]string, len(board))
-			for i := range board {
-				boardCopy[i] = make([]string, len(board[i]))
-				copy(boardCopy[i], board[i])
-			}
-			placedBoards = append(placedBoards, boardCopy)
-			return false
-		} else {
-			isPlaced := false
-			for y := range board[x] {
-				if isSafe(usi, x, y) {
-					isPlaced = placeQueen(board, usi, x, y)
-					if !place(x+1) {
-						isPlaced = removeQueen(board, usi, x, y)
-					}
-				}
-			}
-			return isPlaced
+func newNQueens(n int) *nQueens {
+	board := make([][]byte, n)
+	for i := range board {
+		board[i] = make([]byte, n)
+		for j := range board[i] {
+			board[i][j] = '.'
 		}
 	}
-	place(0)
-	return placedBoards
+	rows, cols := make([]bool, n), make([]bool, n)
+	diag1, diag2 := map[int]bool{}, map[int]bool{}
+
+	return &nQueens{board, n, rows, cols, diag1, diag2, [][]string{}}
 }
 
+func (nq *nQueens) placeQueen(r, c int) {
+	nq.board[r][c] = 'Q'
+	nq.rows[r] = true
+	nq.cols[c] = true
+	nq.diag1[r-c] = true
+	nq.diag2[r+c] = true
+}
 
-func TotalNQueens(n int) (cnt int) {
-	usi := NewUnsafeInfo()
-	var place func(x int) bool
-	place = func(x int) bool {
-		if x >= n {
-			cnt++
-			return false
-		} else {
-			isPlaced := false
-			for y := 0; y < n; y++ {
-				if isSafe(usi, x, y) {
-					isPlaced = placeQueen(nil, usi, x, y)
-					if !place(x+1) {
-						isPlaced = removeQueen(nil, usi, x, y)
-					}
-				}
+func (nq *nQueens) removeQueen(r, c int) {
+	nq.board[r][c] = '.'
+	nq.rows[r] = false
+	nq.cols[c] = false
+	nq.diag1[r-c] = false
+	nq.diag2[r+c] = false
+}
+
+func (nq *nQueens) canPlace(r, c int) bool {
+	return nq.board[r][c] == '.' && !nq.rows[r] && !nq.cols[c] && !nq.diag1[r-c] && !nq.diag2[r+c]
+}
+
+func (nq *nQueens) getSolution() []string {
+	sol := make([]string, nq.n)
+	for i := range nq.board {
+		sol[i] = string(nq.board[i])
+	}
+	return sol
+}
+
+func solveNQueens(n int) (solutions [][]string) {
+	game := newNQueens(n)
+	var dfs func(row int)
+	dfs = func(row int) {
+		if row >= n {
+			game.solutions = append(game.solutions, game.getSolution())
+			return
+		}
+
+		for col := 0; col < n; col++ {
+			if game.canPlace(row, col) {
+				game.placeQueen(row, col)
+				dfs(row+1)
+				game.removeQueen(row, col)
 			}
-			return isPlaced
 		}
 	}
-	place(0)
-	return cnt
+	dfs(0)
+	return game.solutions
 }

@@ -89,6 +89,31 @@ func BuildTreePost(inOrder, postOrder []int) *TreeNode {
 	return build(-1<<31)
 }
 
+
+/*
+func ReconstructTree(connections [][]int) *TreeNode {
+	inDegree, graph := map[int]int{}, map[int][]int{}
+	for _, conn := range connections {
+		inDegree[conn[1]] += 1
+		graph[conn[0]] = append(graph[conn[0]], conn[1])
+	}
+
+	var head *TreeNode
+	for nodeVal, degree := range inDegree {
+		if degree == 0 {
+			head = &TreeNode{Val: nodeVal}
+			break
+		}
+	}
+
+	var dfs func(node *TreeNode)
+	dfs = func(node *TreeNode) {
+
+	}
+	return nil
+}
+*/
+
 func EqualColoredRoots(root *ColorNode) []*ColorNode {
 	results := []*ColorNode{}
 	var dfs func(node *ColorNode) (red, blue, black int)
@@ -242,27 +267,21 @@ func turnRobot(currDir Direction, instruction byte) Direction {
 	if instruction == 'L' {
 		if currDir == North {
 			return West
-		}
-		if currDir == West {
+		} else if currDir == West {
 			return South
-		}
-		if currDir == South {
+		} else if currDir == South {
 			return East
-		}
-		if currDir == East {
+		} else if currDir == East {
 			return North
 		}
 	} else if instruction == 'R' {
 		if currDir == North {
 			return East
-		}
-		if currDir == East {
+		} else if currDir == East {
 			return South
-		}
-		if currDir == South {
+		} else if currDir == South {
 			return West
-		}
-		if currDir == West {
+		} else if currDir == West {
 			return North
 		}
 	}
