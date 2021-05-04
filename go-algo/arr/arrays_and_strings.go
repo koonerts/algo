@@ -31,6 +31,31 @@ type Point struct {
 }
 
 
+
+// TODO:
+func maxKSumCombinations(n1, n2 []int, k int) (results []int) {
+	if k == 0 {
+		return results
+	}
+	n1Heap := collection.NewIntMaxHeap(n1)
+	n2Heap := collection.NewIntMaxHeap(n2)
+
+	n1Val, n2Val := n1Heap.HeapPop(), n2Heap.HeapPop()
+	for len(results) < k {
+		results = append(results, n1Val+n2Val)
+		if len(results) == k {
+			break
+		}
+
+		if n1Val + n2Heap.Peek() >= n2Val + n1Heap.Peek() {
+			n2Val = n2Heap.HeapPop()
+		} else {
+			n1Val = n1Heap.HeapPop()
+		}
+	}
+	return results
+}
+
 func LongestConsecutive(nums []int) int {
 	if len(nums) == 0 { return 0 }
 	numSet := map[int]bool{}
@@ -164,24 +189,6 @@ func MinimumAreaRectangle(points [][]int) int {
 		}
 	}
 	return minArea
-}
-
-func comb(n, k int) int {
-	memo := map[int]map[int]int{}
-	var helper func(n, k int) int
-	helper = func(n, k int) int {
-		if n == 0 || k == 0 {
-			return 1
-		}
-		if memo[n] == nil {
-			memo[n] = map[int]int{}
-		}
-		if _, ok := memo[n][k]; !ok {
-			memo[n][k] = helper(n-1, k) + helper(n, k-1)
-		}
-		return memo[n][k]
-	}
-	return helper(n, k)
 }
 
 func nonRepeatingCharacters(str string) string {

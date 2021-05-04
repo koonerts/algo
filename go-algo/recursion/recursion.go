@@ -1,6 +1,71 @@
 package recursion
 
-import "go-algo/ext/mathext"
+import (
+	"go-algo/ext/mathext"
+	"math"
+)
+
+
+func DistinctMaxHeaps(n int) int {
+	if n <= 1 {
+		return 1
+	}
+
+	dp := make([]int, n+1)
+	for i := range dp {
+		dp[i] = -1
+	}
+
+	getLeft := func (n int) int {
+		h := uint(math.Log2(float64(n)))
+		numH := 1 << h // max nodes that can be present on hth level of heap
+		numLast := n - (numH - 1)
+		if numLast >= numH/2 {
+		return numH - 1
+	}
+		return numH - 1 - (numH/2 - numLast)
+	}
+
+	var helper func(nodeCnt int) int
+	helper = func(nodeCnt int) int {
+		if nodeCnt <= 1 {
+			return 1
+		} else if dp[nodeCnt] != -1 {
+			return dp[nodeCnt]
+		}
+		left := getLeft(nodeCnt)
+		dp[nodeCnt] = NChooseK(nodeCnt-1, left) * helper(left) * helper(nodeCnt - 1 - left)
+		return dp[nodeCnt]
+	}
+
+	helper(n)
+	return dp[n] % 1000000007
+}
+
+
+
+func NChooseK(n, k int) int {
+	memo := map[int]map[int]int{}
+
+	var helper func(n, k int) int
+	helper = func(n, k int) int {
+		if k > n {
+			return 0
+		} else if n <= 1 || k == 0 {
+			return 1
+		}
+
+		if memo[n] == nil {
+			memo[n] = map[int]int{}
+		}
+		if _, ok := memo[n][k]; !ok {
+			memo[n][k] = helper(n-1, k-1) + helper(n-1, k)
+		}
+		return memo[n][k]
+	}
+
+	return helper(n, k)
+}
 
 func LetterCombinations(digits string) (results []string) {
 	if digits == "" {

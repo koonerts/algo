@@ -33,7 +33,8 @@ def merge(arr, lo, mid, hi):
 def quick_sort(arr):
 
     def quick_sort_recursive(lo, hi):
-        if lo > hi: return
+        if lo > hi:
+            return
 
         mid = (lo+hi)//2
         arr[mid], arr[hi] = arr[hi], arr[mid]

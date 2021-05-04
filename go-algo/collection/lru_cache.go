@@ -17,8 +17,8 @@ type LRUCache struct {
 
 func NewLRUCache(capacity int) LRUCache {
 	ll := list.New()
-	head := ll.PushFront(&LRUCacheItem{-1,-1})
-	tail := ll.PushBack(&LRUCacheItem{-1,-1})
+	head := ll.PushFront(nil)
+	tail := ll.PushBack(nil)
 	return LRUCache{
 		cache:    map[int]*list.Element{},
 		head:     head,
