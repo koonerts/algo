@@ -1,3 +1,0 @@
-C:/Users/koone/my-projects/algo/cpp-algo/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/koone/my-projects/algo/cpp-algo/cmake-build-debug/CMakeFiles/cpp_algo.dir
-C:/Users/koone/my-projects/algo/cpp-algo/cmake-build-debug/CMakeFiles/rebuild_cache.dir
