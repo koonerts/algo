@@ -5,18 +5,11 @@ import (
 )
 
 func main() {
-	a := &Test{1}
-	b := *a
-	b.x = 2
-	pln(a.x, b.x)
+
 }
 
 func pln(i ...interface{}) {
-	if len(i) == 1 {
-		fmt.Println(i[0])
-	} else {
-		fmt.Println(i)
-	}
+	fmt.Println(i...)
 }
 
 type Test struct {
