@@ -6,10 +6,7 @@ namespace HackAlgo {
     async function main_async(): Awaitable<void> {
         require_once(__DIR__.'/../vendor/autoload.hack');
         \Facebook\AutoloadMap\initialize();
-        $h = new Collection\Heap(Vector<int>{4,5,1,2,-1}, ($n1, $n2) ==> $n1 <=> $n2);
-        \print_r($h);
     }
-
 }
 
 namespace {

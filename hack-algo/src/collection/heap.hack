@@ -14,11 +14,8 @@ class Heap<T> {
         $this->heapify();
     }
 
-    private function heapify(): void {
-        $mid = \div(\len($this->arr), 2);
-        for ($i = $mid; $i >= 0; $i--) {
-            $this->siftUp($i);
-        }
+    public function len(): int {
+        return \len($this->arr);
     }
 
     public function peek(): ?T {
@@ -27,16 +24,16 @@ class Heap<T> {
 
     public function push(T $val): void {
         $this->arr->add($val);
-        $this->siftDown(0, \len($this->arr)-1);
+        $this->siftDown(0, $this->len()-1);
     }
 
     public function pop(): ?T {
-        if ($this->arr->count() === 0) {
+        if ($this->len() === 0) {
             return null;
         }
 
         $last = $this->arr->pop();
-        if ($this->arr->count() === 0) {
+        if ($this->len() === 0) {
             return $last;
         } else {
             $first = $this->arr[0];
@@ -46,11 +43,18 @@ class Heap<T> {
         }
     }
 
+    private function heapify(): void {
+        $mid = \div($this->len(), 2);
+        for ($i = $mid; $i >= 0; $i--) {
+            $this->siftUp($i);
+        }
+    }
+
     private function siftUp(int $startIdx): void {
         $node = $this->arr[$startIdx];
         $swapIdx = $startIdx;
         $leftIdx = 2*$swapIdx + 1;
-        $size = $this->arr->count();
+        $size = $this->len();
         $comparator = $this->comparator;
 
         while ($leftIdx < $size) {
@@ -58,9 +62,9 @@ class Heap<T> {
             if ($rightIdx < $size && $comparator($this->arr[$rightIdx], $this->arr[$leftIdx]) <= 0) {
                 $leftIdx = $rightIdx;
             }
-            $this->arr[$leftIdx] = $this->arr[$swapIdx];
+            $this->arr[$swapIdx] = $this->arr[$leftIdx];
             $swapIdx = $leftIdx;
-            $leftIdx = ($leftIdx*2) + 1;
+            $leftIdx = $leftIdx*2 + 1;
         }
 
         $this->arr[$swapIdx] = $node;

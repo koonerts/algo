@@ -9,7 +9,7 @@ function binary_search(vec<num> $nums, num $targ): int {
         $mid = (int)(($lo + $hi)/2);
         if ($nums[$mid] === $targ) {
             return $mid;
-        } elseif ($nums[$mid] > $targ) {
+        } else if ($nums[$mid] > $targ) {
             $hi = $mid-1;
         } else {
             $lo = $mid+1;
