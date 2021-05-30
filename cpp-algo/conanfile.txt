@@ -1,0 +1,6 @@
+[requires]
+catch2/2.13.6
+boost/1.76.0
+
+[generators]
+cmake
