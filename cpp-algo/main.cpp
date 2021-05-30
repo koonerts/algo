@@ -3,5 +3,5 @@
 using namespace std;
 
 int main() {
-    cout << *x << endl;
+    cout << 1 << endl;
 }
