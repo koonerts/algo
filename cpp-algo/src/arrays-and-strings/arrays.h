@@ -8,6 +8,6 @@
 #include <vector>
 
 std::vector<int> twoNumberSum(const std::vector<int>& vec, int targetSum);
-bool isValidSubsequence(const std::vector<int>& array, const std::vector<int>& sequence);
+bool isValidSubsequence(const std::vector<int>& vec, const std::vector<int>& seq);
 
 #endif //CPP_ALGO_ARRAYS_H

@@ -18,7 +18,17 @@ vector<int> twoNumberSum(const vector<int>& vec, int targetSum) {
     return {};
 }
 
-bool isValidSubsequence(const vector<int> &array, const vector<int> &sequence) {
+bool isValidSubsequence(const vector<int> &vec, const vector<int> &seq) {
+    if (seq.size() > vec.size())
+        return false;
+
+    auto seqItr = seq.begin();
+    for (int n : vec) {
+        if (n == *seqItr)
+            ++seqItr;
+        if (seqItr == seq.end())
+            return true;
+    }
     return false;
 }
 
