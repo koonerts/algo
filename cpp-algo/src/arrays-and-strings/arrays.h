@@ -7,7 +7,11 @@
 
 #include <vector>
 
-std::vector<int> twoNumberSum(const std::vector<int>& vec, int targetSum);
-bool isValidSubsequence(const std::vector<int>& vec, const std::vector<int>& seq);
+struct Arrays {
+    std::vector<int> twoNumberSum(const std::vector<int>& vec, int targetSum);
+    bool isValidSubsequence(const std::vector<int>& vec, const std::vector<int>& seq);
+    std::vector<int> sortedSquaredArray(const std::vector<int>& vec);
+    std::vector<int> smallestDifference(const std::vector<int> &vec1, const std::vector<int> &vec2);
+};
 
 #endif //CPP_ALGO_ARRAYS_H

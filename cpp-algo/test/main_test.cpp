@@ -5,21 +5,18 @@
 #define CATCH_CONFIG_MAIN
 
 #include <catch2/catch.hpp>
-#include "arrays-and-strings/arrays.h"
+#include "../src/arrays-and-strings/arrays.h"
 
-uint Factorial(uint number) {
-    return number > 1 ? Factorial(number - 1) * number : 1;
-}
-
-TEST_CASE("factorials_are_correct", "[factorial]") {
-    CHECK(Factorial(0) == 1);
-    CHECK(Factorial(1) == 1);
-    CHECK(Factorial(2) == 2);
-    CHECK(Factorial(3) == 6);
-    CHECK(Factorial(10) == 3628800);
-}
 
 TEST_CASE("is_valid_subsequence") {
-    CHECK(isValidSubsequence({5, 1, 22, 25, 6, -1, 8, 10}, {1, 6, -1, 10}));
+    Arrays arr{};
+    CHECK(arr.isValidSubsequence({5, 1, 22, 25, 6, -1, 8, 10}, {1, 6, -1, 10}));
+    CHECK_FALSE(arr.isValidSubsequence({1, 2, 3}, {1, 2, 2}));
+}
+
+TEST_CASE("sorted_squared_array") {
+    Arrays arr{};
+    CHECK(arr.sortedSquaredArray({1, 2, 3}) == std::vector<int>{1, 4, 9});
+    CHECK(arr.sortedSquaredArray({-4, -2, 0, 1, 2, 3}) == std::vector<int>{0, 1, 4, 4, 9, 16});
 }
 

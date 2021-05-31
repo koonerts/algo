@@ -7,8 +7,8 @@ set(CMAKE_CXX_STANDARD 20)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
-add_executable(cpp_algo main.cpp arrays-and-strings/arrays.cpp arrays-and-strings/arrays.h arrays-and-strings/strings.cpp arrays-and-strings/strings.h)
-add_executable(tests tests.cpp)
+add_executable(cpp_algo src/main.cpp src/arrays-and-strings/arrays.cpp src/arrays-and-strings/strings.cpp)
+add_executable(tests test/main_test.cpp src/arrays-and-strings/arrays.cpp src/arrays-and-strings/strings.cpp)
 
 target_link_libraries(cpp_algo ${CONAN_LIBS})
 target_link_libraries(tests ${CONAN_LIBS})
