@@ -18,8 +18,14 @@ TEST_CASE("sortedSquaredArray") {
     CHECK(arr.sortedSquaredArray({-4, -2, 0, 1, 2, 3}) == std::vector<int>{0, 1, 4, 4, 9, 16});
 }
 
-
 TEST_CASE("smallestDifference") {
     Arrays arr{};
     CHECK(arr.smallestDifference({-1, 5, 10, 20, 28, 3}, {26, 134, 135, 15, 17}) == std::vector<int>{28, 26});
+}
+
+TEST_CASE("moveElementToEnd") {
+    Arrays arr{};
+    auto result{arr.moveElementToEnd({2, 1, 2, 2, 2, 3, 4, 2}, 2)};
+    auto is_valid{result == std::vector<int>{1, 3, 4, 2, 2, 2, 2, 2} || result == std::vector<int>{4, 1, 3, 2, 2, 2, 2, 2}};
+    CHECK(is_valid);
 }

@@ -6,11 +6,12 @@
 #include <unordered_set>
 #include <functional>
 
-using namespace std;
 
 
-vector<int> Arrays::twoNumberSum(const vector<int> &vec, int targetSum) {
-    unordered_set<int> numSet{};
+
+std::vector<int>
+Arrays::twoNumberSum(const std::vector<int> &vec, int targetSum) {
+    std::unordered_set<int> numSet{};
     for (int num : vec) {
         if (numSet.contains(targetSum - num)) {
             return {num, targetSum - num};
@@ -20,7 +21,8 @@ vector<int> Arrays::twoNumberSum(const vector<int> &vec, int targetSum) {
     return {};
 }
 
-bool Arrays::isValidSubsequence(const vector<int> &vec, const vector<int> &seq) {
+bool
+Arrays::isValidSubsequence(const std::vector<int> &vec, const std::vector<int> &seq) {
     if (seq.size() > vec.size())
         return false;
 
@@ -34,11 +36,12 @@ bool Arrays::isValidSubsequence(const vector<int> &vec, const vector<int> &seq) 
     return false;
 }
 
-vector<int> Arrays::sortedSquaredArray(const vector<int> &vec) {
+std::vector<int>
+Arrays::sortedSquaredArray(const std::vector<int> &vec) {
     if (vec.empty())
         return {};
 
-    function<int()> binary_search_negative([&vec] {
+    std::function<int()> binary_search_negative([&vec] {
         int negIdx{-1}, lo{}, hi{static_cast<int>(vec.size() - 1)};
         while (lo <= hi) {
             int mid = lo + (hi - lo) / 2;
@@ -52,7 +55,7 @@ vector<int> Arrays::sortedSquaredArray(const vector<int> &vec) {
         return negIdx;
     });
 
-    vector<int> rVec{};
+    std::vector<int> rVec{};
     rVec.reserve(vec.size());
 
     int negIdx{binary_search_negative()};
@@ -73,7 +76,8 @@ vector<int> Arrays::sortedSquaredArray(const vector<int> &vec) {
     return rVec;
 }
 
-vector<int> Arrays::smallestDifference(vector<int> vec1, vector<int> vec2) {
+std::vector<int>
+Arrays::smallestDifference(std::vector<int> vec1, std::vector<int> vec2) {
     auto n1 = vec1.size(), n2 = vec2.size();
     sort(vec1.begin(), vec1.end());
     sort(vec2.begin(), vec2.end());
@@ -84,12 +88,12 @@ vector<int> Arrays::smallestDifference(vector<int> vec1, vector<int> vec2) {
         return {vec1[0], vec2[n2 - 1]};
     }
 
-    vector<int> rVec{-1,-1};
-    auto minDiff = numeric_limits<int>::max();
+    std::vector<int> rVec{-1, -1};
+    auto minDiff = std::numeric_limits<int>::max();
 
-    for(auto p1 = vec1.begin(), p2 = vec2.begin(); p1 != vec1.end() || p2 != vec2.end();) {
-        auto v1_val = p1 != vec1.end() ? *p1 : *(p1-1);
-        auto v2_val = p2 != vec2.end() ? *p2 : *(p2-1);
+    for (auto p1 = vec1.begin(), p2 = vec2.begin(); p1 != vec1.end() || p2 != vec2.end();) {
+        auto v1_val = p1 != vec1.end() ? *p1 : *(p1 - 1);
+        auto v2_val = p2 != vec2.end() ? *p2 : *(p2 - 1);
         auto diff = abs(v1_val - v2_val);
 
         if (diff < minDiff)
@@ -101,4 +105,51 @@ vector<int> Arrays::smallestDifference(vector<int> vec1, vector<int> vec2) {
             ++p2;
     }
     return rVec;
+}
+
+std::vector<int>
+Arrays::moveElementToEnd(std::vector<int> vec, int toMove) {
+    if (vec.empty())
+        return vec;
+
+    for (size_t lo = 0, hi = vec.size() - 1; lo < hi;) {
+        if (vec[lo] != toMove) {
+            ++lo;
+            continue;
+        }
+
+        std::swap(vec[lo], vec[hi]);
+        --hi;
+    }
+    return vec;
+}
+
+bool
+Arrays::isMonotonic(const std::vector<int> &vec) {
+    if (vec.size() <= 1)
+        return true;
+
+    auto vIter = vec.begin() + 1;
+    while (vIter != vec.end() && *vIter == *(vIter - 1))
+        ++vIter;
+
+    if (vIter == vec.end())
+        return true;
+
+    bool is_increasing = *vIter > *(vIter - 1);
+    while (vIter != vec.end()) {
+        if (is_increasing && *vIter < *(vIter - 1))
+            return false;
+        if (!is_increasing && *vIter > *(vIter - 1))
+            return false;
+        ++vIter;
+    }
+    return true;
+}
+
+
+std::vector<int>
+Arrays::spiralTraverse(const std::vector<std::vector<int>>& array) {
+    // Write your code here.
+    return {};
 }
