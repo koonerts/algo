@@ -7,8 +7,6 @@
 #include <functional>
 
 
-
-
 std::vector<int>
 Arrays::twoNumberSum(const std::vector<int> &vec, int targetSum) {
     std::unordered_set<int> numSet{};
@@ -147,9 +145,138 @@ Arrays::isMonotonic(const std::vector<int> &vec) {
     return true;
 }
 
+std::vector<int>
+Arrays::spiralTraverse(const std::vector<std::vector<int>> &vec) {
+    if (vec.empty())
+        return {};
+
+    auto dir = TraversalDirection::Right;
+    size_t m{vec.size()}, n{vec[0].size()};
+    size_t x{}, y{}, left_y{}, right_y{n - 1}, top_x{}, bot_x{m - 1};
+    size_t total{n * m};
+    std::vector<int> rVec{};
+    rVec.reserve(total);
+
+    while (rVec.size() < total) {
+        switch (dir) {
+            case TraversalDirection::Right:
+                while (true) {
+                    rVec.push_back(vec[x][y]);
+                    if (y == right_y) {
+                        ++top_x;
+                        ++x;
+                        dir = TraversalDirection::Down;
+                        break;
+                    }
+                    ++y;
+                }
+                break;
+            case TraversalDirection::Down:
+                while (true) {
+                    rVec.push_back(vec[x][y]);
+                    if (x == bot_x) {
+                        --right_y;
+                        --y;
+                        dir = TraversalDirection::Left;
+                        break;
+                    }
+                    ++x;
+                }
+                break;
+            case TraversalDirection::Left:
+                while (true) {
+                    rVec.push_back(vec[x][y]);
+                    if (y == left_y) {
+                        --bot_x;
+                        --x;
+                        dir = TraversalDirection::Up;
+                        break;
+                    }
+                    --y;
+                }
+                break;
+            case TraversalDirection::Up:
+                while (true) {
+                    rVec.push_back(vec[x][y]);
+                    if (x == top_x) {
+                        ++left_y;
+                        ++y;
+                        dir = TraversalDirection::Right;
+                        break;
+                    }
+                    --x;
+                }
+                break;
+        }
+    }
+
+    return rVec;
+}
+
+std::vector<std::vector<int>>
+Arrays::fourNumberSum(std::vector<int> vec, int targetSum) {
+    if (vec.size() < 4)
+        return {};
+
+    std::vector<std::vector<int>> rVec;
+    std::sort(vec.begin(), vec.end());
+    for (size_t i = 0; i < vec.size() - 3; ++i) {
+        for (size_t j = i + 1; j < vec.size() - 2; ++j) {
+            size_t k{j + 1}, l{vec.size() - 1};
+
+            while (k < l) {
+                int sum = vec[i] + vec[j] + vec[k] + vec[l];
+
+                if (sum == targetSum) {
+                    rVec.push_back({vec[i], vec[j], vec[k], vec[l]});
+                    ++k, --l;
+                } else if (sum < targetSum) {
+                    ++k;
+                } else {
+                    --l;
+                }
+            }
+        }
+    }
+
+    return rVec;
+}
 
 std::vector<int>
-Arrays::spiralTraverse(const std::vector<std::vector<int>>& array) {
-    // Write your code here.
-    return {};
+Arrays::subarraySort(const std::vector<int> &vec) {
+    if (vec.size() <= 1)
+        return {-1, -1};
+
+    size_t lo{}, hi{vec.size() - 1};
+    while (lo < hi && (vec[lo] <= vec[lo + 1] || vec[hi] >= vec[hi - 1])) {
+        if (vec[lo] <= vec[lo + 1])
+            ++lo;
+        if (vec[hi] >= vec[hi - 1])
+            --hi;
+    }
+
+    if (lo >= hi)
+        return {-1, -1};
+
+    auto min{std::numeric_limits<int>::max()}, max{std::numeric_limits<int>::min()};
+    while (lo <= hi) {
+        min = std::min(min, vec[lo]);
+        max = std::max(max, vec[lo]);
+        ++lo;
+    }
+
+    lo = 0, hi = vec.size() - 1;
+    while (lo < hi && (vec[lo] <= min || vec[hi] >= max)) {
+        if (vec[lo] <= min)
+            ++lo;
+        if (vec[hi] >= max)
+            --hi;
+    }
+
+    return {static_cast<int>(lo), static_cast<int>(hi)};
+}
+
+int
+Arrays::minRewards(const std::vector<int>& scores) {
+    return -1;
 }

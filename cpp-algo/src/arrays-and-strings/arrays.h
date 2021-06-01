@@ -8,26 +8,39 @@
 #include <vector>
 
 struct Arrays {
-    std::vector<int>
+    enum class TraversalDirection {
+        Up, Down, Left, Right
+    };
+
+    static std::vector<int>
     twoNumberSum(const std::vector<int> &vec, int targetSum);
 
-    bool
+    static bool
     isValidSubsequence(const std::vector<int> &vec, const std::vector<int> &seq);
 
-    std::vector<int>
+    static std::vector<int>
     sortedSquaredArray(const std::vector<int> &vec);
 
-    std::vector<int>
+    static std::vector<int>
     smallestDifference(std::vector<int> vec1, std::vector<int> vec2);
 
-    std::vector<int>
+    static std::vector<int>
     moveElementToEnd(std::vector<int> vec, int toMove);
 
-    bool
+    static bool
     isMonotonic(const std::vector<int> &vec);
 
-    std::vector<int>
-    spiralTraverse(const std::vector<std::vector<int>>& array);
+    static std::vector<int>
+    spiralTraverse(const std::vector<std::vector<int>> &vec);
+
+    static std::vector<std::vector<int>>
+    fourNumberSum(std::vector<int> vec, int targetSum);
+
+    static std::vector<int>
+    subarraySort(const std::vector<int> &vec);
+
+    static int
+    minRewards(const std::vector<int> &scores);
 };
 
 #endif //CPP_ALGO_ARRAYS_H
