@@ -39,6 +39,9 @@ struct Arrays {
     static std::vector<int>
     subarraySort(const std::vector<int> &vec);
 
+    static std::vector<int>
+    largestRange(const std::vector<int>& vec);
+
     static int
     minRewards(const std::vector<int> &scores);
 };

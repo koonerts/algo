@@ -5,6 +5,7 @@
 #include "arrays.h"
 #include <unordered_set>
 #include <functional>
+#include <set>
 
 
 std::vector<int>
@@ -275,6 +276,33 @@ Arrays::subarraySort(const std::vector<int> &vec) {
 
     return {static_cast<int>(lo), static_cast<int>(hi)};
 }
+
+std::vector<int>
+Arrays::largestRange(const std::vector<int>& vec) {
+    std::set<int> vSet{vec.begin(), vec.end()};
+    auto curr{vSet.begin()}, prev{vSet.begin()}, rangeBegin{vSet.begin()};
+    std::vector<int> rVec{*prev, *prev};
+    size_t maxRange{1};
+    ++curr;
+
+    while (curr != vSet.cend()) {
+        if (*curr != *prev + 1) {
+            rangeBegin = curr;
+        }
+
+        size_t currRange = std::distance(rangeBegin, curr) + 1;
+        if (currRange > maxRange) {
+            rVec[0] = *rangeBegin;
+            rVec[1] = *curr;
+            maxRange = currRange;
+        }
+        prev = curr;
+        ++curr;
+    }
+
+    return rVec;
+}
+
 
 int
 Arrays::minRewards(const std::vector<int>& scores) {

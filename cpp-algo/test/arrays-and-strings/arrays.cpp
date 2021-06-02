@@ -46,3 +46,7 @@ TEST_CASE("subarraySort") {
     CHECK(Arrays::subarraySort({1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19}) == std::vector<int>{3, 9});
     CHECK(Arrays::subarraySort({1, 2, 4, 7, 10, 11, 7, 12, 7, 7, 16, 18, 19}) == std::vector<int>{4, 9});
 }
+
+TEST_CASE("largestRange") {
+    CHECK(Arrays::largestRange({1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6}) == std::vector<int>{0, 7});
+}
