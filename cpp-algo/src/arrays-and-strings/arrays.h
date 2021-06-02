@@ -44,6 +44,9 @@ struct Arrays {
 
     static int
     minRewards(const std::vector<int> &scores);
+
+    static std::vector<int>
+    zigzagTraverse(const std::vector<std::vector<int>>& array);
 };
 
 #endif //CPP_ALGO_ARRAYS_H

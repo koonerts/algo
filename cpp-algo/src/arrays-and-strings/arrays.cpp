@@ -303,8 +303,15 @@ Arrays::largestRange(const std::vector<int>& vec) {
     return rVec;
 }
 
-
+// TODO
 int
 Arrays::minRewards(const std::vector<int>& scores) {
     return -1;
+}
+
+// TODO
+std::vector<int>
+Arrays::zigzagTraverse(const std::vector<std::vector<int>>& array) {
+    // Write your code here.
+    return {};
 }
