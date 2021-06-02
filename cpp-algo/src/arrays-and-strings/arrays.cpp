@@ -2,7 +2,7 @@
 // Created by koonerts on 5/30/21.
 //
 
-#include "arrays.h"
+#include "arrays_test.h"
 #include <unordered_set>
 #include <functional>
 #include <set>

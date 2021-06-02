@@ -8,7 +8,13 @@
 #include <vector>
 
 namespace cpp_algo::dp {
-    int minCost(std::vector<std::vector<int>>& costs);
+
+    int
+    min_cost_paint_houses_memoized(std::vector<std::vector<int>>& costs);
+
+    int
+    min_cost_paint_houses_tabulated(std::vector<std::vector<int>>& costs);
+
 }
 
 #endif //CPP_ALGO_DP_H
