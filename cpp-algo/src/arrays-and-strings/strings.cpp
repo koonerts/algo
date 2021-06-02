@@ -3,3 +3,7 @@
 //
 
 #include "strings.h"
+
+namespace cpp_algo::strings {
+
+}

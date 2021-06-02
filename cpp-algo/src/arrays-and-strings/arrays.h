@@ -7,46 +7,46 @@
 
 #include <vector>
 
-struct Arrays {
+namespace cpp_algo::arrays {
     enum class TraversalDirection {
         Up, Down, Left, Right
     };
 
-    static std::vector<int>
+    std::vector<int>
     twoNumberSum(const std::vector<int> &vec, int targetSum);
 
-    static bool
+    bool
     isValidSubsequence(const std::vector<int> &vec, const std::vector<int> &seq);
 
-    static std::vector<int>
+    std::vector<int>
     sortedSquaredArray(const std::vector<int> &vec);
 
-    static std::vector<int>
+    std::vector<int>
     smallestDifference(std::vector<int> vec1, std::vector<int> vec2);
 
-    static std::vector<int>
+    std::vector<int>
     moveElementToEnd(std::vector<int> vec, int toMove);
 
-    static bool
+    bool
     isMonotonic(const std::vector<int> &vec);
 
-    static std::vector<int>
+    std::vector<int>
     spiralTraverse(const std::vector<std::vector<int>> &vec);
 
-    static std::vector<std::vector<int>>
+    std::vector<std::vector<int>>
     fourNumberSum(std::vector<int> vec, int targetSum);
 
-    static std::vector<int>
+    std::vector<int>
     subarraySort(const std::vector<int> &vec);
 
-    static std::vector<int>
+    std::vector<int>
     largestRange(const std::vector<int>& vec);
 
-    static int
+    int
     minRewards(const std::vector<int> &scores);
 
-    static std::vector<int>
+    std::vector<int>
     zigzagTraverse(const std::vector<std::vector<int>>& array);
-};
+}
 
 #endif //CPP_ALGO_ARRAYS_H
