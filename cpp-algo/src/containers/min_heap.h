@@ -15,17 +15,17 @@ namespace cpp_algo::containers {
             _heap = buildHeap(vector);
         }
 
-        std::vector<int> buildHeap(std::vector<int> &vector);
+        auto buildHeap(std::vector<int> &vector) -> std::vector<int>;
 
-        void siftDown(int currentIdx, int endIdx, std::vector<int> &heap);
+        auto siftDown(int currentIdx, int endIdx, std::vector<int> &heap) -> void;
 
-        void siftUp(int currentIdx, std::vector<int> &heap);
+        auto siftUp(int currentIdx, std::vector<int> &heap) -> void;
 
-        int peek();
+        auto peek() -> int;
 
-        int remove();
+        auto remove() -> int;
 
-        void insert(int value);
+        auto insert(int value) -> void;
 
     private:
         std::vector<int> _heap;

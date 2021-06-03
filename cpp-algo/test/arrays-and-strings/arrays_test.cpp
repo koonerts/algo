@@ -3,7 +3,7 @@
 //
 
 #include <catch2/catch.hpp>
-#include "../../src/arrays-and-strings/arrays_test.h"
+#include "../../src/arrays-and-strings/arrays.h"
 
 using namespace cpp_algo::arrays;
 

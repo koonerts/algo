@@ -9,11 +9,9 @@
 
 namespace cpp_algo::dp {
 
-    int
-    min_cost_paint_houses_memoized(std::vector<std::vector<int>>& costs);
+    auto min_cost_paint_houses_memoized(std::vector<std::vector<int>>& costs) -> int;
 
-    int
-    min_cost_paint_houses_tabulated(std::vector<std::vector<int>>& costs);
+    auto min_cost_paint_houses_tabulated(std::vector<std::vector<int>>& costs) -> int;
 
 }
 

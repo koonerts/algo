@@ -2,14 +2,16 @@
 // Created by koonerts on 5/30/21.
 //
 
-#include "arrays_test.h"
+#include "arrays.h"
 #include <unordered_set>
-#include <functional>
 #include <set>
 
 namespace cpp_algo::arrays {
-    std::vector<int>
-    twoNumberSum(const std::vector<int> &vec, int targetSum) {
+    enum class TraversalDirection {
+        Up, Down, Left, Right
+    };
+
+    auto twoNumberSum(const std::vector<int> &vec, int targetSum) -> std::vector<int> {
         std::unordered_set<int> numSet{};
         for (int num : vec) {
             if (numSet.contains(targetSum - num)) {
@@ -20,8 +22,7 @@ namespace cpp_algo::arrays {
         return {};
     }
 
-    bool
-    isValidSubsequence(const std::vector<int> &vec, const std::vector<int> &seq) {
+    auto isValidSubsequence(const std::vector<int> &vec, const std::vector<int> &seq) -> bool {
         if (seq.size() > vec.size())
             return false;
 
@@ -35,12 +36,11 @@ namespace cpp_algo::arrays {
         return false;
     }
 
-    std::vector<int>
-    sortedSquaredArray(const std::vector<int> &vec) {
+    auto sortedSquaredArray(const std::vector<int> &vec) -> std::vector<int> {
         if (vec.empty())
             return {};
 
-        std::function<int()> binary_search_negative([&vec] {
+        auto binary_search_negative = [&vec]() {
             int negIdx{-1}, lo{}, hi{static_cast<int>(vec.size() - 1)};
             while (lo <= hi) {
                 int mid = lo + (hi - lo) / 2;
@@ -52,7 +52,7 @@ namespace cpp_algo::arrays {
                 }
             }
             return negIdx;
-        });
+        };
 
         std::vector<int> rVec{};
         rVec.reserve(vec.size());
@@ -75,8 +75,7 @@ namespace cpp_algo::arrays {
         return rVec;
     }
 
-    std::vector<int>
-    smallestDifference(std::vector<int> vec1, std::vector<int> vec2) {
+    auto smallestDifference(std::vector<int> vec1, std::vector<int> vec2) -> std::vector<int> {
         auto n1 = vec1.size(), n2 = vec2.size();
         sort(vec1.begin(), vec1.end());
         sort(vec2.begin(), vec2.end());
@@ -106,8 +105,7 @@ namespace cpp_algo::arrays {
         return rVec;
     }
 
-    std::vector<int>
-    moveElementToEnd(std::vector<int> vec, int toMove) {
+    auto moveElementToEnd(std::vector<int> vec, int toMove) -> std::vector<int> {
         if (vec.empty())
             return vec;
 
@@ -123,8 +121,7 @@ namespace cpp_algo::arrays {
         return vec;
     }
 
-    bool
-    isMonotonic(const std::vector<int> &vec) {
+    auto isMonotonic(const std::vector<int> &vec) -> bool {
         if (vec.size() <= 1)
             return true;
 
@@ -146,8 +143,7 @@ namespace cpp_algo::arrays {
         return true;
     }
 
-    std::vector<int>
-    spiralTraverse(const std::vector<std::vector<int>> &vec) {
+    auto spiralTraverse(const std::vector<std::vector<int>> &vec) -> std::vector<int> {
         if (vec.empty())
             return {};
 
@@ -214,8 +210,7 @@ namespace cpp_algo::arrays {
         return rVec;
     }
 
-    std::vector<std::vector<int>>
-    fourNumberSum(std::vector<int> vec, int targetSum) {
+    auto fourNumberSum(std::vector<int> vec, int targetSum) -> std::vector<std::vector<int>> {
         if (vec.size() < 4)
             return {};
 
@@ -243,8 +238,7 @@ namespace cpp_algo::arrays {
         return rVec;
     }
 
-    std::vector<int>
-    subarraySort(const std::vector<int> &vec) {
+    auto subarraySort(const std::vector<int> &vec) -> std::vector<int> {
         if (vec.size() <= 1)
             return {-1, -1};
 
@@ -277,8 +271,7 @@ namespace cpp_algo::arrays {
         return {static_cast<int>(lo), static_cast<int>(hi)};
     }
 
-    std::vector<int>
-    largestRange(const std::vector<int> &vec) {
+    auto largestRange(const std::vector<int> &vec) -> std::vector<int> {
         std::set<int> vSet{vec.begin(), vec.end()};
         auto curr{vSet.begin()}, prev{vSet.begin()}, rangeBegin{vSet.begin()};
         std::vector<int> rVec{*prev, *prev};
@@ -304,14 +297,12 @@ namespace cpp_algo::arrays {
     }
 
 // TODO
-    int
-    minRewards(const std::vector<int> &scores) {
+    auto minRewards(const std::vector<int> &scores) -> int {
         return -1;
     }
 
 // TODO
-    std::vector<int>
-    zigzagTraverse(const std::vector<std::vector<int>> &array) {
+    auto zigzagTraverse(const std::vector<std::vector<int>> &array) -> std::vector<int> {
         // Write your code here.
         return {};
     }
