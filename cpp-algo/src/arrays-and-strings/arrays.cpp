@@ -5,6 +5,8 @@
 #include "arrays.h"
 #include <unordered_set>
 #include <set>
+#include <numeric>
+#include <unordered_map>
 
 
 namespace cpp_algo::arrays {
@@ -44,7 +46,7 @@ namespace cpp_algo::arrays {
         auto binary_search_negative = [&vec]() {
             int negIdx{-1}, lo{}, hi{static_cast<int>(vec.size() - 1)};
             while (lo <= hi) {
-                int mid = lo + (hi - lo) / 2;
+                int mid = std::midpoint(lo, hi);
                 if (vec.at(mid) < 0) {
                     negIdx = mid;
                     lo = mid + 1;
@@ -205,6 +207,8 @@ namespace cpp_algo::arrays {
                         --x;
                     }
                     break;
+                default:
+                    throw std::invalid_argument("Invalid TraversalDirection.");
             }
         }
 
@@ -284,8 +288,8 @@ namespace cpp_algo::arrays {
                 rangeBegin = curr;
             }
 
-            size_t currRange = std::distance(rangeBegin, curr) + 1;
-            if (currRange > maxRange) {
+            if (size_t currRange = std::distance(rangeBegin, curr) + 1;
+                    currRange > maxRange) {
                 rVec[0] = *rangeBegin;
                 rVec[1] = *curr;
                 maxRange = currRange;
@@ -306,6 +310,50 @@ namespace cpp_algo::arrays {
     auto zigzagTraverse(const std::vector<std::vector<int>> &array) -> std::vector<int> {
         // Write your code here.
         return {};
+    }
+
+
+    auto lengthOfLongestSubstring(std::string s) -> int {
+        if (s.size() <= 1)
+            return static_cast<int>(s.size());
+
+        int lo{};
+        int maxLen{};
+        std::vector<int> charIdxMap(256, -1);
+
+        for (auto const &c : s) {
+            if (charIdxMap[c] >= lo) {
+                lo = charIdxMap[c] + 1;
+            }
+            auto idx = static_cast<int>(&c - &s[0]);
+            charIdxMap[c] = idx;
+            maxLen = std::max(maxLen, idx - lo + 1);
+        }
+        return maxLen;
+    }
+
+    auto nextPermutation(std::vector<int> &nums) -> void {
+        if (nums.size() <= 1)
+            return;
+
+        auto firstDecreasingIter = nums.rbegin() + 1;
+        while (firstDecreasingIter != nums.rend() && *firstDecreasingIter >= *(firstDecreasingIter - 1))
+            ++firstDecreasingIter;
+
+        if (firstDecreasingIter == nums.rend()) {
+            std::sort(nums.begin(), nums.end());
+            return;
+        }
+
+        auto iter = firstDecreasingIter.base();
+        while (iter != nums.end()) {
+            if (*iter > *firstDecreasingIter && (iter + 1 == nums.end() || *(iter + 1) <= *firstDecreasingIter))
+                break;
+            ++iter;
+        }
+
+        std::iter_swap(firstDecreasingIter, iter);
+        std::reverse(firstDecreasingIter.base(), nums.end());
     }
 }
 

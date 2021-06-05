@@ -6,6 +6,7 @@
 #define CPP_ALGO_ARRAYS_H
 
 #include <vector>
+#include <string>
 
 namespace cpp_algo::arrays {
     auto twoNumberSum(const std::vector<int> &vec, int targetSum) -> std::vector<int>;
@@ -31,6 +32,10 @@ namespace cpp_algo::arrays {
     auto minRewards(const std::vector<int> &scores) -> int;
 
     auto zigzagTraverse(const std::vector<std::vector<int>> &array) -> std::vector<int>;
+
+    auto lengthOfLongestSubstring(std::string s) -> int;
+
+    auto nextPermutation(std::vector<int> &nums) -> void;
 }
 
 #endif //CPP_ALGO_ARRAYS_H
