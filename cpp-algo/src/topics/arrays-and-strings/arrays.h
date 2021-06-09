@@ -36,6 +36,11 @@ namespace cpp_algo::arrays {
     auto lengthOfLongestSubstring(std::string s) -> int;
 
     auto nextPermutation(std::vector<int> &nums) -> void;
+
+    auto nextClosestTime(std::string time) -> std::string;
+
+    auto insertInterval(std::vector<std::vector<int>>& intervals, std::vector<int>& newInterval) -> std::vector<std::vector<int>>;
+
 }
 
 #endif //CPP_ALGO_ARRAYS_H

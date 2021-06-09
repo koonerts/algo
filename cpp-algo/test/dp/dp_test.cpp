@@ -3,7 +3,7 @@
 //
 
 #include <catch2/catch.hpp>
-#include "../../src/dp/dp.h"
+#include "../../src/topics/dp/dp.h"
 
 using namespace cpp_algo::dp;
 
