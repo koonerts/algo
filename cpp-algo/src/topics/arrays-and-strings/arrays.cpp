@@ -362,47 +362,40 @@ namespace cpp_algo::arrays {
     }
 
     auto insertInterval(std::vector<std::vector<int>> &intervals, std::vector<int> &newInterval) -> std::vector<std::vector<int>> {
+        std::vector<std::vector<int>> retIntervals;
+
         if (intervals.empty()) {
-            intervals.push_back(newInterval);
-            return intervals;
+            retIntervals.push_back(newInterval);
+            return retIntervals;
         }
 
-        int idx{}, start{}, end{1};
+        auto idx = 0;
+        while (idx < intervals.size() && intervals[idx][1] < newInterval[0]) {
+            retIntervals.push_back(intervals[idx]);
+            idx++;
+        }
 
-        // find insertion point
-        while (idx < intervals.size() && newInterval[start] > intervals[idx][start]) {
+        auto is_overlapping = [&intervals, &newInterval, &idx]() {
+            return idx < intervals.size() && (
+                    (newInterval[0] >= intervals[idx][0] && newInterval[0] <= intervals[idx][1]) ||
+                    (newInterval[1] >= intervals[idx][0] && newInterval[1] <= intervals[idx][1]) ||
+                    (intervals[idx][0] >= newInterval[0] && intervals[idx][0] <= newInterval[1]) ||
+                    (intervals[idx][1] >= newInterval[0] && intervals[idx][1] <= newInterval[1])
+            );
+        };
+
+        while (is_overlapping()) {
+            newInterval[0] = std::min(newInterval[0], intervals[idx][0]);
+            newInterval[1] = std::max(newInterval[1], intervals[idx][1]);
             ++idx;
         }
 
-        if (idx == intervals.size()) {
-            intervals.push_back(newInterval);
-            return intervals;
+        retIntervals.push_back(newInterval);
+        while (idx < intervals.size()) {
+            retIntervals.push_back(intervals[idx]);
+            ++idx;
         }
 
-        if (idx == 0) {
-            if (newInterval[end] < intervals[0][start]) {
-                intervals.insert(intervals.begin(), newInterval);
-            } else {
-                intervals[0][start] = std::min(intervals[0][start], newInterval[start]);
-                intervals[0][end] = std::max(intervals[0][end], newInterval[end]);
-            }
-            return intervals;
-        }
-
-        auto is_overlapping_previous = newInterval[start] <= intervals[idx-1][end];
-        auto is_overlapping_next = newInterval[end] >= intervals[idx][start];
-
-        if (!is_overlapping_previous && !is_overlapping_next) {
-            intervals.insert(intervals.begin()+idx, newInterval);
-        } else if (is_overlapping_previous && is_overlapping_next) {
-            intervals[idx-1][end] = intervals[idx][end];
-            intervals.erase(intervals.begin() + idx);
-        } else if (is_overlapping_previous) {
-            intervals[idx-1][end] = newInterval[end];
-        } else {
-            intervals[idx][start] = newInterval[start];
-        }
-
-        return intervals;
+        return retIntervals;
     }
 }

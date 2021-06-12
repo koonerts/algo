@@ -35,7 +35,7 @@ TEST_CASE("spiralTraverse") {
 
 TEST_CASE("fourNumberSum") {
     CHECK(fourNumberSum({7, 6, 4, -1, 1, 2}, 16) == std::vector<std::vector<int>>{{-1, 4, 6, 7},
-                                                                                          {1,  2, 6, 7}});
+                                                                                  {1,  2, 6, 7}});
 }
 
 TEST_CASE("subarraySort") {
@@ -49,4 +49,16 @@ TEST_CASE("subarraySort") {
 
 TEST_CASE("largestRange") {
     CHECK(largestRange({1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6}) == std::vector<int>{0, 7});
+}
+
+TEST_CASE("insertInterval") {
+    std::vector<std::vector<int>> intervals{{1,  2},
+                                            {3,  5},
+                                            {6,  7},
+                                            {8,  10},
+                                            {12, 16}};
+    std::vector<int> newInterval{4, 8};
+    CHECK(insertInterval(intervals, newInterval) == std::vector<std::vector<int>>{{1,  2},
+                                                                                  {3,  10},
+                                                                                  {12, 16}});
 }
