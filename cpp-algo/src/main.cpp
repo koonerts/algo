@@ -11,7 +11,8 @@ using namespace cpp_algo::ext::fmt;
 using namespace cpp_algo::linked_lists;
 
 auto main() -> int {
-    ListNode *head = createLinkedList({1,2,3,4,5});
-    head->print();
+    auto head = createLinkedList({1,2,3,4,5});
+    println(*head);
+    delete head;
 }
 

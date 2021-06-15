@@ -4,6 +4,7 @@
 
 
 #include <cstddef>
+#include <memory>
 #include "linked_lists.h"
 
 
@@ -38,15 +39,13 @@ namespace cpp_algo::linked_lists {
     }
 
     auto createLinkedList(std::vector<int> nums) -> ListNode * {
-        ListNode *head{};
-        ListNode *prev{};
+        ListNode *head{nullptr};
+        ListNode *prev{nullptr};
         for (auto n : nums) {
-            ListNode node{n};
-            if (!head)
-                head = &node;
-            if (prev)
-                prev->next = &node;
-            prev = &node;
+            auto curr = new ListNode{n};
+            if (!head) head = curr;
+            if (prev) prev->next = curr;
+            prev = curr;
         }
         return head;
     }

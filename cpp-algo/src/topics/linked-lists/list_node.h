@@ -16,7 +16,10 @@ namespace cpp_algo::linked_lists {
         ListNode(int val) : val{val}, next{nullptr} {}
         ListNode(int val, ListNode *next) : val{val}, next{nullptr} {}
 
-        auto print() -> void;
+        ListNode(const ListNode &) = default;
+        ListNode &operator=(const ListNode &) = default;
+        ListNode(ListNode &&) noexcept = default;
+        ListNode &operator=(ListNode &&) noexcept = default;
 
         ~ListNode() {
             delete next;

@@ -7,11 +7,12 @@
 
 
 #include <vector>
+#include <memory>
 #include "list_node.h"
+
 
 namespace cpp_algo::linked_lists {
     auto createLinkedList(std::vector<int> nums) -> ListNode *;
-
     auto reverseKGroup(ListNode *head, int k) -> ListNode *;
 }
 

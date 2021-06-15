@@ -7,8 +7,11 @@
 
 #include <vector>
 #include <iostream>
+#include "../topics/linked-lists/list_node.h"
 
 namespace cpp_algo::ext::fmt {
+
+    using namespace cpp_algo::linked_lists;
 
     template<typename T, typename A>
     auto println(const std::vector<T, A> &v) -> void {
@@ -36,6 +39,8 @@ namespace cpp_algo::ext::fmt {
         }
         std::cout << "\n]" << std::endl;
     }
+
+    auto println(const ListNode &head) -> void;
 
 }
 
