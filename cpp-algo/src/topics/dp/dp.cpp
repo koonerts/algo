@@ -4,7 +4,7 @@
 
 #include "dp.h"
 #include <functional>
-#include <map>
+#include <unordered_map>
 
 namespace cpp_algo::dp {
 
