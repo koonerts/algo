@@ -4,3 +4,5 @@
 .vscode/
 venv/
 .history/
+
+cpp-algo/.DS_Store
