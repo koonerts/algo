@@ -5,10 +5,12 @@
 
 #include <cstddef>
 #include <memory>
-#include "linked_lists.h"
+#include "LinkedLists.h"
 
+using namespace cpp_algo::ents;
 
-namespace cpp_algo::linked_lists {
+namespace cpp_algo::topics {
+
     auto reverseKGroup(ListNode *head, int k) -> ListNode * {
         if (k == 0)
             return head;

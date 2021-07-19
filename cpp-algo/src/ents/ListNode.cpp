@@ -3,9 +3,9 @@
 //
 
 #include <iostream>
-#include "list_node.h"
+#include "ListNode.h"
 
 
-namespace cpp_algo::linked_lists {
+namespace cpp_algo::ents {
 
 }

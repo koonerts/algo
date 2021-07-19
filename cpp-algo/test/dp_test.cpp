@@ -3,9 +3,9 @@
 //
 
 #include <catch2/catch.hpp>
-#include "../../src/topics/dp/dp.h"
+#include "../src/topics/Dp.h"
 
-using namespace cpp_algo::dp;
+using namespace cpp_algo::topics;
 
 TEST_CASE("min_cost_paint_houses_memoized") {
     std::vector<std::vector<int>> costs{{17,2,17},{16,16,5},{14,3,19}};

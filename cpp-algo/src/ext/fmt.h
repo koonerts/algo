@@ -7,11 +7,11 @@
 
 #include <vector>
 #include <iostream>
-#include "../topics/linked-lists/list_node.h"
+#include "../ents/ListNode.h"
 
 namespace cpp_algo::ext::fmt {
 
-    using namespace cpp_algo::linked_lists;
+    using namespace cpp_algo::ents;
 
     template<typename T, typename A>
     auto println(const std::vector<T, A> &v) -> void {

@@ -2,19 +2,19 @@
 // Created by koonerts on 6/12/21.
 //
 
-#ifndef CPP_ALGO_LIST_NODE_H
-#define CPP_ALGO_LIST_NODE_H
+#ifndef CPP_ALGO_LISTNODE_H
+#define CPP_ALGO_LISTNODE_H
 
 
 
-namespace cpp_algo::linked_lists {
+namespace cpp_algo::ents {
     struct ListNode {
         int val;
         ListNode *next;
 
         ListNode() : val{}, next{nullptr} {}
-        ListNode(int val) : val{val}, next{nullptr} {}
-        ListNode(int val, ListNode *next) : val{val}, next{nullptr} {}
+        explicit ListNode(int val) : val{val}, next{nullptr} {}
+        ListNode(int val, ListNode *next) : val{val}, next{next} {}
 
         ListNode(const ListNode &) = default;
         ListNode &operator=(const ListNode &) = default;
@@ -28,4 +28,4 @@ namespace cpp_algo::linked_lists {
 }
 
 
-#endif //CPP_ALGO_LIST_NODE_H
+#endif //CPP_ALGO_LISTNODE_H

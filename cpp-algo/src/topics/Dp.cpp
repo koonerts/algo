@@ -2,11 +2,11 @@
 // Created by koonerts on 6/1/21.
 //
 
-#include "dp.h"
+#include "Dp.h"
 #include <functional>
 #include <unordered_map>
 
-namespace cpp_algo::dp {
+namespace cpp_algo::topics {
 
     template<typename T1, typename T2>
     struct Pair {

@@ -5,7 +5,7 @@
 #ifndef CPP_ALGO_STRINGS_H
 #define CPP_ALGO_STRINGS_H
 
-namespace cpp_algo::strings {
+namespace cpp_algo::topics {
 
 }
 

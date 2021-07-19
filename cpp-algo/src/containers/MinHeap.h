@@ -2,16 +2,16 @@
 // Created by koone on 6/2/2021.
 //
 
-#ifndef CPP_ALGO_MIN_HEAP_H
-#define CPP_ALGO_MIN_HEAP_H
+#ifndef CPP_ALGO_MINHEAP_H
+#define CPP_ALGO_MINHEAP_H
 
 #include <vector>
 
 namespace cpp_algo::containers {
     template <typename T>
-    struct min_heap {
+    struct MinHeap {
 
-        min_heap(std::vector<int> vector) {
+        MinHeap(std::vector<int> vector) {
             _heap = buildHeap(vector);
         }
 
@@ -32,4 +32,4 @@ namespace cpp_algo::containers {
     };
 }
 
-#endif //CPP_ALGO_MIN_HEAP_H
+#endif //CPP_ALGO_MINHEAP_H

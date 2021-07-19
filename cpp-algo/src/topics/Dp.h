@@ -7,7 +7,7 @@
 
 #include <vector>
 
-namespace cpp_algo::dp {
+namespace cpp_algo::topics {
 
     auto min_cost_paint_houses_memoized(std::vector<std::vector<int>>& costs) -> int;
 

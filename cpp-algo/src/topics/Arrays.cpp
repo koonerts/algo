@@ -3,19 +3,19 @@
 //
 
 
-#include "arrays.h"
+#include "Arrays.h"
 #include <unordered_set>
 #include <set>
 #include <numeric>
 #include <unordered_map>
 
 
-namespace cpp_algo::arrays {
+namespace cpp_algo::topics {
     enum class TraversalDirection {
         Up, Down, Left, Right
     };
 
-    auto twoNumberSum(const std::vector<int> &vec, int targetSum) -> std::vector<int> {
+    auto Arrays::twoNumberSum(const std::vector<int> &vec, int targetSum) -> std::vector<int> {
         std::unordered_set<int> numSet{};
         for (int num : vec) {
             if (numSet.contains(targetSum - num)) {
@@ -26,7 +26,7 @@ namespace cpp_algo::arrays {
         return {};
     }
 
-    auto isValidSubsequence(const std::vector<int> &vec, const std::vector<int> &seq) -> bool {
+    auto Arrays::isValidSubsequence(const std::vector<int> &vec, const std::vector<int> &seq) -> bool {
         if (seq.size() > vec.size())
             return false;
 
@@ -40,7 +40,7 @@ namespace cpp_algo::arrays {
         return false;
     }
 
-    auto sortedSquaredArray(const std::vector<int> &vec) -> std::vector<int> {
+    auto Arrays::sortedSquaredArray(const std::vector<int> &vec) -> std::vector<int> {
         if (vec.empty())
             return {};
 
@@ -79,7 +79,7 @@ namespace cpp_algo::arrays {
         return rVec;
     }
 
-    auto smallestDifference(std::vector<int> vec1, std::vector<int> vec2) -> std::vector<int> {
+    auto Arrays::smallestDifference(std::vector<int> vec1, std::vector<int> vec2) -> std::vector<int> {
         auto n1 = vec1.size(), n2 = vec2.size();
         sort(vec1.begin(), vec1.end());
         sort(vec2.begin(), vec2.end());
@@ -109,7 +109,7 @@ namespace cpp_algo::arrays {
         return rVec;
     }
 
-    auto moveElementToEnd(std::vector<int> vec, int toMove) -> std::vector<int> {
+    auto Arrays::moveElementToEnd(std::vector<int> vec, int toMove) -> std::vector<int> {
         if (vec.empty())
             return vec;
 
@@ -125,7 +125,7 @@ namespace cpp_algo::arrays {
         return vec;
     }
 
-    auto isMonotonic(const std::vector<int> &vec) -> bool {
+    auto Arrays::isMonotonic(const std::vector<int> &vec) -> bool {
         if (vec.size() <= 1)
             return true;
 
@@ -147,7 +147,7 @@ namespace cpp_algo::arrays {
         return true;
     }
 
-    auto spiralTraverse(const std::vector<std::vector<int>> &vec) -> std::vector<int> {
+    auto Arrays::spiralTraverse(const std::vector<std::vector<int>> &vec) -> std::vector<int> {
         if (vec.empty())
             return {};
 
@@ -216,7 +216,7 @@ namespace cpp_algo::arrays {
         return rVec;
     }
 
-    auto fourNumberSum(std::vector<int> vec, int targetSum) -> std::vector<std::vector<int>> {
+    auto Arrays::fourNumberSum(std::vector<int> vec, int targetSum) -> std::vector<std::vector<int>> {
         if (vec.size() < 4)
             return {};
 
@@ -244,7 +244,7 @@ namespace cpp_algo::arrays {
         return rVec;
     }
 
-    auto subarraySort(const std::vector<int> &vec) -> std::vector<int> {
+    auto Arrays::subarraySort(const std::vector<int> &vec) -> std::vector<int> {
         if (vec.size() <= 1)
             return {-1, -1};
 
@@ -277,7 +277,7 @@ namespace cpp_algo::arrays {
         return {static_cast<int>(lo), static_cast<int>(hi)};
     }
 
-    auto largestRange(const std::vector<int> &vec) -> std::vector<int> {
+    auto Arrays::largestRange(const std::vector<int> &vec) -> std::vector<int> {
         std::set<int> vSet{vec.begin(), vec.end()};
         auto curr{vSet.begin()}, prev{vSet.begin()}, rangeBegin{vSet.begin()};
         std::vector<int> rVec{*prev, *prev};
@@ -302,19 +302,19 @@ namespace cpp_algo::arrays {
         return rVec;
     }
 
-// TODO
-    auto minRewards(const std::vector<int> &scores) -> int {
+    // TODO
+    auto Arrays::minRewards(const std::vector<int> &scores) -> int {
         return -1;
     }
 
-// TODO
-    auto zigzagTraverse(const std::vector<std::vector<int>> &array) -> std::vector<int> {
+    // TODO
+    auto Arrays::zigzagTraverse(const std::vector<std::vector<int>> &array) -> std::vector<int> {
         // Write your code here.
         return {};
     }
 
 
-    auto lengthOfLongestSubstring(std::string s) -> int {
+    auto Arrays::lengthOfLongestSubstring(std::string s) -> int {
         if (s.size() <= 1)
             return static_cast<int>(s.size());
 
@@ -333,7 +333,7 @@ namespace cpp_algo::arrays {
         return maxLen;
     }
 
-    auto nextPermutation(std::vector<int> &nums) -> void {
+    auto Arrays::nextPermutation(std::vector<int> &nums) -> void {
         if (nums.size() <= 1)
             return;
 
@@ -358,11 +358,11 @@ namespace cpp_algo::arrays {
     }
 
     // TODO
-    auto nextClosestTime(std::string time) -> std::string {
+    auto Arrays::nextClosestTime(std::string time) -> std::string {
         return "";
     }
 
-    auto insertInterval(std::vector<std::vector<int>> &intervals, std::vector<int> &newInterval) -> std::vector<std::vector<int>> {
+    auto Arrays::insertInterval(std::vector<std::vector<int>> &intervals, std::vector<int> &newInterval) -> std::vector<std::vector<int>> {
         std::vector<std::vector<int>> retIntervals;
 
         if (intervals.empty()) {
@@ -398,5 +398,13 @@ namespace cpp_algo::arrays {
         }
 
         return retIntervals;
+    }
+
+    auto Arrays::maxArea(std::vector<int> &heights) -> int {
+        return -1;
+    }
+
+    auto Arrays::tandemBicycle(std::vector<int> redShirtSpeeds, std::vector<int> blueShirtSpeeds, bool fastest) -> int {
+        return -1;
     }
 }
