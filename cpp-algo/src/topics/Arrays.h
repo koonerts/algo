@@ -45,6 +45,10 @@ namespace cpp_algo::topics {
         static auto maxArea(std::vector<int>& height) -> int;
 
         static auto tandemBicycle(std::vector<int> redShirtSpeeds, std::vector<int> blueShirtSpeeds, bool fastest) -> int;
+
+        static auto firstNonRepeatingCharacter(std::string str) -> int;
+
+        static auto mergeOverlappingIntervals(std::vector<std::vector<int>> &intervals) -> std::vector<std::vector<int>>;
     };
 }
 
