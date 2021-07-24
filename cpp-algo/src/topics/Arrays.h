@@ -49,6 +49,8 @@ namespace cpp_algo::topics {
         static auto firstNonRepeatingCharacter(std::string str) -> int;
 
         static auto mergeOverlappingIntervals(std::vector<std::vector<int>> &intervals) -> std::vector<std::vector<int>>;
+
+        static auto sortStack(vector<int> &stack) -> std::vector<int>;
     };
 }
 

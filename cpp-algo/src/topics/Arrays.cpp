@@ -451,4 +451,16 @@ namespace cpp_algo::topics {
 
         return ret_intervals;
     }
+
+    auto Arrays::sortStack(vector<int> &stack) -> vector<int> {
+
+        const auto sortRec = [&stack]() {
+            auto sortRecImpl = [&stack](int prev, auto &sortRecImplRef) {
+                if (stack.empty())
+            };
+
+            sortRecImpl(numeric_limits<int>::max(), sortRecImpl);
+        };
+        return std::vector<int>();
+    }
 }
