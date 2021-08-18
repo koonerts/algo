@@ -1,6 +1,7 @@
 package arr
 
 import (
+	"bytes"
 	"container/heap"
 	"fmt"
 	"github.com/itroot/keysort"
@@ -30,8 +31,6 @@ type Point struct {
 	x, y int
 }
 
-
-
 // TODO:
 func maxKSumCombinations(n1, n2 []int, k int) (results []int) {
 	if k == 0 {
@@ -47,7 +46,7 @@ func maxKSumCombinations(n1, n2 []int, k int) (results []int) {
 			break
 		}
 
-		if n1Val + n2Heap.Peek() >= n2Val + n1Heap.Peek() {
+		if n1Val+n2Heap.Peek() >= n2Val+n1Heap.Peek() {
 			n2Val = n2Heap.HeapPop()
 		} else {
 			n1Val = n1Heap.HeapPop()
@@ -57,7 +56,9 @@ func maxKSumCombinations(n1, n2 []int, k int) (results []int) {
 }
 
 func LongestConsecutive(nums []int) int {
-	if len(nums) == 0 { return 0 }
+	if len(nums) == 0 {
+		return 0
+	}
 	numSet := map[int]bool{}
 	for _, num := range nums {
 		numSet[num] = true
@@ -76,8 +77,6 @@ func LongestConsecutive(nums []int) int {
 	}
 	return maxConsec
 }
-
-
 
 func Subsets(nums []int) [][]int {
 	results := [][]int{}
@@ -1276,7 +1275,9 @@ func CombinationSum(candidates []int, target int) (results [][]int) {
 		}
 
 		for ; idx < len(candidates); idx++ {
-			if idx > 0 && nums[idx] == nums[idx-1] {continue}
+			if idx > 0 && nums[idx] == nums[idx-1] {
+				continue
+			}
 			nums = append(nums, candidates[idx])
 			backtrack(remaining-candidates[idx], idx, nums)
 			nums = nums[:len(nums)-1]
@@ -1347,7 +1348,9 @@ func CombinationSum2(candidates []int, target int) (results [][]int) {
 		}
 
 		for ; idx < len(candidates); idx++ {
-			if idx > 0 && nums[idx] == nums[idx-1] {continue}
+			if idx > 0 && nums[idx] == nums[idx-1] {
+				continue
+			}
 			nums = append(nums, candidates[idx])
 			backtrack(remaining-candidates[idx], idx+1, nums)
 			nums = nums[:len(nums)-1]
@@ -1798,67 +1801,51 @@ func SummaryRanges(nums []int) []string {
 	return ranges
 }
 
-type PaddedWord struct {
-	word       []byte
-	wordEndIdx int
-}
+func FullJustify(words []string, maxWidth int) (results []string) {
+	currLine := [][]byte{}
+	currLineWidth := 0
 
-func FullJustify(words []string, maxWidth int) []string {
-	results := []string{}
-	lo, hi := 0, 0
-	currLen := 0
-	for hi < len(words) {
-		currLen += len(words[hi]) + 1
-		if currLen >= maxWidth || hi == len(words)-1 {
-			if currLen > maxWidth {
-				currLen -= len(words[hi]) + 1
-				hi--
-			}
-			paddedWords := make([]PaddedWord, hi-lo+1)
-			for i := range paddedWords {
-				b := make([]byte, len(words[lo])+1)
-				pw := PaddedWord{word: b, wordEndIdx: len(b) - 2}
-				for j := range words[lo] {
-					pw.word[j] = words[lo][j]
-				}
-				pw.word[len(pw.word)-1] = ' '
-				paddedWords[i] = pw
-				lo++
-			}
+	var addToResults = func(line [][]byte) {
+		resultLine := make([]byte, 0, maxWidth)
+		for _, chunk := range currLine {
+			resultLine = append(resultLine, chunk...)
+		}
+		results = append(results, string(resultLine))
+	}
 
-			if hi != len(words)-1 {
-				i := 0
-				canEvenlyDistribute := (maxWidth-currLen)%len(paddedWords) == 0
-				n := len(paddedWords)
-				if !canEvenlyDistribute {
-					paddedWords[0].word = append(paddedWords[0].word, ' ')
-					paddedWords[n-1].word = paddedWords[n-1].word[:len(paddedWords[n-1].word)-1]
-					n--
-					i++
-				}
-
-				for currLen < maxWidth {
-					i %= n
-					paddedWords[i].word = append(paddedWords[i].word, ' ')
-					currLen++
-					i++
-				}
-			}
-
-			sentenceBytes := make([]byte, 0, maxWidth)
-			for i := 0; i < len(paddedWords); i++ {
-				for j := 0; j < len(paddedWords[i].word); j++ {
-					sentenceBytes = append(sentenceBytes, paddedWords[i].word[j])
-				}
-			}
-			results = append(results, string(sentenceBytes))
-			currLen = 0
+	for i := 0; i < len(words); {
+		word := words[i]
+		if currLineWidth == 0 {
+			currLine = append(currLine, []byte(word))
+			currLineWidth += len(word)
+			i++
+			continue
 		}
 
-		hi++
+		if currLineWidth+len(word)+1 <= maxWidth {
+			currLine[len(currLine)-1] = append(currLine[len(currLine)-1], ' ')
+			currLine = append(currLine, []byte(word))
+			currLineWidth += len(word) + 1
+			i++
+		} else {
+			for j := 0; currLineWidth < maxWidth; j++ {
+				if j >= len(currLine)-1 {
+					j = 0
+				}
+				currLine[j] = append(currLine[j], ' ')
+				currLineWidth++
+			}
+
+			addToResults(currLine)
+			currLine = [][]byte{}
+			currLineWidth = 0
+		}
 	}
-	if len(results[len(results)-1]) < maxWidth {
-		results[len(results)-1] = results[len(results)-1] + strings.Repeat(" ", maxWidth-len(results[len(results)-1]))
+
+	if currLineWidth > 0 {
+		n := len(currLine)
+		currLine[n-1] = append(currLine[n-1], bytes.Repeat([]byte(" "), maxWidth-currLineWidth)...)
+		addToResults(currLine)
 	}
 
 	return results

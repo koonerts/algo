@@ -8,3 +8,5 @@ venv/
 cpp-algo/.DS_Store
 
 cpp-algo/test/arrays-and-strings/.DS_Store
+
+cpp-algo/build/

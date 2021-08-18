@@ -2,18 +2,18 @@ package main
 
 import (
 	"fmt"
+	"go-algo/arr"
 )
 
 func main() {
-
+	result := arr.FullJustify([]string{"What", "must", "be", "acknowledgment", "shall", "be"}, 16)
+	for _, line := range result {
+		pln(line)
+	}
 }
 
 func pln(i ...interface{}) {
 	fmt.Println(i...)
-}
-
-type Test struct {
-	x int
 }
 
 func max(nums ...int) int {
