@@ -10,8 +10,7 @@ type RandomizedSet struct {
 	nums []int
 }
 
-/** Initialize your data structure here. */
-func Constructor() RandomizedSet {
+func NewRandomizedSet() RandomizedSet {
 	return RandomizedSet{map[int]int{}, []int{}}
 }
 
@@ -37,7 +36,6 @@ func (rs *RandomizedSet) Remove(val int) bool {
 	}
 	return false
 }
-
 
 /** Get a random element from the set. */
 func (rs *RandomizedSet) GetRandom() int {

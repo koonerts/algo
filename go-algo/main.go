@@ -6,10 +6,10 @@ import (
 )
 
 func main() {
-	result := arr.FullJustify([]string{"What", "must", "be", "acknowledgment", "shall", "be"}, 16)
-	for _, line := range result {
-		pln(line)
-	}
+	pln(arr.DecodeString("3[a]2[bc]"))
+	pln(arr.DecodeString("3[a2[c]]"))
+	pln(arr.DecodeString("2[abc]3[cd]ef"))
+	pln(arr.DecodeString("abc3[cd]xyz"))
 }
 
 func pln(i ...interface{}) {

@@ -31,6 +31,40 @@ type Point struct {
 	x, y int
 }
 
+func DecodeString(s string) string {
+	stk := []byte{}
+	openIndexes := []int{}
+	repeatIndexes := []int{}
+
+	var isNumber = func(b byte) bool {
+		return b >= '0' && b <= '9'
+	}
+
+	for i := range s {
+		ch := s[i]
+		if ch == ']' {
+			n, m := len(openIndexes), len(repeatIndexes)
+			openIdx, repeatIdx := openIndexes[n-1], repeatIndexes[m-1]
+			openIndexes, repeatIndexes = openIndexes[:n-1], repeatIndexes[:m-1]
+
+			repeatCnt, _ := strconv.Atoi(string(stk[repeatIdx:openIdx]))
+			repeatBytes := bytes.Repeat(stk[openIdx+1:], repeatCnt)
+			stk = stk[:repeatIdx]
+			stk = append(stk, repeatBytes...)
+		} else {
+			stk = append(stk, ch)
+			n := len(stk)
+			if ch == '[' {
+				openIndexes = append(openIndexes, n-1)
+			} else if isNumber(s[i]) && (i == 0 || !isNumber(s[i-1])) {
+				repeatIndexes = append(repeatIndexes, n-1)
+			}
+		}
+	}
+
+	return string(stk)
+}
+
 // TODO:
 func maxKSumCombinations(n1, n2 []int, k int) (results []int) {
 	if k == 0 {
