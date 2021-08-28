@@ -10,7 +10,5 @@ using namespace cpp_algo::ext::fmt;
 
 
 int main() {
-    unordered_map<int, int> m{};
-    cout << m[1] << endl;
-    cout << m.contains(1) << endl;
+    vector<int> v(5, 0);
 }

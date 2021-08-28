@@ -603,24 +603,15 @@ namespace cpp_algo::topics {
     }
 
     auto Arrays::minTransfers(const vector<std::vector<int>> &transactions) -> int {
-        unordered_map<int, int> balances{};
-        unordered_map<int, int> posBalances{};
-        unordered_map<int, int> negBalances{};
-        unordered_set<int> neutralPersons{};
+        vector<int> balances(22, 0);
 
-        for (const auto &transaction : transactions) {
-            auto p1{transaction[0]}, p2{transaction[1]}, amt{transaction[2]};
-            if (!balances.contains(p1)) balances[p1] = 0;
-            if (!balances.contains(p2)) balances[p2] = 0;
-            balances[p1] -= amt;
-            balances[p2] += amt;
+        for (const auto &t : transactions) {
+            balances[t[0]] -= t[3];
+            balances[t[1]] += t[3];
         }
 
-        for (const auto &[p, bal] : balances) {
-            if (bal > 0) posBalances.emplace(p, bal);
-            else if (bal < 0) negBalances.emplace(p, bal);
-            else neutralPersons.emplace(p);
-        }
+        auto minTransactions{numeric_limits<int>::max()};
+        
 
         return 0;
     }
