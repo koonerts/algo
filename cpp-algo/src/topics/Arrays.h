@@ -40,9 +40,9 @@ namespace cpp_algo::topics {
 
         static auto nextClosestTime(std::string time) -> std::string;
 
-        static auto insertInterval(std::vector<std::vector<int>>& intervals, std::vector<int>& newInterval) -> std::vector<std::vector<int>>;
+        static auto insertInterval(std::vector<std::vector<int>> &intervals, std::vector<int> &newInterval) -> std::vector<std::vector<int>>;
 
-        static auto maxArea(std::vector<int>& height) -> int;
+        static auto maxArea(std::vector<int> &height) -> int;
 
         static auto tandemBicycle(std::vector<int> redShirtSpeeds, std::vector<int> blueShirtSpeeds, bool fastest) -> int;
 
@@ -50,7 +50,19 @@ namespace cpp_algo::topics {
 
         static auto mergeOverlappingIntervals(std::vector<std::vector<int>> &intervals) -> std::vector<std::vector<int>>;
 
-        static auto sortStack(vector<int> &stack) -> std::vector<int>;
+        static auto sortStack(std::vector<int> stack) -> std::vector<int>;
+
+        static auto multiply(std::string num1, std::string num2) -> std::string;
+
+        static auto rotateMatrix(std::vector<std::vector<int>> &matrix) -> void;
+
+        static auto minCostToHireWorkers(std::vector<int> &quality, std::vector<int> &wage, int k) -> double;
+
+        static auto kClosestPoints(std::vector<std::vector<int>> &points, int k) -> std::vector<std::vector<int>>;
+
+        static auto maxAreaOfIsland(std::vector<std::vector<int>>& grid) -> int;
+
+        static auto minTransfers(const std::vector<std::vector<int>>& transactions) -> int;
     };
 }
 

@@ -6,19 +6,24 @@
 #include "Arrays.h"
 #include <unordered_set>
 #include <set>
+#include <stack>
 #include <numeric>
 #include <unordered_map>
+#include <queue>
+#include "../ext/fmt.h"
 
 using namespace std;
+using namespace cpp_algo::ext::fmt;
 
 namespace cpp_algo::topics {
+
     enum class TraversalDirection {
         Up, Down, Left, Right
     };
 
     auto Arrays::twoNumberSum(const vector<int> &vec, int targetSum) -> vector<int> {
         unordered_set<int> numSet{};
-        for (int num : vec) {
+        for (int num: vec) {
             if (numSet.contains(targetSum - num)) {
                 return {num, targetSum - num};
             }
@@ -32,7 +37,7 @@ namespace cpp_algo::topics {
             return false;
 
         auto seqItr = seq.begin();
-        for (int n : vec) {
+        for (int n: vec) {
             if (n == *seqItr)
                 ++seqItr;
             if (seqItr == seq.end())
@@ -314,7 +319,6 @@ namespace cpp_algo::topics {
         return {};
     }
 
-
     auto Arrays::lengthOfLongestSubstring(string s) -> int {
         if (s.size() <= 1)
             return static_cast<int>(s.size());
@@ -323,7 +327,7 @@ namespace cpp_algo::topics {
         int maxLen{};
         vector<int> charIdxMap(256, -1);
 
-        for (auto const &c : s) {
+        for (auto const &c: s) {
             if (charIdxMap[c] >= lo) {
                 lo = charIdxMap[c] + 1;
             }
@@ -442,25 +446,182 @@ namespace cpp_algo::topics {
         ret_intervals.emplace_back(intervals[0]);
         for (auto i = 1; i < intervals.size(); ++i) {
             auto n = ret_intervals.size();
-            if (intervals[i][0] > ret_intervals[n-1][1]) {
+            if (intervals[i][0] > ret_intervals[n - 1][1]) {
                 ret_intervals.emplace_back(intervals[i]);
             } else {
-                ret_intervals[n-1][1] = max(ret_intervals[n-1][1], intervals[i][1]);
+                ret_intervals[n - 1][1] = max(ret_intervals[n - 1][1], intervals[i][1]);
             }
         }
 
         return ret_intervals;
     }
 
-    auto Arrays::sortStack(vector<int> &stack) -> vector<int> {
+    // TODO - https://www.algoexpert.io/questions/Sort%20Stack
+    auto Arrays::sortStack(vector<int> stack) -> vector<int> {
 
-        const auto sortRec = [&stack]() {
-            auto sortRecImpl = [&stack](int prev, auto &sortRecImplRef) {
-                if (stack.empty())
+        const auto sortStackRec = [&stack](optional<int> prevNum) {
+            auto sortStackRecImpl = [&stack](optional<int> prevNum, auto &sortStackRecImplRef) {
+
             };
-
-            sortRecImpl(numeric_limits<int>::max(), sortRecImpl);
+            sortStackRecImpl(prevNum, sortStackRecImpl);
         };
-        return std::vector<int>();
+        sortStackRec({});
+        return stack;
+    }
+
+    auto Arrays::multiply(string num1, string num2) -> string {
+        if (num1.size() > num2.size())
+            return Arrays::multiply(num2, num1);
+
+        if (num1 == "0" || num2 == "0") return "0";
+        else if (num1 == "1") return num2;
+        else if (num2 == "1") return num1;
+
+        const auto mlty = [](const char &c1, const char &c2) -> int {
+            return (c1 - '0') * (c2 - '0');
+        };
+
+        auto add = [](const string &s1, const string &s2) -> string {
+            auto n1 = s1.size(), n2 = s2.size();
+            if (!n1) return s2;
+            if (!n2) return s1;
+
+            auto carry = 0;
+            auto n = max(n1, n2);
+            string result;
+            result.reserve(n + 1);
+            for (auto i = 0; i < n; ++i) {
+                auto s1v = i >= n1 ? 0 : s1[i] - '0';
+                auto s2v = i >= n2 ? 0 : s2[i] - '0';
+                auto res = s1v + s2v + carry;
+                carry = res / 10;
+                result += to_string(res % 10);
+            }
+
+            if (carry > 0)
+                result += "1";
+            return result;
+        };
+
+        string result;
+        for (auto n1_it = num1.crbegin(); n1_it != num1.crend(); ++n1_it) {
+            int carry = 0;
+            auto dst = distance(num1.crbegin(), n1_it);
+            string ss;
+            ss.reserve(num2.size() + dst + 1);
+
+            if (dst > 0)
+                ss += string(dst, '0');
+
+            for (auto n2_it = num2.crbegin(); n2_it != num2.crend(); ++n2_it) {
+                auto res = mlty(*n1_it, *n2_it) + carry;
+                carry = res / 10;
+                ss += to_string(res % 10);
+            }
+
+            if (carry > 0)
+                ss += to_string(carry);
+            result = add(result, ss);
+        }
+
+        reverse(result.begin(), result.end());
+        return result;
+    }
+
+    // TODO - https://leetcode.com/explore/interview/card/google/59/array-and-strings/3052/
+    auto Arrays::rotateMatrix(vector<vector<int>> &matrix) -> void {
+
+    }
+
+    // TODO - https://leetcode.com/explore/interview/card/google/59/array-and-strings/3061/
+    auto Arrays::minCostToHireWorkers(vector<int> &quality, vector<int> &wage, int k) -> double {
+        return 0;
+    }
+
+    auto Arrays::kClosestPoints(vector<vector<int>> &points, int k) -> vector<vector<int>> {
+        const auto euclidean_dist = [](const vector<int> &point) {
+            return sqrt(pow(point[0], 2) + pow(point[1], 2));
+        };
+
+        priority_queue<pair<double, vector<int>>> pq{};
+        for (const auto &point: points) {
+            auto dst = euclidean_dist(point);
+            if (pq.size() < k) {
+                pq.emplace(pair(dst, point));
+            } else if (dst < pq.top().first) {
+                pq.pop();
+                pq.emplace(pair(dst, point));
+            }
+        }
+
+        vector<vector<int>> rpoints;
+        rpoints.reserve(k);
+        while (!pq.empty()) {
+            rpoints.emplace_back(pq.top().second);
+            pq.pop();
+        }
+        return rpoints;
+    }
+
+    auto Arrays::maxAreaOfIsland(vector<std::vector<int>> &grid) -> int {
+        size_t rows{grid.size()}, cols{grid[0].size()};
+        int maxArea = 0;
+        queue<pair<int, int>> que{};
+        const vector<pair<int, int>> dirs{{1,  0},
+                                          {0,  1},
+                                          {-1, 0},
+                                          {0,  -1}};
+
+        for (int x = 0; x < rows; ++x) {
+            for (int y = 0; y < cols; ++y) {
+                if (grid[x][y] == 0)
+                    continue;
+
+                int area{0};
+                grid[x][y] = 0;
+                que.emplace(x, y);
+
+                while (!que.empty()) {
+                    ++area;
+                    const auto[currX, currY] = que.front();
+                    que.pop();
+                    maxArea = max(maxArea, area);
+
+                    for (const auto[dx, dy]: dirs) {
+                        const int newX{currX + dx}, newY{currY + dy};
+                        if (newX >= 0 && newY >= 0 && newX < rows && newY < cols && grid[newX][newY] == 1) {
+                            grid[newX][newY] = 0;
+                            que.emplace(newX, newY);
+                        }
+                    }
+                }
+
+            }
+        }
+
+        return maxArea;
+    }
+
+    auto Arrays::minTransfers(const vector<std::vector<int>> &transactions) -> int {
+        unordered_map<int, int> balances{};
+        unordered_map<int, int> posBalances{};
+        unordered_map<int, int> negBalances{};
+        unordered_set<int> neutralPersons{};
+
+        for (const auto &transaction : transactions) {
+            auto p1{transaction[0]}, p2{transaction[1]}, amt{transaction[2]};
+            if (!balances.contains(p1)) balances[p1] = 0;
+            if (!balances.contains(p2)) balances[p2] = 0;
+            balances[p1] -= amt;
+            balances[p2] += amt;
+        }
+
+        for (const auto &[p, bal] : balances) {
+            if (bal > 0) posBalances.emplace(p, bal);
+            else if (bal < 0) negBalances.emplace(p, bal);
+            else neutralPersons.emplace(p);
+        }
+
+        return 0;
     }
 }

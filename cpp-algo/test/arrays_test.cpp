@@ -70,6 +70,5 @@ TEST_CASE("firstNonRepeatingCharacter") {
 
 TEST_CASE("mergeOverlappingIntervals") {
     vector<vector<int>> v{{1,2}, {0,3}};
-    auto res = Arrays::mergeOverlappingIntervals(v);
-    // CHECK(Arrays::mergeOverlappingIntervals({{1,2}, {0,3}}) == {{}});
+    CHECK(Arrays::mergeOverlappingIntervals(v) == vector<vector<int>>{{0, 3}});
 }

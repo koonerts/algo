@@ -13,6 +13,11 @@ namespace cpp_algo::ext::fmt {
 
     using namespace cpp_algo::ents;
 
+    template<typename T>
+    auto println(T &&param) -> void {
+        std::cout << std::forward<decltype(param)>(param) << std::endl;
+    }
+
     template<typename T, typename A>
     auto println(const std::vector<T, A> &v) -> void {
         std::cout << "[";

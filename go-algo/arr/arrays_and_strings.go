@@ -31,6 +31,63 @@ type Point struct {
 	x, y int
 }
 
+func maxAreaOfIsland(grid [][]int) int {
+	if len(grid) == 0 {
+		return 0
+	}
+
+	que := [][]int{}
+	rows, cols := len(grid), len(grid[0])
+	maxArea := 0
+	dirs := [][]int{{0, 1}, {1, 0}, {0, -1}, {-1, 0}}
+
+	var isValidPoint = func(x, y int) bool {
+		return x >= 0 && x < rows && y >= 0 && y < cols
+	}
+
+	var max = func(nums ...int) int {
+		currMax := nums[0]
+		for _, num := range nums {
+			if num > currMax {
+				currMax = num
+			}
+		}
+		return currMax
+	}
+
+	var computeIslandArea = func(x, y int) int {
+		area := 0
+		que = append(que, []int{x, y})
+
+		for len(que) > 0 {
+			area++
+			n := len(que)
+			currX, currY := que[n-1][0], que[n-1][1]
+			que = que[:n-1]
+
+			for _, dir := range dirs {
+				newX, newY := currX+dir[0], currY+dir[1]
+				if isValidPoint(newX, newY) && grid[newX][newY] == 1 {
+					grid[newX][newY] = 0
+					que = append(que, []int{newX, newY})
+				}
+			}
+		}
+		return area
+	}
+
+	for x := 0; x < rows; x++ {
+		for y := 0; y < cols; y++ {
+			if grid[x][y] == 1 {
+				grid[x][y] = 0
+				maxArea = max(maxArea, computeIslandArea(x, y))
+			}
+		}
+	}
+
+	return maxArea
+}
+
 func DecodeString(s string) string {
 	stk := []byte{}
 	openIndexes := []int{}
@@ -4042,17 +4099,11 @@ func MinCost(s string, cost []int) int {
 			curSum, curMax = 0, 0
 		}
 		curSum += cost[i]
-		curMax = max(curMax, cost[i])
+		curMax = mathext.MaxInt(curMax, cost[i])
 	}
 	return res + curSum - curMax
 }
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
 func MinimumBribes(q []int32) {
 	var bribeCnt int32
 	for i := int32(len(q) - 1); i >= 0; i-- {
