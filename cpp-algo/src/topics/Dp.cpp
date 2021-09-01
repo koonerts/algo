@@ -5,8 +5,12 @@
 #include "Dp.h"
 #include <functional>
 #include <unordered_map>
+#include <string>
+#include <string_view>
 
 namespace cpp_algo::topics {
+
+    using namespace std;
 
     template<typename T1, typename T2>
     struct Pair {
@@ -65,6 +69,40 @@ namespace cpp_algo::topics {
     }
 
     auto min_cost_paint_houses_tabulated(std::vector<std::vector<int>> &costs) -> int {
+        return 0;
+    }
+
+    auto longestStrChain(std::vector<std::string> &words) -> int {
+
+        auto isPredecessor = [](const std::string_view &s1, const std::string_view &s2) {
+            auto n1 = s1.size(), n2 = s2.size();
+            if (std::abs(int(n1-n2)) > 1)
+                return false;
+
+            auto p1 = 0, p2 = 0;
+            auto diffCnt = 0;
+
+            auto nmax = std::max(n1, n2);
+            while (p1 < nmax || p2 < nmax) {
+                if (p1 >= nmax) {
+                    ++p2;
+                    ++diffCnt;
+                } else if (p2 >= nmax) {
+                    ++p1;
+                    ++diffCnt;
+                } else if (s1[p1] != s2[p2]) {
+                    ++diffCnt;
+                    if (p1 <= p2)
+                        ++p1;
+                    else
+                        ++p2;
+                } else {
+                    ++p1;
+                    ++p2;
+                }
+            }
+        };
+
         return 0;
     }
 

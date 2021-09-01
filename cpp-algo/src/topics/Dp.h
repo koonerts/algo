@@ -11,7 +11,9 @@ namespace cpp_algo::topics {
 
     auto min_cost_paint_houses_memoized(std::vector<std::vector<int>>& costs) -> int;
 
-    auto min_cost_paint_houses_tabulated(std::vector<std::vector<int>>& costs) -> int;
+    auto min_cost_paint_houses_tabulated(std::vector<std::vector<int>>& costs) -> it;
+
+    auto longestStrChain(std::vector<std::string>& words) -> int;
 
 }
 

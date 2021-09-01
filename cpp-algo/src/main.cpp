@@ -10,5 +10,6 @@ using namespace cpp_algo::ext::fmt;
 
 
 int main() {
-    vector<int> v(5, 0);
+    auto result = Arrays::minTransfers({{0,1,10},{2,0,5}});
+    cout << result << endl;
 }

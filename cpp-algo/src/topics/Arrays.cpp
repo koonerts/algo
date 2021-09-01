@@ -10,10 +10,8 @@
 #include <numeric>
 #include <unordered_map>
 #include <queue>
-#include "../ext/fmt.h"
 
 using namespace std;
-using namespace cpp_algo::ext::fmt;
 
 namespace cpp_algo::topics {
 
@@ -604,15 +602,42 @@ namespace cpp_algo::topics {
 
     auto Arrays::minTransfers(const vector<std::vector<int>> &transactions) -> int {
         vector<int> balances(22, 0);
-
         for (const auto &t : transactions) {
-            balances[t[0]] -= t[3];
-            balances[t[1]] += t[3];
+            balances[t[0]] -= t[2];
+            balances[t[1]] += t[2];
         }
 
         auto minTransactions{numeric_limits<int>::max()};
-        
 
-        return 0;
+        const auto dfs = [&balances, &minTransactions]() {
+            auto dfsImpl = [&balances, &minTransactions](int idx, int transactionCount, auto &dfsImplRef) {
+                if (transactionCount >= minTransactions) {
+                    return;
+                }
+
+                auto n = balances.size();
+                while (idx < n && balances[idx] == 0) {
+                    ++idx;
+                }
+
+                if (idx == n) {
+                    minTransactions = min(minTransactions, transactionCount);
+                    return;
+                }
+
+                for (auto i = idx + 1; i < n; ++i) {
+                    if (balances[idx] * balances[i] < 0) {
+                        balances[i] += balances[idx];
+                        dfsImplRef(idx+1, transactionCount+1, dfsImplRef);
+                        balances[i] -= balances[idx];
+                    }
+                }
+            };
+
+            dfsImpl(0, 0, dfsImpl);
+        };
+
+        dfs();
+        return minTransactions;
     }
 }
