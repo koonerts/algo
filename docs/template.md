@@ -94,30 +94,12 @@ def variation_2(args):
 
 ## Multi-language Implementation
 
-### Java Implementation
+### Go Implementation
 
-```java
-public ReturnType algorithmName(ParamType param) {
-    // Java implementation
-    return result;
-}
-```
-
-### JavaScript Implementation
-
-```javascript
-function algorithmName(param) {
-    // JavaScript implementation
-    return result;
-}
-```
-
-### C++ Implementation
-
-```cpp
-ReturnType algorithmName(ParamType param) {
-    // C++ implementation
-    return result;
+```go
+func algorithmName(param ParamType) ReturnType {
+    // Go implementation
+    return result
 }
 ```
 

@@ -101,12 +101,10 @@ Throughout this repository, algorithm implementations and practice problems are 
 
 ## Implementation Languages
 
-Examples and implementations are provided in multiple languages where available:
+Examples and implementations are provided in:
 
 - **Python**: Primary language with comprehensive coverage
-- **JavaScript**: Web-friendly implementations
-- **Java**: Object-oriented implementations
-- **C++**: Performance-optimized implementations
+- **Go**: Performance and concurrency-focused implementations
 
 ## Getting Help
 
@@ -123,7 +121,7 @@ If you'd like to contribute to this repository, please follow these guidelines:
 
 ### Adding New Algorithms
 1. Use the [standard template](template.md) for consistency
-2. Include implementations in multiple languages where possible
+2. Include implementations in Python and Go
 3. Add difficulty indicators to all problems
 4. Include visualizations and clear explanations
 5. Follow the existing file naming and organization conventions
@@ -141,7 +139,7 @@ If you'd like to contribute to this repository, please follow these guidelines:
 4. Consider creating animations for step-by-step algorithm execution
 
 ### Adding Language Implementations
-1. Follow language-specific best practices and coding standards
+1. Follow Python or Go best practices and coding standards
 2. Include comments explaining non-obvious parts of the implementation
 3. Ensure implementations are efficient and handle edge cases
 4. Test implementations with various inputs before submitting

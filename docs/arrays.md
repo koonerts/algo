@@ -50,6 +50,23 @@ def brute_force_max_subarray(nums):
 
     return max_sum
 # Time: O(n²), Space: O(1)
+
+# Test cases
+if __name__ == "__main__":
+    # Example 1: Standard case with positive and negative numbers
+    test1 = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+    # Expected: 6 (subarray [4, -1, 2, 1])
+    print(f"Test 1 result: {brute_force_max_subarray(test1)}")
+    
+    # Example 2: All negative numbers
+    test2 = [-1, -2, -3, -4]
+    # Expected: -1 (subarray [-1])
+    print(f"Test 2 result: {brute_force_max_subarray(test2)}")
+    
+    # Example 3: All positive numbers
+    test3 = [1, 2, 3, 4]
+    # Expected: 10 (entire array)
+    print(f"Test 3 result: {brute_force_max_subarray(test3)}")
 ```
 
 ## Step 3: Optimized Kadane's Algorithm
@@ -65,6 +82,30 @@ def kadane(nums):
 
     return max_so_far
 # Time: O(n), Space: O(1)
+
+# Test cases
+if __name__ == "__main__":
+    # Example 1: Standard case with positive and negative numbers
+    test1 = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+    # Expected: 6 (subarray [4, -1, 2, 1])
+    print(f"Test 1 result: {kadane(test1)}")
+    
+    # Example 2: All negative numbers
+    test2 = [-1, -2, -3, -4]
+    # Expected: -1 (subarray [-1])
+    print(f"Test 2 result: {kadane(test2)}")
+    
+    # Example 3: All positive numbers
+    test3 = [1, 2, 3, 4]
+    # Expected: 10 (entire array)
+    print(f"Test 3 result: {kadane(test3)}")
+    
+    # Compare brute force vs optimized results
+    for test in [test1, test2, test3]:
+        bf_result = brute_force_max_subarray(test)
+        kadane_result = kadane(test)
+        assert bf_result == kadane_result, f"Results don't match for {test}"
+    print("All tests passed! Brute force and Kadane's algorithm give same results.")
 ```
 
 ## Step 4: Common Variations
@@ -91,6 +132,26 @@ def kadane_with_indices(nums):
             end = i
 
     return max_so_far, start, end
+
+# Test cases
+if __name__ == "__main__":
+    # Example 1: Standard case with positive and negative numbers
+    test1 = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+    max_sum, start, end = kadane_with_indices(test1)
+    print(f"Max sum: {max_sum}, Subarray: {test1[start:end+1]} (indices {start}-{end})")
+    # Expected: Max sum: 6, Subarray: [4, -1, 2, 1] (indices 3-6)
+    
+    # Example 2: All positive numbers
+    test2 = [1, 2, 3, 4]
+    max_sum, start, end = kadane_with_indices(test2)
+    print(f"Max sum: {max_sum}, Subarray: {test2[start:end+1]} (indices {start}-{end})")
+    # Expected: Max sum: 10, Subarray: [1, 2, 3, 4] (indices 0-3)
+    
+    # Example 3: Test with a different pattern
+    test3 = [5, -4, 3, 4, -2, 1, 7, -8, 6]
+    max_sum, start, end = kadane_with_indices(test3)
+    print(f"Max sum: {max_sum}, Subarray: {test3[start:end+1]} (indices {start}-{end})")
+    # Expected: Max sum: 13, Subarray: [5, -4, 3, 4, -2, 1, 7] or [3, 4, -2, 1, 7] (depends on implementation)
 ```
 
 ### Handling All Negative Numbers
@@ -105,6 +166,29 @@ def kadane_all_negative(nums):
         max_so_far = max(max_so_far, max_ending_here)
 
     return max_so_far
+
+# Test cases
+if __name__ == "__main__":
+    # Example 1: All negative numbers
+    test1 = [-1, -2, -3, -4]
+    print(f"Max sum: {kadane_all_negative(test1)}")
+    # Expected: -1 (the largest single element)
+    
+    # Example 2: Mixed numbers with negative result
+    test2 = [-5, -1, -8, -9]
+    print(f"Max sum: {kadane_all_negative(test2)}")
+    # Expected: -1
+    
+    # Example 3: Negative and positive numbers
+    test3 = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+    print(f"Max sum: {kadane_all_negative(test3)}")
+    # Expected: 6
+    
+    # Check if standard Kadane fails but all-negative version works
+    test4 = [-10, -5, -2, -1, -7]
+    standard_result = kadane(test4) if 'kadane' in globals() else float('-inf')
+    all_neg_result = kadane_all_negative(test4)
+    print(f"Standard Kadane: {standard_result}, All-negative version: {all_neg_result}")
 ```
 
 ### Circular Array Maximum Sum
@@ -193,51 +277,26 @@ def max_product_subarray(nums):
 
 ## Multi-language Implementation
 
-### Java Implementation
+### Go Implementation
 
-```java
-public int maxSubArray(int[] nums) {
-    int maxSoFar = nums[0];
-    int maxEndingHere = nums[0];
+```go
+func maxSubArray(nums []int) int {
+    maxSoFar := nums[0]
+    maxEndingHere := nums[0]
     
-    for (int i = 1; i < nums.length; i++) {
-        maxEndingHere = Math.max(nums[i], maxEndingHere + nums[i]);
-        maxSoFar = Math.max(maxSoFar, maxEndingHere);
+    for i := 1; i < len(nums); i++ {
+        maxEndingHere = max(nums[i], maxEndingHere + nums[i])
+        maxSoFar = max(maxSoFar, maxEndingHere)
     }
     
-    return maxSoFar;
+    return maxSoFar
 }
-```
 
-### JavaScript Implementation
-
-```javascript
-function kadane(nums) {
-    let maxSoFar = nums[0];
-    let maxEndingHere = nums[0];
-    
-    for (let i = 1; i < nums.length; i++) {
-        maxEndingHere = Math.max(nums[i], maxEndingHere + nums[i]);
-        maxSoFar = Math.max(maxSoFar, maxEndingHere);
+func max(a, b int) int {
+    if a > b {
+        return a
     }
-    
-    return maxSoFar;
-}
-```
-
-### C++ Implementation
-
-```cpp
-int maxSubArray(vector<int>& nums) {
-    int maxSoFar = nums[0];
-    int maxEndingHere = nums[0];
-    
-    for (int i = 1; i < nums.size(); i++) {
-        maxEndingHere = max(nums[i], maxEndingHere + nums[i]);
-        maxSoFar = max(maxSoFar, maxEndingHere);
-    }
-    
-    return maxSoFar;
+    return b
 }
 ```
 
