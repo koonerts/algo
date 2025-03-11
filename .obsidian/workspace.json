@@ -11,74 +11,13 @@
             "id": "0362418a94a5f902",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/index.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "index"
-            }
-          },
-          {
-            "id": "874065355e557296",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/ready-to-use-activities.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "ready-to-use-activities"
-            }
-          },
-          {
-            "id": "f99b6c6db6e8ca16",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/ready-to-use-activities.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "ready-to-use-activities"
-            }
-          },
-          {
-            "id": "1d5ebe56611c8d58",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/learning-activities.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "learning-activities"
-            }
-          },
-          {
-            "id": "cb5edf5e9c123441",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/lesson-plan.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "lesson-plan"
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
             }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "vertical"
@@ -161,7 +100,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/lesson-plan.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -171,7 +109,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for lesson-plan"
+              "title": "Backlinks"
             }
           },
           {
@@ -180,12 +118,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/lesson-plan.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from lesson-plan"
+              "title": "Outgoing links"
             }
           },
           {
@@ -209,13 +146,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/lesson-plan.md",
                 "followCursor": true,
                 "showSearch": true,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of lesson-plan"
+              "title": "Outline"
             }
           },
           {
@@ -257,39 +193,43 @@
       "file-tree-alternative:File Tree Alternative Plugin": false
     }
   },
-  "active": "cb5edf5e9c123441",
+  "active": "0362418a94a5f902",
   "lastOpenFiles": [
-    "docs/template.md",
-    "docs/glossary.md",
-    "openrouter/anthropic/claude-3-7-sonnet:thinking",
+    "scratch/scratch1.txt",
+    "scratch/scratch.txt",
+    "scratch",
+    "py-algo/leetcode/Profile.pdf",
+    "package.json",
     "openrouter/anthropic/claude-3.7-sonnet:thinking",
+    "openrouter/anthropic/claude-3-7-sonnet:thinking",
     "openrouter/anthropic",
     "openrouter",
-    "docs/arrays.md",
+    "go-algo/cache/XDG_STATE_HOME/znap/z-shell/F-Sy-H",
+    "go-algo/cache/XDG_STATE_HOME/znap/z-shell/zsh-eza",
+    "docs/trees.md",
+    "docs/template.md",
     "docs/ready-to-use-activities.md",
-    "docs/index.md",
-    "docs/learning-activities.md",
+    "docs/linked-lists.md",
     "docs/lesson-plan.md",
+    "docs/learning-activities.md",
+    "docs/index.md",
+    "docs/heaps.md",
+    "docs/graphs.md",
+    "docs/glossary.md",
+    "docs/dynamic-programming.md",
+    "docs/backtracking.md",
+    "docs/arrays.md",
     "docs/additional-patterns.md",
-    "docs 1/index.md",
-    "docs 1/dynamic-programming.md",
-    "docs 1/arrays.md",
     "docs 1/trees.md",
     "docs 1/ready-to-use-activities.md",
     "docs 1/linked-lists.md",
     "docs 1/lesson-plan.md",
     "docs 1/learning-activities.md",
-    "docs 1/graphs.md",
+    "docs 1/index.md",
     "docs 1/heaps.md",
+    "docs 1/graphs.md",
+    "docs 1/dynamic-programming.md",
     "docs 1/backtracking.md",
-    "docs 1/additional-patterns.md",
-    "docs 1",
-    "docs/docs/arrays.md",
-    "docs/docs/index.md",
-    "docs/docs/trees.md",
-    "docs/docs/ready-to-use-activities.md",
-    "docs/docs/linked-lists.md",
-    "docs/docs/lesson-plan.md",
-    "docs/docs"
+    "docs 1/arrays.md"
   ]
 }
