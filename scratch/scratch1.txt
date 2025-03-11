@@ -1,0 +1,60 @@
+generate chezmoi cheatsheet - to assist as a quick guide to get the basic functionality
+
+
+META | Seattle, WA
+Sr. Partner Engineer - Meta FinTech (MFT)          July 2022 - December 2024
+● Built and architected File Management System (FMS), a platformized framework processing 10s of millions of daily
+  transactions across 250+ settlement files from 12+ global payment providers; reduced provider onboarding time
+  from 6-12 weeks to 2-4 weeks.
+● Migrated critical MFT Recon+Alerting Python codebases to utilize concurrent/async IO + parallel processing;
+  improved settlement file processing by 25x-35x (6+ hrs → 10-15 mins).
+● Reduced overall daily parallel processing time for all settlements from 10+ hrs to 30-40 mins, enabling Treasury/Finance
+  teams to close month-end books consistently by day 2.
+● Fixed performance bottlenecks in company-wide blob storage CLI, improving file search/traversal performance
+  by 65%-95% (from ~5min-10hrs+ to ~3-5 secs).
+● Implemented Apple IAP reconciliation for FB/Instagram Ads Boost in US, protecting over $1B in revenue while
+  maintaining compliance with Apple App Store requirements.
+● Provided technical leadership and mentorship to junior engineers on reconciliation systems and payment processing.
+
+Partner Engineer - Meta FinTech (MFT)               June 2021 - June 2022
+● Led migration of 185k+ merchants/shops to PayPal's v3 APIs for Facebook/Instagram Shops, coordinating with 8+
+  cross-functional teams to ensure compliance with FINCen and Tax/IRS requirements.
+● Designed, built, and launched Partner Self-Certification Portal (PSCP), enabling LATAM payment partners to independently
+  test their Meta Pay API implementation, significantly reducing partner engineering overhead.
+
+BSWIFT | Chicago, IL
+Senior Software Engineer II                        December 2020 - May 2021
+● Led the solutioning and re-architecture of an in-house data comparison/migration tool.
+● Conducted several large code refactorings to clean up technical debt, ultimately leading to a 50% improvement in
+  latency + 70% cost reduction for bSwift's AWS APIGateway usage.
+
+Senior Software Engineer I                         January 2019 - December 2020
+● Implemented bswift's first cloud infrastructure projects, including a customer service chatbot (AWS Lex) and
+  AI-assisted document search (AWS Kendra).
+● Created a CI/CD deployment pipeline using AWS CDK/Lambda/CodeBuild/CodePipeline/S3 for AWS resources,
+  implementing Infrastructure as Code principles.
+● Built bswift's first graph database application using Neo4j, facilitating data integrity during migrations between environments.
+● Developed bswift's first fully asynchronous API + event-queue processor, handling several million monthly events
+  for a major client's demographic data import.
+
+Software Engineer                                 June 2017 - January 2019
+● Refactored a large portion of the bswift database and codebase (2000+ files) to better handle environment-specific
+  configuration persistence after database refreshes.
+● Improved processing performance of bswift's most used flat file import by 300%.
+● Created 30+ web pages for default and client API/SSO configuration management.
+● Mentored junior developers and managed contractor work, including code reviews.
+
+Junior Software Engineer                          September 2015 - June 2017
+● Contributed to multiple core systems including Imports, Exports/EDI, Payroll, and API/SSO data connections.
+● Optimized export file processing for bswift's largest client, improving performance by 5300% (from 9hrs to 10 mins).
+
+EDUCATION
+Miami University | Oxford, Ohio                    August 2011 - May 2015
+B.S. - Computer Engineering
+
+TECHNICAL SKILLS
+● Languages: Python, C#, SQL, TypeScript, JavaScript, PowerShell, Java, Golang (Go), Groovy
+● Tools/Technologies: Concurrent/Async Processing, AWS (Lambda, APIGateway, CDK, CodePipeline, S3, DynamoDB),
+  Hive/Spark, .NET Core, .NET Framework, MSSQL, Neo4J, Angular, Git
+● Skills: Distributed Systems, Payment Processing & Reconciliation, Performance Optimization, System Architecture,
+  Object-Oriented Programming, REST API Development, Full-Stack Development, Infrastructure as Code (IaC)

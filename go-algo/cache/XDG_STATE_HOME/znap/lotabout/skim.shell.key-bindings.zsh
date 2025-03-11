@@ -1,0 +1,1 @@
+/Users/koonerts/git/lotabout/skim/shell/key-bindings.zsh

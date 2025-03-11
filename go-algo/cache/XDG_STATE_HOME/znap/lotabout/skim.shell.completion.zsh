@@ -1,0 +1,1 @@
+/Users/koonerts/git/lotabout/skim/shell/completion.zsh
