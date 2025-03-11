@@ -16,3 +16,6 @@ openrouter
 **/*/.history
 **/cache
 **/*/cache
+**/.cursor
+**/.cursor*
+**/*/.cursor
