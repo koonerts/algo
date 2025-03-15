@@ -11,7 +11,6 @@ Time Complexity: O(n²) where n is the length of the array
 Space Complexity: O(n) for the result (not counting the input)
 """
 
-from typing import List
 
 
 def threeSum(nums: list[int]) -> list[list[int]]:

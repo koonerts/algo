@@ -13,7 +13,6 @@ Time Complexity: O(n log n) due to sorting, where n is the number of intervals
 Space Complexity: O(n) for the result array
 """
 
-from typing import List
 
 
 def merge(intervals: list[list[int]]) -> list[list[int]]:
