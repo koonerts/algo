@@ -4,43 +4,43 @@
 
 1. [Introduction](#introduction)
 2. [Array Algorithms](#array-algorithms)
-   - [Kadane's Algorithm](#kadanes-algorithm)
-   - [Sliding Window (Fixed Size)](#sliding-window-fixed-size)
-   - [Sliding Window (Variable Size)](#sliding-window-variable-size)
-   - [Two Pointers Technique](#two-pointers-technique)
-   - [Prefix Sums](#prefix-sums)
+   * [Kadane's Algorithm](#kadanes-algorithm)
+   * [Sliding Window (Fixed Size)](#sliding-window-fixed-size)
+   * [Sliding Window (Variable Size)](#sliding-window-variable-size)
+   * [Two Pointers Technique](#two-pointers-technique)
+   * [Prefix Sums](#prefix-sums)
 3. [Linked Lists](#linked-lists)
-   - [Fast & Slow Pointers](#fast--slow-pointers)
-   - [Iterative Linked List Reversal](#iterative-linked-list-reversal)
+   * [Fast/Slow Pointers](#fast--slow-pointers)
+   * [Iterative Linked List Reversal](#iterative-linked-list-reversal)
 4. [Trees & Advanced Data Structures](#trees--advanced-data-structures)
-   - [Trie (Prefix Tree)](#trie-data-structure)
-   - [Union-Find (Disjoint Set)](#union-find-disjoint-set)
-   - [Segment Tree](#segment-tree)
-   - [Iterative DFS](#iterative-dfs)
+   * [Trie (Prefix Tree)](#trie-data-structure)
+   * [Union-Find (Disjoint Set)](#union-find-disjoint-set)
+   * [Segment Tree](#segment-tree)
+   * [Iterative DFS](#iterative-dfs)
 5. [Heaps](#heaps)
-   - [Two Heaps Algorithm](#two-heaps-algorithm)
+   * [Two Heaps Algorithm](#two-heaps-algorithm)
 6. [Backtracking](#backtracking)
-   - [Subsets Algorithm](#subsets-algorithm)
-   - [Combinations Algorithm](#combinations-algorithm)
-   - [Permutations Algorithm](#permutations-algorithm)
+   * [Subsets Algorithm](#subsets-algorithm)
+   * [Combinations Algorithm](#combinations-algorithm)
+   * [Permutations Algorithm](#permutations-algorithm)
 7. [Graphs](#graphs)
-   - [Dijkstra's Algorithm](#dijkstras-algorithm)
-   - [Prim's Algorithm](#prims-algorithm)
-   - [Kruskal's Algorithm](#kruskals-algorithm)
-   - [Topological Sort](#topological-sort)
+   * [Dijkstra's Algorithm](#dijkstras-algorithm)
+   * [Prim's Algorithm](#prims-algorithm)
+   * [Kruskal's Algorithm](#kruskals-algorithm)
+   * [Topological Sort](#topological-sort)
 8. [Dynamic Programming](#dynamic-programming)
-   - [0/1 Knapsack](#01-knapsack)
-   - [Unbounded Knapsack](#unbounded-knapsack)
-   - [Longest Common Subsequence (LCS)](#longest-common-subsequence)
-   - [Palindrome Problems](#palindrome-problems)
+   * [0/1 Knapsack](#01-knapsack)
+   * [Unbounded Knapsack](#unbounded-knapsack)
+   * [Longest Common Subsequence (LCS)](#longest-common-subsequence)
+   * [Palindrome Problems](#palindrome-problems)
 9. [Additional Patterns](#additional-patterns)
-   - [Binary Search Variations](#binary-search-variations)
-   - [Monotonic Stack/Queue](#monotonic-stackqueue)
-   - [BFS for Shortest Path](#bfs-for-shortest-path)
-   - [Bit Manipulation](#bit-manipulation)
-   - [Dutch National Flag](#dutch-national-flag)
-   - [Boyer-Moore Voting Algorithm](#boyer-moore-voting-algorithm)
-   - [Floyd's Cycle Finding](#floyds-cycle-finding)
+   * [Binary Search Variations](#binary-search-variations)
+   * [Monotonic Stack/Queue](#monotonic-stackqueue)
+   * [BFS for Shortest Path](#bfs-for-shortest-path)
+   * [Bit Manipulation](#bit-manipulation)
+   * [Dutch National Flag](#dutch-national-flag)
+   * [Boyer-Moore Voting Algorithm](#boyer-moore-voting-algorithm)
+   * [Floyd's Cycle Finding](#floyds-cycle-finding)
 10. [Learning Plan](#learning-plan)
 11. [Glossary](#glossary)
 12. [Learning Activities](#learning-activities)
@@ -51,9 +51,9 @@ Welcome to the Algorithm & Data Structure cheatsheets! This repository contains 
 
 ### How to Use This Repository
 
-- **Beginners**: Start with the [Learning Plan](#learning-plan) below
-- **Interview Prep**: Focus on the algorithm references organized by category
-- **Practice**: Use the [Learning Activities](#learning-activities) to test your knowledge
+* **Beginners**: Start with the [Learning Plan](#learning-plan) below
+* **Interview Prep**: Focus on the algorithm references organized by category
+* **Practice**: Use the [Learning Activities](#learning-activities) to test your knowledge
 
 If you're new to algorithms or need a refresher:
 
@@ -71,16 +71,19 @@ If you're new to algorithms or need a refresher:
 Kadane's algorithm efficiently finds the maximum sum contiguous subarray within a one-dimensional array of numbers. It uses dynamic programming to track the maximum sum ending at each position.
 
 **When to Use**:
-- Finding maximum/minimum sum subarray
-- Problems requiring contiguous elements with optimal value
-- When you need O(n) solution for subarray sum problems
+
+* Finding maximum/minimum sum subarray
+* Problems requiring contiguous elements with optimal value
+* When you need O(n) solution for subarray sum problems
 
 **Key Insight**:
 At each position, you have two choices:
+
 1. Start a new subarray from current position
 2. Extend the previous subarray by including current element
 
 **Implementation**:
+
 ```python
 def kadane(nums):
     max_so_far = float('-inf')
@@ -101,10 +104,12 @@ def kadane(nums):
 The fixed-size sliding window algorithm maintains a subarray/substring of constant length `k` that "slides" through the data from left to right, updating results at each step.
 
 **When to Use**:
-- Computing running averages, sums, or statistics over a fixed-size range
-- Finding subarrays/substrings of fixed length with certain properties
+
+* Computing running averages, sums, or statistics over a fixed-size range
+* Finding subarrays/substrings of fixed length with certain properties
 
 **Implementation**:
+
 ```python
 def sliding_window(arr, k):
     # Initialize window and result
@@ -129,6 +134,7 @@ def sliding_window(arr, k):
 Variable-size sliding window uses two pointers to define a window that expands and contracts based on certain conditions.
 
 **Implementation**:
+
 ```python
 def sliding_window_variable(arr, condition):
     left = 0
@@ -157,11 +163,13 @@ def sliding_window_variable(arr, condition):
 Uses two pointers to solve problems in linear time O(n) by eliminating nested loops.
 
 **Key Patterns**:
-- From both ends: left → | ← right
-- Same direction: slow → fast →
-- Fast/slow: slow → fast →→ (different speeds)
+
+* From both ends: left → | ← right
+* Same direction: slow → fast →
+* Fast/slow: slow → fast →→ (different speeds)
 
 **Implementation (from both ends)**:
+
 ```python
 def two_pointers_from_ends(arr):
     left, right = 0, len(arr) - 1
@@ -184,6 +192,7 @@ def two_pointers_from_ends(arr):
 Precompute cumulative sums to efficiently answer range queries. Transforms O(n) range sum operations into O(1).
 
 **Implementation**:
+
 ```python
 def prefix_sum_setup(arr):
     n = len(arr)
@@ -208,25 +217,27 @@ def range_sum(prefix, i, j):
 Uses two pointers moving at different speeds to solve problems like finding cycles or the middle node.
 
 **Key Applications**:
-- Cycle detection
-- Finding the middle element
-- Finding the kth element from the end
+
+* Cycle detection
+* Finding the middle element
+* Finding the kth element from the end
 
 **Implementation (cycle detection)**:
+
 ```python
 def has_cycle(head):
     if not head or not head.next:
         return False
-    
+
     slow = head
     fast = head.next
-    
+
     while slow != fast:
         if not fast or not fast.next:
             return False
         slow = slow.next
         fast = fast.next.next
-        
+
     return True
 ```
 
@@ -237,17 +248,18 @@ def has_cycle(head):
 Reverses a linked list in-place using iteration.
 
 **Implementation**:
+
 ```python
 def reverse_list(head):
     prev = None
     current = head
-    
+
     while current:
         next_temp = current.next
         current.next = prev
         prev = current
         current = next_temp
-        
+
     return prev
 ```
 
@@ -260,6 +272,7 @@ def reverse_list(head):
 A tree-like data structure for efficient string operations and prefix matching.
 
 **Implementation**:
+
 ```python
 class TrieNode:
     def __init__(self):
@@ -269,7 +282,7 @@ class TrieNode:
 class Trie:
     def __init__(self):
         self.root = TrieNode()
-    
+
     def insert(self, word):
         node = self.root
         for char in word:
@@ -277,7 +290,7 @@ class Trie:
                 node.children[char] = TrieNode()
             node = node.children[char]
         node.is_end_of_word = True
-    
+
     def search(self, word):
         node = self.root
         for char in word:
@@ -285,7 +298,7 @@ class Trie:
                 return False
             node = node.children[char]
         return node.is_end_of_word
-    
+
     def starts_with(self, prefix):
         node = self.root
         for char in prefix:
@@ -302,22 +315,23 @@ class Trie:
 Data structure for efficiently tracking connected components and performing union operations.
 
 **Implementation**:
+
 ```python
 class UnionFind:
     def __init__(self, size):
         self.root = list(range(size))
         self.rank = [1] * size
-    
+
     def find(self, x):
         if x == self.root[x]:
             return x
         self.root[x] = self.find(self.root[x])  # Path compression
         return self.root[x]
-    
+
     def union(self, x, y):
         rootX = self.find(x)
         rootY = self.find(y)
-        
+
         if rootX != rootY:
             if self.rank[rootX] > self.rank[rootY]:
                 self.root[rootY] = rootX
@@ -326,7 +340,7 @@ class UnionFind:
             else:
                 self.root[rootY] = rootX
                 self.rank[rootX] += 1
-                
+
     def connected(self, x, y):
         return self.find(x) == self.find(y)
 ```
@@ -344,23 +358,24 @@ Tree-based data structure for efficient range queries and updates.
 Non-recursive implementation of depth-first search using an explicit stack.
 
 **Implementation**:
+
 ```python
 def iterative_dfs(graph, start):
     visited = set()
     stack = [start]
-    
+
     while stack:
         node = stack.pop()
-        
+
         if node not in visited:
             visited.add(node)
             print(node)  # Process node
-            
+
             # Add neighbors in reverse order for same traversal as recursive
             for neighbor in reversed(graph[node]):
                 if neighbor not in visited:
                     stack.append(neighbor)
-    
+
     return visited
 ```
 
@@ -373,6 +388,7 @@ def iterative_dfs(graph, start):
 Uses two heaps (min and max) to efficiently track medians and partition elements.
 
 **Implementation (median finding)**:
+
 ```python
 import heapq
 
@@ -380,21 +396,21 @@ class MedianFinder:
     def __init__(self):
         self.small = []  # max heap (negative values)
         self.large = []  # min heap
-        
+
     def addNum(self, num):
         # By default, add to max heap
         heapq.heappush(self.small, -num)
-        
+
         # Ensure max of small <= min of large
         if self.small and self.large and -self.small[0] > self.large[0]:
             heapq.heappush(self.large, -heapq.heappop(self.small))
-            
+
         # Balance heaps
         if len(self.small) > len(self.large) + 1:
             heapq.heappush(self.large, -heapq.heappop(self.small))
         if len(self.large) > len(self.small) + 1:
             heapq.heappush(self.small, -heapq.heappop(self.large))
-            
+
     def findMedian(self):
         if len(self.small) > len(self.large):
             return -self.small[0]
@@ -412,18 +428,19 @@ class MedianFinder:
 Generates all possible subsets of a given set.
 
 **Implementation**:
+
 ```python
 def subsets(nums):
     result = []
-    
+
     def backtrack(start, current):
         result.append(current[:])
-        
+
         for i in range(start, len(nums)):
             current.append(nums[i])
             backtrack(i + 1, current)
             current.pop()
-    
+
     backtrack(0, [])
     return result
 ```
@@ -435,20 +452,21 @@ def subsets(nums):
 Generates all possible k-sized combinations from n elements.
 
 **Implementation**:
+
 ```python
 def combine(n, k):
     result = []
-    
+
     def backtrack(start, current):
         if len(current) == k:
             result.append(current[:])
             return
-        
+
         for i in range(start, n + 1):
             current.append(i)
             backtrack(i + 1, current)
             current.pop()
-    
+
     backtrack(1, [])
     return result
 ```
@@ -460,21 +478,22 @@ def combine(n, k):
 Generates all possible arrangements of a set of elements.
 
 **Implementation**:
+
 ```python
 def permute(nums):
     result = []
-    
+
     def backtrack(current):
         if len(current) == len(nums):
             result.append(current[:])
             return
-        
+
         for num in nums:
             if num not in current:
                 current.append(num)
                 backtrack(current)
                 current.pop()
-    
+
     backtrack([])
     return result
 ```
@@ -488,6 +507,7 @@ def permute(nums):
 Finds shortest paths from a source vertex to all other vertices in a weighted graph.
 
 **Implementation**:
+
 ```python
 import heapq
 
@@ -496,23 +516,23 @@ def dijkstra(graph, start):
     distances = {node: float('infinity') for node in graph}
     distances[start] = 0
     priority_queue = [(0, start)]
-    
+
     while priority_queue:
         current_distance, current_node = heapq.heappop(priority_queue)
-        
+
         # Skip if we've found a better path
         if current_distance > distances[current_node]:
             continue
-            
+
         # Check neighbors
         for neighbor, weight in graph[current_node].items():
             distance = current_distance + weight
-            
+
             # Update if we found a better path
             if distance < distances[neighbor]:
                 distances[neighbor] = distance
                 heapq.heappush(priority_queue, (distance, neighbor))
-                
+
     return distances
 ```
 
@@ -535,34 +555,35 @@ Finds a minimum spanning tree using a disjoint set (Union-Find).
 Orders vertices in a directed acyclic graph such that for every edge (u, v), vertex u comes before v.
 
 **Implementation**:
+
 ```python
 def topological_sort(graph):
     # Graph: adjacency list where graph[node] = list of neighbors
-    
+
     # Initialize in-degree for all nodes
     in_degree = {node: 0 for node in graph}
     for node in graph:
         for neighbor in graph[node]:
             in_degree[neighbor] += 1
-    
+
     # Start with nodes that have no dependencies
     queue = [node for node in graph if in_degree[node] == 0]
     result = []
-    
+
     while queue:
         node = queue.pop(0)
         result.append(node)
-        
+
         # Remove edges from this node
         for neighbor in graph[node]:
             in_degree[neighbor] -= 1
             if in_degree[neighbor] == 0:
                 queue.append(neighbor)
-    
+
     # Check for cycles
     if len(result) != len(graph):
         return []  # Graph has a cycle
-    
+
     return result
 ```
 
@@ -575,18 +596,19 @@ def topological_sort(graph):
 Solves the problem of selecting items with weight constraints where each item can be used at most once.
 
 **Implementation**:
+
 ```python
 def knapsack_01(weights, values, capacity):
     n = len(weights)
     dp = [[0 for _ in range(capacity + 1)] for _ in range(n + 1)]
-    
+
     for i in range(1, n + 1):
         for w in range(1, capacity + 1):
             if weights[i-1] <= w:
                 dp[i][w] = max(values[i-1] + dp[i-1][w-weights[i-1]], dp[i-1][w])
             else:
                 dp[i][w] = dp[i-1][w]
-    
+
     return dp[n][capacity]
 ```
 
@@ -603,18 +625,19 @@ Similar to 0/1 knapsack but allows using items unlimited times.
 Finds the longest subsequence present in two sequences.
 
 **Implementation**:
+
 ```python
 def longest_common_subsequence(text1, text2):
     m, n = len(text1), len(text2)
     dp = [[0] * (n + 1) for _ in range(m + 1)]
-    
+
     for i in range(1, m + 1):
         for j in range(1, n + 1):
             if text1[i-1] == text2[j-1]:
                 dp[i][j] = dp[i-1][j-1] + 1
             else:
                 dp[i][j] = max(dp[i-1][j], dp[i][j-1])
-    
+
     return dp[m][n]
 ```
 
@@ -633,20 +656,21 @@ Algorithms for identifying and working with palindromic substrings and subsequen
 Modified binary search approaches for complex scenarios.
 
 **Implementation**:
+
 ```python
 def binary_search(arr, target):
     left, right = 0, len(arr) - 1
-    
+
     while left <= right:
         mid = left + (right - left) // 2
-        
+
         if arr[mid] == target:
             return mid
         elif arr[mid] < target:
             left = mid + 1
         else:
             right = mid - 1
-    
+
     return -1  # Not found
 ```
 
@@ -663,27 +687,28 @@ Data structures for efficiently solving next greater/smaller element problems.
 Uses breadth-first search to find shortest paths in unweighted graphs.
 
 **Implementation**:
+
 ```python
 from collections import deque
 
 def bfs_shortest_path(graph, start, end):
     if start == end:
         return [start]
-    
+
     visited = {start}
     queue = deque([(start, [start])])
-    
+
     while queue:
         node, path = queue.popleft()
-        
+
         for neighbor in graph[node]:
             if neighbor not in visited:
                 if neighbor == end:
                     return path + [neighbor]
-                
+
                 visited.add(neighbor)
                 queue.append((neighbor, path + [neighbor]))
-    
+
     return []  # No path exists
 ```
 
@@ -706,16 +731,17 @@ Three-way partitioning algorithm for sorting arrays with three distinct values.
 Efficiently finds the majority element in an array.
 
 **Implementation**:
+
 ```python
 def majority_element(nums):
     count = 0
     candidate = None
-    
+
     for num in nums:
         if count == 0:
             candidate = num
         count += (1 if num == candidate else -1)
-    
+
     return candidate
 ```
 
@@ -730,47 +756,50 @@ Algorithm for detecting cycles in sequences.
 A structured 3-week algorithm learning acceleration plan:
 
 ### Week 1: Fundamentals
-- Day 1-2: Arrays & Strings (Two Pointers, Sliding Window)
-- Day 3-4: Linked Lists (Fast & Slow Pointers, Reversal)
-- Day 5-7: Stacks, Queues, and Basic Trees (BFS, DFS)
+
+* Day 1-2: Arrays & Strings (Two Pointers, Sliding Window)
+* Day 3-4: Linked Lists (Fast & Slow Pointers, Reversal)
+* Day 5-7: Stacks, Queues, and Basic Trees (BFS, DFS)
 
 ### Week 2: Intermediate Techniques
-- Day 8-10: Binary Search & Divide and Conquer
-- Day 11-12: Backtracking & Recursion
-- Day 13-14: Dynamic Programming Fundamentals
+
+* Day 8-10: Binary Search & Divide and Conquer
+* Day 11-12: Backtracking & Recursion
+* Day 13-14: Dynamic Programming Fundamentals
 
 ### Week 3: Advanced Patterns
-- Day 15-16: Graphs & Network Flow
-- Day 17-18: Advanced Dynamic Programming
-- Day 19-21: System Design & Complex Problem Patterns
+
+* Day 15-16: Graphs & Network Flow
+* Day 17-18: Advanced Dynamic Programming
+* Day 19-21: System Design & Complex Problem Patterns
 
 ## Glossary
 
 A brief glossary of common algorithm and data structure terms:
 
-- **Asymptotic Notation**: Mathematical notation to describe algorithm efficiency
-- **BFS**: Breadth-First Search, a graph traversal algorithm
-- **Binary Search**: Divide and conquer search algorithm for sorted arrays
-- **DFS**: Depth-First Search, a graph traversal algorithm
-- **Dynamic Programming**: Breaking complex problems into simpler overlapping subproblems
-- **Greedy Algorithm**: Making locally optimal choices at each stage
-- **Hash Table**: Data structure that maps keys to values using a hash function
-- **Memoization**: Optimization technique storing results of expensive function calls
-- **Recursion**: Function that calls itself to solve smaller instances of the same problem
-- **Time Complexity**: Measurement of algorithm efficiency relative to input size
+* **Asymptotic Notation**: Mathematical notation to describe algorithm efficiency
+* **BFS**: Breadth-First Search, a graph traversal algorithm
+* **Binary Search**: Divide and conquer search algorithm for sorted arrays
+* **DFS**: Depth-First Search, a graph traversal algorithm
+* **Dynamic Programming**: Breaking complex problems into simpler overlapping subproblems
+* **Greedy Algorithm**: Making locally optimal choices at each stage
+* **Hash Table**: Data structure that maps keys to values using a hash function
+* **Memoization**: Optimization technique storing results of expensive function calls
+* **Recursion**: Function that calls itself to solve smaller instances of the same problem
+* **Time Complexity**: Measurement of algorithm efficiency relative to input size
 
 ## Learning Activities
 
 Interactive learning activities to reinforce algorithm knowledge:
 
-- Algorithm Flash Cards
-- Template Skeleton Exercises
-- Algorithm Decision Tree
-- Time Attack Implementation Challenges
-- Complexity Analysis Quizzes
-- Pattern Matching Games
-- Memory Optimization Challenges
+* Algorithm Flash Cards
+* Template Skeleton Exercises
+* Algorithm Decision Tree
+* Time Attack Implementation Challenges
+* Complexity Analysis Quizzes
+* Pattern Matching Games
+* Memory Optimization Challenges
 
 ---
 
-*This document combines key algorithms and data structures from the repository. For detailed implementations, variations, and practice problems, refer to individual algorithm files.*
+_This document combines key algorithms and data structures from the repository. For detailed implementations, variations, and practice problems, refer to individual algorithm files._
