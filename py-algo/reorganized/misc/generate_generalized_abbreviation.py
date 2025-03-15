@@ -21,9 +21,9 @@ Given a word, write a function to generate all of its unique generalized abbrevi
     Output: "code", "cod1", "co1e", "co2", "c1de", "c1d1", "c2e", "c3", "1ode", "1od1", "1o1e", "1o2", "2de", "2d1", "3e", "4"
 """
 
-
 from collections import deque
-import string
+
+
 def generate_generalized_abbreviation(word: str):
     """
     Given a word, write a function to generate all of its unique generalized abbreviations.
@@ -45,7 +45,7 @@ def generate_generalized_abbreviation(word: str):
     Input: "code"
     Output: "code", "cod1", "co1e", "co2", "c1de", "c1d1", "c2e", "c3", "1ode", "1od1", "1o1e", "1o2", "2de", "2d1", "3e", "4"
     """
-    q = deque([''])
+    q = deque([""])
 
     for c in word:
         for _ in range(len(q)):
@@ -54,15 +54,14 @@ def generate_generalized_abbreviation(word: str):
 
             if permutation and permutation[-1].isnumeric():
                 i = -1
-                while i-1 >= -len(permutation) and permutation[i-1].isnumeric():
+                while i - 1 >= -len(permutation) and permutation[i - 1].isnumeric():
                     i -= 1
 
                 q.append(permutation[:i] + str(int(permutation[i:]) + 1))
             else:
-                q.append(permutation + '1')
+                q.append(permutation + "1")
 
     return list(q)
-
 
 
 # Example usage

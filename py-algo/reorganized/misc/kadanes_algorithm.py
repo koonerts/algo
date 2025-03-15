@@ -2,9 +2,13 @@
 Algorithm
 
 """
+
+
 def kadanesAlgorithm(array):
-    if not array: return 0
-    elif len(array) == 1: return array[0]
+    if not array:
+        return 0
+    elif len(array) == 1:
+        return array[0]
 
     max_sum, curr_sum = 0, 0
     for i in range(len(array)):
@@ -13,7 +17,6 @@ def kadanesAlgorithm(array):
         if curr_sum < 0:
             curr_sum = 0
     return max_sum
-
 
 
 # Example usage

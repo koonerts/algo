@@ -30,7 +30,6 @@ def find_squared_digit_sum(val) -> int:
             return False
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to find_happy_number

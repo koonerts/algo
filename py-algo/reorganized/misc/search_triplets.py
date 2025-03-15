@@ -13,6 +13,8 @@ Given an array of unsorted numbers, find all unique triplets in it that add up t
     Output: [[-5, 2, 3], [-2, -1, 3]]
     Explanation: There are two unique triplets whose sum is equal to zero.
 """
+
+
 def search_triplets(arr: list[int]) -> list[list[int]]:
     """
     Given an array of unsorted numbers, find all unique triplets in it that add up to zero.
@@ -59,7 +61,6 @@ def search_triplets(arr: list[int]) -> list[list[int]]:
     Overall space complexity is O(n + n) -> O(n)
     """
     return triplets
-
 
 
 # Example usage

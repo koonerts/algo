@@ -20,6 +20,8 @@ We are given an array containing ‘n’ objects. Each object, when created, was
     Input: [1, 5, 6, 4, 3, 2]
     Output: [1, 2, 3, 4, 5, 6]
 """
+
+
 def cyclic_sort(nums: list[int]) -> list[int]:
     """
     We are given an array containing ‘n’ objects. Each object, when created, was assigned a
@@ -48,7 +50,6 @@ def cyclic_sort(nums: list[int]) -> list[int]:
         else:
             nums[nums[i] - 1], nums[i] = nums[i], nums[nums[i] - 1]
     return nums
-
 
 
 # Example usage

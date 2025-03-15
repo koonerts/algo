@@ -29,7 +29,6 @@ Given a string and a pattern, find out if the string contains any permutation of
 """
 
 
-import string
 def find_permutation(str_: str, pattern: str):
     """
     Given a string and a pattern, find out if the string contains any permutation of the pattern.
@@ -79,7 +78,6 @@ def find_permutation(str_: str, pattern: str):
         if i - start + 1 == len(pattern):
             return True
     return False
-
 
 
 # Example usage

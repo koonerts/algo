@@ -23,6 +23,8 @@ Given an array of numbers and a number ‘K’, we need to remove ‘K’ number
     Output: 3
     Explanation: We can remove one occurrence of '4' to get three distinct numbers.
 """
+
+
 def find_maximum_distinct_elements(nums, k):
     """
     Given an array of numbers and a number ‘K’, we need to remove ‘K’ numbers from the array
@@ -72,7 +74,6 @@ def find_maximum_distinct_elements(nums, k):
             break
 
     return distinct_cnt
-
 
 
 # Example usage

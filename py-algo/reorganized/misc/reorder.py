@@ -14,6 +14,8 @@ Given the head of a Singly LinkedList, write a method to modify the LinkedList s
     Input: 2 -> 4 -> 6 -> 8 -> 10 -> null
     Output: 2 -> 10 -> 4 -> 8 -> 6 -> null
 """
+
+
 def reorder(head: Node):
     """
     Given the head of a Singly LinkedList, write a method to modify the LinkedList such that the
@@ -54,7 +56,6 @@ def reorder(head: Node):
         cntr += 1
 
     return
-
 
 
 # Example usage

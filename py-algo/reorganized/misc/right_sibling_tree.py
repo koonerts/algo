@@ -3,10 +3,12 @@ Sibling Tree
 
 """
 
-
 from collections import deque
+
+
 def rightSiblingTree(root):
-    if not root: return root
+    if not root:
+        return root
 
     q = deque([root.left, root.right])
 
@@ -16,7 +18,6 @@ def rightSiblingTree(root):
         for i in range(q_len):
             left, right = q.popleft()
             pass
-
 
 
 # Example usage

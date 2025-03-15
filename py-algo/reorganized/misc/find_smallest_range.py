@@ -13,6 +13,8 @@ Given ‘M’ sorted arrays, find the smallest range that includes at least one 
     Output: [9, 12]
     Explanation: The range [9, 12] includes 9 from L1, 12 from L2 and 10 from L3.
 """
+
+
 def find_smallest_range(lists):
     """
     Given ‘M’ sorted arrays, find the smallest range that includes at least one number from each of the ‘M’ lists.
@@ -29,7 +31,6 @@ def find_smallest_range(lists):
     """
     # TODO: Come back to
     return [-1, -1]
-
 
 
 # Example usage

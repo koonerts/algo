@@ -2,6 +2,8 @@
 Kth Node From End
 
 """
+
+
 def removeKthNodeFromEnd(head: LinkedList, k):
     k_ahead = head
     for _ in range(k):
@@ -24,7 +26,6 @@ def removeKthNodeFromEnd(head: LinkedList, k):
                 node = None
                 break
             node = node.next
-
 
 
 # Example usage

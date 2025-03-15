@@ -57,9 +57,7 @@ class NestedInteger:
 
 
 class Solution:
-
     def depthSum(self, nestedList: list[NestedInteger]) -> int:
-
         def helper(ni_obj, depth):
             if ni_obj.isInteger():
                 curr_val = depth * ni_obj.getInteger()
@@ -67,9 +65,8 @@ class Solution:
             else:
                 nested_sum = 0
                 for nested_ni_obj in ni_obj.getList():
-                    nested_sum += helper(nested_ni_obj, depth+1)
+                    nested_sum += helper(nested_ni_obj, depth + 1)
                 return nested_sum
-
 
         depth_sum = 0
         for obj in nestedList:
@@ -77,5 +74,9 @@ class Solution:
         return depth_sum
 
 
-ni_list = [NestedInteger([NestedInteger(1), NestedInteger(1)]), NestedInteger(2), NestedInteger([NestedInteger(1), NestedInteger(1)])]
+ni_list = [
+    NestedInteger([NestedInteger(1), NestedInteger(1)]),
+    NestedInteger(2),
+    NestedInteger([NestedInteger(1), NestedInteger(1)]),
+]
 print(Solution().depthSum(ni_list))

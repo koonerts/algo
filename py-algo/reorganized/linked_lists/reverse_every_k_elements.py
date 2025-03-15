@@ -2,6 +2,8 @@
 Reverse_every_k_elements
 
 """
+
+
 def reverse_every_k_elements(head: Node, k: int) -> Node:
     k_cntr, sublist_cntr = 1, 0
     sublist_tail, sublist_tail_prev, node, prev, new_head = head, head, head, None, None
@@ -23,7 +25,6 @@ def reverse_every_k_elements(head: Node, k: int) -> Node:
             prev = None
         k_cntr += 1
     return new_head
-
 
 
 # Example usage

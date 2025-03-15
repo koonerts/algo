@@ -104,7 +104,10 @@ def quick_sort(lst, left, right):
 
         pivot_index = choose_pivot(left, right)  # Index of pivot
 
-        lst[right], lst[pivot_index] = lst[pivot_index], lst[right]  # put the pivot at the end
+        lst[right], lst[pivot_index] = (
+            lst[pivot_index],
+            lst[right],
+        )  # put the pivot at the end
 
         pivot = lst[right]  # Pivot
         i = left - 1  # All the elements less than or equal to the
@@ -115,7 +118,10 @@ def quick_sort(lst, left, right):
                 i += 1  # increment the index
                 lst[i], lst[j] = lst[j], lst[i]
 
-        lst[i + 1], lst[right] = lst[right], lst[i + 1]  # Putting the pivot back in place
+        lst[i + 1], lst[right] = (
+            lst[right],
+            lst[i + 1],
+        )  # Putting the pivot back in place
         return i + 1
 
     if left < right:
@@ -138,7 +144,7 @@ def sort_binary_list(lst):
 
 
 def dutch_national_flag_sort(lst):
-    l, r = 0, len(lst)-1
+    l, r = 0, len(lst) - 1
     while l < r:
         if lst[l] == 0:
             l += 1

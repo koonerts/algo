@@ -13,6 +13,8 @@ Given the head of a Singly LinkedList, write a method to check if the LinkedList
     Input: 2 -> 4 -> 6 -> 4 -> 2 -> 2 -> null
     Output: false
 """
+
+
 def is_palindromic_linked_list(head: Node) -> bool:
     """
     Given the head of a Singly LinkedList, write a method to check if the LinkedList is a palindrome or not.
@@ -37,7 +39,10 @@ def is_palindromic_linked_list(head: Node) -> bool:
 
     is_palindrome = True
     while head and reverse_second_half:
-        if head.value != reverse_second_half.value and reverse_second_half.value is not None:
+        if (
+            head.value != reverse_second_half.value
+            and reverse_second_half.value is not None
+        ):
             is_palindrome = False
             break
 
@@ -46,7 +51,6 @@ def is_palindromic_linked_list(head: Node) -> bool:
 
     reverse_ll(copy_reverse_second_half)
     return is_palindrome
-
 
 
 # Example usage

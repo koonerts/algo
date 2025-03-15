@@ -2,8 +2,10 @@
 Words
 
 """
+
+
 def expressiveWords(s: str, words: list[str]) -> int:
-        pass
+    pass
 
 
 # Example usage

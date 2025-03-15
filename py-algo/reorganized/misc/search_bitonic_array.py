@@ -75,7 +75,6 @@ def b_search(start, end, is_ascending) -> int:
         return i
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to search_bitonic_array

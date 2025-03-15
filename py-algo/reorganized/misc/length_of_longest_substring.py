@@ -19,6 +19,8 @@ Given a string with lowercase letters only, if you are allowed to replace no mor
     Output: 3
     Explanation: Replace the 'b' or 'd' with 'c' to have the longest repeating substring "ccc".
 """
+
+
 def length_of_longest_substring(str_: str, k: int) -> int:
     """
     Given a string with lowercase letters only, if you are allowed to replace no more than ‘k’ letters with any letter,
@@ -59,7 +61,6 @@ def length_of_longest_substring(str_: str, k: int) -> int:
 
         max_substring_len = max(max_substring_len, window_len)
     return max_substring_len
-
 
 
 # Example usage

@@ -6,7 +6,7 @@ class Node:
     def print_list(self):
         temp = self
         while temp is not None:
-            print(str(temp.value) + " ", end='')
+            print(str(temp.value) + " ", end="")
             temp = temp.next
         print()
 
@@ -130,7 +130,10 @@ def is_palindromic_linked_list(head: Node) -> bool:
 
     is_palindrome = True
     while head and reverse_second_half:
-        if head.value != reverse_second_half.value and reverse_second_half.value is not None:
+        if (
+            head.value != reverse_second_half.value
+            and reverse_second_half.value is not None
+        ):
             is_palindrome = False
             break
 
@@ -220,6 +223,7 @@ def circular_array_loop_exists(arr: list[int]) -> bool:
     Output: false
     Explanation: The array does not have any cycle.
     """
+
     def get_index(curr_index: int, curr_direction: int) -> int:
         new_direction = 1 if arr[curr_index] > 0 else -1
         if new_direction != direction:

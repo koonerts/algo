@@ -12,8 +12,9 @@ Given a string, find all of its permutations preserving the character sequence b
     Output: "ab7c", "Ab7c", "aB7c", "AB7c", "ab7C", "Ab7C", "aB7C", "AB7C"
 """
 
-
 from collections import deque
+
+
 def find_letter_case_string_permutations(str_in: str) -> list[str]:
     """
     Given a string, find all of its permutations preserving the character sequence but changing case.
@@ -26,7 +27,7 @@ def find_letter_case_string_permutations(str_in: str) -> list[str]:
     Input: "ab7c"
     Output: "ab7c", "Ab7c", "aB7c", "AB7c", "ab7C", "Ab7C", "aB7C", "AB7C"
     """
-    q = deque([''])
+    q = deque([""])
     for c in str_in:
         for _ in range(len(q)):
             current_permutation = q.popleft()
@@ -36,7 +37,6 @@ def find_letter_case_string_permutations(str_in: str) -> list[str]:
             else:
                 q.append(current_permutation + c)
     return list(q)
-
 
 
 # Example usage

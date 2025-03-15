@@ -2,15 +2,18 @@
 Number Sum
 
 """
+
+
 def fourNumberSum(array, targetSum):
-    if len(array) < 4: return []
+    if len(array) < 4:
+        return []
 
     result = []
     array.sort()
-    for i in range(len(array)-3):
-        for j in range(i+1, len(array)-2):
-            k, l = j+1, len(array)-1
-            
+    for i in range(len(array) - 3):
+        for j in range(i + 1, len(array) - 2):
+            k, l = j + 1, len(array) - 1
+
             while k < l:
                 val = array[i] + array[j] + array[k] + array[l]
                 if val == targetSum:
@@ -22,7 +25,6 @@ def fourNumberSum(array, targetSum):
                 else:
                     l -= 1
     return result
-
 
 
 # Example usage

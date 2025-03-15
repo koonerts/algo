@@ -3,6 +3,8 @@ Reverse_sub_list
 
 Given the head of a LinkedList and two positions ‘p’ and ‘q’, reverse the LinkedList from position ‘p’ to ‘q’.
 """
+
+
 def reverse_sub_list(head: Node, p: int, q: int):
     """
     Given the head of a LinkedList and two positions ‘p’ and ‘q’, reverse the LinkedList from position ‘p’ to ‘q’.
@@ -30,7 +32,6 @@ def reverse_sub_list(head: Node, p: int, q: int):
                 p_node.next = node
 
     return head
-
 
 
 # Example usage

@@ -30,7 +30,6 @@ def can_partition_recursive(curr_sum: int, curr_index: int) -> bool:
     return can_partition_recursive(s//2, 0)
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to can_partition_to_equal_subsets_memoized

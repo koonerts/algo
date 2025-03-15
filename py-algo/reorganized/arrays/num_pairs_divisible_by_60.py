@@ -3,9 +3,9 @@ Num_pairs_divisible_by_60
 
 """
 
-
 import collections
-from collections import Counter
+
+
 def num_pairs_divisible_by_60(times: list[int]) -> int:
     complement = collections.Counter()
     ans = 0
@@ -14,7 +14,6 @@ def num_pairs_divisible_by_60(times: list[int]) -> int:
             ans += complement[-t % 60]
         complement[t % 60] += 1
     return ans
-
 
 
 # Example usage

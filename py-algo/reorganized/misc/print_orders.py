@@ -33,8 +33,9 @@ There are ‘N’ tasks, labeled from ‘0’ to ‘N-1’. Each task can have s
     13) [1, 3, 2, 0, 4, 5]
 """
 
-
 from collections import deque
+
+
 def print_orders(tasks, prerequisites):
     """
     There are ‘N’ tasks, labeled from ‘0’ to ‘N-1’. Each task can have some prerequisite tasks which need to be completed before it can be scheduled. Given the number of tasks and a list of prerequisite pairs, write a method to print all possible ordering of tasks meeting all prerequisites.
@@ -68,8 +69,8 @@ def print_orders(tasks, prerequisites):
     12) [1, 3, 2, 0, 5, 4]
     13) [1, 3, 2, 0, 4, 5]
     """
-    in_degrees_map = {i:0 for i in range(tasks)}
-    adjacency_map = {i:[] for i in range(tasks)}
+    in_degrees_map = {i: 0 for i in range(tasks)}
+    adjacency_map = {i: [] for i in range(tasks)}
     sorted_orders = deque([[]])
     sources = deque()
 
@@ -78,7 +79,8 @@ def print_orders(tasks, prerequisites):
         in_degrees_map[child_task] += 1
 
     for task, degree in in_degrees_map.items():
-        if degree == 0: sources.append(task)
+        if degree == 0:
+            sources.append(task)
 
     while sources:
         level_orders = []
@@ -94,7 +96,6 @@ def print_orders(tasks, prerequisites):
 
     for order in sorted_orders:
         print(order)
-
 
 
 # Example usage

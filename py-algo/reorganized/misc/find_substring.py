@@ -18,6 +18,8 @@ Given a string and a pattern, find the smallest substring in the given string wh
     Output: ""
     Explanation: No substring in the given string has all characters of the pattern.
 """
+
+
 def find_substring(str_: str, pattern: str) -> str:
     """
     Given a string and a pattern, find the smallest substring in the given string which has all the characters of the given pattern.
@@ -57,10 +59,9 @@ def find_substring(str_: str, pattern: str) -> str:
 
         if solved == len(pattern_map):
             if min_substr == "" or i - start + 1 < len(min_substr):
-                min_substr = str_[start:i+1]
+                min_substr = str_[start : i + 1]
 
     return min_substr
-
 
 
 # Example usage

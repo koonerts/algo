@@ -17,7 +17,6 @@ def find(idx):
     return find(len(array) - 1)
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to maxSubsetSumNoAdjacent

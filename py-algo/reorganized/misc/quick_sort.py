@@ -28,7 +28,6 @@ def qs_rec(lo, hi):
     qs_rec(0, len(array)-1)
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to quickSort

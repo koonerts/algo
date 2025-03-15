@@ -19,8 +19,9 @@ Given a set of distinct numbers, find all of its permutations.
     Output: [1,3,5], [1,5,3], [3,1,5], [3,5,1], [5,1,3], [5,3,1]
 """
 
-
 from collections import deque
+
+
 def find_permutations(nums: list[int]):
     """
     Given a set of distinct numbers, find all of its permutations.
@@ -40,7 +41,8 @@ def find_permutations(nums: list[int]):
     Input: [1,3,5]
     Output: [1,3,5], [1,5,3], [3,1,5], [3,5,1], [5,1,3], [5,3,1]
     """
-    if not nums: return []
+    if not nums:
+        return []
     result = []
     q: deque[list[int]] = deque()
 
@@ -62,7 +64,6 @@ def find_permutations(nums: list[int]):
                     q.append(set_copy)
 
     return result
-
 
 
 # Example usage

@@ -2,8 +2,11 @@
 Sort
 
 """
+
+
 def selectionSort(array):
-    if len(array) <= 1: return array
+    if len(array) <= 1:
+        return array
 
     for i in range(len(array) - 1):
         min_idx = i + 1
@@ -14,7 +17,6 @@ def selectionSort(array):
         if array[i] > array[min_idx]:
             array[i], array[min_idx] = array[min_idx], array[i]
     return array
-
 
 
 # Example usage

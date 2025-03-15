@@ -1,16 +1,19 @@
 from collections import deque
 
+
 class Node:
     def __init__(self, val, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
 
+
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
-        self.left: 'TreeNode' = left
-        self.right: 'TreeNode' = right
+        self.left: "TreeNode" = left
+        self.right: "TreeNode" = right
+
 
 class Robot:
     def move(self):
@@ -41,9 +44,7 @@ class Robot:
         """
 
 
-
 class BSTIterator:
-
     def __init__(self, root: TreeNode):
         self.stk = []
         self.populate_stack(root)
@@ -73,13 +74,14 @@ def listToNode(nums) -> Node:
             node_map[i] = node
 
     for i, num in enumerate(nums):
-        left = 2*i + 1
+        left = 2 * i + 1
         right = left + 1
         if left < len(nums) and left in node_map:
             node_map[i].left = node_map[left]
         if right < len(nums) and right in node_map:
             node_map[i].right = node_map[right]
     return node_map[0]
+
 
 def listToTreeNode(nums) -> TreeNode:
     node_map = {}
@@ -91,13 +93,14 @@ def listToTreeNode(nums) -> TreeNode:
             node_map[i] = node
 
     for i, num in enumerate(nums):
-        left = 2*i + 1
+        left = 2 * i + 1
         right = left + 1
         if left < len(nums) and left in node_map:
             node_map[i].left = node_map[left]
         if right < len(nums) and right in node_map:
             node_map[i].right = node_map[right]
     return node_map[0]
+
 
 class Solution:
     def searchBST(self, root: TreeNode, val: int) -> TreeNode:
@@ -111,7 +114,8 @@ class Solution:
         return None
 
     def insertIntoBST(self, root: TreeNode, val: int) -> TreeNode:
-        if not root: return TreeNode(val)
+        if not root:
+            return TreeNode(val)
 
         node = root
         while node:
@@ -130,7 +134,8 @@ class Solution:
         return root
 
     def deleteNode(self, root: TreeNode, key: int) -> TreeNode:
-        if not root or root.val == key: return None
+        if not root or root.val == key:
+            return None
 
         node = root
         prev = None
@@ -144,7 +149,8 @@ class Solution:
 
     def inorderTraversal(self, root: TreeNode) -> list[int]:
         result = []
-        if not root: return result
+        if not root:
+            return result
 
         def traverse(node):
             if not node:
@@ -175,7 +181,8 @@ class Solution:
         return result
 
     def zigzagLevelOrder(self, root: TreeNode) -> list[list[int]]:
-        if not root: return []
+        if not root:
+            return []
 
         direction = 1  # 1 left->right, -1 right->left
         result = []
@@ -191,8 +198,10 @@ class Solution:
                 else:
                     level_result.appendleft(node.val)
 
-                if node.left: q.append(node.left)
-                if node.right: q.append(node.right)
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
 
             result.append(list(level_result))
             direction *= -1
@@ -232,21 +241,24 @@ class Solution:
                 root = root.right
         return successor
 
-
     def numIslands(self, grid: list[list[str]]) -> int:
-        LAND, WATER = '1', '0'
+        LAND, WATER = "1", "0"
         rows, cols = len(grid), len(grid[0])
         cnt = 0
 
         def sink_island(row, col):
-            if not (0 <= row < rows) or not (0 <= col < cols) or grid[row][col] == WATER:
+            if (
+                not (0 <= row < rows)
+                or not (0 <= col < cols)
+                or grid[row][col] == WATER
+            ):
                 return
 
             grid[row][col] = WATER
-            sink_island(row, col+1)
-            sink_island(row, col-1)
-            sink_island(row+1, col)
-            sink_island(row-1, col)
+            sink_island(row, col + 1)
+            sink_island(row, col - 1)
+            sink_island(row + 1, col)
+            sink_island(row - 1, col)
 
         for r in range(rows):
             for c in range(cols):
@@ -260,14 +272,16 @@ class Solution:
         return cnt
 
     def letterCombinations(self, digits: str) -> list[str]:
-        phone = {'2': ['a', 'b', 'c'],
-                 '3': ['d', 'e', 'f'],
-                 '4': ['g', 'h', 'i'],
-                 '5': ['j', 'k', 'l'],
-                 '6': ['m', 'n', 'o'],
-                 '7': ['p', 'q', 'r', 's'],
-                 '8': ['t', 'u', 'v'],
-                 '9': ['w', 'x', 'y', 'z']}
+        phone = {
+            "2": ["a", "b", "c"],
+            "3": ["d", "e", "f"],
+            "4": ["g", "h", "i"],
+            "5": ["j", "k", "l"],
+            "6": ["m", "n", "o"],
+            "7": ["p", "q", "r", "s"],
+            "8": ["t", "u", "v"],
+            "9": ["w", "x", "y", "z"],
+        }
         results = []
 
         def dfs(curr_str, digit_index):
@@ -275,35 +289,37 @@ class Solution:
                 results.append(curr_str)
             else:
                 for letter in phone[digits[digit_index]]:
-                    dfs(curr_str+letter, digit_index+1)
+                    dfs(curr_str + letter, digit_index + 1)
 
-        dfs('', 0)
+        dfs("", 0)
         return results
 
     def generateParenthesis(self, n: int) -> list[str]:
         result = []
-        if n <= 0: return result
+        if n <= 0:
+            return result
 
         def add_parenthesis(curr_str, open_cnt, closed_cnt):
             if closed_cnt == n:
                 result.append(curr_str)
             else:
                 if open_cnt < n:
-                    add_parenthesis(curr_str+'(', open_cnt+1, closed_cnt)
+                    add_parenthesis(curr_str + "(", open_cnt + 1, closed_cnt)
                 if closed_cnt < open_cnt:
-                    add_parenthesis(curr_str+')', open_cnt, closed_cnt+1)
+                    add_parenthesis(curr_str + ")", open_cnt, closed_cnt + 1)
 
-        add_parenthesis('', 0, 0)
+        add_parenthesis("", 0, 0)
         return result
 
     def permute(self, nums: list[int]) -> list[list[int]]:
-        if not nums or len(nums) == 1: return []
+        if not nums or len(nums) == 1:
+            return []
 
         res = []
         q = deque([[]])
         for i in range(0, len(nums)):
             curr = q.popleft()
-            for j in range(len(curr)+1):
+            for j in range(len(curr) + 1):
                 copy_curr = curr.copy()
                 copy_curr.insert(j, nums[i])
 
@@ -314,8 +330,8 @@ class Solution:
         return res
 
     def canFinish(self, numCourses: int, prerequisites: list[list[int]]) -> bool:
-        in_degree_map = {i:0 for i in range(numCourses)}
-        adj_graph = {i:[] for i in range(numCourses)}
+        in_degree_map = {i: 0 for i in range(numCourses)}
+        adj_graph = {i: [] for i in range(numCourses)}
 
         for parent, child in prerequisites:
             in_degree_map[child] += 1
@@ -337,16 +353,20 @@ class Solution:
                     q.append(child_course)
         return cnt >= numCourses
 
-    def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+    def lowestCommonAncestor(
+        self, root: TreeNode, p: TreeNode, q: TreeNode
+    ) -> TreeNode:
         lca_node: TreeNode or None = None
         pass
 
     def diameterOfBinaryTree(self, root: TreeNode) -> int:
-        if not root: return 0
+        if not root:
+            return 0
 
         def depth(node):
             nonlocal diameter
-            if not node: return 0
+            if not node:
+                return 0
 
             left = depth(node.left)
             right = depth(node.right)
@@ -357,39 +377,49 @@ class Solution:
         depth(root)
         return diameter
 
-    def floodFill(self, image: list[list[int]], sr: int, sc: int, new_color: int) -> list[list[int]]:
-        if not image: return image
+    def floodFill(
+        self, image: list[list[int]], sr: int, sc: int, new_color: int
+    ) -> list[list[int]]:
+        if not image:
+            return image
 
         def fill(x, y, orig_color):
-            if x >= len(image) \
-                    or x < 0 \
-                    or y >= len(image[x]) \
-                    or y < 0 \
-                    or image[x][y] != orig_color \
-                    or new_color == orig_color:
+            if (
+                x >= len(image)
+                or x < 0
+                or y >= len(image[x])
+                or y < 0
+                or image[x][y] != orig_color
+                or new_color == orig_color
+            ):
                 return
             else:
                 image[x][y] = new_color
-                fill(x, y+1, orig_color)
-                fill(x, y-1, orig_color)
-                fill(x-1, y, orig_color)
-                fill(x+1, y, orig_color)
+                fill(x, y + 1, orig_color)
+                fill(x, y - 1, orig_color)
+                fill(x - 1, y, orig_color)
+                fill(x + 1, y, orig_color)
 
         fill(sr, sc, image[sr][sc])
         return image
 
     def longestIncreasingPath(self, matrix: list[list[int]]) -> int:
-        if not matrix: return 0
+        if not matrix:
+            return 0
 
         def traverse(i, j, prev):
             nonlocal max_increasing_path_len
 
-            if 0 <= i < len(matrix) and 0 <= j < len(matrix[0]) and (matrix[i][j] > prev or prev == float('-inf')):
-                if memo[i][j] == float('-inf'):
-                    left = traverse(i, j+1, matrix[i][j]) + 1
-                    right = traverse(i, j-1, matrix[i][j]) + 1
-                    up = traverse(i+1, j, matrix[i][j]) + 1
-                    down = traverse(i-1, j, matrix[i][j]) + 1
+            if (
+                0 <= i < len(matrix)
+                and 0 <= j < len(matrix[0])
+                and (matrix[i][j] > prev or prev == float("-inf"))
+            ):
+                if memo[i][j] == float("-inf"):
+                    left = traverse(i, j + 1, matrix[i][j]) + 1
+                    right = traverse(i, j - 1, matrix[i][j]) + 1
+                    up = traverse(i + 1, j, matrix[i][j]) + 1
+                    down = traverse(i - 1, j, matrix[i][j]) + 1
                     memo[i][j] = max(left, right, up, down)
 
                 max_increasing_path_len = max(max_increasing_path_len, memo[i][j])
@@ -398,14 +428,18 @@ class Solution:
                 return 0
 
         max_increasing_path_len = 0
-        memo = [[float('-inf') for j in range(len(matrix[0]))] for i in range(len(matrix))]
+        memo = [
+            [float("-inf") for j in range(len(matrix[0]))] for i in range(len(matrix))
+        ]
 
         for i in range(len(matrix)):
             for j in range(len(matrix[0])):
-                traverse(i, j, float('-inf'))
+                traverse(i, j, float("-inf"))
         return max_increasing_path_len
 
-    def calcEquation(self, equations: list[list[str]], values: list[float], queries: list[list[str]]) -> list[float]:
+    def calcEquation(
+        self, equations: list[list[str]], values: list[float], queries: list[list[str]]
+    ) -> list[float]:
         pass
 
     def cleanRoom(self, robot: Robot):
@@ -415,10 +449,10 @@ class Solution:
         """
 
     def alienOrder(self, words: list[str]) -> str:
-        in_deg = {c:0 for word in words for c in word}
-        adj_graph = {c:[] for word in words for c in word}
+        in_deg = {c: 0 for word in words for c in word}
+        adj_graph = {c: [] for word in words for c in word}
         for i in range(len(words)):
-            for l in range(i+1, len(words)):
+            for l in range(i + 1, len(words)):
                 word = words[i]
                 next_word = words[l]
                 if word == next_word:
@@ -486,7 +520,8 @@ class Solution:
 
     # TODO: Come back to
     def isBipartite(self, graph: list[list[int]]) -> bool:
-        if not graph: return True
+        if not graph:
+            return True
         s1, s2 = set(), set()
 
         set_number = 1
@@ -523,8 +558,8 @@ class UnionFind:
 
 
 uf = UnionFind()
-uf.union(1,2)
+uf.union(1, 2)
 print(uf.find(1))
 print(uf.find(2))
-uf.union(1,4)
-uf.union(3,4)
+uf.union(1, 4)
+uf.union(3, 4)

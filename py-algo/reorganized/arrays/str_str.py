@@ -2,8 +2,10 @@
 Str
 
 """
+
+
 def strStr(haystack: str, needle: str) -> int:
-        pass
+    pass
 
 
 # Example usage

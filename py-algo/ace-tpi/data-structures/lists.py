@@ -8,18 +8,20 @@ def remove_even(list):
 def merge_lists(lst1, lst2):
     result = []
     min_heap = []
-    if lst1: heappush(min_heap, (lst1[0], 0, 1))
-    if lst1: heappush(min_heap, (lst2[0], 0, 2))
+    if lst1:
+        heappush(min_heap, (lst1[0], 0, 1))
+    if lst1:
+        heappush(min_heap, (lst2[0], 0, 2))
 
     while min_heap:
         num, i, list_id = heappop(min_heap)
         result.append(num)
 
-        if list_id == 1 and i+1 < len(lst1):
-            heappush(min_heap, (lst1[i+1], i+1, 1))
+        if list_id == 1 and i + 1 < len(lst1):
+            heappush(min_heap, (lst1[i + 1], i + 1, 1))
 
-        if list_id == 2 and i+1 < len(lst2):
-            heappush(min_heap, (lst2[i+1], i+1, 2))
+        if list_id == 2 and i + 1 < len(lst2):
+            heappush(min_heap, (lst2[i + 1], i + 1, 2))
 
     return result
 
@@ -33,7 +35,8 @@ def find_product(lst):
 
 
 def find_second_maximum(lst):
-    if not lst: return None
+    if not lst:
+        return None
     min_heap = []
 
     for num in lst:
@@ -48,11 +51,11 @@ def find_second_maximum(lst):
 def right_rotate(lst, n):
     # get rotation index
     n = n % len(lst)
-    return lst[-n:]+lst[:-n]
+    return lst[-n:] + lst[:-n]
 
 
 def rearrange(lst):
-    start, end = 0, len(lst)-1
+    start, end = 0, len(lst) - 1
 
     while start < end:
         if lst[start] < 0:
@@ -64,7 +67,7 @@ def rearrange(lst):
 
 
 def max_min(lst):
-    start, end = 0, len(lst)-1
+    start, end = 0, len(lst) - 1
     ret_arr = []
     while start <= end:
         ret_arr.append(lst[end])
@@ -80,9 +83,9 @@ def max_min_no_extra_space(lst):
     if len(lst) == 0:
         return []
 
-    maxIdx = len(lst)-1  # max index
+    maxIdx = len(lst) - 1  # max index
     minIdx = 0  # first index
-    maxElem = lst[-1]+1  # Max element
+    maxElem = lst[-1] + 1  # Max element
     # traverse the list
     for i in range(len(lst)):
         # even number means max element to append

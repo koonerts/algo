@@ -2,10 +2,12 @@
 Traversal
 
 """
+
+
 def preorderTraversal(root: TreeNode) -> list[int]:
-        out = []
-        self.recurse(root, out, TraversalType.PREORDER)
-        return out
+    out = []
+    self.recurse(root, out, TraversalType.PREORDER)
+    return out
 
 
 # Example usage

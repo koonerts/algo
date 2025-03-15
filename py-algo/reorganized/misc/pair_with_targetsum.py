@@ -14,6 +14,8 @@ Given an array of sorted numbers and a target sum, find a pair in the array whos
     Output: [0, 2]
     Explanation: The numbers at index 0 and 2 add up to 11: 2+9=11
 """
+
+
 def pair_with_targetsum(arr: list[int], target_sum: int) -> list[int]:
     """
     Given an array of sorted numbers and a target sum, find a pair in the array whose sum is equal to the given target.
@@ -40,7 +42,6 @@ def pair_with_targetsum(arr: list[int], target_sum: int) -> list[int]:
             start += 1
 
     return [-1, -1]
-
 
 
 # Example usage

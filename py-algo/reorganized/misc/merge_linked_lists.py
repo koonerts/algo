@@ -2,6 +2,8 @@
 Linked Lists
 
 """
+
+
 def mergeLinkedLists(headOne, headTwo):
     n1, n2 = headOne, headTwo
     head: LinkedList
@@ -32,7 +34,6 @@ def mergeLinkedLists(headOne, headTwo):
             prev = n2
             n2 = n2.next
     return head
-
 
 
 # Example usage

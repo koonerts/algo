@@ -1,4 +1,3 @@
-
 def parity(x: int):
     result = 0
     while x:

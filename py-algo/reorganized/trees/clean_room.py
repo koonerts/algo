@@ -4,11 +4,13 @@ Room
 :type robot: Robot
         :rtype: None
 """
+
+
 def cleanRoom(robot: Robot):
-        """
-        :type robot: Robot
-        :rtype: None
-        """
+    """
+    :type robot: Robot
+    :rtype: None
+    """
 
 
 # Example usage

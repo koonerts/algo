@@ -14,8 +14,9 @@ Given an array with positive numbers and a target number, find all of its contig
     Explanation: There are seven contiguous subarrays whose product is less than the target.
 """
 
-
 from collections import deque
+
+
 def find_subarrays(arr: list[int], target: int) -> list[list[int]]:
     """
     Given an array with positive numbers and a target number, find all of its contiguous subarrays whose product is less than the target number.
@@ -50,7 +51,6 @@ def find_subarrays(arr: list[int], target: int) -> list[list[int]]:
             temp_list.appendleft(arr[i])
             result.append(list(temp_list))
     return result
-
 
 
 # Example usage

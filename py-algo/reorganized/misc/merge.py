@@ -18,6 +18,8 @@ Given a list of intervals, merge all the overlapping intervals to produce a list
     Output: [[1,6]]
     Explanation: Since all the given intervals overlap, we merged them into one.
 """
+
+
 def merge(intervals: list[Interval]) -> list[Interval]:
     """
     Given a list of intervals, merge all the overlapping intervals to produce a list that has only mutually exclusive intervals.
@@ -54,7 +56,6 @@ def merge(intervals: list[Interval]) -> list[Interval]:
     # add the last interval
     merged_intervals.append(Interval(start, end))
     return merged_intervals
-
 
 
 # Example usage

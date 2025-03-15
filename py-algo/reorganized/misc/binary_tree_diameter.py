@@ -18,7 +18,6 @@ def find_depths(node):
     return max_diameter
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to binaryTreeDiameter

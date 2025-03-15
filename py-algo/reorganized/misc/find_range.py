@@ -17,6 +17,8 @@ Given an array of numbers sorted in ascending order, find the range of a given n
     Input: [1, 3, 8, 10, 15], key = 12
     Output: [-1, -1]
 """
+
+
 def find_range(arr: list[int], key: int) -> list[int]:
     """
     Given an array of numbers sorted in ascending order, find the range of a given number ‘key’.
@@ -35,21 +37,22 @@ def find_range(arr: list[int], key: int) -> list[int]:
     Input: [1, 3, 8, 10, 15], key = 12
     Output: [-1, -1]
     """
-    if not arr: return [- 1, -1]
+    if not arr:
+        return [-1, -1]
 
-    start, end = 0, len(arr)-1
+    start, end = 0, len(arr) - 1
 
     while start <= end:
-        mid = (start+end)//2
+        mid = (start + end) // 2
         if arr[mid] == key:
             break
         elif arr[mid] < key:
-            start = mid+1
+            start = mid + 1
         else:
-            end = mid-1
+            end = mid - 1
 
-    if start > end: return [-1, -1]
-
+    if start > end:
+        return [-1, -1]
 
 
 # Example usage

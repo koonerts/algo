@@ -19,6 +19,8 @@ Given a list of non-overlapping intervals sorted by their start time, insert a g
     Output: [[1,4], [5,7]]
     Explanation: After insertion, since [1,4] overlaps with [2,3], we merged them into one [1,4].
 """
+
+
 def insert(intervals: list[list[int]], new_interval: list[int]) -> list[list[int]]:
     """
     Given a list of non-overlapping intervals sorted by their start time, insert a given interval at
@@ -58,7 +60,6 @@ def insert(intervals: list[list[int]], new_interval: list[int]) -> list[list[int
         merged_intervals.append(new_interval)
 
     return merged_intervals
-
 
 
 # Example usage

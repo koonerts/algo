@@ -3,15 +3,15 @@ import numpy as np
 import string
 from heapq import *
 
+
 def print_matrix(matrix):
     print(np.array(matrix))
 
 
 class Solution:
-
     def evalRPN(self, arr):
         stk = []
-        ops = {'+', '*', '/', '-'}
+        ops = {"+", "*", "/", "-"}
         for i, val in enumerate(arr):
             if val in ops:
                 n1, n2 = stk.pop(), stk.pop()
@@ -44,7 +44,8 @@ class Solution:
         Input: [0,1,0,3,12]
         Output: [1,3,12,0,0]
         """
-        if len(nums) <= 1: return
+        if len(nums) <= 1:
+            return
 
         left, i = 0, 1
         while i < len(nums) and left < len(nums):
@@ -159,7 +160,9 @@ class Solution:
         print(zero_val_indexes)
         for i, v in enumerate(zero_val_indexes):
             start = 0 if i == 0 else zero_val_indexes[i - 1] + 1
-            end = len(nums) if i + 1 >= len(zero_val_indexes) else zero_val_indexes[i + 1]
+            end = (
+                len(nums) if i + 1 >= len(zero_val_indexes) else zero_val_indexes[i + 1]
+            )
             length = len(range(start, end))
             print(start, end, length)
             if length > curr_max:
@@ -206,7 +209,6 @@ class Solution:
         Output: [5,6]
         """
         for i in range(len(nums)):
-
             new_index = abs(nums[i]) - 1
             if nums[new_index] > 0:
                 nums[new_index] *= -1
@@ -220,7 +222,8 @@ class Solution:
         return xor
 
     def rotate_with_extra_space(self, nums: list[int], k: int) -> None:
-        if not nums: return nums
+        if not nums:
+            return nums
         k = k % len(nums)
         nums_copy = nums[-k:] + nums[:-k]
         for i in range(len(nums)):
@@ -291,10 +294,11 @@ class Solution:
         return result
 
     def threeSumClosest(self, nums: list[int], target: int) -> int:
-        if len(nums) == 3: return sum(nums)
+        if len(nums) == 3:
+            return sum(nums)
 
         nums.sort()
-        closest_sum = float('inf')
+        closest_sum = float("inf")
         for i in range(len(nums)):
             left, right = i + 1, len(nums) - 1
             while left < right:
@@ -366,9 +370,21 @@ class Solution:
         return max_area
 
     def intToRoman(self, num: int) -> str:
-        digits = {1000: 'M', 900: 'CM', 500: 'D', 400: 'CD', 100: 'C',
-                  90: 'XC', 50: 'L', 40: 'XL', 10: 'X',
-                  9: 'IX', 5: 'V', 4: 'IV', 1: 'I'}
+        digits = {
+            1000: "M",
+            900: "CM",
+            500: "D",
+            400: "CD",
+            100: "C",
+            90: "XC",
+            50: "L",
+            40: "XL",
+            10: "X",
+            9: "IX",
+            5: "V",
+            4: "IV",
+            1: "I",
+        }
 
     def missingNumber(self, nums: list[int]) -> int:
         i = 0
@@ -389,7 +405,7 @@ class Solution:
     def minWindow(self, s: str, t: str) -> str:
         char_freq = collections.Counter(t)
         char_index_map = {key: collections.deque() for key in char_freq}
-        left, matched_cnt, min_substr = -1, 0, ''
+        left, matched_cnt, min_substr = -1, 0, ""
 
         for i, c in enumerate(s):
             if c in char_freq:
@@ -401,10 +417,11 @@ class Solution:
                     matched_cnt += 1
                     if matched_cnt == len(char_freq):
                         if (i - left + 1) < len(min_substr):
-                            min_substr = s[left:i + 1]
+                            min_substr = s[left : i + 1]
 
     def maxProfit(self, prices: list[int]) -> int:
-        if len(prices) == 1: return 0
+        if len(prices) == 1:
+            return 0
 
         profit = 0
         peak, valley = 0, 0
@@ -420,12 +437,13 @@ class Solution:
         return profit
 
     def rotate(self, nums: list[int], k: int) -> None:
-        if not nums or k == 0: return
+        if not nums or k == 0:
+            return
 
         k = k % len(nums)
         idx, prev, temp = 0, nums[0], 0
         for _ in range(len(nums)):
-            idx = ((idx + k) % len(nums))
+            idx = (idx + k) % len(nums)
             temp = nums[idx]
             nums[idx] = prev
             prev = temp
@@ -460,7 +478,7 @@ class Solution:
         if is_neg:
             reversed_x = -reversed_x
 
-        return 0 if not (-2 ** 31 - 1 <= reversed_x <= 2 ** 31 - 1) else reversed_x
+        return 0 if not (-(2**31) - 1 <= reversed_x <= 2**31 - 1) else reversed_x
 
     def firstUniqChar(self, s: str) -> int:
         char_map = {}
@@ -474,7 +492,8 @@ class Solution:
         return -1
 
     def isPalindrome(self, s: str) -> bool:
-        if s == '': return True
+        if s == "":
+            return True
 
         start, end = 0, len(s) - 1
         while start <= end:
@@ -491,11 +510,12 @@ class Solution:
         return True
 
     def myAtoi(self, s: str) -> int:
-        if not s: return 0
+        if not s:
+            return 0
 
         start, end = -1, -1
         for i, c in enumerate(s):
-            if c in ['+', '-'] or c.isnumeric():
+            if c in ["+", "-"] or c.isnumeric():
                 start = i
                 end = i + 1
                 while end < len(s) and s[end].isnumeric():
@@ -506,26 +526,26 @@ class Solution:
             else:
                 return 0
 
-        sign = '+'
+        sign = "+"
 
-        if s[start] == '+':
+        if s[start] == "+":
             start += 1
-            if s[start] == '-':
-                sign = '-'
+            if s[start] == "-":
+                sign = "-"
                 start += 1
-        elif s[start] == '-':
-            sign = '-'
+        elif s[start] == "-":
+            sign = "-"
             start += 1
-            if s[start] == '-':
-                sign = '-'
+            if s[start] == "-":
+                sign = "-"
                 start += 1
 
         if not s[start:end].isnumeric():
             return 0
 
         val = int(s[start:end])
-        if val > 2 ** 31:
-            return 2 ** 31
+        if val > 2**31:
+            return 2**31
         elif val < (-2) ** 31:
             return (-2) ** 31
         else:
@@ -538,19 +558,21 @@ class Solution:
         left, right = 0, 0
         char_freq = {}
 
-        ret_str = ''
+        ret_str = ""
         while right < len(s):
             if s[right] in t:
                 char_freq[s[right]] = char_freq.get(s[right], 0) + 1
 
     def compareVersion(self, version1: str, version2: str) -> int:
-        v1_list = list(map(int, version1.split('.')))
-        v2_list = list(map(int, version2.split('.')))
+        v1_list = list(map(int, version1.split(".")))
+        v2_list = list(map(int, version2.split(".")))
 
         for i in range(max(len(v1_list), len(v2_list))):
             v1_val, v2_val = 0, 0
-            if i < len(v1_list): v1_val = v1_list[i]
-            if i < len(v2_list): v2_val = v2_list[i]
+            if i < len(v1_list):
+                v1_val = v1_list[i]
+            if i < len(v2_list):
+                v2_val = v2_list[i]
 
             if v1_val < v2_val:
                 return -1
@@ -559,23 +581,23 @@ class Solution:
         return 0
 
     def mostCommonWord(self, paragraph: str, banned: list[str]) -> str:
-        stop_list = ["!", "?", ",", ";", ".", ' ']
+        stop_list = ["!", "?", ",", ";", ".", " "]
         word_freq = {}
 
         word_chars = []
-        max_word = (0, '')
+        max_word = (0, "")
         for c in paragraph.lower():
             if c in stop_list and word_chars:
-                word = ''.join(word_chars)
+                word = "".join(word_chars)
                 if word not in banned:
                     word_freq[word] = word_freq.get(word, 0) + 1
                     max_word = max(max_word, (word_freq[word], word))
                 word_chars = []
             elif c == "'":
                 continue
-            elif c != ' ':
+            elif c != " ":
                 word_chars.append(c)
-        return max_word[1] if max_word[1] else ''.join(word_chars)
+        return max_word[1] if max_word[1] else "".join(word_chars)
 
     def reorderLogFiles(self, logs: list[str]) -> list[str]:
         digit_logs = []
@@ -583,19 +605,19 @@ class Solution:
 
         i = 0
         while i < len(logs):
-            id_sep_index = str.index(logs[i], ' ')
+            id_sep_index = str.index(logs[i], " ")
 
-            if logs[i][id_sep_index + 1:id_sep_index + 2].isnumeric():
+            if logs[i][id_sep_index + 1 : id_sep_index + 2].isnumeric():
                 digit_logs.append(logs[i])
             else:
                 if not letter_logs:
                     letter_logs.append(logs[i])
                 else:
-                    log_data = logs[i][id_sep_index + 1:]
+                    log_data = logs[i][id_sep_index + 1 :]
 
                     for j in range(len(letter_logs)):
-                        ll_id_sep_index = str.index(letter_logs[j], ' ')
-                        ll_log_data = letter_logs[j][ll_id_sep_index + 1:]
+                        ll_id_sep_index = str.index(letter_logs[j], " ")
+                        ll_log_data = letter_logs[j][ll_id_sep_index + 1 :]
 
                         if log_data < ll_log_data:
                             letter_logs.insert(j, logs[i])
@@ -626,11 +648,11 @@ class Solution:
     def numUniqueEmails(self, emails: list[str]) -> int:
         def clean_email(email: str):
             local, domain = email.split("@")
-            ignore_idx = local.find('+')
+            ignore_idx = local.find("+")
             if ignore_idx >= 0:
-                local = local[:ignore_idx].replace('.', '')
+                local = local[:ignore_idx].replace(".", "")
             else:
-                local = local.replace('.', '')
+                local = local.replace(".", "")
 
             return local, domain
 
@@ -642,7 +664,8 @@ class Solution:
         return len(email_set)
 
     def lengthOfLongestSubstring(self, s: str) -> int:
-        if not s: return 0
+        if not s:
+            return 0
 
         char_idx = {}
 
@@ -657,27 +680,31 @@ class Solution:
         return max_len
 
     def multiply(self, num1: str, num2: str) -> str:
-        if num1 == "0" or num2 == "0": return "0"
-        elif num1 == "1": return num2
-        elif num2 == "1": return num1
-        elif len(num2) > len(num1): return self.multiply(num2, num1)
+        if num1 == "0" or num2 == "0":
+            return "0"
+        elif num1 == "1":
+            return num2
+        elif num2 == "1":
+            return num1
+        elif len(num2) > len(num1):
+            return self.multiply(num2, num1)
 
         total_sum = 0
         outer_multiplier = 1
-        for i in range(len(num2)-1, -1, -1):
+        for i in range(len(num2) - 1, -1, -1):
             carry_over = 0
             sum_ = 0
             inner_multiplier = 1
-            for j in range(len(num1)-1, -1, -1):
-                prod = int(num2[i])*int(num1[j]) + carry_over
+            for j in range(len(num1) - 1, -1, -1):
+                prod = int(num2[i]) * int(num1[j]) + carry_over
                 if j != 0:
-                    sum_ += (prod%10)*inner_multiplier
-                    carry_over = prod//10
+                    sum_ += (prod % 10) * inner_multiplier
+                    carry_over = prod // 10
                 else:
-                    sum_ += prod*inner_multiplier
+                    sum_ += prod * inner_multiplier
 
                 inner_multiplier *= 10
-            total_sum += sum_*outer_multiplier
+            total_sum += sum_ * outer_multiplier
             outer_multiplier *= 10
         return str(total_sum)
 
@@ -702,7 +729,7 @@ class Solution:
         if lower == upper and lower not in nums:
             return [str(lower)]
         elif not nums:
-            return [f'{lower}->{upper}']
+            return [f"{lower}->{upper}"]
 
         result = []
         for i, num in enumerate(nums):
@@ -711,29 +738,29 @@ class Solution:
                     if lower + 1 == num:
                         result.append(str(lower))
                     else:
-                        result.append(f'{lower}->{num - 1}')
+                        result.append(f"{lower}->{num - 1}")
             else:
                 diff = num - nums[i - 1]
                 if diff == 2:
                     result.append(str(num - 1))
                 elif diff > 2:
-                    result.append(f'{nums[i - 1] + 1}->{num - 1}')
+                    result.append(f"{nums[i - 1] + 1}->{num - 1}")
 
             if i == len(nums) - 1 and num < upper:
                 if num + 1 == upper:
                     result.append(str(upper))
                 else:
-                    result.append(f'{num + 1}->{upper}')
+                    result.append(f"{num + 1}->{upper}")
         return result
 
     def nextClosestTime(self, time: str) -> str:
-        valid_digits = [int(c) for c in time if c != ':']
+        valid_digits = [int(c) for c in time if c != ":"]
         valid_digits.sort()
 
-        new_time = ''
+        new_time = ""
         for i in range(len(time) - 1, -1, -1):
-            if time[i] == ':':
-                new_time = ':' + new_time
+            if time[i] == ":":
+                new_time = ":" + new_time
                 continue
 
             val = next((d for d in valid_digits if d > int(time[i])), valid_digits[0])
@@ -774,7 +801,8 @@ class Solution:
         return list(map(lambda x: next_number[x], nums1))
 
     def isMajorityElement(self, nums: list[int], target: int) -> bool:
-        if not nums: return False
+        if not nums:
+            return False
 
         def binary_search_low():
             low = -1
@@ -805,7 +833,8 @@ class Solution:
             return high
 
         lower = binary_search_low()
-        if lower == -1: return False
+        if lower == -1:
+            return False
         higher = binary_search_high()
 
         cnt = higher - lower + 1
@@ -814,7 +843,8 @@ class Solution:
     def isValidSubsequence(self, array, seq):
         seq_idx = 0
         for num in array:
-            if seq_idx >= len(seq): return True
+            if seq_idx >= len(seq):
+                return True
 
             if num == seq[seq_idx]:
                 seq_idx += 1
@@ -845,43 +875,55 @@ class Solution:
 
         for c in s:
             if c == ")":
-                val = str(eval(''.join(stk[opening_paren_indexes[-1]+1:])))
+                val = str(eval("".join(stk[opening_paren_indexes[-1] + 1 :])))
                 while len(stk) > opening_paren_indexes[-1]:
                     stk.pop()
                 stk.append(val)
                 opening_paren_indexes.pop()
-            elif c == '(':
+            elif c == "(":
                 stk.append(c)
-                opening_paren_indexes.append(len(stk)-1)
+                opening_paren_indexes.append(len(stk) - 1)
             else:
                 stk.append(c)
-        return eval(''.join(stk))
+        return eval("".join(stk))
 
     def findBall(self, grid: list[list[int]]) -> list[int]:
         LEFT, RIGHT = -1, 1
-        ret = [-1]*len(grid[0])
+        ret = [-1] * len(grid[0])
 
         def traverse(x, y) -> int:
-            if 0 <= x < len(grid) and 0 <= y < len(grid[0]) and grid[x][y] != -1 and grid[x][y] != 1:
+            if (
+                0 <= x < len(grid)
+                and 0 <= y < len(grid[0])
+                and grid[x][y] != -1
+                and grid[x][y] != 1
+            ):
                 return grid[x][y]
-            elif x > len(grid)-1:
-                return y*10
-            elif grid[x][y] == LEFT and y == 0 \
-                    or grid[x][y] == RIGHT and y == len(grid[0])-1 \
-                    or grid[x][y] == RIGHT and grid[x][y+1] == LEFT \
-                    or grid[x][y] == LEFT and grid[x][y-1] == RIGHT:
+            elif x > len(grid) - 1:
+                return y * 10
+            elif (
+                grid[x][y] == LEFT
+                and y == 0
+                or grid[x][y] == RIGHT
+                and y == len(grid[0]) - 1
+                or grid[x][y] == RIGHT
+                and grid[x][y + 1] == LEFT
+                or grid[x][y] == LEFT
+                and grid[x][y - 1] == RIGHT
+            ):
                 return -1
             else:
-                grid[x][y] = traverse(x+1, y + grid[x][y])
+                grid[x][y] = traverse(x + 1, y + grid[x][y])
                 return grid[x][y]
 
         for i in range(len(ret)):
-            ret[i] = traverse(0, i)//10
+            ret[i] = traverse(0, i) // 10
         print_matrix(grid)
         return ret
 
     def lengthOfLongestSubstringKDistinct(self, s: str, k: int) -> int:
-        if k == 0: return 0
+        if k == 0:
+            return 0
 
         freq, lo = {}, 0
         max_len = 0
@@ -896,31 +938,38 @@ class Solution:
                         freq[s[lo]] -= 1
                     lo += 1
                 freq[v] = freq.get(v, 0) + 1
-            max_len = max(max_len, hi-lo+1)
+            max_len = max(max_len, hi - lo + 1)
         return max_len
 
-    def turnstile(self, num_worker: int, arr_time: list[int], direction: list[int]) -> list[int]:
-
-        time_map = {i:[] for i in range(arr_time[-1]+2)}
+    def turnstile(
+        self, num_worker: int, arr_time: list[int], direction: list[int]
+    ) -> list[int]:
+        time_map = {i: [] for i in range(arr_time[-1] + 2)}
         LOAD, UNLOAD = 0, 1
         for i, time in enumerate(arr_time):
             time_map[time].append(i)
 
         previously_used_action = (None, None)
-        res = [-1]*num_worker
+        res = [-1] * num_worker
         for time, workers in time_map.items():
             if len(workers) == 1:
                 res[workers[0]] = time
                 previously_used_action = (time, direction[workers[0]])
             else:
                 prev_time, prev_action = previously_used_action
-                if prev_time is None or time-prev_time > 1:
-                    previously_used_action = self.add_to_dock(res, time_map, time, workers, direction, UNLOAD)
-                elif time-prev_time == 1:
+                if prev_time is None or time - prev_time > 1:
+                    previously_used_action = self.add_to_dock(
+                        res, time_map, time, workers, direction, UNLOAD
+                    )
+                elif time - prev_time == 1:
                     if prev_action == UNLOAD:
-                        previously_used_action = self.add_to_dock(res, time_map, time, workers, direction, UNLOAD)
+                        previously_used_action = self.add_to_dock(
+                            res, time_map, time, workers, direction, UNLOAD
+                        )
                     else:
-                        previously_used_action = self.add_to_dock(res, time_map, time, workers, direction, LOAD)
+                        previously_used_action = self.add_to_dock(
+                            res, time_map, time, workers, direction, LOAD
+                        )
         return res
 
     def add_to_dock(self, res, time_map, time, workers, direction, action):
@@ -934,7 +983,7 @@ class Solution:
             previously_used_action = (time, direction[workers[worker_idx]])
             for i, worker in enumerate(workers):
                 if i != worker_idx:
-                    time_map[time+1].append(worker)
+                    time_map[time + 1].append(worker)
             return previously_used_action
         return None, None
 
@@ -943,20 +992,26 @@ def top_mentioned(k: int, keywords: list[str], reviews: list[str]) -> list[str]:
     kw_freq = collections.defaultdict(lambda: 0)
     heap = []
     for _, review in enumerate(reviews):
-        words = [w for w in review.lower().translate(str.maketrans('', '', string.punctuation)).split(" ") if w in keywords]
+        words = [
+            w
+            for w in review.lower()
+            .translate(str.maketrans("", "", string.punctuation))
+            .split(" ")
+            if w in keywords
+        ]
         for _, word in enumerate(words):
             kw_freq[word] += 1
 
     for word, count in kw_freq.items():
-        if len(heap) < k or (count > heap[0][0] or (count == heap[0][0] and word < heap[0][1])):
+        if len(heap) < k or (
+            count > heap[0][0] or (count == heap[0][0] and word < heap[0][1])
+        ):
             if len(heap) == k:
                 heappop(heap)
             heappush(heap, (count, word))
 
     print(kw_freq)
     return [w[1] for w in heap]
-
-
 
 
 def num_pairs_divisible_by_60(times: list[int]) -> int:

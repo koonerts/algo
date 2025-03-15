@@ -13,8 +13,9 @@ Topological Sort of a directed graph (a graph with unidirectional edges) is a li
     2) 3, 2, 1, 0
 """
 
-
 from collections import deque
+
+
 def topological_sort(vertices, edges):
     """
     Topological Sort of a directed graph (a graph with unidirectional edges) is a linear ordering of its
@@ -57,7 +58,6 @@ def topological_sort(vertices, edges):
                     q.append(child)
 
     return sortedOrder
-
 
 
 # Example usage

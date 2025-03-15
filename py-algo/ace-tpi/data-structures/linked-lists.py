@@ -3,10 +3,12 @@ class Node:
         self.data = data
         self.next_element = None
 
+
 class LinkedListNode:
     def __init__(self, data, next=None):
         self.data = data
         self.next = next
+
 
 class LinkedList:
     def __init__(self):
@@ -16,14 +18,14 @@ class LinkedList:
         return self.head_node
 
     def is_empty(self):
-        if(self.head_node is None):  # Check whether the head is None
+        if self.head_node is None:  # Check whether the head is None
             return True
         else:
             return False
 
     def insert_at_head(self, dt):
         temp_node = Node(dt)
-        if(self.is_empty()):
+        if self.is_empty():
             self.head_node = temp_node
             return self.head_node
 
@@ -63,7 +65,7 @@ class LinkedList:
         return length
 
     def print_list(self):
-        if(self.is_empty()):
+        if self.is_empty():
             print("List is Empty")
             return False
         temp = self.head_node
@@ -78,7 +80,7 @@ class LinkedList:
         first_element = self.get_head()
         # If List is not empty then link head to the
         # nextElement of firstElement.
-        if (first_element is not None):
+        if first_element is not None:
             self.head_node = first_element.next_element
             first_element.next_element = None
         return
@@ -114,8 +116,8 @@ class LinkedList:
             print("List is Empty")
             return None
         temp = self.head_node
-        while(temp is not None):
-            if(temp.data is dt):
+        while temp is not None:
+            if temp.data is dt:
                 return temp
             temp = temp.next_element
 
@@ -162,17 +164,20 @@ def insert_at_tail(lst: LinkedList, value: int):
 
 
 def search(lst: LinkedList, value):
-    if not lst: return False
+    if not lst:
+        return False
 
     node = lst.get_head()
     while node:
-        if node.data == value: return True
+        if node.data == value:
+            return True
         node = node.next_element
     return False
 
 
 def delete(lst: LinkedList, value):
-    if not lst: return False
+    if not lst:
+        return False
     node = lst.get_head()
 
     prev = None
@@ -198,7 +203,8 @@ def length(lst):
 
 
 def reverse(lst):
-    if not lst or not lst.get_head(): return lst
+    if not lst or not lst.get_head():
+        return lst
 
     prev = None
     node = lst.get_head()
@@ -208,7 +214,8 @@ def reverse(lst):
 
 
 def detect_loop(lst: LinkedList):
-    if not lst: return False
+    if not lst:
+        return False
     slow, fast = lst.get_head(), lst.get_head()
     while slow and fast:
         if slow == fast:
@@ -222,16 +229,17 @@ def detect_loop(lst: LinkedList):
 
 
 def find_mid(lst: LinkedList):
-    if not lst or not lst.get_head(): return None
+    if not lst or not lst.get_head():
+        return None
 
     len_, mid = length(lst), 0
     if len_ % 2 == 1:
-        mid = (len_//2) + 1
+        mid = (len_ // 2) + 1
     else:
-        mid = len_//2
+        mid = len_ // 2
 
     node = lst.get_head()
-    for i in range(1, mid+1):
+    for i in range(1, mid + 1):
         if i == mid:
             return node
         else:
@@ -239,7 +247,8 @@ def find_mid(lst: LinkedList):
 
 
 def remove_duplicates(lst: LinkedList):
-    if not lst or not lst.get_head(): return lst
+    if not lst or not lst.get_head():
+        return lst
 
     node, prev, vals = lst.get_head(), None, set()
     while node:
@@ -253,9 +262,12 @@ def remove_duplicates(lst: LinkedList):
 
 
 def union(list1: LinkedList, list2: LinkedList):
-    if not list1: return list2
-    elif not list2: return list1
-    elif not list1 and not list2: return None
+    if not list1:
+        return list2
+    elif not list2:
+        return list1
+    elif not list1 and not list2:
+        return None
 
     l1_node = list1.get_head()
     while l1_node.next_element:
@@ -298,11 +310,13 @@ def intersection(list1: LinkedList, list2: LinkedList):
 
 
 def find_nth(lst: LinkedList, n: int) -> int:
-    if not lst or not lst.get_head(): return -1
+    if not lst or not lst.get_head():
+        return -1
 
     lst_node, n_ahead = lst.get_head(), lst.get_head()
     for _ in range(n):
-        if not n_ahead: return -1
+        if not n_ahead:
+            return -1
         n_ahead = n_ahead.next_element
 
     while n_ahead:
@@ -330,26 +344,36 @@ def find_happy_number(num: int):
 
 
 def add_integers(head1, head2):
-    if not head1: return head2
-    elif not head2: return head1
-    if not head1: return head2
-    elif not head2: return head1
+    if not head1:
+        return head2
+    elif not head2:
+        return head1
+    if not head1:
+        return head2
+    elif not head2:
+        return head1
 
     carry_over = 0
     ret_head, prev = head1, None
     while head1 or head2 or carry_over:
-        val = (0 if not head1 else head1.data) + (0 if not head2 else head2.data) + carry_over
-        carry_over = val//10
+        val = (
+            (0 if not head1 else head1.data)
+            + (0 if not head2 else head2.data)
+            + carry_over
+        )
+        carry_over = val // 10
 
         if not head1:
             head1 = LinkedListNode(val % 10)
         else:
             head1.data = val % 10
 
-        if prev: prev.next = head1
+        if prev:
+            prev.next = head1
         prev = head1
         head1 = head1.next
-        if head2: head2 = head2.next
+        if head2:
+            head2 = head2.next
 
     return ret_head
 
@@ -402,6 +426,7 @@ def union_using_hash_table(list1, list2):
 
     return list1
 
+
 # Returns a list containing the intersection of list1 and list2
 
 
@@ -434,8 +459,8 @@ def main():
     ll2.insert_at_head(7)
     ll2.insert_at_tail(14)
     ll2.insert_at_tail(21)
-    union_using_hash_table(ll,ll2)
+    union_using_hash_table(ll, ll2)
     ll.print_list()
 
-main()
 
+main()

@@ -7,7 +7,6 @@ def isBadVersion(n) -> bool:
 
 
 class Solution:
-
     def firstBadVersion(self, n):
         """
         :type n: int
@@ -18,7 +17,7 @@ class Solution:
 
         mid = (1 + n) // 2
         is_mid_bad = isBadVersion(mid)
-        is_prev_good = (mid == 1 or not isBadVersion(mid - 1))
+        is_prev_good = mid == 1 or not isBadVersion(mid - 1)
 
         while not (is_mid_bad and is_prev_good):
             if is_mid_bad:
@@ -27,18 +26,19 @@ class Solution:
                 mid = ((mid + 1) + n) // 2
 
             is_mid_bad = isBadVersion(mid)
-            is_prev_good = (mid == 1 or not isBadVersion(mid - 1))
+            is_prev_good = mid == 1 or not isBadVersion(mid - 1)
 
         return mid
 
     def findPeakElement(self, nums: list[int]) -> int:
-        if len(nums) == 1: return 0
+        if len(nums) == 1:
+            return 0
 
         left, right = 0, len(nums) - 1
         while left <= right:
             mid = (left + right) // 2
-            prev_val = float('-inf') if mid - 1 < left else nums[mid - 1]
-            next_val = float('-inf') if mid + 1 > right else nums[mid + 1]
+            prev_val = float("-inf") if mid - 1 < left else nums[mid - 1]
+            next_val = float("-inf") if mid + 1 > right else nums[mid + 1]
 
             if prev_val < nums[mid] > next_val:
                 return mid
@@ -61,13 +61,16 @@ class Solution:
                     ret_list[0] = lower_bound
 
             if 0 <= upper_bound + 1 < len(nums):
-                upper_bound = self.binarySearch(nums, upper_bound + 1, len(nums) - 1, target)
+                upper_bound = self.binarySearch(
+                    nums, upper_bound + 1, len(nums) - 1, target
+                )
                 if upper_bound >= 0:
                     ret_list[1] = upper_bound
         return ret_list
 
     def binarySearch(self, arr: list[int], left: int, right: int, target: int) -> int:
-        if not arr: return -1
+        if not arr:
+            return -1
 
         while left <= right:
             mid = (left + right) // 2
@@ -98,7 +101,8 @@ class Solution:
         return result
 
     def binary_search_rotated(self, nums: list[int], target: int) -> int:
-        if not nums: return -1
+        if not nums:
+            return -1
 
         start, end = 0, len(nums) - 1
         while start <= end:
@@ -143,7 +147,8 @@ class Solution:
         return max_concurrent_meetings
 
     def searchMatrix(self, matrix: list[list[int]], target: int) -> bool:
-        if not matrix: return -1
+        if not matrix:
+            return -1
 
         rows, cols = len(matrix), len(matrix[0])
 
@@ -162,10 +167,10 @@ class Solution:
             p1 = (start + end) // 2
             p2 = ((total_len + 1) // 2) - (p1 + 2)
 
-            n1_p_val = float('-inf') if p1 < 0 else nums1[p1]
-            n2_p_val = float('-inf') if p2 < 0 else nums2[p2]
-            n1_next_val = float('inf') if p1 + 1 >= len1 else nums1[p1 + 1]
-            n2_next_val = float('inf') if p2 + 1 >= len2 else nums2[p2 + 1]
+            n1_p_val = float("-inf") if p1 < 0 else nums1[p1]
+            n2_p_val = float("-inf") if p2 < 0 else nums2[p2]
+            n1_next_val = float("inf") if p1 + 1 >= len1 else nums1[p1 + 1]
+            n2_next_val = float("inf") if p2 + 1 >= len2 else nums2[p2 + 1]
 
             if n1_p_val <= n2_next_val and n2_p_val <= n1_next_val:
                 if total_len % 2 == 1:

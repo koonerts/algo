@@ -2,9 +2,10 @@
 Bad Version
 
 """
+
+
 def isBadVersion(n) -> bool:
     return True
-
 
 
 # Example usage

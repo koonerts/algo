@@ -19,7 +19,6 @@ def level_order_traverse(node: TreeNode, level: int):
     return result
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to traverse_using_recursion

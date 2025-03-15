@@ -13,6 +13,8 @@ Given an array of unsorted numbers and a target number, find all unique quadrupl
     Output: [-2, 0, 2, 2], [-1, 0, 1, 2]
     Explanation: Both the quadruplets add up to the target.
 """
+
+
 def search_quadruplets(arr: list[int], target: int) -> list[list[int]]:
     """
     Given an array of unsorted numbers and a target number, find all unique quadruplets in it, whose sum is equal to the target number.
@@ -38,15 +40,16 @@ def search_quadruplets(arr: list[int], target: int) -> list[list[int]]:
                 sum_ = ival + jval + kval + lval
                 if sum_ == target:
                     quadruplets.append([ival, jval, kval, lval])
-                    while k < l and arr[k] == kval: k += 1
-                    while l > k and arr[l] == lval: l -= 1
+                    while k < l and arr[k] == kval:
+                        k += 1
+                    while l > k and arr[l] == lval:
+                        l -= 1
                 elif sum_ > target:
                     l -= 1
                 else:
                     k += 1
 
     return quadruplets
-
 
 
 # Example usage

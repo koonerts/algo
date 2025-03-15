@@ -22,6 +22,8 @@ Given an array of intervals, find the next interval of each interval.
     Output: [2, -1, -1]
     Explanation: The next interval of [3,4] is [4,6] which has index ‘2’. There is no next interval for [1,5] and [4,6].
 """
+
+
 def find_next_interval(intervals: list[Interval]):
     """
     Given an array of intervals, find the next interval of each interval.
@@ -48,7 +50,6 @@ def find_next_interval(intervals: list[Interval]):
     # TODO: Come back to
     result = []
     return result
-
 
 
 # Example usage

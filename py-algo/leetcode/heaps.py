@@ -1,12 +1,15 @@
 from heapq import *
 from typing import List
 
+
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         freq_map = {}
         for num in nums:
-            if num in freq_map: freq_map[num] += 1
-            else: freq_map[num] = 1
+            if num in freq_map:
+                freq_map[num] += 1
+            else:
+                freq_map[num] = 1
 
         min_heap = []
         for num in freq_map:

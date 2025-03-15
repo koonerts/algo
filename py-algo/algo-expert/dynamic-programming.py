@@ -6,8 +6,9 @@ def print_matrix(matrix):
 
 
 def maxSubsetSumNoAdjacent(array):
-    if not array: return 0
-    EMPTY = float('-inf')
+    if not array:
+        return 0
+    EMPTY = float("-inf")
     memo = [EMPTY for n in array]
 
     def find(idx):
@@ -33,14 +34,14 @@ def numberOfWaysToMakeChange(n, denoms):
 
 
 def minNumberOfCoinsForChange(n, denoms):
-    min_coins = [float('inf') for i in range(n + 1)]
+    min_coins = [float("inf") for i in range(n + 1)]
     min_coins[0] = 0
 
     for i in range(len(denoms)):
         for j in range(len(min_coins)):
             if denoms[i] <= j:
                 min_coins[j] = min(min_coins[j], min_coins[j - denoms[i]] + 1)
-    return min_coins[-1] if min_coins[-1] < float('inf') else -1
+    return min_coins[-1] if min_coins[-1] < float("inf") else -1
 
 
 def knapsackProblem(items, capacity):
@@ -51,7 +52,9 @@ def knapsackProblem(items, capacity):
         for j in range(1, capacity + 1):
             profit_with = 0
             if items[i][WEIGHT] <= j:
-                profit_with = items[i][PROFIT] + (0 if i - 1 < 0 else max_profits[i - 1][j - items[i][WEIGHT]])
+                profit_with = items[i][PROFIT] + (
+                    0 if i - 1 < 0 else max_profits[i - 1][j - items[i][WEIGHT]]
+                )
 
             profit_without = 0
             if i - 1 >= 0 and j - 1 >= 0:
@@ -85,7 +88,9 @@ def knapsackProblemRecursive(items, capacity):
         else:
             profit_with = 0
             if items[i - 1][WEIGHT] <= j:
-                profit_with = helper(i + 1, j - items[i - 1][WEIGHT]) + items[i - 1][PRICE]
+                profit_with = (
+                    helper(i + 1, j - items[i - 1][WEIGHT]) + items[i - 1][PRICE]
+                )
             profit_without = helper(i + 1, j)
 
             memo[i][j] = max(profit_with, profit_without)
@@ -115,9 +120,11 @@ def levenshteinDistance(s, t):
                 cost = 0
             else:
                 cost = 1
-            dist[row][col] = min(dist[row - 1][col] + 1,  # deletion
-                                 dist[row][col - 1] + 1,  # insertion
-                                 dist[row - 1][col - 1] + cost)  # substitution
+            dist[row][col] = min(
+                dist[row - 1][col] + 1,  # deletion
+                dist[row][col - 1] + 1,  # insertion
+                dist[row - 1][col - 1] + cost,
+            )  # substitution
 
     print_matrix(dist)
     return dist[-1][-1]
@@ -132,7 +139,8 @@ def minNumberOfJumps(array):
 
 
 def maxSumIncreasingSubsequence(array):
-    if not array: return 0, []
+    if not array:
+        return 0, []
     sums = [num for num in array]
     prev_indexes = [None] * len(array)
 
@@ -158,5 +166,9 @@ def maxSumIncreasingSubsequence(array):
     return max_sum, nums
 
 
-print(levenshteinDistance('elxyotpogyqouwyptbjqfrtkgtygvvmyqldjtjkhwzfebqzbgznsbaeixwpaelxyotpogyqouwyptbjqfrtkgtygvvmyqldjtjkhwzfebqzbgznsbaeixwpa', 'ylxyocpogynouwybtbjqxrtkgxygvvmyqldptjkhyzfebpzbgzksbaeoxwpaabcdylxyocpogynouwybtbjqxrtkgxygvvmyqldptjkhyzfebpzbgzksbaeoxwpa'))
-
+print(
+    levenshteinDistance(
+        "elxyotpogyqouwyptbjqfrtkgtygvvmyqldjtjkhwzfebqzbgznsbaeixwpaelxyotpogyqouwyptbjqfrtkgtygvvmyqldjtjkhwzfebqzbgznsbaeixwpa",
+        "ylxyocpogynouwybtbjqxrtkgxygvvmyqldptjkhyzfebpzbgzksbaeoxwpaabcdylxyocpogynouwybtbjqxrtkgxygvvmyqldptjkhyzfebpzbgzksbaeoxwpa",
+    )
+)

@@ -5,14 +5,16 @@ Find the minimum depth of a binary tree.
     The minimum depth is the number of nodes along the shortest path from the root node to the nearest leaf node.
 """
 
-
 from collections import deque
+
+
 def find_minimum_depth(root: TreeNode) -> int:
     """
     Find the minimum depth of a binary tree.
     The minimum depth is the number of nodes along the shortest path from the root node to the nearest leaf node.
     """
-    if not root: return -1
+    if not root:
+        return -1
     level = 1
     q = deque([root])
     while q:
@@ -22,10 +24,11 @@ def find_minimum_depth(root: TreeNode) -> int:
             if not node.left and not node.right:
                 return level
             else:
-                if node.left: q.append(node.left)
-                if node.right: q.append(node.right)
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
         level += 1
-
 
 
 # Example usage

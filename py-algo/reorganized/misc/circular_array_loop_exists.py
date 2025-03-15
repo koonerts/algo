@@ -85,7 +85,6 @@ def get_index(curr_index: int, curr_direction: int) -> int:
     return False
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to circular_array_loop_exists

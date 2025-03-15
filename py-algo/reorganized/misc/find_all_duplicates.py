@@ -12,6 +12,8 @@ We are given an unsorted array containing ‘n’ numbers taken from the range 1
     Input: [5, 4, 7, 2, 3, 5, 3]
     Output: [3, 5]
 """
+
+
 def find_all_duplicates(nums):
     """
     We are given an unsorted array containing ‘n’ numbers taken from the range 1 to ‘n’.
@@ -42,7 +44,6 @@ def find_all_duplicates(nums):
             duplicate_numbers.append(num)
 
     return duplicate_numbers
-
 
 
 # Example usage

@@ -21,6 +21,8 @@ Given a set of positive numbers, partition the set into two subsets with minimum
     Explanation: We can partition the given set into two subsets where minimum absolute difference
                  between the sum of numbers is '92'. Here are the two subsets: {1, 3, 4} & {100}.
 """
+
+
 def partition_to_min_subset_difference_memoized(nums: list[int]):
     """
     Given a set of positive numbers, partition the set into two subsets with minimum difference between their subset sums.
@@ -44,14 +46,15 @@ def partition_to_min_subset_difference_memoized(nums: list[int]):
                  between the sum of numbers is '92'. Here are the two subsets: {1, 3, 4} & {100}.
     """
     # TODO: Come back to
-    if not nums: return 0
-    elif len(nums) == 1: return nums[0]
+    if not nums:
+        return 0
+    elif len(nums) == 1:
+        return nums[0]
 
     s = sum(nums)
-    target = s//2
+    target = s // 2
     dp = [[None for col in range(target)] for row in range(len(nums))]
     pass
-
 
 
 # Example usage

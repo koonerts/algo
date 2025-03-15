@@ -11,6 +11,8 @@ Given a set with distinct elements, find all of its distinct subsets.
     Input: [1, 5, 3]
     Output: [], [1], [5], [3], [1,5], [1,3], [5,3], [1,5,3]
 """
+
+
 def find_subsets(nums: list[int]):
     """
     Given a set with distinct elements, find all of its distinct subsets.
@@ -29,7 +31,6 @@ def find_subsets(nums: list[int]):
         for i in range(len(subsets)):
             subsets.append(list(subsets[i]) + [num])
     return subsets
-
 
 
 # Example usage

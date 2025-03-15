@@ -2,6 +2,8 @@
 Binary Tree
 
 """
+
+
 def flattenBinaryTree(root):
     head, stk = None, []
     node, prev = root, None
@@ -20,7 +22,6 @@ def flattenBinaryTree(root):
         prev = node
         node = node.right
     return head
-
 
 
 # Example usage

@@ -22,8 +22,9 @@ There are ‘N’ tasks, labeled from ‘0’ to ‘N-1’.
     Explanation: A possible scheduling of tasks is: [0 1 4 3 2 5]
 """
 
-
 from collections import deque
+
+
 def is_scheduling_possible(tasks, prerequisites):
     """
     There are ‘N’ tasks, labeled from ‘0’ to ‘N-1’.
@@ -46,8 +47,8 @@ def is_scheduling_possible(tasks, prerequisites):
     Output: true
     Explanation: A possible scheduling of tasks is: [0 1 4 3 2 5]
     """
-    in_degrees_map = {i:0 for i in range(tasks)}
-    adjacency_map = {i:[] for i in range(tasks)}
+    in_degrees_map = {i: 0 for i in range(tasks)}
+    adjacency_map = {i: [] for i in range(tasks)}
     scheduled_tasks = 0
     q = deque()
 
@@ -56,7 +57,8 @@ def is_scheduling_possible(tasks, prerequisites):
         in_degrees_map[task] += 1
 
     for task, degree in in_degrees_map.items():
-        if degree == 0: q.append(task)
+        if degree == 0:
+            q.append(task)
 
     while q:
         for _ in range(len(q)):
@@ -69,7 +71,6 @@ def is_scheduling_possible(tasks, prerequisites):
                     q.append(child_task)
 
     return scheduled_tasks == tasks
-
 
 
 # Example usage

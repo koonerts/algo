@@ -29,6 +29,8 @@ Given the weights and profits of ‘N’ items, we are asked to put these items 
     :param capacity:
     :return:
 """
+
+
 def solve_knapsack(profits, weights, capacity):
     """
     Given the weights and profits of ‘N’ items, we are asked to put these items in a knapsack with a capacity ‘C.’
@@ -60,9 +62,8 @@ def solve_knapsack(profits, weights, capacity):
     :return:
     """
     # create a two dimensional array for Memoization, each element is initialized to '-1'
-    dp = [[-1 for x in range(capacity+1)] for y in range(len(profits))]
+    dp = [[-1 for x in range(capacity + 1)] for y in range(len(profits))]
     return knapsack_memoized(dp, profits, weights, capacity, 0)
-
 
 
 # Example usage

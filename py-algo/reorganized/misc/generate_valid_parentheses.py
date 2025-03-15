@@ -11,6 +11,8 @@ For a given number ‘N’, write a function to generate all combination of ‘N
     Input: N=3
     Output: ((())), (()()), (())(), ()(()), ()()()
 """
+
+
 def generate_valid_parentheses(N: int):
     """
     For a given number ‘N’, write a function to generate all combination of ‘N’ pairs of balanced parentheses.
@@ -26,7 +28,6 @@ def generate_valid_parentheses(N: int):
     # TODO: Come back to
     result = []
     return result
-
 
 
 # Example usage

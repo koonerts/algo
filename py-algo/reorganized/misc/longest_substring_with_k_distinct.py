@@ -18,6 +18,8 @@ Given a string, find the length of the longest substring in it with no more than
     Output: 5
     Explanation: The longest substrings with no more than '3' distinct characters are "cbbeb" & "bbebi".
 """
+
+
 def longest_substring_with_k_distinct(str_: str, k: int) -> int:
     """
     Given a string, find the length of the longest substring in it with no more than K distinct characters.
@@ -59,7 +61,6 @@ def longest_substring_with_k_distinct(str_: str, k: int) -> int:
             max_len = curr_len
 
     return max_len
-
 
 
 # Example usage

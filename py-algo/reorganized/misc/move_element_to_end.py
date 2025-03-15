@@ -2,6 +2,8 @@
 Element To End
 
 """
+
+
 def moveElementToEnd(array, toMove):
     l, r = 0, len(array) - 1
     while l < r:
@@ -11,7 +13,6 @@ def moveElementToEnd(array, toMove):
         else:
             l += 1
     return array
-
 
 
 # Example usage

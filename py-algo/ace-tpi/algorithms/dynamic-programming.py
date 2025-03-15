@@ -1,5 +1,3 @@
-
-
 def knapsack_memoized(profits, weights, capacity):
     """
     Finds the maximum value that can be put in a knapsack
@@ -43,19 +41,23 @@ def can_partition(nums):
     :return: returns True if two sub-lists have equal sum, otherwise False
     """
     nums_sum = sum(nums)
-    if nums_sum % 2 == 1: return False
-    memo = [[-1 for col in range(nums_sum//2 + 1)] for row in range(len(nums)+1)]
+    if nums_sum % 2 == 1:
+        return False
+    memo = [[-1 for col in range(nums_sum // 2 + 1)] for row in range(len(nums) + 1)]
 
     def can_partition_recursive(r, curr_sum):
         if curr_sum == 0:
             return True
-        elif not ((1 <= r <= len(nums)) and (1 <= curr_sum <= nums_sum//2)):
+        elif not ((1 <= r <= len(nums)) and (1 <= curr_sum <= nums_sum // 2)):
             return False
         else:
             if memo[r][curr_sum] == -1:
-                memo[r][curr_sum] = can_partition_recursive(r+1, curr_sum) or can_partition_recursive(r+1, curr_sum - nums[r-1])
+                memo[r][curr_sum] = can_partition_recursive(
+                    r + 1, curr_sum
+                ) or can_partition_recursive(r + 1, curr_sum - nums[r - 1])
             return memo[r][curr_sum]
-    can = can_partition_recursive(1, nums_sum//2)
+
+    can = can_partition_recursive(1, nums_sum // 2)
     print(memo)
     return can
 
@@ -75,13 +77,15 @@ def longest_palindromic_subsequence(s):
         else:
             if memo[left][right] == -1:
                 if s[left] == s[right]:
-                    memo[left][right] = 2 + find_longest(left+1, right-1)
+                    memo[left][right] = 2 + find_longest(left + 1, right - 1)
                 else:
-                    memo[left][right] = max(find_longest(left+1, right), find_longest(left, right-1))
+                    memo[left][right] = max(
+                        find_longest(left + 1, right), find_longest(left, right - 1)
+                    )
             return memo[left][right]
 
     memo = [[-1 for col in range(len(s))] for row in range(len(s))]
-    max_len = find_longest(0, len(s)-1)
+    max_len = find_longest(0, len(s) - 1)
     return max_len
 
 
@@ -96,7 +100,9 @@ def longest_palindromic_subsequence_tabulated(s):
             if s[start_index] == s[end_index]:
                 memo[start_index][end_index] = 2 + memo[start_index + 1][end_index - 1]
             else:  # case 2: skip one element either from the beginning or the end
-                memo[start_index][end_index] = max(memo[start_index + 1][end_index], memo[start_index][end_index - 1])
+                memo[start_index][end_index] = max(
+                    memo[start_index + 1][end_index], memo[start_index][end_index - 1]
+                )
 
     return memo[0][len(s) - 1]
 
@@ -112,19 +118,21 @@ def count_change(denominations, amount):
     def find_ways(curr_amount, idx):
         if curr_amount == 0:
             return 1
-        elif curr_amount < 0 or not(0 <= idx < len(denominations)):
+        elif curr_amount < 0 or not (0 <= idx < len(denominations)):
             return 0
         else:
             if memo[idx][curr_amount] == -1:
-                memo[idx][curr_amount] = find_ways(curr_amount, idx-1) + find_ways(curr_amount - denominations[idx], idx)
+                memo[idx][curr_amount] = find_ways(curr_amount, idx - 1) + find_ways(
+                    curr_amount - denominations[idx], idx
+                )
             return memo[idx][curr_amount]
 
-    memo = [[-1 for col in range(amount+1)] for row in range(len(denominations))]
-    return find_ways(amount, len(denominations)-1)
+    memo = [[-1 for col in range(amount + 1)] for row in range(len(denominations))]
+    return find_ways(amount, len(denominations) - 1)
 
 
 def count_change_tabulated(denominations, amount):
-    memo = [[-1 for col in range(amount+1)] for row in range(len(denominations))]
+    memo = [[-1 for col in range(amount + 1)] for row in range(len(denominations))]
     for row in memo:
         row[0] = 1
 

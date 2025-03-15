@@ -52,14 +52,10 @@ Space Complexity: O(1) as we use constant extra space
     return -1
 
 
-
-
     # Example usage
-    if __name__ == "__main__":
+if __name__ == "__main__":
     print(binarySearch([-1, 0, 3, 5, 9, 12], 9))  # Output: 4
     print(binarySearch([-1, 0, 3, 5, 9, 12], 2))  # Output: -1
-
-
 
 
 # Example usage

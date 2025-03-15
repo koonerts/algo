@@ -13,6 +13,8 @@ Given an unsorted array of numbers, find the top ‘K’ frequently occurring nu
     Output: [11, 5] or [11, 12] or [11, 3]
     Explanation: Only '11' appeared twice, all other numbers appeared once.
 """
+
+
 def find_k_frequent_numbers(nums, k):
     """
     Given an unsorted array of numbers, find the top ‘K’ frequently occurring numbers in it.
@@ -40,10 +42,9 @@ def find_k_frequent_numbers(nums, k):
         if len(heap) < k:
             heappush(heap, (freq, num))
         elif freq > heap[0][0]:
-            heappushpop(heap, (freq,num))
+            heappushpop(heap, (freq, num))
 
     return [item[1] for item in heap]
-
 
 
 # Example usage

@@ -18,6 +18,8 @@ Given a string, find the length of the longest substring, which has no repeating
     Output: 3
     Explanation: Longest substrings without any repeating characters are "abc" & "cde".
 """
+
+
 def non_repeat_substring(str_: str) -> int:
     """
     Given a string, find the length of the longest substring, which has no repeating characters.
@@ -51,10 +53,9 @@ def non_repeat_substring(str_: str) -> int:
 
             start += 1
 
-        max_ = max(max_, i-start+1)
+        max_ = max(max_, i - start + 1)
 
     return max_
-
 
 
 # Example usage

@@ -2,10 +2,12 @@
 Primes
 
 """
+
+
 def countPrimes(n: int) -> int:
-        primes = set(range(2, n))
-        # for prime in primes:
-        #     for next
+    primes = set(range(2, n))
+    # for prime in primes:
+    #     for next
 
 
 # Example usage

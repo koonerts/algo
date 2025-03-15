@@ -12,6 +12,8 @@ Input: 1 -> 2 -> 3 -> 4 -> 5 -> null
     Input: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> null
     Output: 4
 """
+
+
 def find_middle_of_linked_list(head: Node) -> Node:
     """
     Input: 1 -> 2 -> 3 -> 4 -> 5 -> null
@@ -31,7 +33,6 @@ def find_middle_of_linked_list(head: Node) -> Node:
         slow = slow.next
         fast = fast.next.next
     return slow
-
 
 
 # Example usage

@@ -1,11 +1,13 @@
 from collections import deque
 
+
 class BinaryTreeNode:
     def __init__(self, data, left=None, right=None, parent=None):
         self.data = data
         self.left = left
         self.right = right
         self.parent = parent
+
 
 class TreeNode:
     def __init__(self, val):
@@ -18,7 +20,7 @@ class TreeNode:
             current = next_level_root
             next_level_root = None
             while current:
-                print(str(current.val) + " ", end='')
+                print(str(current.val) + " ", end="")
                 if not next_level_root:
                     if current.left:
                         next_level_root = current.left
@@ -33,9 +35,11 @@ def are_identical(root1: BinaryTreeNode, root2: BinaryTreeNode):
         return True
 
     if root1 and root2:
-        return root1.data == root2.data and \
-               are_identical(root1.left, root2.left) and \
-               are_identical(root1.right, root2.right)
+        return (
+            root1.data == root2.data
+            and are_identical(root1.left, root2.left)
+            and are_identical(root1.right, root2.right)
+        )
     else:
         return False
 
@@ -44,6 +48,7 @@ class InorderIterator:
     """
     TODO: Come back to -> https://www.educative.io/module/lesson/data-structures-in-python/m7wOjD0DlBO
     """
+
     def __init__(self, root: BinaryTreeNode):
         self.stack = []
         self.populate_stack(root)
@@ -57,7 +62,8 @@ class InorderIterator:
         return len(self.stack) > 0
 
     def getNext(self):
-        if not self.hasNext(): return None
+        if not self.hasNext():
+            return None
 
         val = self.stack.pop()
         self.populate_stack(val.right)
@@ -144,22 +150,27 @@ def level_order_traversal(root: BinaryTreeNode):
         for _ in range(len(que)):
             node = que.popleft()
             level_result += str(node.data) + " "
-            if node.left: que.append(node.left)
-            if node.right: que.append(node.right)
+            if node.left:
+                que.append(node.left)
+            if node.right:
+                que.append(node.right)
         result += level_result.rstrip() + "\n"
     return result
 
 
 def traverse(root):
-    if not root: return []
+    if not root:
+        return []
     q, result = deque([root]), deque()
     while q:
         level_result = []
         for _ in range(len(q)):
             node = q.popleft()
             level_result.append(node.val)
-            if node.left: q.append(node.left)
-            if node.right: q.append(node.right)
+            if node.left:
+                q.append(node.left)
+            if node.right:
+                q.append(node.right)
         result.appendleft(level_result)
     return list(result)
 
@@ -172,9 +183,11 @@ def find_level_averages(root):
         for _ in range(len(q)):
             node = q.popleft()
             level_result.append(node.val)
-            if node.left: q.append(node.left)
-            if node.right: q.append(node.right)
-        result.append(sum(level_result)/len(level_result))
+            if node.left:
+                q.append(node.left)
+            if node.right:
+                q.append(node.right)
+        result.append(sum(level_result) / len(level_result))
     return result
 
 
@@ -187,14 +200,17 @@ def find_level_order_successor(root, key):
                 return node
             else:
                 prev = node
-                if node.left: q.append(node.left)
-                if node.right: q.append(node.right)
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
     return None
 
 
 def zig_zag_level_order(root):
     result = []
-    if not root: return result
+    if not root:
+        return result
 
     q = deque([root])
     is_forward = True
@@ -207,42 +223,52 @@ def zig_zag_level_order(root):
             else:
                 level_result.appendleft(node.val)
 
-            if node.left: q.append(node.left)
-            if node.right: q.append(node.right)
+            if node.left:
+                q.append(node.left)
+            if node.right:
+                q.append(node.right)
         result.append(list(level_result))
         is_forward = not is_forward
     return result
 
 
 def connect_level_order_siblings(root):
-    if not root: return
+    if not root:
+        return
     q = deque([root])
     while q:
         prev = None
         for _ in range(len(q)):
             node = q.popleft()
-            if prev: prev.next = node
-            if node.left: q.append(node.left)
-            if node.right: q.append(node.right)
+            if prev:
+                prev.next = node
+            if node.left:
+                q.append(node.left)
+            if node.right:
+                q.append(node.right)
             prev = node
 
 
 def is_bst(root):
-    if not root: return True
+    if not root:
+        return True
 
-    def is_valid(node, upper_limit=float('inf'), lower_limit=float('-inf')):
+    def is_valid(node, upper_limit=float("inf"), lower_limit=float("-inf")):
         if not node:
             return True
         else:
-            return (upper_limit > node.data > lower_limit) and \
-                   is_valid(node.left, node.data, lower_limit) and \
-                   is_valid(node.right, upper_limit, node.data)
+            return (
+                (upper_limit > node.data > lower_limit)
+                and is_valid(node.left, node.data, lower_limit)
+                and is_valid(node.right, upper_limit, node.data)
+            )
 
     return is_valid(root)
 
 
 def convert_to_doubly_linked_list(root):
-    if not root: return
+    if not root:
+        return
 
     head, prev = None, None
     stk = []
@@ -282,5 +308,6 @@ def main():
     root.left.right.left = BinaryTreeNode(60)
     head = convert_to_doubly_linked_list_recursive(root)
     print(head)
+
 
 main()

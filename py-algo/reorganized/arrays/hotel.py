@@ -2,6 +2,8 @@
 Hotel
 
 """
+
+
 def hotel(arrive, depart, K):
     if K == 0:
         return False
@@ -24,7 +26,6 @@ def hotel(arrive, depart, K):
 
         heappush(heap, intervals[i][1])
     return True
-
 
 
 # Example usage

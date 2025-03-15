@@ -2,6 +2,8 @@
 To Tree Node
 
 """
+
+
 def listToTreeNode(nums) -> TreeNode:
     node_map = {}
     for i, num in enumerate(nums):
@@ -12,7 +14,7 @@ def listToTreeNode(nums) -> TreeNode:
             node_map[i] = node
 
     for i, num in enumerate(nums):
-        left = 2*i + 1
+        left = 2 * i + 1
         right = left + 1
         if left < len(nums) and left in node_map:
             node_map[i].left = node_map[left]

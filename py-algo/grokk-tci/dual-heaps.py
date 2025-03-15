@@ -30,7 +30,7 @@ class MedianOfAStream:
         if heap_len % 2 == 1:
             return -self.max_heap[0]
         else:
-            return (-self.max_heap[0] + self.min_heap[0])/2
+            return (-self.max_heap[0] + self.min_heap[0]) / 2
 
 
 class SlidingWindowMedian:
@@ -97,7 +97,7 @@ class SlidingWindowMedian:
         def get_median() -> float:
             heap_len = len(min_h) + len(max_h)
             if heap_len % 2 == 0:
-                return (-max_h[0] + min_h[0])/2
+                return (-max_h[0] + min_h[0]) / 2
             else:
                 return -max_h[0]
 
@@ -130,7 +130,9 @@ class SlidingWindowMedian:
         return result
 
 
-def find_maximum_capital(capital: list[int], profits: list[int], numberOfProjects: int, initialCapital: int) -> int:
+def find_maximum_capital(
+    capital: list[int], profits: list[int], numberOfProjects: int, initialCapital: int
+) -> int:
     """
     Given a set of investment projects with their respective profits, we need to find the most profitable projects.
     We are given an initial capital and are allowed to invest only in a fixed number of projects.
@@ -196,13 +198,10 @@ def find_next_interval(intervals: list[Interval]):
 
 
 def main():
-
-    result = find_next_interval(
-        [Interval(2, 3), Interval(3, 4), Interval(5, 6)])
+    result = find_next_interval([Interval(2, 3), Interval(3, 4), Interval(5, 6)])
     print("Next interval indices are: " + str(result))
 
-    result = find_next_interval(
-        [Interval(3, 4), Interval(1, 5), Interval(4, 6)])
+    result = find_next_interval([Interval(3, 4), Interval(1, 5), Interval(4, 6)])
     print("Next interval indices are: " + str(result))
 
 

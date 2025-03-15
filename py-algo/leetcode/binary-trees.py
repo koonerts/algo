@@ -1,7 +1,7 @@
 from enum import Enum
 import collections
 import json
-from collections import defaultdict, deque
+from collections import deque
 
 
 class TraversalType(Enum):
@@ -12,7 +12,7 @@ class TraversalType(Enum):
 
 
 class RelationshipToParent(Enum):
-    LEFT = 1,
+    LEFT = (1,)
     RIGHT = 2
 
 
@@ -24,7 +24,13 @@ class TreeNode:
 
 
 class Node:
-    def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None):
+    def __init__(
+        self,
+        val: int = 0,
+        left: "Node" = None,
+        right: "Node" = None,
+        next: "Node" = None,
+    ):
         self.val = val
         self.left = left
         self.right = right
@@ -157,7 +163,8 @@ class Solution:
         return max(curr_depth, l_depth, r_depth)
 
     def isSymmetric(self, root: TreeNode) -> bool:
-        if not root: return True
+        if not root:
+            return True
 
         def isMirror(n1: TreeNode, n2: TreeNode) -> bool:
             if not n1 and not n2:
@@ -258,7 +265,8 @@ class Solution:
             Explanation: Given the above perfect binary tree (Figure A), your function should populate each next pointer to point to its next right node.
                          The serialized output is in level order as connected by the next pointers, with '#' signifying the end of each level.
         """
-        if not root: return root
+        if not root:
+            return root
 
         q = collections.deque([root])
         while q:
@@ -268,8 +276,10 @@ class Solution:
                 if i < length - 1:
                     node.next = q[0]
 
-                if node.left: q.append(node.left)
-                if node.right: q.append(node.right)
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
 
         return root
 
@@ -281,7 +291,7 @@ class Solution:
         """
         inorder = self.inorderTraversal(root)
         preorder = self.preorderTraversal(root)
-        return json.dumps({'inorder':inorder, 'preorder':preorder})
+        return json.dumps({"inorder": inorder, "preorder": preorder})
 
     def deserialize(self, data: str) -> TreeNode:
         """
@@ -290,15 +300,22 @@ class Solution:
         map = json.loads(data)
         return self.buildTree_Pre(map.inorder, map.preorder)
 
-    def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+    def lowestCommonAncestor(
+        self, root: TreeNode, p: TreeNode, q: TreeNode
+    ) -> TreeNode:
         pass
 
     def isValidBST(self, root: TreeNode) -> bool:
-        def validate(node, low=float('-inf'), high=float('inf')):
+        def validate(node, low=float("-inf"), high=float("inf")):
             if not node:
                 return True
             else:
-                return low < node.val < high and validate(node.left, low, node.val) and validate(node.right, node.val, high)
+                return (
+                    low < node.val < high
+                    and validate(node.left, low, node.val)
+                    and validate(node.right, node.val, high)
+                )
+
         return validate(root)
 
     def maxPathSum(self, root: TreeNode) -> int:
@@ -315,7 +332,7 @@ class Solution:
                 max_sum = max(max_sum, total_gain)
                 return node.val + max(left_gain, right_gain)
 
-        max_sum = float('-inf')
+        max_sum = float("-inf")
         find_max_sum(root)
         return max_sum
 
@@ -333,20 +350,25 @@ class Solution:
                     return ladder_len
                 else:
                     visited.add(curr_word)
-                    for word in (w for w in word_set-visited):
+                    for word in (w for w in word_set - visited):
                         char_diff = 0
                         for i in range(len(word)):
                             if word[i] != curr_word[i]:
                                 char_diff += 1
-                                if char_diff > 1: break
+                                if char_diff > 1:
+                                    break
                         if char_diff == 1:
                             q.append(word)
         return 0
 
     def findOrder(self, numCourses: int, prerequisites: list[list[int]]) -> list[int]:
-        if not prerequisites: return list(range(numCourses))
+        if not prerequisites:
+            return list(range(numCourses))
 
-        in_degree, graph = {i:0 for i in range(numCourses)}, {i:[] for i in range(numCourses)}
+        in_degree, graph = (
+            {i: 0 for i in range(numCourses)},
+            {i: [] for i in range(numCourses)},
+        )
         for course, pre_req in prerequisites:
             in_degree[course] += 1
             graph[pre_req].append(course)
@@ -369,7 +391,8 @@ class Solution:
         return result if len(result) == numCourses else []
 
     def removeLeafNodes(self, root: TreeNode, target: int) -> TreeNode:
-        if not root or (not root.left and not root.right and root.val == target): return None
+        if not root or (not root.left and not root.right and root.val == target):
+            return None
 
         def remove(node: TreeNode, parent: TreeNode, rel: RelationshipToParent):
             if not node:
@@ -383,9 +406,10 @@ class Solution:
                         parent.left = None
                     else:
                         parent.right = None
+
         remove(root, None, None)
 
-        if (not root.left and not root.right and root.val == target):
+        if not root.left and not root.right and root.val == target:
             return None
         else:
             return root

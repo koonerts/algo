@@ -2,11 +2,13 @@
 Binary Search
 
 """
+
+
 def shiftedBinarySearch(array, target):
-    low, high = 0, len(array)-1
+    low, high = 0, len(array) - 1
 
     while low <= high:
-        mid = (high+low)//2
+        mid = (high + low) // 2
         if array[mid] == target:
             return mid
         else:
@@ -22,7 +24,6 @@ def shiftedBinarySearch(array, target):
                 else:
                     high = mid - 1
     return -1
-
 
 
 # Example usage

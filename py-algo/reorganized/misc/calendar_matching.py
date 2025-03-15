@@ -57,7 +57,6 @@ def get_free_openings(booked_times):
     return openings
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to calendarMatching

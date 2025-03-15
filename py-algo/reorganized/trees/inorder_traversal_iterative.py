@@ -2,19 +2,21 @@
 Traversal_iterative
 
 """
+
+
 def inorderTraversal_iterative(root: TreeNode) -> list[int]:
-        result = []
-        stack = [root]
+    result = []
+    stack = [root]
 
-        while root or stack:
-            while root:
-                stack.append(root)
-                root = root.left
+    while root or stack:
+        while root:
+            stack.append(root)
+            root = root.left
 
-            root = stack.pop()
-            result.append(root.val)
-            root = root.right
-        return result
+        root = stack.pop()
+        result.append(root.val)
+        root = root.right
+    return result
 
 
 # Example usage

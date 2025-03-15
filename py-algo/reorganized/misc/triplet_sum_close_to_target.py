@@ -19,6 +19,8 @@ Given an array of unsorted numbers and a target number, find a triplet in the ar
     Output: 3
     Explanation: The triplet [1, 1, 1] has the closest sum to the target.
 """
+
+
 def triplet_sum_close_to_target(arr: list[int], target_sum: int):
     """
     Given an array of unsorted numbers and a target number, find a triplet in the array whose sum is as close to the target number as possible and
@@ -69,7 +71,6 @@ def triplet_sum_close_to_target(arr: list[int], target_sum: int):
     Overall space: O(n)
     """
     return closest_sum
-
 
 
 # Example usage

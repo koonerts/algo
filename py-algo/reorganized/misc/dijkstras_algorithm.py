@@ -2,14 +2,16 @@
 Algorithm
 
 """
+
+
 def dijkstrasAlgorithm(start, edges):
-    result = [float('inf') for i in range(len(edges))]
+    result = [float("inf") for i in range(len(edges))]
     result[start] = 0
+
+
 def traverse(node):
-        for children in edges[start]:
-            pass
-
-
+    for children in edges[start]:
+        pass
 
 
 # Example usage

@@ -2,6 +2,8 @@
 Reverse_ll
 
 """
+
+
 def reverse_ll(head: Node):
     prev = None
     while head is not None:
@@ -10,7 +12,6 @@ def reverse_ll(head: Node):
         prev = head
         head = next_
     return prev
-
 
 
 # Example usage

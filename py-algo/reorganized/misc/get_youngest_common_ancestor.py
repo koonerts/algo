@@ -2,7 +2,13 @@
 Youngest Common Ancestor
 
 """
-def getYoungestCommonAncestor(topAncestor: AncestralTree, descendantOne: AncestralTree, descendantTwo: AncestralTree):
+
+
+def getYoungestCommonAncestor(
+    topAncestor: AncestralTree,
+    descendantOne: AncestralTree,
+    descendantTwo: AncestralTree,
+):
     d1_depth, d2_depth = 0, 0
     node1 = descendantOne
     while node1 != topAncestor:
@@ -14,7 +20,7 @@ def getYoungestCommonAncestor(topAncestor: AncestralTree, descendantOne: Ancestr
         d2_depth += 1
         node2 = node2.ancestor
 
-    depth_diff = abs(d1_depth-d2_depth)
+    depth_diff = abs(d1_depth - d2_depth)
     for _ in range(depth_diff):
         if d1_depth > d2_depth:
             descendantOne = descendantOne.ancestor
@@ -25,7 +31,6 @@ def getYoungestCommonAncestor(topAncestor: AncestralTree, descendantOne: Ancestr
         descendantOne = descendantOne.ancestor
         descendantTwo = descendantTwo.ancestor
     return descendantOne
-
 
 
 # Example usage

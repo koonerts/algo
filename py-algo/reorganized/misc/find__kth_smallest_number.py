@@ -19,6 +19,8 @@ Given an unsorted array of numbers, find Kth smallest number in it.
     Output: 11
     Explanation: The 3rd smallest number is '11', as the first two small numbers are [5, -1].
 """
+
+
 def find_Kth_smallest_number(nums, k):
     """
     Given an unsorted array of numbers, find Kth smallest number in it.
@@ -46,7 +48,6 @@ def find_Kth_smallest_number(nums, k):
         elif num > min_heap[0]:
             heappushpop(min_heap, num)
     return min_heap[0]
-
 
 
 # Example usage

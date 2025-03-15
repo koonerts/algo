@@ -4,6 +4,8 @@ Find_cycle_start
 Given the head of a Singly LinkedList that contains a cycle,
     write a function to find the starting node of the cycle.
 """
+
+
 def find_cycle_start(head: Node) -> Node:
     """
     Given the head of a Singly LinkedList that contains a cycle,
@@ -33,7 +35,6 @@ def find_cycle_start(head: Node) -> Node:
         start = start.next
 
     return start
-
 
 
 # Example usage

@@ -2,6 +2,8 @@
 Sorted Arrays
 
 """
+
+
 def mergeSortedArrays(arrays):
     min_heap = []
     for i in range(len(arrays)):
@@ -14,9 +16,8 @@ def mergeSortedArrays(arrays):
         result.append(num)
 
         if idx < len(arrays[list_id]) - 1:
-            heappush(min_heap, (arrays[list_id][idx+1], idx+1, list_id))
+            heappush(min_heap, (arrays[list_id][idx + 1], idx + 1, list_id))
     return result
-
 
 
 # Example usage

@@ -18,6 +18,8 @@ Given a set of positive numbers, determine if a subset exists whose sum is equal
     Output: False
     The given set does not have any subset whose sum is equal to '6'.
 """
+
+
 def can_partition_with_subset_sum_equal_to_s_tabulated(nums: list[int], s: int) -> bool:
     """
     Given a set of positive numbers, determine if a subset exists whose sum is equal to a given number ‘S’.
@@ -41,18 +43,21 @@ def can_partition_with_subset_sum_equal_to_s_tabulated(nums: list[int], s: int) 
 
     for row in range(len(dp)):
         for col in range(len(dp[row])):
-            val = row-1 >= 0 and dp[row-1][col] is True
+            val = row - 1 >= 0 and dp[row - 1][col] is True
 
             if not val:
                 num = nums[row]
-                curr_sum = col+1
+                curr_sum = col + 1
                 remaining_sum = curr_sum - num
-                val = remaining_sum == 0 or (remaining_sum > 0 and row-1 >= 0 and dp[row-1][remaining_sum-1] is True)
+                val = remaining_sum == 0 or (
+                    remaining_sum > 0
+                    and row - 1 >= 0
+                    and dp[row - 1][remaining_sum - 1] is True
+                )
 
             dp[row][col] = val
 
     return bool(dp[-1][-1])
-
 
 
 # Example usage

@@ -2,8 +2,10 @@
 String
 
 """
+
+
 def repeatedString(s, n):
-        pass
+    pass
 
 
 # Example usage

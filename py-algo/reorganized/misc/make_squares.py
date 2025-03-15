@@ -11,6 +11,8 @@ Given a sorted array, create a new array containing squares of all the number of
     Input: [-3, -1, 0, 1, 2]
     Output: [0 1 1 4 9]
 """
+
+
 def make_squares(arr: list[int]) -> list[int]:
     """
     Given a sorted array, create a new array containing squares of all the number of the input array in the sorted order.
@@ -45,7 +47,6 @@ def make_squares(arr: list[int]) -> list[int]:
                 asc += 1
 
     return squares
-
 
 
 # Example usage

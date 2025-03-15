@@ -2,6 +2,8 @@
 Sort
 
 """
+
+
 def heapSort(array):
     min_heap = MinHeap(array)
     result = []

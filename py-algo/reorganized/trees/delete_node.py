@@ -2,18 +2,21 @@
 Node
 
 """
-def deleteNode(root: TreeNode, key: int) -> TreeNode:
-        if not root or root.val == key: return None
 
-        node = root
-        prev = None
-        while node:
-            if node.val > key:
-                prev = node
-                node = node.left
-            elif node.val < key:
-                prev = node
-                node = node.right
+
+def deleteNode(root: TreeNode, key: int) -> TreeNode:
+    if not root or root.val == key:
+        return None
+
+    node = root
+    prev = None
+    while node:
+        if node.val > key:
+            prev = node
+            node = node.left
+        elif node.val < key:
+            prev = node
+            node = node.right
 
 
 # Example usage

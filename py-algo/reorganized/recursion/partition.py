@@ -32,7 +32,6 @@ def dfs(idx, curr_str, curr_path):
         return results
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to partition

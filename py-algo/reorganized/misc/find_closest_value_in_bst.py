@@ -2,6 +2,8 @@
 Closest Value In Bst
 
 """
+
+
 def findClosestValueInBst(tree: BST, target: int):
     node = tree
     closest_val = node.value
@@ -16,7 +18,6 @@ def findClosestValueInBst(tree: BST, target: int):
         if abs(node.value - target) < abs(closest_val - target):
             closest_val = node.value
     return closest_val
-
 
 
 # Example usage

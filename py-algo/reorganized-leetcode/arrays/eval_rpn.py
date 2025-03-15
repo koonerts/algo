@@ -9,15 +9,15 @@ Valid operators are +, -, *, and /. Each operand may be an integer or another ex
 def evalRPN(arr):
     """
     Evaluates an expression in Reverse Polish Notation.
-    
+
     Args:
         arr: List of strings representing the expression
-        
+
     Returns:
         int: Result of evaluating the expression
     """
     stk = []
-    ops = {'+', '*', '/', '-'}
+    ops = {"+", "*", "/", "-"}
     for i, val in enumerate(arr):
         if val in ops:
             n1, n2 = stk.pop(), stk.pop()

@@ -19,6 +19,8 @@ Given an array of characters where each character represents a fruit tree, you a
     Explanation: We can put 3 'B' in one basket and two 'C' in the other basket.
                  This can be done if we start with the second letter: ['B', 'C', 'B', 'B', 'C']
 """
+
+
 def fruits_into_baskets(fruits: list[str]) -> int:
     """
     Given an array of characters where each character represents a fruit tree, you are given two baskets, and your goal is
@@ -56,10 +58,9 @@ def fruits_into_baskets(fruits: list[str]) -> int:
 
             start += 1
 
-        max_ = max(max_, i-start+1)
+        max_ = max(max_, i - start + 1)
 
     return max_
-
 
 
 # Example usage

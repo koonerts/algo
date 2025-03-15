@@ -10,7 +10,6 @@ def min_jumps(idx):
             return min_jumps()
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to minNumberOfJumps

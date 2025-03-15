@@ -16,7 +16,6 @@ Given an array of points in the a 2D plane, find ‘K’ closest points to the o
 """
 
 
-import math
 def find_closest_points(points: list[Point], k: int):
     """
     Given an array of points in the a 2D plane, find ‘K’ closest points to the origin.
@@ -40,7 +39,6 @@ def find_closest_points(points: list[Point], k: int):
             heappushpop(result, point)
 
     return result
-
 
 
 # Example usage

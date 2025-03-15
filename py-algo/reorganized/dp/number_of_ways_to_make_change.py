@@ -2,6 +2,8 @@
 Of Ways To Make Change
 
 """
+
+
 def numberOfWaysToMakeChange(n, denoms):
     memo = [0 for i in range(n + 1)]
     memo[0] = 1
@@ -11,7 +13,6 @@ def numberOfWaysToMakeChange(n, denoms):
             if denom <= i:
                 memo[i] += memo[i - denom]
     return memo[-1]
-
 
 
 # Example usage

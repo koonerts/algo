@@ -10,7 +10,7 @@ class Interval:
         return self.end < other.end
 
     def print_interval(self):
-        print("[" + str(self.start) + ", " + str(self.end) + "]", end='')
+        print("[" + str(self.start) + ", " + str(self.end) + "]", end="")
 
 
 def merge(intervals: list[Interval]) -> list[Interval]:
@@ -92,7 +92,9 @@ def insert(intervals: list[list[int]], new_interval: list[int]) -> list[list[int
     return merged_intervals
 
 
-def merge_intervals(intervals_a: list[list[int]], intervals_b: list[list[int]]) -> list[list[int]]:
+def merge_intervals(
+    intervals_a: list[list[int]], intervals_b: list[list[int]]
+) -> list[list[int]]:
     """
     Given two lists of intervals, find the intersection of these two lists.
     Each list consists of disjoint intervals sorted on their start time.
@@ -113,7 +115,10 @@ def merge_intervals(intervals_a: list[list[int]], intervals_b: list[list[int]]) 
 
     while index_a < len(intervals_a) and index_b < len(intervals_b):
         iv_a, iv_b = intervals_a[index_a], intervals_b[index_b]
-        if iv_b[start] <= iv_a[start] <= iv_b[end] or iv_a[start] <= iv_b[start] <= iv_a[end]:
+        if (
+            iv_b[start] <= iv_a[start] <= iv_b[end]
+            or iv_a[start] <= iv_b[start] <= iv_a[end]
+        ):
             result.append([max(iv_a[start], iv_b[start]), min(iv_a[end], iv_b[end])])
 
         if iv_a[end] == iv_b[end]:
@@ -133,7 +138,8 @@ class Meeting:
 
 
 def min_meeting_rooms(meetings: list[Meeting]):
-    if not meetings: return 0
+    if not meetings:
+        return 0
 
     max_rooms = 0
     meetings.sort(key=lambda x: x.start)
@@ -166,7 +172,7 @@ def find_max_cpu_load(jobs: list[Job]):
     Example 1:
     Jobs: [[1,4,3], [2,5,4], [7,9,6]]
     Output: 7
-    Explanation: Since [1,4,3] and [2,5,4] overlap, their maximum CPU load (3+4=7) will be when both the 
+    Explanation: Since [1,4,3] and [2,5,4] overlap, their maximum CPU load (3+4=7) will be when both the
     jobs are running at the same time i.e., during the time interval (2,4).
 
     Example 2:
@@ -177,7 +183,7 @@ def find_max_cpu_load(jobs: list[Job]):
     Example 3:
     Jobs: [[1,4,2], [2,4,1], [3,6,5]]
     Output: 8
-    Explanation: Maximum CPU load will be 8 as all jobs overlap during the time interval [3,4]. 
+    Explanation: Maximum CPU load will be 8 as all jobs overlap during the time interval [3,4].
     """
     curr_cpu_load, max_cpu_load, running_jobs = 0, 0, []
     jobs.sort(key=lambda x: x.start)
@@ -240,8 +246,7 @@ def find_employee_free_time(schedule: list[list[Interval]]):
         queueTop = heapq.heappop(minHeap)
         # if previousInterval is not overlapping with the next interval, insert a free interval
         if previousInterval.end < queueTop.interval.start:
-            result.append(Interval(previousInterval.end,
-                                   queueTop.interval.start))
+            result.append(Interval(previousInterval.end, queueTop.interval.start))
             previousInterval = queueTop.interval
         else:  # overlapping intervals, update the previousInterval if needed
             if previousInterval.end < queueTop.interval.end:
@@ -250,8 +255,14 @@ def find_employee_free_time(schedule: list[list[Interval]]):
         # if there are more intervals available for the same employee, add their next interval
         employeeSchedule = schedule[queueTop.employeeIndex]
         if len(employeeSchedule) > queueTop.intervalIndex + 1:
-            heapq.heappush(minHeap, EmployeeInterval(employeeSchedule[queueTop.intervalIndex + 1], queueTop.employeeIndex,
-                                                     queueTop.intervalIndex + 1))
+            heapq.heappush(
+                minHeap,
+                EmployeeInterval(
+                    employeeSchedule[queueTop.intervalIndex + 1],
+                    queueTop.employeeIndex,
+                    queueTop.intervalIndex + 1,
+                ),
+            )
 
     return result
 
@@ -271,8 +282,13 @@ def main():
     #     interval.print_interval()
     # print()
 
-    input = [[Interval(1, 3)], [Interval(2, 4)], [Interval(3, 5), Interval(7, 9)], [Interval(5, 6)]]
-    print("Free intervals: ", end='')
+    input = [
+        [Interval(1, 3)],
+        [Interval(2, 4)],
+        [Interval(3, 5), Interval(7, 9)],
+        [Interval(5, 6)],
+    ]
+    print("Free intervals: ", end="")
     for interval in find_employee_free_time(input):
         interval.print_interval()
     print()

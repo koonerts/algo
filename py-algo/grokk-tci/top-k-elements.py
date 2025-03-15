@@ -42,11 +42,10 @@ def find_Kth_smallest_number(nums, k):
 
 
 class Point:
-
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.euclidean_dist = math.sqrt(self.x ** 2+self.y ** 2)
+        self.euclidean_dist = math.sqrt(self.x**2 + self.y**2)
 
     def __lt__(self, other):
         return self.euclidean_dist > other.euclidean_dist
@@ -55,7 +54,7 @@ class Point:
         return not self < other
 
     def print_point(self):
-        print("["+str(self.x)+", "+str(self.y)+"] ", end='')
+        print("[" + str(self.x) + ", " + str(self.y) + "] ", end="")
 
 
 def find_closest_points(points: list[Point], k: int):
@@ -107,7 +106,7 @@ def minimum_cost_to_connect_ropes(ropeLengths) -> int:
     heapify(ropeLengths)
 
     while len(ropeLengths) > 1:
-        temp_cost = heappop(ropeLengths)+heappop(ropeLengths)
+        temp_cost = heappop(ropeLengths) + heappop(ropeLengths)
         cost += temp_cost
         heappush(ropeLengths, temp_cost)
 
@@ -141,7 +140,7 @@ def find_k_frequent_numbers(nums, k):
         if len(heap) < k:
             heappush(heap, (freq, num))
         elif freq > heap[0][0]:
-            heappushpop(heap, (freq,num))
+            heappushpop(heap, (freq, num))
 
     return [item[1] for item in heap]
 
@@ -172,9 +171,9 @@ def sort_character_by_frequency(str):
     ret_list = []
     while max_heap:
         freq, c = heappop(max_heap)
-        ret_list += c*-freq
+        ret_list += c * -freq
 
-    return ''.join(ret_list)
+    return "".join(ret_list)
 
 
 class KthLargestNumberInStream:
@@ -216,7 +215,7 @@ def find_closest_elements(arr, K, X):
     # TODO: Can be improved by using binary search for finding the closest element
     #       and then 2 pointers expanding to either side of that element until reaching K
     for num in arr:
-        diff = abs(num-X)
+        diff = abs(num - X)
 
         if len(result) < K:
             heappush(result, (-diff, num))

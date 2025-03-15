@@ -18,6 +18,8 @@ You are given a list of tasks that need to be run, in any order, on a server.
     Output: 5
     Explanation: a -> b -> idle -> idle -> a
 """
+
+
 def schedule_tasks(tasks, k):
     """
     You are given a list of tasks that need to be run, in any order, on a server.
@@ -40,7 +42,6 @@ def schedule_tasks(tasks, k):
     # TODO: Come back to
     interval_count = 0
     return interval_count
-
 
 
 # Example usage

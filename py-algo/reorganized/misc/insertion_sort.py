@@ -2,8 +2,11 @@
 Sort
 
 """
+
+
 def insertionSort(array):
-    if len(array) <= 1: return array
+    if len(array) <= 1:
+        return array
 
     for i in range(1, len(array)):
         j, k = i, i - 1
@@ -12,7 +15,6 @@ def insertionSort(array):
             j -= 1
             k -= 1
     return array
-
 
 
 # Example usage

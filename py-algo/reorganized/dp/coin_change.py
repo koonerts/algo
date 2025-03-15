@@ -48,15 +48,11 @@ Space Complexity: O(amount) for the DP array
     return dp[amount] if dp[amount] <= amount else -1
 
 
-
-
     # Example usage
-    if __name__ == "__main__":
+if __name__ == "__main__":
     coinChange([1, 2, 5], 11)  # Output: 3
     coinChange([2], 3)  # Output: -1
     coinChange([1], 0)  # Output: 0
-
-
 
 
 # Example usage

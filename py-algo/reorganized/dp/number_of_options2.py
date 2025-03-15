@@ -2,6 +2,8 @@
 Number_of_options2
 
 """
+
+
 def number_of_options2(a, b, c, d, target):
     sources = [a, b, c, d]
     dp = [[0] * (target + 1) for _ in range(5)]
@@ -15,7 +17,6 @@ def number_of_options2(a, b, c, d, target):
                         dp[i][v + j] += dp[i + 1][j]
 
     return sum(dp[0])
-
 
 
 # Example usage

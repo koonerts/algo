@@ -23,7 +23,6 @@ def dfs(node:TreeNode, curr_path: [], curr_sum: int):
     return all_paths
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to find_paths

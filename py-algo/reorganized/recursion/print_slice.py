@@ -2,6 +2,8 @@
 Print_slice
 
 """
+
+
 def print_slice(arr):
     print(np.array(arr))
 

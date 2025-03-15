@@ -13,6 +13,8 @@ Given an expression containing digits and operations (+, -, *), find all possibl
     Output: 8, -12, 7, -7, -3
     Explanation: 2*(3-(4-5)) => 8, 2*(3-4-5) => -12, 2*3-(4-5) => 7, 2*(3-4)-5 => -7, (2*3)-4-5 => -3
 """
+
+
 def diff_ways_to_evaluate_expression(input: str) -> list[int]:
     """
     Given an expression containing digits and operations (+, -, *), find all possible ways in which the expression can be evaluated by grouping the numbers and operators using parentheses.
@@ -30,7 +32,6 @@ def diff_ways_to_evaluate_expression(input: str) -> list[int]:
     # TODO: Come back to
     result = []
     return result
-
 
 
 # Example usage

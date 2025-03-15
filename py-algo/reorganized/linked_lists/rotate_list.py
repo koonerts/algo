@@ -2,8 +2,11 @@
 Rotate_list
 
 """
+
+
 def rotate_list(head: Node, n: int):
-    if not head or n == 0: return head
+    if not head or n == 0:
+        return head
 
     len = 0
     node = head
@@ -29,8 +32,7 @@ def rotate_list(head: Node, n: int):
         while node.next:
             node = node.next
         node.next = head
-        return new_head\
-
+        return new_head
 
 
 # Example usage

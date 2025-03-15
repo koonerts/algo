@@ -24,7 +24,6 @@ def remove(node: TreeNode, parent: TreeNode, rel: RelationshipToParent):
             return root
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to removeLeafNodes

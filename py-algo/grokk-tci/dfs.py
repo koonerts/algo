@@ -6,9 +6,9 @@ class TreeNode:
 
 
 def has_path(root: TreeNode, sum: int) -> bool:
-
-    def dfs(node:TreeNode, curr_sum: int):
-        if not node: return False
+    def dfs(node: TreeNode, curr_sum: int):
+        if not node:
+            return False
         curr_sum -= node.val
 
         # is leaf
@@ -26,8 +26,9 @@ def has_path(root: TreeNode, sum: int) -> bool:
 def find_paths(root: TreeNode, sum: int):
     all_paths = []
 
-    def dfs(node:TreeNode, curr_path: [], curr_sum: int):
-        if not node: return
+    def dfs(node: TreeNode, curr_path: [], curr_sum: int):
+        if not node:
+            return
         curr_sum -= node.val
         curr_path.append(node.val)
 
@@ -46,16 +47,18 @@ def find_paths(root: TreeNode, sum: int):
 
 
 def find_sum_of_path_numbers(root: TreeNode):
-
     def dfs(node: TreeNode, curr_sum: int, digit_concat: str):
-        if not node: return 0
+        if not node:
+            return 0
 
         digit_concat += str(node.val)
         if not node.left and not node.right:
             curr_sum += int(digit_concat)
             return curr_sum
         else:
-            return dfs(node.left, curr_sum, digit_concat) + dfs(node.right, curr_sum, digit_concat)
+            return dfs(node.left, curr_sum, digit_concat) + dfs(
+                node.right, curr_sum, digit_concat
+            )
 
     curr_sum = 0
     curr_sum = dfs(root, curr_sum, "")
@@ -66,12 +69,16 @@ def find_path(root: TreeNode, sequence: list[int]):
     """
     Given a binary tree and a number sequence, find if the sequence is present as a root-to-leaf path in the given tree.
     """
+
     def dfs(node: TreeNode, path) -> bool:
-        if not node: return False
+        if not node:
+            return False
         if not node.left and not node.right:
             return path + [node.val] == sequence
         else:
-            return dfs(node.left, path + [node.val]) or dfs(node.right, path + [node.val])
+            return dfs(node.left, path + [node.val]) or dfs(
+                node.right, path + [node.val]
+            )
 
     return dfs(root, [])
 
@@ -96,5 +103,3 @@ class TreeDiameter:
 def find_maximum_path_sum(root):
     # TODO: Come back to
     return -1
-
-

@@ -64,7 +64,6 @@ def add_or_delete(queue, index, str_):
     return q1 == q2
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to backspace_compare

@@ -13,6 +13,8 @@ Given a string, sort it based on the decreasing frequency of its characters.
     Output: "bbbaac"
     Explanation: 'b' appeared three times, 'a' appeared twice, and 'c' appeared only once.
 """
+
+
 def sort_character_by_frequency(str):
     """
     Given a string, sort it based on the decreasing frequency of its characters.
@@ -39,10 +41,9 @@ def sort_character_by_frequency(str):
     ret_list = []
     while max_heap:
         freq, c = heappop(max_heap)
-        ret_list += c*-freq
+        ret_list += c * -freq
 
-    return ''.join(ret_list)
-
+    return "".join(ret_list)
 
 
 # Example usage

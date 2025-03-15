@@ -2,6 +2,8 @@
 Main
 
 """
+
+
 def main():
     head = Node(1)
     head.next = Node(2)
@@ -9,10 +11,10 @@ def main():
     head.next.next.next = Node(4)
     head.next.next.next.next = Node(5)
 
-    print("Nodes of original LinkedList are: ", end='')
+    print("Nodes of original LinkedList are: ", end="")
     head.print_list()
     result = rotate_list(head, -2)
-    print("Nodes of reversed LinkedList are: ", end='')
+    print("Nodes of reversed LinkedList are: ", end="")
     result.print_list()
 
 

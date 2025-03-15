@@ -28,6 +28,8 @@ Given a sequence originalSeq and an array of sequences, write a method to find i
     Explanation: The sequences [3, 1, 5] and [1, 4, 2, 5] can uniquely reconstruct
     [3, 1, 4, 2, 5].
 """
+
+
 def can_construct(originalSeq, sequences):
     """
     Given a sequence originalSeq and an array of sequences, write a method to find if originalSeq can be
@@ -59,7 +61,6 @@ def can_construct(originalSeq, sequences):
     """
     # TODO: Come back to
     return False
-
 
 
 # Example usage

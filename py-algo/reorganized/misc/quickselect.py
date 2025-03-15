@@ -2,6 +2,8 @@
 Quickselect
 
 """
+
+
 def quickselect(array, k):
     max_heap = []
 
@@ -11,7 +13,6 @@ def quickselect(array, k):
         elif array[i] < -max_heap[0]:
             heappushpop(max_heap, -array[i])
     return -max_heap[0]
-
 
 
 # Example usage

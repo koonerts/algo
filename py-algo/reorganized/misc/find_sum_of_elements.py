@@ -15,6 +15,8 @@ Given an array, find the sum of all numbers between the K1’th and K2’th smal
     Explanation: The sum of the numbers between the 1st smallest number (3) and the 4th smallest
                  number (8) is 12 (5+7).
 """
+
+
 def find_sum_of_elements(nums, k1, k2):
     """
     Given an array, find the sum of all numbers between the K1’th and K2’th smallest elements of that array.
@@ -33,7 +35,6 @@ def find_sum_of_elements(nums, k1, k2):
     """
     # TODO: Come back to
     return -1
-
 
 
 # Example usage

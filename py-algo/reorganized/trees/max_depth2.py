@@ -2,12 +2,14 @@
 Depth2
 
 """
+
+
 def maxDepth2(root: TreeNode) -> int:
-        if not root:
-            return 0
-        left_depth = self.maxDepth2(root.left)
-        right_depth = self.maxDepth2(root.right)
-        return max(left_depth, right_depth) + 1
+    if not root:
+        return 0
+    left_depth = self.maxDepth2(root.left)
+    right_depth = self.maxDepth2(root.right)
+    return max(left_depth, right_depth) + 1
 
 
 # Example usage

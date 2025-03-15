@@ -39,6 +39,8 @@ There is a dictionary containing words from an alien language for which we donâ€
 
     From the above five points, we can conclude that the correct character order is: "ywxz"
 """
+
+
 def find_order_alien_dict(words):
     """
     There is a dictionary containing words from an alien language for which we donâ€™t know the ordering of the alphabets.
@@ -81,7 +83,6 @@ def find_order_alien_dict(words):
     """
     # TODO: Come back to
     return ""
-
 
 
 # Example usage

@@ -1,5 +1,6 @@
 from heapq import *
 
+
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
@@ -10,20 +11,19 @@ class ListNode:
     #     return self.val < other_val
 
     def print_list(self):
-        vals = ''
+        vals = ""
         node = self
         while node:
             if node:
                 vals += str(node.val)
             if node.next:
-                vals += '->'
+                vals += "->"
             node = node.next
 
         print(vals)
 
 
 class Solution:
-
     def subtract(self, head: ListNode) -> ListNode:
         lo, hi = 0, 0
         last = head
@@ -31,10 +31,10 @@ class Solution:
             last = last.next
             hi += 1
 
-        n = hi-lo+1
+        n = hi - lo + 1
         # 1->2->3->4->5
         node = head
-        lo, mid = 0, n//2
+        lo, mid = 0, n // 2
         while lo <= mid:
             node = node.next
             lo += 1
@@ -63,7 +63,6 @@ class Solution:
         left.next = prev
         return head
 
-
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
         """https://leetcode.com/problems/add-two-numbers/"""
 
@@ -83,8 +82,10 @@ class Solution:
             prev_digit_node = digit_node
             carry_over = digit_sum // 10
 
-            if l1: l1 = l1.next
-            if l2: l2 = l2.next
+            if l1:
+                l1 = l1.next
+            if l2:
+                l2 = l2.next
 
             if not l1 and not l2 and carry_over == 1:
                 digit_node = ListNode(1)
@@ -143,11 +144,14 @@ class Solution:
             prev = curr
             curr = temp
             return reverse(curr, prev)
+
         return reverse(head)
 
     def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
-        if not l1: return l2
-        elif not l2: return l1
+        if not l1:
+            return l2
+        elif not l2:
+            return l1
 
         head: ListNode
         if l1.val <= l2.val:
@@ -189,12 +193,14 @@ class Solution:
         return True
 
     def mergeKLists(self, lists: list[ListNode]) -> ListNode:
-        if not lists: return None
+        if not lists:
+            return None
 
         min_heap = []
         for i in range(len(lists)):
             head = lists[i]
-            if head: heappush(min_heap, (head.val, head))
+            if head:
+                heappush(min_heap, (head.val, head))
 
         head, prev = None, None
         while min_heap:

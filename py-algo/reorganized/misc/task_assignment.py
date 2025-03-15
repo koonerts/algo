@@ -2,6 +2,8 @@
 Assignment
 
 """
+
+
 def taskAssignment(k, tasks):
     idx_map = {}
     for i, v in enumerate(tasks):
@@ -11,7 +13,7 @@ def taskAssignment(k, tasks):
             idx_map[v].append(i)
 
     tasks.sort()
-    lo, hi = 0, len(tasks)-1
+    lo, hi = 0, len(tasks) - 1
 
     results = []
     while lo < hi:
@@ -26,7 +28,6 @@ def taskAssignment(k, tasks):
         lo += 1
         hi -= 1
     return results
-
 
 
 # Example usage

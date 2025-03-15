@@ -17,7 +17,6 @@ def dfs(count, i):
     return dfs(0, 0)
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to number_of_options

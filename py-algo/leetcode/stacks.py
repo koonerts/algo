@@ -1,6 +1,7 @@
 from typing import List
 import collections
 
+
 class MyQueueStack:
     """
     Implement a last in first out (LIFO) stack using only two queues. The implemented stack should support all the functions of a normal queue (push, top, pop, and empty).
@@ -28,13 +29,11 @@ class MyQueueStack:
         self.q1 = collections.deque()
         self.q2 = collections.deque()
 
-
     def push(self, x: int) -> None:
         """
         Push element x onto stack.
         """
         self.q1.append(x)
-
 
     def pop(self) -> int:
         """
@@ -44,7 +43,6 @@ class MyQueueStack:
             self.q2.append(self.q1.popleft())
         return self.q2.popleft()
 
-
     def top(self) -> int:
         """
         Get the top element.
@@ -52,7 +50,6 @@ class MyQueueStack:
         if not self.q2:
             self.q2.append(self.q1.popleft())
         return self.q2[0]
-
 
     def empty(self) -> bool:
         """
@@ -67,6 +64,7 @@ class MyQueueStack:
 # param_2 = obj.pop()
 # param_3 = obj.top()
 # param_4 = obj.empty()
+
 
 class MinStack:
     def __init__(self):
@@ -97,7 +95,6 @@ class Node:
 
 
 class Stacks:
-
     def isValid(self, s: str) -> bool:
         """
         Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
@@ -113,13 +110,14 @@ class Stacks:
             return False
 
         stack = []
-        map_ = {')': '(', ']': '[', '}': '{'}
+        map_ = {")": "(", "]": "[", "}": "{"}
 
         for c in s:
             if c not in map_:
                 stack.append(c)
             else:
-                if not stack: return False
+                if not stack:
+                    return False
                 if stack.pop() != map_[c]:
                     return False
 
@@ -170,12 +168,16 @@ class Stacks:
         """
 
         def execute(n1: int, n2: int, operand: str) -> int:
-            if operand == '*': return n1 * n2
-            if operand == '+': return n1 + n2
-            if operand == '-': return n1 - n2
-            if operand == '/': return int(n1 / n2)
+            if operand == "*":
+                return n1 * n2
+            if operand == "+":
+                return n1 + n2
+            if operand == "-":
+                return n1 - n2
+            if operand == "/":
+                return int(n1 / n2)
 
-        operands = ['*', '+', '-', '/']
+        operands = ["*", "+", "-", "/"]
         stack = []
         for t in tokens:
             if t in operands:
@@ -267,7 +269,8 @@ class Stacks:
         Input: adjList = [[2],[1]]
         Output: [[2],[1]]
         """
-        if not node: return node
+        if not node:
+            return node
 
         seen = {}
 
@@ -327,24 +330,25 @@ class Stacks:
         Input: s = "abc3[cd]xyz"
         Output: "abccdcdcdxyz"
         """
-        if not s: return s
+        if not s:
+            return s
 
         stack = []
         for c in s:
-            if c != ']':
+            if c != "]":
                 stack.append(c)
             else:
-                enc_str = ''
-                while stack and stack[-1] != '[':
+                enc_str = ""
+                while stack and stack[-1] != "[":
                     enc_str = stack.pop() + enc_str
                 stack.pop()
 
-                multiplier = ''
+                multiplier = ""
                 while stack and stack[-1].isnumeric():
                     multiplier = stack.pop() + multiplier
 
-                stack.extend(list(enc_str*(int(multiplier))))
-        return ''.join(stack)
+                stack.extend(list(enc_str * (int(multiplier))))
+        return "".join(stack)
 
 
 print(Stacks().decodeString("3[a2[c]]"))

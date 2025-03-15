@@ -27,7 +27,6 @@ Given an array of numbers sorted in an ascending order, find the ceiling of a gi
 """
 
 
-import math
 def search_ceiling_of_a_number(arr: list[int], key: int) -> int:
     """
     Given an array of numbers sorted in an ascending order, find the ceiling of a given number ‘key’.
@@ -57,19 +56,18 @@ def search_ceiling_of_a_number(arr: list[int], key: int) -> int:
     if not arr or arr[-1] < key:
         return -1
 
-    start, end = 0, len(arr)-1
+    start, end = 0, len(arr) - 1
     while start <= end:
-        mid = int((start+end) / 2)
+        mid = int((start + end) / 2)
 
         if arr[mid] == key:
             return mid
         elif arr[mid] < key:
-            start = mid+1
+            start = mid + 1
         else:
-            end = mid-1
+            end = mid - 1
 
     return start
-
 
 
 # Example usage

@@ -1,5 +1,6 @@
 from collections import deque
 
+
 def topological_sort(vertices, edges):
     """
     Topological Sort of a directed graph (a graph with unidirectional edges) is a linear ordering of its
@@ -66,8 +67,8 @@ def is_scheduling_possible(tasks, prerequisites):
     Output: true
     Explanation: A possible scheduling of tasks is: [0 1 4 3 2 5]
     """
-    in_degrees_map = {i:0 for i in range(tasks)}
-    adjacency_map = {i:[] for i in range(tasks)}
+    in_degrees_map = {i: 0 for i in range(tasks)}
+    adjacency_map = {i: [] for i in range(tasks)}
     scheduled_tasks = 0
     q = deque()
 
@@ -76,7 +77,8 @@ def is_scheduling_possible(tasks, prerequisites):
         in_degrees_map[task] += 1
 
     for task, degree in in_degrees_map.items():
-        if degree == 0: q.append(task)
+        if degree == 0:
+            q.append(task)
 
     while q:
         for _ in range(len(q)):
@@ -115,8 +117,8 @@ def find_order(tasks, prerequisites):
     Output: [0 1 4 3 2 5]
     Explanation: A possible scheduling of tasks is: [0 1 4 3 2 5]
     """
-    in_degrees_map = {i:0 for i in range(tasks)}
-    adjacency_map = {i:[] for i in range(tasks)}
+    in_degrees_map = {i: 0 for i in range(tasks)}
+    adjacency_map = {i: [] for i in range(tasks)}
     sorted_order = []
     q = deque()
 
@@ -125,7 +127,8 @@ def find_order(tasks, prerequisites):
         in_degrees_map[task] += 1
 
     for task, degree in in_degrees_map.items():
-        if degree == 0: q.append(task)
+        if degree == 0:
+            q.append(task)
 
     while q:
         for _ in range(len(q)):
@@ -173,8 +176,8 @@ def print_orders(tasks, prerequisites):
     12) [1, 3, 2, 0, 5, 4]
     13) [1, 3, 2, 0, 4, 5]
     """
-    in_degrees_map = {i:0 for i in range(tasks)}
-    adjacency_map = {i:[] for i in range(tasks)}
+    in_degrees_map = {i: 0 for i in range(tasks)}
+    adjacency_map = {i: [] for i in range(tasks)}
     sorted_orders = deque([[]])
     sources = deque()
 
@@ -183,7 +186,8 @@ def print_orders(tasks, prerequisites):
         in_degrees_map[child_task] += 1
 
     for task, degree in in_degrees_map.items():
-        if degree == 0: sources.append(task)
+        if degree == 0:
+            sources.append(task)
 
     while sources:
         level_orders = []

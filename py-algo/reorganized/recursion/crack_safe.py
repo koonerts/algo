@@ -17,7 +17,6 @@ def dfs(node):
         return "".join(ans) + "0" * (n-1)
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to crackSafe

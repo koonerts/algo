@@ -9,8 +9,10 @@ class LinkedList:
     def print_list(self):
         temp = self
         while temp is not None:
-            if temp.next: print(temp.value, end="->")
-            else: print(temp.value, end="")
+            if temp.next:
+                print(temp.value, end="->")
+            else:
+                print(temp.value, end="")
             temp = temp.next
         print()
 
@@ -18,19 +20,18 @@ class LinkedList:
 def create_ll_from_map(nmap) -> LinkedList:
     head = None
     node_map = {}
-    nmap = nmap.get('linkedList', nmap)
-    for n in nmap['nodes']:
-        node = LinkedList(n['value'])
-        node_map[n['id']] = node
-        if n['id'] == nmap['head']:
+    nmap = nmap.get("linkedList", nmap)
+    for n in nmap["nodes"]:
+        node = LinkedList(n["value"])
+        node_map[n["id"]] = node
+        if n["id"] == nmap["head"]:
             head = node
 
-    for n in nmap['nodes']:
-        if n['next'] is not None:
-            node = node_map[n['id']]
-            node.next = node_map[n['next']]
+    for n in nmap["nodes"]:
+        if n["next"] is not None:
+            node = node_map[n["id"]]
+            node.next = node_map[n["next"]]
     return head
-
 
 
 def removeKthNodeFromEnd(head: LinkedList, k):
@@ -116,7 +117,14 @@ def shiftLinkedList(head, k):
 
 
 def rearrangeLinkedList(head, k):
-    low_head, low_tail, k_head, k_tail, hi_head, hi_tail = None, None, None, None, None, None
+    low_head, low_tail, k_head, k_tail, hi_head, hi_tail = (
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    )
     node = head
     while node:
         if node.value < k:
@@ -153,7 +161,8 @@ def rearrangeLinkedList(head, k):
 
 
 def linkedListPalindrome(head):
-    if not head or not head.next: return True
+    if not head or not head.next:
+        return True
 
     len = 0
     node = head
@@ -161,7 +170,7 @@ def linkedListPalindrome(head):
         len += 1
         node = node.next
 
-    mid = len//2
+    mid = len // 2
     node, prev = head, None
     for _ in range(mid):
         temp = node.next
@@ -193,8 +202,8 @@ nmap = {
             {"id": "3", "next": "4-2", "value": 3},
             {"id": "4-2", "next": "5-2", "value": 4},
             {"id": "5-2", "next": "6-2", "value": 5},
-            {"id": "6-2", "next": None, "value": 6}
-        ]
+            {"id": "6-2", "next": None, "value": 6},
+        ],
     }
 }
 
@@ -202,4 +211,3 @@ root = create_ll_from_map(nmap)
 root.print_list()
 res = linkedListPalindrome(root)
 print(res)
-

@@ -26,7 +26,6 @@ def binary_search_direction(lo, hi, direction):
     return [left, right]
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to searchForRange

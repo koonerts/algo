@@ -22,6 +22,8 @@ Given a sorted array of numbers, find if a given number ‘key’ is present in 
     Input: [10, 6, 4], key = 4
     Output: 2
 """
+
+
 def binary_search(arr: list[int], key: int) -> int:
     """
     Given a sorted array of numbers, find if a given number ‘key’ is present in the array.
@@ -45,29 +47,29 @@ def binary_search(arr: list[int], key: int) -> int:
     Input: [10, 6, 4], key = 4
     Output: 2
     """
-    if not arr: return -1
+    if not arr:
+        return -1
 
-    start, end = 0, len(arr)-1
+    start, end = 0, len(arr) - 1
     is_ascending = True if len(arr) > 1 and arr[0] < arr[1] else False
 
     while start <= end:
-        mid = int((start+end) / 2)
+        mid = int((start + end) / 2)
 
         if arr[mid] == key:
             return mid
         elif arr[mid] < key:
             if is_ascending:
-                start = mid+1
+                start = mid + 1
             else:
-                end = mid-1
+                end = mid - 1
         else:
             if is_ascending:
-                end = mid-1
+                end = mid - 1
             else:
-                start = mid+1
+                start = mid + 1
 
     return False
-
 
 
 # Example usage

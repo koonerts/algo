@@ -13,6 +13,8 @@ Given an array of positive numbers and a positive number ‘k,’ find the maxim
     Output: 7
     Explanation: Subarray with maximum sum is [3, 4].
 """
+
+
 def max_sub_array_of_size_k(k: int, arr: list[int]) -> int:
     """
     Given an array of positive numbers and a positive number ‘k,’ find the maximum sum of any contiguous subarray of size ‘k’.
@@ -40,7 +42,6 @@ def max_sub_array_of_size_k(k: int, arr: list[int]) -> int:
             max_sum = curr_sum
 
     return max_sum
-
 
 
 # Example usage

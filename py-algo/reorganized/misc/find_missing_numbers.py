@@ -17,6 +17,8 @@ We are given an unsorted array containing numbers taken from the range 1 to ‘n
     Input: [2, 3, 2, 1]
     Output: 4
 """
+
+
 def find_missing_numbers(nums):
     """
     We are given an unsorted array containing numbers taken from the range 1 to ‘n’.
@@ -51,7 +53,6 @@ def find_missing_numbers(nums):
             missing_nums.append(i + 1)
 
     return missing_nums
-
 
 
 # Example usage

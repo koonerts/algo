@@ -2,6 +2,8 @@
 In Order Traversal
 
 """
+
+
 def iterativeInOrderTraversal(tree, callback):
     node = tree
     while node.parent:
@@ -23,7 +25,6 @@ def iterativeInOrderTraversal(tree, callback):
 
                 prev = node
                 node = node.parent
-
 
 
 # Example usage

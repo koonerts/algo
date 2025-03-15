@@ -2,15 +2,16 @@
 Equals Value
 
 """
+
+
 def indexEqualsValue(array):
     lo, hi = 0, len(array) - 1
 
     while lo <= hi:
-        mid = (lo+hi)//2
+        mid = (lo + hi) // 2
         if array[mid] == mid:
             return mid
         # elif
-
 
 
 # Example usage

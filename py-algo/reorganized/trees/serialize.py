@@ -7,16 +7,15 @@ Encodes a tree to a single string.
 """
 
 
-import string
 def serialize(root: TreeNode) -> str:
-        """
-        Encodes a tree to a single string.
-        :type root: TreeNode
-        :rtype: str
-        """
-        inorder = self.inorderTraversal(root)
-        preorder = self.preorderTraversal(root)
-        return json.dumps({'inorder':inorder, 'preorder':preorder})
+    """
+    Encodes a tree to a single string.
+    :type root: TreeNode
+    :rtype: str
+    """
+    inorder = self.inorderTraversal(root)
+    preorder = self.preorderTraversal(root)
+    return json.dumps({"inorder": inorder, "preorder": preorder})
 
 
 # Example usage

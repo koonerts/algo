@@ -2,8 +2,10 @@
 Merge
 
 """
+
+
 def merge(arr, lo, mid, hi):
-    i, j = lo, mid+1
+    i, j = lo, mid + 1
     result = []
     while i <= mid and j <= hi:
         if arr[i] <= arr[j]:
@@ -20,9 +22,8 @@ def merge(arr, lo, mid, hi):
         result.append(arr[j])
         j += 1
 
-    for i in range(lo, hi+1):
-        arr[i] = result[i-lo]
-
+    for i in range(lo, hi + 1):
+        arr[i] = result[i - lo]
 
 
 # Example usage

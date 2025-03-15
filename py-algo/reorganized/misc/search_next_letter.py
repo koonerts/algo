@@ -30,6 +30,8 @@ Given an array of lowercase letters sorted in ascending order,
     Output: 'a'
     Explanation: As the array is assumed to be circular, the smallest letter greater than 'h' is 'a'.
 """
+
+
 def search_next_letter(letters: list[str], key: str) -> str:
     """
     Given an array of lowercase letters sorted in ascending order,
@@ -64,22 +66,21 @@ def search_next_letter(letters: list[str], key: str) -> str:
     if letters[-1] <= key or letters[0] > key:
         return letters[0]
 
-    start, end = 0, len(letters)-1
+    start, end = 0, len(letters) - 1
 
     while start <= end:
-        mid = int((start+end) / 2)
+        mid = int((start + end) / 2)
         if letters[mid] == key:
-            if mid+1 <= len(letters)-1:
-                return letters[mid+1]
+            if mid + 1 <= len(letters) - 1:
+                return letters[mid + 1]
             else:
                 return letters[0]
         elif letters[mid] < key:
-            start = mid+1
+            start = mid + 1
         else:
-            end = mid-1
+            end = mid - 1
 
-    return letters[0] if start > len(letters)-1 else letters[start]
-
+    return letters[0] if start > len(letters) - 1 else letters[start]
 
 
 # Example usage

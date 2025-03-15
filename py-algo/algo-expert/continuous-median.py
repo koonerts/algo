@@ -3,7 +3,6 @@ from heapq import *
 # Do not edit the class below except for
 # the insert method. Feel free to add new
 # properties and methods to the class.
-from typing import List, Any
 
 
 class ContinuousMedianHandler:
@@ -26,7 +25,7 @@ class ContinuousMedianHandler:
 
     def set_median(self):
         if (len(self.minh) + len(self.maxh)) % 2 == 0:
-            self.median = (self.minh[0] + -self.maxh[0])/2
+            self.median = (self.minh[0] + -self.maxh[0]) / 2
         else:
             self.median = -self.maxh[0]
 

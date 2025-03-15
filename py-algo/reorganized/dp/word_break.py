@@ -37,7 +37,6 @@ def _wordBreak_topdown(s):
     return [" ".join(words) for words in memo[s]]
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to wordBreak

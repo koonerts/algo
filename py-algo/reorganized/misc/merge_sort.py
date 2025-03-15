@@ -27,7 +27,6 @@ def merge(lo, mid, hi):
     return array
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to mergeSort

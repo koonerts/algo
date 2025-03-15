@@ -2,8 +2,17 @@
 Linked List
 
 """
+
+
 def rearrangeLinkedList(head, k):
-    low_head, low_tail, k_head, k_tail, hi_head, hi_tail = None, None, None, None, None, None
+    low_head, low_tail, k_head, k_tail, hi_head, hi_tail = (
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    )
     node = head
     while node:
         if node.value < k:
@@ -37,7 +46,6 @@ def rearrangeLinkedList(head, k):
     if hi_tail:
         hi_tail.next = None
     return new_head
-
 
 
 # Example usage

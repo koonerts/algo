@@ -24,6 +24,8 @@ Minimum Window Sort (medium) #
     Output: 3
     Explanation: The whole array needs to be sorted.
 """
+
+
 def shortest_window_sort(arr: list[int]) -> int:
     """
     Minimum Window Sort (medium) #
@@ -60,18 +62,20 @@ def shortest_window_sort(arr: list[int]) -> int:
         if arr[end] >= arr[end - 1]:
             end -= 1
 
-    if start >= end: return 0
+    if start >= end:
+        return 0
 
-    min_, max_ = float('inf'), float('-inf')
+    min_, max_ = float("inf"), float("-inf")
     for i in range(start, end + 1):
         min_ = min(min_, arr[i])
         max_ = max(max_, arr[i])
 
-    while start > 0 and arr[start-1] > min_: start -= 1
-    while end < len(arr) - 1 and arr[end + 1] < max_: end += 1
+    while start > 0 and arr[start - 1] > min_:
+        start -= 1
+    while end < len(arr) - 1 and arr[end + 1] < max_:
+        end += 1
 
     return end - start + 1
-
 
 
 # Example usage

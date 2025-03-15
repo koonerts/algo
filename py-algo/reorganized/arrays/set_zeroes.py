@@ -3,11 +3,13 @@ Zeroes
 
 Do not return anything, modify matrix in-place instead.
 """
+
+
 def setZeroes(matrix: list[list[int]]) -> None:
-        """
-        Do not return anything, modify matrix in-place instead.
-        """
-        pass
+    """
+    Do not return anything, modify matrix in-place instead.
+    """
+    pass
 
 
 # Example usage

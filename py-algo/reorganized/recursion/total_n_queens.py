@@ -44,7 +44,6 @@ def traverse(row=0):
         return result
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to totalNQueens

@@ -73,7 +73,9 @@ def find_Kth_smallest(lists, k):
         if num_count == k:
             return num
         elif next_index < len(lists[list_index]):
-            heappush(min_heap, (lists[list_index][next_index], list_index, next_index+1))
+            heappush(
+                min_heap, (lists[list_index][next_index], list_index, next_index + 1)
+            )
 
 
 def find_Kth_smallest(matrix: list[list[int]], k: int):

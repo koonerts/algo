@@ -15,6 +15,8 @@ Given a string and a list of words, find all the starting indices of substrings 
     Output: [3]
     Explanation: The only substring containing both the words is "catfox".
 """
+
+
 def find_word_concatenation(str, words):
     """
     Given a string and a list of words, find all the starting indices of substrings in the given string that are a

@@ -18,7 +18,6 @@ def depths(node, level=0):
     return total_sum
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to allKindsOfNodeDepths

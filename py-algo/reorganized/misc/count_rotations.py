@@ -13,6 +13,8 @@ Given an array of numbers which is sorted in ascending order and is rotated ‘k
     Output: 5
     Explanation: The array has been rotated 5 times.
 """
+
+
 def count_rotations(arr):
     """
     Given an array of numbers which is sorted in ascending order and is rotated ‘k’ times around a pivot, find ‘k’.
@@ -29,7 +31,6 @@ def count_rotations(arr):
     """
     # TODO: Come back to
     return -1
-
 
 
 # Example usage

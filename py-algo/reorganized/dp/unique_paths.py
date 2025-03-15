@@ -2,10 +2,14 @@
 Paths
 
 """
+
+
 def uniquePaths(m: int, n: int) -> int:
-        pathCnt = 0
+    pathCnt = 0
+
+
 def traverse(x, y):
-            nonlocal pathCnt
+    nonlocal pathCnt
 
 
 # Example usage

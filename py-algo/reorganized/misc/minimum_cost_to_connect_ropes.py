@@ -19,6 +19,8 @@ Given ‘N’ ropes with different lengths, we need to connect these ropes into 
     Output: 42
     Explanation: First connect 1+2(=3), then 3+3(=6), 6+5(=11), 11+11(=22). Total cost is 42 (3+6+11+22)
 """
+
+
 def minimum_cost_to_connect_ropes(ropeLengths) -> int:
     """
     Given ‘N’ ropes with different lengths, we need to connect these ropes into one big rope with minimum cost.
@@ -43,12 +45,11 @@ def minimum_cost_to_connect_ropes(ropeLengths) -> int:
     heapify(ropeLengths)
 
     while len(ropeLengths) > 1:
-        temp_cost = heappop(ropeLengths)+heappop(ropeLengths)
+        temp_cost = heappop(ropeLengths) + heappop(ropeLengths)
         cost += temp_cost
         heappush(ropeLengths, temp_cost)
 
     return cost
-
 
 
 # Example usage

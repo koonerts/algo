@@ -20,7 +20,6 @@ def helper(ni_obj, depth):
         return depth_sum
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to depthSum

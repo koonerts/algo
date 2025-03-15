@@ -1,6 +1,4 @@
-from collections import deque, OrderedDict, defaultdict
 from heapq import *
-import math
 
 
 class Pair:
@@ -10,23 +8,25 @@ class Pair:
 
 
 def find_max_sliding_window(arr, window_size):
-    if len(arr) <= window_size: return max(arr)
+    if len(arr) <= window_size:
+        return max(arr)
 
     result = []
     left, right = 0, window_size - 1
-    curr_max = float('-inf')
+    curr_max = float("-inf")
     while right < len(arr) - 1:
-        window_max = max(arr[left:right+1])
+        window_max = max(arr[left : right + 1])
 
     # TODO: come back to
 
 
 def binary_search_rotated(arr: list[int], key):
-    if not arr: return -1
+    if not arr:
+        return -1
 
     l, r = 0, len(arr) - 1
     while l <= r:
-        mid = (l+r)//2
+        mid = (l + r) // 2
 
         # found
         if arr[mid] == key:
@@ -50,11 +50,12 @@ def binary_search_rotated(arr: list[int], key):
 
 
 def find_least_common_number(a: list[int], b: list[int], c: list[int]) -> int:
-    if not a or not b or not c: return -1
+    if not a or not b or not c:
+        return -1
 
     def binary_search(start, end, nums, target):
         while start <= end:
-            mid = (start + end)//2
+            mid = (start + end) // 2
             if nums[mid] == target:
                 return mid
             elif nums[mid] < target:
@@ -64,7 +65,10 @@ def find_least_common_number(a: list[int], b: list[int], c: list[int]) -> int:
         return -1
 
     for i in range(len(a)):
-        if binary_search(0, len(b)-1, b, a[i]) != -1 and binary_search(0, len(c)-1, c, a[i]) != -1:
+        if (
+            binary_search(0, len(b) - 1, b, a[i]) != -1
+            and binary_search(0, len(c) - 1, c, a[i]) != -1
+        ):
             return a[i]
     return -1
 
@@ -73,7 +77,7 @@ def find_low_index(arr: list[int], key):
     start, end = 0, len(arr) - 1
     low_index = -1
     while start <= end:
-        mid = (start + end)//2
+        mid = (start + end) // 2
         if arr[mid] == key:
             low_index = mid
             end = mid - 1
@@ -88,7 +92,7 @@ def find_high_index(arr: list[int], key):
     start, end = 0, len(arr) - 1
     high_index = -1
     while start <= end:
-        mid = (start + end)//2
+        mid = (start + end) // 2
         if arr[mid] == key:
             high_index = mid
             start = mid + 1
@@ -121,7 +125,8 @@ def find_buy_sell_stock_prices(array):
 
 
 def merge_intervals(v: list[Pair]):
-    if not v: return []
+    if not v:
+        return []
 
     result = [v[0]]
     for i in range(1, len(v)):
@@ -137,8 +142,8 @@ def cyclic_sort(nums):
     while i < len(nums):
         while nums[i] != i + 1:
             v1 = nums[i]
-            v2 = nums[nums[i]-1]
-            nums[i], nums[v1-1] = v2, v1
+            v2 = nums[nums[i] - 1]
+            nums[i], nums[v1 - 1] = v2, v1
         i += 1
     return nums
 
@@ -156,7 +161,7 @@ def max_sub_array_of_size_k(k, arr):
 
 
 def smallest_subarray_with_given_sum(s, arr):
-    left, curr_sum, min_len = 0, 0, float('inf')
+    left, curr_sum, min_len = 0, 0, float("inf")
     for i in range(len(arr)):
         if arr[i] >= s:
             return 1
@@ -167,8 +172,8 @@ def smallest_subarray_with_given_sum(s, arr):
                 while curr_sum - arr[left] >= s:
                     curr_sum -= arr[left]
                     left += 1
-                min_len = min(i-left+1, min_len)
-    return 0 if min_len == float('inf') else min_len
+                min_len = min(i - left + 1, min_len)
+    return 0 if min_len == float("inf") else min_len
 
 
 def make_squares(arr):
@@ -179,8 +184,8 @@ def make_squares(arr):
     j = i - 1
 
     while len(result) != len(arr):
-        i_val = float('inf') if i >= len(arr) else arr[i]**2
-        j_val = float('inf') if j < 0 else arr[j]**2
+        i_val = float("inf") if i >= len(arr) else arr[i] ** 2
+        j_val = float("inf") if j < 0 else arr[j] ** 2
 
         if i_val <= j_val:
             result.append(i_val)
@@ -197,29 +202,31 @@ def find_subsets(nums):
 
 
 def find_max_in_bitonic_array(arr):
-    if not arr: return float('-inf')
+    if not arr:
+        return float("-inf")
 
     l, r = 0, len(arr) - 1
     while l <= r:
-        mid = (l+r)//2
+        mid = (l + r) // 2
 
         # increasing
         if arr[l] <= arr[mid]:
-            if mid + 1 > r or arr[mid] > arr[mid+1]:
+            if mid + 1 > r or arr[mid] > arr[mid + 1]:
                 return arr[mid]
             else:
                 l = mid + 1
         # decreasing
         else:
-            if mid - 1 < l or arr[mid] > arr[mid-1]:
+            if mid - 1 < l or arr[mid] > arr[mid - 1]:
                 return arr[mid]
             else:
                 r = mid - 1
 
+
 def find_max_in_bitonic_array2(arr):
     start, end = 0, len(arr) - 1
     while start < end:
-        mid = (start+end) // 2
+        mid = (start + end) // 2
         if arr[mid] > arr[mid + 1]:
             end = mid
         else:
@@ -230,24 +237,26 @@ def find_max_in_bitonic_array2(arr):
 
 
 def find_permutations(nums):
-    if not nums: return []
+    if not nums:
+        return []
     pass
 
 
 def search_triplets(arr: list[int]):
-    if not arr: return []
+    if not arr:
+        return []
 
     arr.sort()
     triplets = []
 
     for i in range(len(arr) - 2):
-        left, right = i+1, len(arr) - 1
+        left, right = i + 1, len(arr) - 1
         while left < right:
             sum = arr[i] + arr[left] + arr[right]
             if sum == 0:
                 triplets.append([arr[i], arr[left], arr[right]])
                 left += 1
-                while left <= right and arr[left] == arr[left-1]:
+                while left <= right and arr[left] == arr[left - 1]:
                     left += 1
             elif sum < 0:
                 left += 1
@@ -257,13 +266,14 @@ def search_triplets(arr: list[int]):
 
 
 def triplet_sum_close_to_target(arr, target_sum):
-    if not arr: return []
+    if not arr:
+        return []
 
     arr.sort()
-    min_closest_sum = float('inf')
+    min_closest_sum = float("inf")
 
     for i in range(len(arr) - 2):
-        left, right = i+1, len(arr) - 1
+        left, right = i + 1, len(arr) - 1
         while left < right:
             sum = arr[i] + arr[left] + arr[right]
             if sum == target_sum:
@@ -283,13 +293,14 @@ def triplet_sum_close_to_target(arr, target_sum):
 
 
 def triplet_with_smaller_sum(arr, target):
-    if not arr: return []
+    if not arr:
+        return []
 
     arr.sort()
     cntr = 0
 
     for i in range(len(arr) - 2):
-        left, right = i+1, len(arr) - 1
+        left, right = i + 1, len(arr) - 1
         while left < right:
             sum = arr[i] + arr[left] + arr[right]
             if sum < target:
@@ -302,7 +313,8 @@ def triplet_with_smaller_sum(arr, target):
 
 
 def find_subarrays_with_product_less_than_target(arr, target):
-    if not arr: return []
+    if not arr:
+        return []
 
     result = []
     left, curr_product = 0, 1
@@ -311,23 +323,25 @@ def find_subarrays_with_product_less_than_target(arr, target):
 
 
 def can_attend_all_appointments(intervals):
-    if not intervals or len(intervals) == 1: return True
+    if not intervals or len(intervals) == 1:
+        return True
     start, end = 0, 1
-    intervals.sort(key=lambda i:i[start])
+    intervals.sort(key=lambda i: i[start])
 
     for i in range(1, len(intervals)):
-        if intervals[i][start] < intervals[i-1][end]:
+        if intervals[i][start] < intervals[i - 1][end]:
             return False
     return True
 
 
 def find_key_range(arr, key):
-    result = [- 1, -1]
-    if not arr: return result
+    result = [-1, -1]
+    if not arr:
+        return result
 
     def binary_search(l, r):
         while l <= r:
-            mid = (l+r)//2
+            mid = (l + r) // 2
             if arr[mid] == key:
                 return mid
             elif arr[mid] < key:
@@ -343,11 +357,11 @@ def find_key_range(arr, key):
     low, high = idx, idx
     result = [low, high]
     while low != -1:
-        low = binary_search(0, low-1)
+        low = binary_search(0, low - 1)
         if low != -1:
             result[0] = low
     while high != -1:
-        high = binary_search(high+1, len(arr) - 1)
+        high = binary_search(high + 1, len(arr) - 1)
         if high != -1:
             result[1] = high
     return result
@@ -355,9 +369,9 @@ def find_key_range(arr, key):
 
 def search_min_diff_element(arr, key):
     l, r = 0, len(arr) - 1
-    min_diff_element_val = float('inf')
+    min_diff_element_val = float("inf")
     while l <= r:
-        mid = (l+r)//2
+        mid = (l + r) // 2
         if arr[mid] == key:
             return arr[mid]
         elif arr[mid] < key:

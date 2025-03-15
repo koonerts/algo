@@ -1,4 +1,3 @@
-
 def binary_search(arr: list[int], key: int) -> int:
     """
     Given a sorted array of numbers, find if a given number ‘key’ is present in the array.
@@ -22,26 +21,27 @@ def binary_search(arr: list[int], key: int) -> int:
     Input: [10, 6, 4], key = 4
     Output: 2
     """
-    if not arr: return -1
+    if not arr:
+        return -1
 
-    start, end = 0, len(arr)-1
+    start, end = 0, len(arr) - 1
     is_ascending = True if len(arr) > 1 and arr[0] < arr[1] else False
 
     while start <= end:
-        mid = int((start+end) / 2)
+        mid = int((start + end) / 2)
 
         if arr[mid] == key:
             return mid
         elif arr[mid] < key:
             if is_ascending:
-                start = mid+1
+                start = mid + 1
             else:
-                end = mid-1
+                end = mid - 1
         else:
             if is_ascending:
-                end = mid-1
+                end = mid - 1
             else:
-                start = mid+1
+                start = mid + 1
 
     return False
 
@@ -75,16 +75,16 @@ def search_ceiling_of_a_number(arr: list[int], key: int) -> int:
     if not arr or arr[-1] < key:
         return -1
 
-    start, end = 0, len(arr)-1
+    start, end = 0, len(arr) - 1
     while start <= end:
-        mid = int((start+end) / 2)
+        mid = int((start + end) / 2)
 
         if arr[mid] == key:
             return mid
         elif arr[mid] < key:
-            start = mid+1
+            start = mid + 1
         else:
-            end = mid-1
+            end = mid - 1
 
     return start
 
@@ -123,21 +123,21 @@ def search_next_letter(letters: list[str], key: str) -> str:
     if letters[-1] <= key or letters[0] > key:
         return letters[0]
 
-    start, end = 0, len(letters)-1
+    start, end = 0, len(letters) - 1
 
     while start <= end:
-        mid = int((start+end) / 2)
+        mid = int((start + end) / 2)
         if letters[mid] == key:
-            if mid+1 <= len(letters)-1:
-                return letters[mid+1]
+            if mid + 1 <= len(letters) - 1:
+                return letters[mid + 1]
             else:
                 return letters[0]
         elif letters[mid] < key:
-            start = mid+1
+            start = mid + 1
         else:
-            end = mid-1
+            end = mid - 1
 
-    return letters[0] if start > len(letters)-1 else letters[start]
+    return letters[0] if start > len(letters) - 1 else letters[start]
 
 
 def find_range(arr: list[int], key: int) -> list[int]:
@@ -158,24 +158,26 @@ def find_range(arr: list[int], key: int) -> list[int]:
     Input: [1, 3, 8, 10, 15], key = 12
     Output: [-1, -1]
     """
-    if not arr: return [- 1, -1]
+    if not arr:
+        return [-1, -1]
 
-    start, end = 0, len(arr)-1
+    start, end = 0, len(arr) - 1
 
     while start <= end:
-        mid = (start+end)//2
+        mid = (start + end) // 2
         if arr[mid] == key:
             break
         elif arr[mid] < key:
-            start = mid+1
+            start = mid + 1
         else:
-            end = mid-1
+            end = mid - 1
 
-    if start > end: return [-1, -1]
+    if start > end:
+        return [-1, -1]
 
 
 def find_range2(arr, key):
-    result = [- 1, -1]
+    result = [-1, -1]
     result[0] = binary_search2(arr, key, False)
     if result[0] != -1:  # no need to search, if 'key' is not present in the input array
         result[1] = binary_search2(arr, key, True)
@@ -201,7 +203,7 @@ def binary_search2(arr, key, findMaxIndex):
     return keyIndex
 
 
-def search_min_diff_element(arr: list[int], key:int) -> int:
+def search_min_diff_element(arr: list[int], key: int) -> int:
     """
     Given an array of numbers sorted in ascending order, find the element in the array
     that has the minimum difference with the given ‘key’.
@@ -223,13 +225,15 @@ def search_min_diff_element(arr: list[int], key:int) -> int:
     Input: [4, 6, 10], key = 17
     Output: 10
     """
-    if key <= arr[0]: return arr[0]
-    elif key >= arr[len(arr)-1]: return arr[len(arr)-1]
+    if key <= arr[0]:
+        return arr[0]
+    elif key >= arr[len(arr) - 1]:
+        return arr[len(arr) - 1]
 
-    start, end = 0, len(arr)-1
+    start, end = 0, len(arr) - 1
 
     while start <= end:
-        mid = (start+end)//2
+        mid = (start + end) // 2
 
         if arr[mid] == key:
             return key
@@ -276,11 +280,11 @@ def find_index_of_max_in_bitonic_array(arr) -> int:
     start, end = 0, len(arr) - 1
 
     while start <= end:
-        mid = (start+end)//2
+        mid = (start + end) // 2
 
-        if mid+1 <= len(arr)-1 and arr[mid] < arr[mid+1]:
+        if mid + 1 <= len(arr) - 1 and arr[mid] < arr[mid + 1]:
             start = mid + 1
-        elif end-1 >= 0 and arr[mid] < arr[mid-1]:
+        elif end - 1 >= 0 and arr[mid] < arr[mid - 1]:
             end = mid - 1
         else:
             return mid
@@ -309,9 +313,10 @@ def search_bitonic_array(arr, key):
     Input: [10, 9, 8], key=10
     Output: 0
     """
+
     def b_search(start, end, is_ascending) -> int:
         while start <= end:
-            mid = (start + end)//2
+            mid = (start + end) // 2
             if arr[mid] == key:
                 return mid
             elif arr[mid] < key:
@@ -334,7 +339,7 @@ def search_bitonic_array(arr, key):
 
         # search descending half
         if i == -1 and key < arr[max_index]:
-            i = b_search(max_index+1, len(arr)-1, False)
+            i = b_search(max_index + 1, len(arr) - 1, False)
 
         return i
 

@@ -54,7 +54,8 @@ class MyQueue:
 
 
 def reverseK(queue: MyQueue, k: int):
-    if not queue or queue.is_empty() or queue.size() < k or k < 0: return None
+    if not queue or queue.is_empty() or queue.size() < k or k < 0:
+        return None
 
     new_queue = MyQueue()
     first_k = []
@@ -90,7 +91,7 @@ class NewQueue:
 
 
 def evaluate_post_fix(exp: str) -> int:
-    exp = exp.replace(' ', '')
+    exp = exp.replace(" ", "")
     stack = MyStack()
 
     for c in exp:
@@ -99,7 +100,7 @@ def evaluate_post_fix(exp: str) -> int:
         else:
             y = stack.pop()
             x = stack.pop()
-            val = str(eval(f'{x}{c}{y}'))
+            val = str(eval(f"{x}{c}{y}"))
             stack.push(val)
     return int(float(stack.top()))
 
@@ -127,20 +128,22 @@ class MinStack:
         return
 
         # Removes and returns value from min_stack
+
     def pop(self):
         self.min_stack.pop()
         return self.main_stack.pop()
 
         # Pushes values into min_stack
+
     def push(self, value):
         self.main_stack.push(value)
-        if(self.min_stack.is_empty() or self.min_stack.top() > value):
+        if self.min_stack.is_empty() or self.min_stack.top() > value:
             self.min_stack.push(value)
         else:
             self.min_stack.push(self.min_stack.top())
 
-
         # Returns minimum value from newStack in O(1) Time
+
     def min(self):
         if not self.min_stack.is_empty():
             return self.min_stack.top()

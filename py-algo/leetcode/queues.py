@@ -28,25 +28,21 @@ class MyStackQueue:
         self.s1 = []
         self.s2 = []
 
-
     def push(self, x: int) -> None:
         """
         Push element x to the back of queue.
         """
         self.s1.append(x)
 
-
     def pop(self) -> int:
         """
         Removes the element from in front of queue and returns that element.
         """
 
-
     def peek(self) -> int:
         """
         Get the front element.
         """
-
 
     def empty(self) -> bool:
         """
@@ -55,7 +51,6 @@ class MyStackQueue:
 
 
 class MyCircularQueue:
-
     def __init__(self, k: int):
         """
         Initialize your data structure here. Set the size of the queue to be k.
@@ -159,7 +154,7 @@ class MovingAverage:
 
 
 class Queues:
-    ROOM = 2 ** 31 - 1
+    ROOM = 2**31 - 1
     GATE = 0
     WALL = -1
 
@@ -187,7 +182,8 @@ class Queues:
           1  -1   2  -1
           0  -1   3   4
         """
-        if not rooms: return
+        if not rooms:
+            return
 
         q = collections.deque()
         rows = len(rooms)
@@ -202,7 +198,13 @@ class Queues:
         while len(q) > 0:
             row, col = q.popleft()
             for x, y in directions:
-                if row + x < 0 or row + x >= rows or col + y < 0 or col + y >= cols or rooms[row + x][col + y] != self.ROOM:
+                if (
+                    row + x < 0
+                    or row + x >= rows
+                    or col + y < 0
+                    or col + y >= cols
+                    or rooms[row + x][col + y] != self.ROOM
+                ):
                     continue
                 rooms[row + x][col + y] = rooms[row + x][col + y] + 1
                 q.append((row + x, col + y))
@@ -249,7 +251,11 @@ class Queues:
                         r, c = q.popleft()
                         for x, y in directions:
                             r_next, c_next = r + x, c + y
-                            if 0 <= r_next < rows and 0 <= c_next < cols and grid[r_next][c_next] == "1":
+                            if (
+                                0 <= r_next < rows
+                                and 0 <= c_next < cols
+                                and grid[r_next][c_next] == "1"
+                            ):
                                 grid[r_next][c_next] = "0"
                                 q.append((r_next, c_next))
         return count
@@ -278,12 +284,13 @@ class Queues:
         Output: 1
         Explanation: We can turn the last wheel in reverse to move from "0000" -> "0009"
         """
+
         def neighbors(node):
             for i in range(4):
                 x = int(node[i])
                 for d in [-1, 1]:
                     y = (x + d) % 10
-                    yield node[:i] + str(y) + node[i+1:]
+                    yield node[:i] + str(y) + node[i + 1 :]
 
     def numSquares(self, n: int) -> int:
         """
@@ -311,7 +318,7 @@ class Queues:
         for i, num in enumerate(nums):
             for _ in range(len(que)):
                 item = que.popleft()
-                for j in range(i+1):
+                for j in range(i + 1):
                     copy = item.copy()
                     copy.insert(j, num)
 
@@ -329,15 +336,15 @@ class Queues:
             open_cnt, closed_cnt, paren_str = que.popleft()
 
             if open_cnt == n:
-                if len(paren_str) == (n*2)-1:
-                    ret_list.append(paren_str + ')')
+                if len(paren_str) == (n * 2) - 1:
+                    ret_list.append(paren_str + ")")
                 else:
-                    que.append((open_cnt, closed_cnt+1, paren_str + ')'))
+                    que.append((open_cnt, closed_cnt + 1, paren_str + ")"))
             elif open_cnt == closed_cnt:
-                que.append((open_cnt+1, closed_cnt, paren_str + '('))
+                que.append((open_cnt + 1, closed_cnt, paren_str + "("))
             else:
-                que.append((open_cnt+1, closed_cnt, paren_str + '('))
-                que.append((open_cnt, closed_cnt+1, paren_str + ')'))
+                que.append((open_cnt + 1, closed_cnt, paren_str + "("))
+                que.append((open_cnt, closed_cnt + 1, paren_str + ")"))
 
         return ret_list
 

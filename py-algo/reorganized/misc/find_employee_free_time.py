@@ -22,8 +22,9 @@ Employee Free Time (hard) #
     Explanation: All employees are free between [5,7].
 """
 
-
 from heapq import *
+
+
 def find_employee_free_time(schedule: list[list[Interval]]):
     """
     Employee Free Time (hard) #
@@ -61,8 +62,7 @@ def find_employee_free_time(schedule: list[list[Interval]]):
         queueTop = heapq.heappop(minHeap)
         # if previousInterval is not overlapping with the next interval, insert a free interval
         if previousInterval.end < queueTop.interval.start:
-            result.append(Interval(previousInterval.end,
-                                   queueTop.interval.start))
+            result.append(Interval(previousInterval.end, queueTop.interval.start))
             previousInterval = queueTop.interval
         else:  # overlapping intervals, update the previousInterval if needed
             if previousInterval.end < queueTop.interval.end:
@@ -71,11 +71,16 @@ def find_employee_free_time(schedule: list[list[Interval]]):
         # if there are more intervals available for the same employee, add their next interval
         employeeSchedule = schedule[queueTop.employeeIndex]
         if len(employeeSchedule) > queueTop.intervalIndex + 1:
-            heapq.heappush(minHeap, EmployeeInterval(employeeSchedule[queueTop.intervalIndex + 1], queueTop.employeeIndex,
-                                                     queueTop.intervalIndex + 1))
+            heapq.heappush(
+                minHeap,
+                EmployeeInterval(
+                    employeeSchedule[queueTop.intervalIndex + 1],
+                    queueTop.employeeIndex,
+                    queueTop.intervalIndex + 1,
+                ),
+            )
 
     return result
-
 
 
 # Example usage

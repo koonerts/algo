@@ -2,11 +2,13 @@
 List
 
 """
+
+
 def reverseList(head: ListNode) -> ListNode:
-        prev = None
-        while head:
-            head.next, prev, head = prev, head, head.next
-        return prev
+    prev = None
+    while head:
+        head.next, prev, head = prev, head, head.next
+    return prev
 
 
 # Example usage

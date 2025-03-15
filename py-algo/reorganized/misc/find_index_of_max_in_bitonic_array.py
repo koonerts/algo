@@ -22,6 +22,8 @@ Find the maximum value in a given Bitonic array.
     Input: [10, 9, 8]
     Output: 10
 """
+
+
 def find_index_of_max_in_bitonic_array(arr) -> int:
     """
     Find the maximum value in a given Bitonic array.
@@ -51,15 +53,14 @@ def find_index_of_max_in_bitonic_array(arr) -> int:
     start, end = 0, len(arr) - 1
 
     while start <= end:
-        mid = (start+end)//2
+        mid = (start + end) // 2
 
-        if mid+1 <= len(arr)-1 and arr[mid] < arr[mid+1]:
+        if mid + 1 <= len(arr) - 1 and arr[mid] < arr[mid + 1]:
             start = mid + 1
-        elif end-1 >= 0 and arr[mid] < arr[mid-1]:
+        elif end - 1 >= 0 and arr[mid] < arr[mid - 1]:
             end = mid - 1
         else:
             return mid
-
 
 
 # Example usage

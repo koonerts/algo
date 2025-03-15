@@ -27,7 +27,6 @@ def quick_sort_recursive(lo, hi):
     quick_sort_recursive(0, len(arr)-1)
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to quick_sort

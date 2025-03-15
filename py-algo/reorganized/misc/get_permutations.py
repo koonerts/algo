@@ -3,17 +3,19 @@ Permutations
 
 """
 
-
 from collections import deque
+
+
 def getPermutations(array):
     result = []
-    if not array: return result
+    if not array:
+        return result
 
     q = deque([[]])
     for num in array:
         for i in range(len(q)):
             p = q.popleft()
-            for j in range(len(p)+1):
+            for j in range(len(p) + 1):
                 p_copy = p.copy()
                 p_copy.insert(j, num)
 
@@ -22,7 +24,6 @@ def getPermutations(array):
                 else:
                     q.append(p_copy)
     return result
-
 
 
 # Example usage

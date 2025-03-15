@@ -18,7 +18,6 @@ def dfs(node: TreeNode, curr_sum: int, digit_concat: str):
     return curr_sum
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to find_sum_of_path_numbers

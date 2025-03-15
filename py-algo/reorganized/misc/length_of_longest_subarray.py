@@ -13,6 +13,8 @@ Given an array containing 0s and 1s, if you are allowed to replace no more than 
     Output: 9
     Explanation: Replace the '0' at index 6, 9, and 10 to have the longest contiguous subarray of 1s having length 9.
 """
+
+
 def length_of_longest_subarray(arr: list[int], k: int) -> int:
     """
     Given an array containing 0s and 1s, if you are allowed to replace no more than ‘k’ 0s with 1s, find the length of the longest contiguous subarray having all 1s.
@@ -46,7 +48,6 @@ def length_of_longest_subarray(arr: list[int], k: int) -> int:
 
         max_subarray_len = max(max_subarray_len, window_len)
     return max_subarray_len
-
 
 
 # Example usage

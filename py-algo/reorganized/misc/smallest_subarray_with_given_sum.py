@@ -19,6 +19,8 @@ Given an array of positive numbers and a positive number ‘S,’ find the lengt
     Output: 3
     Explanation: Smallest subarrays with a sum greater than or equal to '8' are [3, 4, 1] or [1, 1, 6].
 """
+
+
 def smallest_subarray_with_given_sum(s: int, arr: list[int]) -> int:
     """
     Given an array of positive numbers and a positive number ‘S,’ find the length of the smallest contiguous subarray
@@ -42,7 +44,7 @@ def smallest_subarray_with_given_sum(s: int, arr: list[int]) -> int:
     start, curr_sum, min_length = 0, 0, len(arr) + 1
     for window_end in range(0, len(arr)):
         curr_sum += arr[window_end]  # add the next element
-        
+
         # shrink the window as small as possible until the 'curr_sum' is smaller than 's'
         while curr_sum >= s:
             min_length = min(min_length, window_end - start + 1)
@@ -51,7 +53,6 @@ def smallest_subarray_with_given_sum(s: int, arr: list[int]) -> int:
     if min_length > len(arr):
         return 0
     return min_length
-
 
 
 # Example usage

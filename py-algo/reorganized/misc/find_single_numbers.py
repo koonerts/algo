@@ -2,10 +2,11 @@
 Find_single_numbers
 
 """
+
+
 def find_single_numbers(nums):
     # TODO: Write your code here
     return [-1, -1]
-
 
 
 # Example usage

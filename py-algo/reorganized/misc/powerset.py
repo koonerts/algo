@@ -2,6 +2,8 @@
 Powerset
 
 """
+
+
 def powerset(array):
     q = [[]]
     for num in array:
@@ -10,7 +12,6 @@ def powerset(array):
             item.append(num)
             q.append(item)
     return q
-
 
 
 # Example usage

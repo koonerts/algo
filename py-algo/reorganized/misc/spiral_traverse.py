@@ -2,6 +2,8 @@
 Traverse
 
 """
+
+
 def spiralTraverse(array):
     RIGHT, DOWN, LEFT, UP = 0, 1, 2, 3
     direction = RIGHT
@@ -10,7 +12,7 @@ def spiralTraverse(array):
 
     result = []
     x, y = 0, 0
-    while len(result) < len(array)*len(array[0]):
+    while len(result) < len(array) * len(array[0]):
         if direction == RIGHT:
             y = y_left
             while y_left <= y <= y_right:
@@ -39,9 +41,8 @@ def spiralTraverse(array):
                 x -= 1
             x += 1
             y_left += 1
-        direction = (direction+1) % 4
+        direction = (direction + 1) % 4
     return result
-
 
 
 # Example usage

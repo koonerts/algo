@@ -2,9 +2,11 @@
 Brackets
 
 """
+
+
 def balancedBrackets(string):
-    bracket_map = {'}':'{', ']':'[', ')':'('}
-    open_brackets = {'{','[','('}
+    bracket_map = {"}": "{", "]": "[", ")": "("}
+    open_brackets = {"{", "[", "("}
     stk = []
     for c in string:
         if c not in bracket_map and c not in open_brackets:
@@ -16,7 +18,6 @@ def balancedBrackets(string):
                 return False
             stk.pop()
     return len(stk) == 0
-
 
 
 # Example usage

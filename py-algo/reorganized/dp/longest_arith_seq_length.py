@@ -19,7 +19,6 @@ def maxSeqHelper(d):
     return ret
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to longestArithSeqLength

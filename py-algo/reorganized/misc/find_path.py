@@ -17,7 +17,6 @@ def dfs(node: TreeNode, path) -> bool:
     return dfs(root, [])
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to find_path

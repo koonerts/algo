@@ -2,8 +2,10 @@
 Trap
 
 """
+
+
 def trap(heights: list[int]) -> int:
-        pass
+    pass
 
 
 # Example usage

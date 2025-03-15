@@ -2,8 +2,11 @@
 List Palindrome
 
 """
+
+
 def linkedListPalindrome(head):
-    if not head or not head.next: return True
+    if not head or not head.next:
+        return True
 
     len = 0
     node = head
@@ -11,7 +14,7 @@ def linkedListPalindrome(head):
         len += 1
         node = node.next
 
-    mid = len//2
+    mid = len // 2
     node, prev = head, None
     for _ in range(mid):
         temp = node.next
@@ -31,7 +34,6 @@ def linkedListPalindrome(head):
         p1 = p1.next
         p2 = p2.next
     return True
-
 
 
 # Example usage

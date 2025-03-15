@@ -2,6 +2,8 @@
 Linked List
 
 """
+
+
 def shiftLinkedList(head, k):
     ll_len = 0
     node = head
@@ -26,7 +28,6 @@ def shiftLinkedList(head, k):
             break
         node = node.next
     return new_head
-
 
 
 # Example usage

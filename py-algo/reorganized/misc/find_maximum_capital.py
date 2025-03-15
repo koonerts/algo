@@ -26,7 +26,11 @@ Given a set of investment projects with their respective profits, we need to fin
     Next, we will select the fourth project, giving us a profit of 5.
     After selecting the three projects, our total capital will be 8 (1+2+5).
 """
-def find_maximum_capital(capital: list[int], profits: list[int], numberOfProjects: int, initialCapital: int) -> int:
+
+
+def find_maximum_capital(
+    capital: list[int], profits: list[int], numberOfProjects: int, initialCapital: int
+) -> int:
     """
     Given a set of investment projects with their respective profits, we need to find the most profitable projects.
     We are given an initial capital and are allowed to invest only in a fixed number of projects.
@@ -55,7 +59,6 @@ def find_maximum_capital(capital: list[int], profits: list[int], numberOfProject
     """
     # TODO: Come back to
     return -1
-
 
 
 # Example usage

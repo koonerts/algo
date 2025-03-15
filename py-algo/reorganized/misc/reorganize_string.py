@@ -24,6 +24,8 @@ Given a string and a number ‘K’, find if the string can be rearranged such t
     Output: ""
     Explanation: We cannot find an arrangement of the string where any two 'a' are 3 distance apart.
 """
+
+
 def reorganize_string(str, k):
     """
     Given a string and a number ‘K’, find if the string can be rearranged such that the same characters are
@@ -51,7 +53,6 @@ def reorganize_string(str, k):
     """
     # TODO: Come back to
     return ""
-
 
 
 # Example usage

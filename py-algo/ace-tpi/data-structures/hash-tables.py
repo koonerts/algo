@@ -1,5 +1,6 @@
 from collections import defaultdict
 
+
 def is_disjoint(list1, list2):
     l1_set = set(list1)
     for num in list2:
@@ -34,7 +35,7 @@ def trace_path(my_dict: dict):  # A Map object
     while len(result) < len(my_dict):
         for source, dest in my_dict.items():
             if dest == result[-1][0]:
-                result.append([source,dest])
+                result.append([source, dest])
                 break
     result.reverse()
     return result
@@ -43,7 +44,7 @@ def trace_path(my_dict: dict):  # A Map object
 def find_pair(my_list):
     sum_map = {}
     for i in range(len(my_list)):
-        for j in range(i+1, len(my_list)):
+        for j in range(i + 1, len(my_list)):
             sum_ = my_list[i] + my_list[j]
             if sum_ in sum_map:
                 return [[my_list[i], my_list[j]], sum_map[sum_]]
@@ -73,13 +74,13 @@ def findSum(lst, k):
     num_set = set()
     for num in lst:
         if k - num in num_set:
-            return [num, k-num]
+            return [num, k - num]
         else:
             num_set.add(num)
 
 
 def findFirstUnique(lst):
-    freq_map = defaultdict(lambda:0)
+    freq_map = defaultdict(lambda: 0)
     for num in lst:
         freq_map[num] += 1
     return next((key for key in freq_map if freq_map[key] == 1))

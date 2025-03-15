@@ -2,6 +2,8 @@
 Distance
 
 """
+
+
 def levenshteinDistance(s, t):
     rows = len(s) + 1
     cols = len(t) + 1
@@ -23,13 +25,14 @@ def levenshteinDistance(s, t):
                 cost = 0
             else:
                 cost = 1
-            dist[row][col] = min(dist[row - 1][col] + 1,  # deletion
-                                 dist[row][col - 1] + 1,  # insertion
-                                 dist[row - 1][col - 1] + cost)  # substitution
+            dist[row][col] = min(
+                dist[row - 1][col] + 1,  # deletion
+                dist[row][col - 1] + 1,  # insertion
+                dist[row - 1][col - 1] + cost,
+            )  # substitution
 
     print_matrix(dist)
     return dist[-1][-1]
-
 
 
 # Example usage

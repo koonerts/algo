@@ -11,6 +11,8 @@ Given an array of ‘K’ sorted LinkedLists, merge them into one sorted list.
     Input: L1=[5, 8, 9], L2=[1, 7]
     Output: [1, 5, 7, 8, 9]
 """
+
+
 def merge_lists(lists: list[ListNode]):
     """
     Given an array of ‘K’ sorted LinkedLists, merge them into one sorted list.
@@ -44,7 +46,6 @@ def merge_lists(lists: list[ListNode]):
         prev = curr
 
     return result_head
-
 
 
 # Example usage

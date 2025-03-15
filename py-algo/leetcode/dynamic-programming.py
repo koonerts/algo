@@ -41,7 +41,8 @@ class Solution:
         return traverse(len(nums) - 1)
 
     def canJump(self, nums: list[int]) -> bool:
-        if len(nums) <= 1: return True
+        if len(nums) <= 1:
+            return True
 
         target_index = len(nums) - 1
         left_index = len(nums) - 2
@@ -60,7 +61,8 @@ class Solution:
             nonlocal pathCnt
 
     def coinChange(self, coins: list[int], amount: int) -> int:
-        if not coins or amount <= 0: return -1
+        if not coins or amount <= 0:
+            return -1
 
     def longestPalindrome(self, s: str) -> str:
         pass
@@ -74,7 +76,7 @@ def wordBreak(s: str, wordDict: List[str]) -> List[str]:
 
     # @lru_cache(maxsize=None)    # alternative memoization solution
     def _wordBreak_topdown(s):
-        """ return list of word lists """
+        """return list of word lists"""
         if not s:
             return [[]]  # list of empty list
 
@@ -112,7 +114,8 @@ def longestArithSeqLength(A):
         print(memo)
         return ans
 
-    for d in range(-500, 501): ret = max(ret, maxSeqHelper(d))
+    for d in range(-500, 501):
+        ret = max(ret, maxSeqHelper(d))
     return ret
 
 
@@ -125,7 +128,6 @@ for a in range(2, 1000):
 
 
 def split_primes(input_str: str) -> int:
-
     primes = set()
     for a in range(2, 1000):
         if all(a % p != 0 for p in primes):
@@ -135,7 +137,7 @@ def split_primes(input_str: str) -> int:
     for i in range(1, len(input_str) + 1):
         lst = []
         for n, count in zip(range(len(dp), 0, -1), dp):
-            if input_str[i - n] != '0' and int(input_str[i - n:i]) in primes:
+            if input_str[i - n] != "0" and int(input_str[i - n : i]) in primes:
                 lst.append(count)
         dp.append(sum(lst))
     return dp[-1]
@@ -146,7 +148,8 @@ def number_of_options(a, b, c, d, target):
 
     @lru_cache(None)
     def dfs(count, i):
-        if count > target: return 0
+        if count > target:
+            return 0
 
         if i == 4:
             return 1

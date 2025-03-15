@@ -24,7 +24,6 @@ def can_partition_recursive(curr_sum, curr_row) -> bool:
     return can_partition_recursive(0, 0)
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to can_partition_with_subset_sum_equal_to_s_memoized

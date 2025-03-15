@@ -2,6 +2,8 @@
 Can_partition_to_equal_subsets_tabulated
 
 """
+
+
 def can_partition_to_equal_subsets_tabulated(nums):
     s = sum(nums)
 
@@ -9,28 +11,27 @@ def can_partition_to_equal_subsets_tabulated(nums):
     if s % 2 != 0:
         return False
 
-    dp = [[None for col in range(s//2)] for row in range(len(nums))]
+    dp = [[None for col in range(s // 2)] for row in range(len(nums))]
 
     for row in range(len(dp)):
         for col in range(len(dp[row])):
-            val = row-1 >= 0 and dp[row-1][col] is True
+            val = row - 1 >= 0 and dp[row - 1][col] is True
 
             if not val:
-                curr_sum = col+1
+                curr_sum = col + 1
                 num = nums[row]
-                remaining_sum = curr_sum-num
+                remaining_sum = curr_sum - num
 
                 if remaining_sum == 0:
                     val = True
                 elif remaining_sum < 0:
                     val = False
                 else:
-                    val = row-1 >= 0 and dp[row-1][remaining_sum-1] is True
+                    val = row - 1 >= 0 and dp[row - 1][remaining_sum - 1] is True
 
             dp[row][col] = val
 
     return dp[-1][-1]
-
 
 
 # Example usage

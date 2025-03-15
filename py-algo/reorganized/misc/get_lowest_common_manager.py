@@ -2,9 +2,12 @@
 Lowest Common Manager
 
 """
-def getLowestCommonManager(topManager: OrgChart, reportOne: OrgChart, reportTwo: OrgChart):
-    pass
 
+
+def getLowestCommonManager(
+    topManager: OrgChart, reportOne: OrgChart, reportTwo: OrgChart
+):
+    pass
 
 
 # Example usage

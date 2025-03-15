@@ -2,6 +2,8 @@
 Number Sort
 
 """
+
+
 def threeNumberSort(array, order):
     low, high = 0, len(array) - 1
     i = 0
@@ -18,7 +20,6 @@ def threeNumberSort(array, order):
             # decrement 'high' only, after the swap the number at index 'i' could be 0, 1 or 2
             high -= 1
     return array
-
 
 
 # Example usage

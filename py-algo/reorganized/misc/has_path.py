@@ -19,7 +19,6 @@ def dfs(node:TreeNode, curr_sum: int):
     return dfs(root, sum)
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to has_path

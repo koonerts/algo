@@ -16,6 +16,8 @@ Given a sorted number array and two integers ‘K’ and ‘X’, find ‘K’ c
     Input: [2, 4, 5, 6, 9], K = 3, X = 10
     Output: [5, 6, 9]
 """
+
+
 def find_closest_elements(arr, K, X):
     """
     Given a sorted number array and two integers ‘K’ and ‘X’, find ‘K’ closest numbers to ‘X’ in the array.
@@ -38,7 +40,7 @@ def find_closest_elements(arr, K, X):
     # TODO: Can be improved by using binary search for finding the closest element
     #       and then 2 pointers expanding to either side of that element until reaching K
     for num in arr:
-        diff = abs(num-X)
+        diff = abs(num - X)
 
         if len(result) < K:
             heappush(result, (-diff, num))
@@ -46,7 +48,6 @@ def find_closest_elements(arr, K, X):
             heappushpop(result, (-diff, num))
 
     return [item[1] for item in result]
-
 
 
 # Example usage

@@ -2,6 +2,8 @@
 Number Sum
 
 """
+
+
 def threeNumberSum(array, targetSum):
     array.sort()
 
@@ -20,7 +22,6 @@ def threeNumberSum(array, targetSum):
             else:
                 k -= 1
     return res
-
 
 
 # Example usage

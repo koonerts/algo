@@ -3,10 +3,12 @@ Min_meeting_rooms
 
 """
 
-
 from heapq import *
+
+
 def min_meeting_rooms(meetings: list[Meeting]):
-    if not meetings: return 0
+    if not meetings:
+        return 0
 
     max_rooms = 0
     meetings.sort(key=lambda x: x.start)
@@ -19,7 +21,6 @@ def min_meeting_rooms(meetings: list[Meeting]):
         heapq.heappush(end_times, meeting.end)
         max_rooms = max(max_rooms, len(end_times))
     return max_rooms
-
 
 
 # Example usage

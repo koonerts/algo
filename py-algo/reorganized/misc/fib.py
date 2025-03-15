@@ -2,6 +2,8 @@
 Fib
 
 """
+
+
 def fib(n):
     if n <= 0:
         return 0
@@ -9,7 +11,7 @@ def fib(n):
         return 0
     elif n == 2:
         return 1
-    return n + fib(n-2)
+    return n + fib(n - 2)
 
 
 # Example usage

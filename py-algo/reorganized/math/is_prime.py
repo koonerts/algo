@@ -2,14 +2,16 @@
 Prime
 
 """
+
+
 def isPrime(n, currPrimes) -> bool:
-        if n == 2:
-            return True
-        else:
-            for cp in currPrimes:
-                if n % cp == 0:
-                    return False
-            return True
+    if n == 2:
+        return True
+    else:
+        for cp in currPrimes:
+            if n % cp == 0:
+                return False
+        return True
 
 
 # Example usage

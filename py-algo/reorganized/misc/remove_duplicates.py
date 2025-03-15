@@ -14,6 +14,8 @@ Given an array of sorted numbers, remove all duplicates from it. You should not 
     Output: 2
     Explanation: The first two elements after removing the duplicates will be [2, 11].
 """
+
+
 def remove_duplicates(arr: list[int]) -> int:
     """
     Given an array of sorted numbers, remove all duplicates from it. You should not use any extra space.
@@ -39,7 +41,6 @@ def remove_duplicates(arr: list[int]) -> int:
 
     print(arr)
     return switch_index
-
 
 
 # Example usage

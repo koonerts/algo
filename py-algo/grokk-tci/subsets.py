@@ -1,5 +1,5 @@
 from collections import deque
-import re
+
 
 def find_subsets(nums: list[int]):
     """
@@ -33,7 +33,8 @@ def find_subsets_with_dups(nums: list[int]):
     Input: [1, 5, 3, 3]
     Output: [], [1], [5], [3], [1,5], [1,3], [5,3], [1,5,3], [3,3], [1,3,3], [3,3,5], [1,5,3,3]
     """
-    if not nums: return [[]]
+    if not nums:
+        return [[]]
 
     nums.sort()
     subsets = [[]]
@@ -41,7 +42,7 @@ def find_subsets_with_dups(nums: list[int]):
 
     for i, num in enumerate(nums):
         start = 0
-        if i > 0 and nums[i-1] == nums[i]:
+        if i > 0 and nums[i - 1] == nums[i]:
             start = end + 1
         end = len(subsets) - 1
         for j in range(start, end + 1):
@@ -68,7 +69,8 @@ def find_permutations(nums: list[int]):
     Input: [1,3,5]
     Output: [1,3,5], [1,5,3], [3,1,5], [3,5,1], [5,1,3], [5,3,1]
     """
-    if not nums: return []
+    if not nums:
+        return []
     result = []
     q: deque[list[int]] = deque()
 
@@ -104,7 +106,7 @@ def find_letter_case_string_permutations(str_in: str) -> list[str]:
     Input: "ab7c"
     Output: "ab7c", "Ab7c", "aB7c", "AB7c", "ab7C", "Ab7C", "aB7C", "AB7C"
     """
-    q = deque([''])
+    q = deque([""])
     for c in str_in:
         for _ in range(len(q)):
             current_permutation = q.popleft()
@@ -154,7 +156,7 @@ def generate_generalized_abbreviation(word: str):
     Input: "code"
     Output: "code", "cod1", "co1e", "co2", "c1de", "c1d1", "c2e", "c3", "1ode", "1od1", "1o1e", "1o2", "2de", "2d1", "3e", "4"
     """
-    q = deque([''])
+    q = deque([""])
 
     for c in word:
         for _ in range(len(q)):
@@ -163,12 +165,12 @@ def generate_generalized_abbreviation(word: str):
 
             if permutation and permutation[-1].isnumeric():
                 i = -1
-                while i-1 >= -len(permutation) and permutation[i-1].isnumeric():
+                while i - 1 >= -len(permutation) and permutation[i - 1].isnumeric():
                     i -= 1
 
                 q.append(permutation[:i] + str(int(permutation[i:]) + 1))
             else:
-                q.append(permutation + '1')
+                q.append(permutation + "1")
 
     return list(q)
 
@@ -232,5 +234,3 @@ def main():
 
 
 main()
-
-

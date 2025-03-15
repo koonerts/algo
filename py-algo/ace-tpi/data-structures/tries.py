@@ -1,5 +1,5 @@
 class TrieNode:
-    def __init__(self, char=''):
+    def __init__(self, char=""):
         self.children = [None] * 26  # Total size of the English alphabet
         self.is_end_word = False  # True if the node represents the end of word
         self.char = char  # To store the value of a particular key
@@ -19,7 +19,7 @@ class Trie:
 
     # Function to get the index of character 't'
     def get_index(self, t):
-        return ord(t) - ord('a')
+        return ord(t) - ord("a")
 
     # Function to insert a key into the trie
     def insert(self, key):
@@ -101,8 +101,7 @@ class Trie:
 
         else:
             child_node = current_node.children[self.get_index(key[level])]
-            child_deleted = self.delete_helper(
-                key, child_node, length, level + 1)
+            child_deleted = self.delete_helper(key, child_node, length, level + 1)
             if child_deleted:
                 # Making children pointer also None: since child is deleted
                 current_node.children[self.get_index(key[level])] = None
@@ -153,7 +152,7 @@ def total_words(root: TrieNode):
 def find_words(root: TrieNode):
     words = []
 
-    def traverse(node, current_word=''):
+    def traverse(node, current_word=""):
         if node:
             if node.is_end_word:
                 words.append(current_word + node.char)
@@ -167,26 +166,28 @@ def find_words(root: TrieNode):
 
 def sort_list(arr):
     trie = Trie()
-    for word in arr: trie.insert(word)
+    for word in arr:
+        trie.insert(word)
     return find_words(trie.root)
 
 
 def is_formation_possible(dictionary, word):
     trie = Trie()
-    for w in dictionary: trie.insert(w)
+    for w in dictionary:
+        trie.insert(w)
 
     def traverse(node, i):
         if node and node.char == word[i]:
-            if i == len(word)-1:
+            if i == len(word) - 1:
                 return True
 
             for child in node.children:
                 traverse(child, current_word + node.char)
 
 
-
 keys = ["the", "a", "there", "answer", "any", "by", "bye", "their", "abc"]
 trie = Trie()
-for key in keys: trie.insert(key)
+for key in keys:
+    trie.insert(key)
 
 print(find_words(trie.root))

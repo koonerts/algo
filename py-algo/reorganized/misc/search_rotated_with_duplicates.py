@@ -9,6 +9,8 @@ How do we search in a sorted and rotated array that also has duplicates?
     Output: 1
     Explanation: '7' is present in the array at index '1'.
 """
+
+
 def search_rotated_with_duplicates(arr, key):
     """
     How do we search in a sorted and rotated array that also has duplicates?

@@ -2,8 +2,11 @@
 Sum Increasing Subsequence
 
 """
+
+
 def maxSumIncreasingSubsequence(array):
-    if not array: return 0, []
+    if not array:
+        return 0, []
     sums = [num for num in array]
     prev_indexes = [None] * len(array)
 
@@ -27,7 +30,6 @@ def maxSumIncreasingSubsequence(array):
         max_idx = prev_indexes[max_idx]
     nums.reverse()
     return max_sum, nums
-
 
 
 # Example usage

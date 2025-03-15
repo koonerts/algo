@@ -15,7 +15,7 @@ class Graph:
 
     # Function to add an edge from source to destination
     def add_edge(self, source, destination):
-        if (source < self.vertices and destination < self.vertices):
+        if source < self.vertices and destination < self.vertices:
             # As we are implementing a directed graph, (1,0) is not equal to (0,1)
             self.array[source].insert_at_head(destination)
 
@@ -29,7 +29,7 @@ class Graph:
         for i in range(self.vertices):
             print("|", i, end=" | => ")
             temp = self.array[i].get_head()
-            while(temp is not None):
+            while temp is not None:
                 print("[", temp.data, end=" ] -> ")
                 temp = temp.next_element
             print("None")

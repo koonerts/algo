@@ -14,7 +14,7 @@ BASE_DIR = Path("/Users/koonerts/.proj/algo/py-algo/reorganized")
 PRIORITY_PROBLEMS = {
     "arrays": [
         "two_sum.py",
-        "three_sum.py", 
+        "three_sum.py",
         "move_zeroes.py",
         "contains_duplicate.py",
         "max_profit.py",
@@ -41,7 +41,7 @@ PRIORITY_PROBLEMS = {
     "sorting": [
         "merge.py",
         "binary_search.py",
-    ]
+    ],
 }
 
 # Templates for different problem types
@@ -70,7 +70,7 @@ Returns:
     
 Time Complexity: {time_complexity}
 Space Complexity: {space_complexity}
-"""'''
+"""''',
     },
     "linked_lists": {
         "docstring": '''"""
@@ -96,7 +96,7 @@ Returns:
     
 Time Complexity: {time_complexity}
 Space Complexity: {space_complexity}
-"""'''
+"""''',
     },
     "default": {
         "docstring": '''"""
@@ -122,8 +122,8 @@ Returns:
     
 Time Complexity: {time_complexity}
 Space Complexity: {space_complexity}
-"""'''
-    }
+"""''',
+    },
 }
 
 # Problem-specific enhancements
@@ -142,13 +142,13 @@ PROBLEM_DATA = {
         "examples": [
             "twoSum([2, 7, 11, 15], 9)  # Output: [0, 1]",
             "twoSum([3, 2, 4], 6)  # Output: [1, 2]",
-            "twoSum([3, 3], 6)  # Output: [0, 1]"
-        ]
+            "twoSum([3, 3], 6)  # Output: [0, 1]",
+        ],
     },
     "is_valid_sudoku.py": {
         "title": "Valid Sudoku",
         "description": "Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules: Each row must contain the digits 1-9 without repetition, each column must contain the digits 1-9 without repetition, and each of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without repetition.",
-        "example_input": "[\n  [\"5\",\"3\",\".\",\".\",\"7\",\".\",\".\",\".\",\".\"],\n  [\"6\",\".\",\".\",\"1\",\"9\",\"5\",\".\",\".\",\".\"],\n  [\".\",\"9\",\"8\",\".\",\".\",\".\",\".\",\"6\",\".\"],\n  [\"8\",\".\",\".\",\".\",\"6\",\".\",\".\",\".\",\"3\"],\n  [\"4\",\".\",\".\",\"8\",\".\",\"3\",\".\",\".\",\"1\"],\n  [\"7\",\".\",\".\",\".\",\"2\",\".\",\".\",\".\",\"6\"],\n  [\".\",\"6\",\".\",\".\",\".\",\".\",\"2\",\"8\",\".\"],\n  [\".\",\".\",\".\",\"4\",\"1\",\"9\",\".\",\".\",\"5\"],\n  [\".\",\".\",\".\",\".\",\"8\",\".\",\".\",\"7\",\"9\"]\n]",
+        "example_input": '[\n  ["5","3",".",".","7",".",".",".","."],\n  ["6",".",".","1","9","5",".",".","."],\n  [".","9","8",".",".",".",".","6","."],\n  ["8",".",".",".","6",".",".",".","3"],\n  ["4",".",".","8",".","3",".",".","1"],\n  ["7",".",".",".","2",".",".",".","6"],\n  [".","6",".",".",".",".","2","8","."],\n  [".",".",".","4","1","9",".",".","5"],\n  [".",".",".",".","8",".",".","7","9"]\n]',
         "example_output": "true",
         "time_complexity": "O(1) since the board size is fixed (9x9)",
         "space_complexity": "O(1) since we use fixed-size data structures",
@@ -156,9 +156,9 @@ PROBLEM_DATA = {
         "args": "board (List[List[str]]): 9x9 Sudoku board",
         "returns": "bool: True if the board is valid, False otherwise",
         "examples": [
-            "isValidSudoku([\n  [\"5\",\"3\",\".\",\".\",\"7\",\".\",\".\",\".\",\".\"],\n  [\"6\",\".\",\".\",\"1\",\"9\",\"5\",\".\",\".\",\".\"],\n  [\".\",\"9\",\"8\",\".\",\".\",\".\",\".\",\"6\",\".\"],\n  [\"8\",\".\",\".\",\".\",\"6\",\".\",\".\",\".\",\"3\"],\n  [\"4\",\".\",\".\",\"8\",\".\",\"3\",\".\",\".\",\"1\"],\n  [\"7\",\".\",\".\",\".\",\"2\",\".\",\".\",\".\",\"6\"],\n  [\".\",\"6\",\".\",\".\",\".\",\".\",\"2\",\"8\",\".\"],\n  [\".\",\".\",\".\",\"4\",\"1\",\"9\",\".\",\".\",\"5\"],\n  [\".\",\".\",\".\",\".\",\"8\",\".\",\".\",\"7\",\"9\"]\n])  # Output: True",
-            "isValidSudoku([\n  [\"8\",\"3\",\".\",\".\",\"7\",\".\",\".\",\".\",\".\"],\n  [\"6\",\".\",\".\",\"1\",\"9\",\"5\",\".\",\".\",\".\"],\n  [\".\",\"9\",\"8\",\".\",\".\",\".\",\".\",\"6\",\".\"],\n  [\"8\",\".\",\".\",\".\",\"6\",\".\",\".\",\".\",\"3\"],\n  [\"4\",\".\",\".\",\"8\",\".\",\"3\",\".\",\".\",\"1\"],\n  [\"7\",\".\",\".\",\".\",\"2\",\".\",\".\",\".\",\"6\"],\n  [\".\",\"6\",\".\",\".\",\".\",\".\",\"2\",\"8\",\".\"],\n  [\".\",\".\",\".\",\"4\",\"1\",\"9\",\".\",\".\",\"5\"],\n  [\".\",\".\",\".\",\".\",\"8\",\".\",\".\",\"7\",\"9\"]\n])  # Output: False (duplicated 8 in first column)"
-        ]
+            'isValidSudoku([\n  ["5","3",".",".","7",".",".",".","."],\n  ["6",".",".","1","9","5",".",".","."],\n  [".","9","8",".",".",".",".","6","."],\n  ["8",".",".",".","6",".",".",".","3"],\n  ["4",".",".","8",".","3",".",".","1"],\n  ["7",".",".",".","2",".",".",".","6"],\n  [".","6",".",".",".",".","2","8","."],\n  [".",".",".","4","1","9",".",".","5"],\n  [".",".",".",".","8",".",".","7","9"]\n])  # Output: True',
+            'isValidSudoku([\n  ["8","3",".",".","7",".",".",".","."],\n  ["6",".",".","1","9","5",".",".","."],\n  [".","9","8",".",".",".",".","6","."],\n  ["8",".",".",".","6",".",".",".","3"],\n  ["4",".",".","8",".","3",".",".","1"],\n  ["7",".",".",".","2",".",".",".","6"],\n  [".","6",".",".",".",".","2","8","."],\n  [".",".",".","4","1","9",".",".","5"],\n  [".",".",".",".","8",".",".","7","9"]\n])  # Output: False (duplicated 8 in first column)',
+        ],
     },
     "three_sum.py": {
         "title": "Three Sum",
@@ -173,8 +173,8 @@ PROBLEM_DATA = {
         "examples": [
             "threeSum([-1, 0, 1, 2, -1, -4])  # Output: [[-1, -1, 2], [-1, 0, 1]]",
             "threeSum([0, 0, 0])  # Output: [[0, 0, 0]]",
-            "threeSum([1, 2, -2, -1])  # Output: []"
-        ]
+            "threeSum([1, 2, -2, -1])  # Output: []",
+        ],
     },
     "move_zeroes.py": {
         "title": "Move Zeroes",
@@ -188,8 +188,8 @@ PROBLEM_DATA = {
         "returns": "None: The array is modified in-place",
         "examples": [
             "arr1 = [0, 1, 0, 3, 12]\nmoveZeroes(arr1)\nprint(arr1)  # Output: [1, 3, 12, 0, 0]",
-            "arr2 = [0, 0, 1]\nmoveZeroes(arr2)\nprint(arr2)  # Output: [1, 0, 0]"
-        ]
+            "arr2 = [0, 0, 1]\nmoveZeroes(arr2)\nprint(arr2)  # Output: [1, 0, 0]",
+        ],
     },
     "contains_duplicate.py": {
         "title": "Contains Duplicate",
@@ -204,8 +204,8 @@ PROBLEM_DATA = {
         "examples": [
             "containsDuplicate([1, 2, 3, 1])  # Output: True",
             "containsDuplicate([1, 2, 3, 4])  # Output: False",
-            "containsDuplicate([1, 1, 1, 3, 3, 4, 3, 2, 4, 2])  # Output: True"
-        ]
+            "containsDuplicate([1, 1, 1, 3, 3, 4, 3, 2, 4, 2])  # Output: True",
+        ],
     },
     "max_profit.py": {
         "title": "Best Time to Buy and Sell Stock",
@@ -219,8 +219,8 @@ PROBLEM_DATA = {
         "returns": "int: The maximum profit that can be achieved",
         "examples": [
             "maxProfit([7, 1, 5, 3, 6, 4])  # Output: 5",
-            "maxProfit([7, 6, 4, 3, 1])  # Output: 0"
-        ]
+            "maxProfit([7, 6, 4, 3, 1])  # Output: 0",
+        ],
     },
     # Linked Lists
     "reverse.py": {
@@ -230,7 +230,9 @@ PROBLEM_DATA = {
         "example_output": "5->4->3->2->1->NULL",
         "time_complexity": "O(n) where n is the number of nodes in the list",
         "space_complexity": "O(1) as we only use a constant amount of extra space",
-        "imports": ["from typing import Optional\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next"],
+        "imports": [
+            "from typing import Optional\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next"
+        ],
         "args": "head (Optional[ListNode]): Head of the linked list",
         "returns": "Optional[ListNode]: New head of the reversed linked list",
         "examples": [
@@ -240,10 +242,10 @@ PROBLEM_DATA = {
             "new_head = reverse(head)",
             "# Print the reversed list",
             "while new_head:",
-            "    print(new_head.val, end=\" \")",
+            '    print(new_head.val, end=" ")',
             "    new_head = new_head.next",
-            "# Output: 5 4 3 2 1"
-        ]
+            "# Output: 5 4 3 2 1",
+        ],
     },
     "has_cycle.py": {
         "title": "Linked List Cycle",
@@ -252,7 +254,9 @@ PROBLEM_DATA = {
         "example_output": "true (there is a cycle in the linked list)",
         "time_complexity": "O(n) where n is the number of nodes in the list",
         "space_complexity": "O(1) as we only use two pointers regardless of list size",
-        "imports": ["from typing import Optional\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next"],
+        "imports": [
+            "from typing import Optional\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next"
+        ],
         "args": "head (Optional[ListNode]): Head of the linked list",
         "returns": "bool: True if the linked list has a cycle, False otherwise",
         "examples": [
@@ -270,8 +274,8 @@ PROBLEM_DATA = {
             "",
             "# Create a linked list without a cycle: 1->2->3->None",
             "head2 = ListNode(1, ListNode(2, ListNode(3)))",
-            "print(hasCycle(head2))  # Output: False"
-        ]
+            "print(hasCycle(head2))  # Output: False",
+        ],
     },
     "merge_two_lists.py": {
         "title": "Merge Two Sorted Lists",
@@ -280,7 +284,9 @@ PROBLEM_DATA = {
         "example_output": "[1,1,2,3,4,4]",
         "time_complexity": "O(n + m) where n and m are the lengths of the lists",
         "space_complexity": "O(1) as we only modify pointers",
-        "imports": ["from typing import Optional\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next"],
+        "imports": [
+            "from typing import Optional\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next"
+        ],
         "args": "l1 (Optional[ListNode]): Head of first sorted linked list\nl2 (Optional[ListNode]): Head of second sorted linked list",
         "returns": "Optional[ListNode]: Head of merged sorted linked list",
         "examples": [
@@ -295,10 +301,10 @@ PROBLEM_DATA = {
             "",
             "# Print the merged list",
             "while result:",
-            "    print(result.val, end=\" \")",
+            '    print(result.val, end=" ")',
             "    result = result.next",
-            "# Output: 1 1 2 3 4 4"
-        ]
+            "# Output: 1 1 2 3 4 4",
+        ],
     },
     "remove_nth_from_end.py": {
         "title": "Remove Nth Node From End of List",
@@ -307,7 +313,9 @@ PROBLEM_DATA = {
         "example_output": "[1,2,3,5] (the 2nd node from the end, which is 4, is removed)",
         "time_complexity": "O(n) where n is the length of the list",
         "space_complexity": "O(1) as we only use a constant amount of extra space",
-        "imports": ["from typing import Optional\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next"],
+        "imports": [
+            "from typing import Optional\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next"
+        ],
         "args": "head (Optional[ListNode]): Head of the linked list\nn (int): Position from the end to remove (1-indexed)",
         "returns": "Optional[ListNode]: Head of the modified linked list",
         "examples": [
@@ -319,10 +327,10 @@ PROBLEM_DATA = {
             "",
             "# Print the result",
             "while result:",
-            "    print(result.val, end=\" \")",
+            '    print(result.val, end=" ")',
             "    result = result.next",
-            "# Output: 1 2 3 5"
-        ]
+            "# Output: 1 2 3 5",
+        ],
     },
     # Trees
     "max_depth.py": {
@@ -332,7 +340,9 @@ PROBLEM_DATA = {
         "example_output": "3",
         "time_complexity": "O(n) where n is the number of nodes in the tree",
         "space_complexity": "O(h) where h is the height of the tree (for recursion stack)",
-        "imports": ["from typing import Optional\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right"],
+        "imports": [
+            "from typing import Optional\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right"
+        ],
         "args": "root (Optional[TreeNode]): Root of the binary tree",
         "returns": "int: The maximum depth of the tree",
         "examples": [
@@ -343,8 +353,8 @@ PROBLEM_DATA = {
             "root.right.left = TreeNode(15)",
             "root.right.right = TreeNode(7)",
             "",
-            "print(maxDepth(root))  # Output: 3"
-        ]
+            "print(maxDepth(root))  # Output: 3",
+        ],
     },
     "level_order.py": {
         "title": "Binary Tree Level Order Traversal",
@@ -353,7 +363,9 @@ PROBLEM_DATA = {
         "example_output": "[[3],[9,20],[15,7]]",
         "time_complexity": "O(n) where n is the number of nodes in the tree",
         "space_complexity": "O(n) to store the result and the queue",
-        "imports": ["from typing import List, Optional, Deque\nfrom collections import deque\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right"],
+        "imports": [
+            "from typing import List, Optional, Deque\nfrom collections import deque\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right"
+        ],
         "args": "root (Optional[TreeNode]): Root of the binary tree",
         "returns": "List[List[int]]: Level order traversal of the tree's values",
         "examples": [
@@ -364,8 +376,8 @@ PROBLEM_DATA = {
             "root.right.left = TreeNode(15)",
             "root.right.right = TreeNode(7)",
             "",
-            "print(levelOrder(root))  # Output: [[3],[9,20],[15,7]]"
-        ]
+            "print(levelOrder(root))  # Output: [[3],[9,20],[15,7]]",
+        ],
     },
     "inorder_traversal.py": {
         "title": "Binary Tree Inorder Traversal",
@@ -374,7 +386,9 @@ PROBLEM_DATA = {
         "example_output": "[1,3,2]",
         "time_complexity": "O(n) where n is the number of nodes in the tree",
         "space_complexity": "O(n) for the output list and recursion stack",
-        "imports": ["from typing import List, Optional\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right"],
+        "imports": [
+            "from typing import List, Optional\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right"
+        ],
         "args": "root (Optional[TreeNode]): Root of the binary tree",
         "returns": "List[int]: The inorder traversal of the tree's values",
         "examples": [
@@ -383,8 +397,8 @@ PROBLEM_DATA = {
             "root.right = TreeNode(2)",
             "root.right.left = TreeNode(3)",
             "",
-            "print(inorderTraversal(root))  # Output: [1, 3, 2]"
-        ]
+            "print(inorderTraversal(root))  # Output: [1, 3, 2]",
+        ],
     },
     "is_valid_bst.py": {
         "title": "Validate Binary Search Tree",
@@ -393,7 +407,9 @@ PROBLEM_DATA = {
         "example_output": "true",
         "time_complexity": "O(n) where n is the number of nodes in the tree",
         "space_complexity": "O(h) where h is the height of the tree (for recursion stack)",
-        "imports": ["from typing import Optional\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right"],
+        "imports": [
+            "from typing import Optional\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right"
+        ],
         "args": "root (Optional[TreeNode]): Root of the binary tree",
         "returns": "bool: True if the tree is a valid BST, False otherwise",
         "examples": [
@@ -410,8 +426,8 @@ PROBLEM_DATA = {
             "invalid_bst.right.right = TreeNode(6)",
             "",
             "print(isValidBST(valid_bst))    # Output: True",
-            "print(isValidBST(invalid_bst))  # Output: False"
-        ]
+            "print(isValidBST(invalid_bst))  # Output: False",
+        ],
     },
     # DP
     "climb_stairs.py": {
@@ -427,8 +443,8 @@ PROBLEM_DATA = {
         "examples": [
             "climbStairs(2)  # Output: 2",
             "climbStairs(3)  # Output: 3",
-            "climbStairs(5)  # Output: 8"
-        ]
+            "climbStairs(5)  # Output: 8",
+        ],
     },
     "longest_palindrome.py": {
         "title": "Longest Palindromic Substring",
@@ -441,10 +457,10 @@ PROBLEM_DATA = {
         "args": "s (str): Input string",
         "returns": "str: Longest palindromic substring",
         "examples": [
-            "longestPalindrome(\"babad\")  # Output: \"bab\" or \"aba\"",
-            "longestPalindrome(\"cbbd\")  # Output: \"bb\"",
-            "longestPalindrome(\"a\")  # Output: \"a\""
-        ]
+            'longestPalindrome("babad")  # Output: "bab" or "aba"',
+            'longestPalindrome("cbbd")  # Output: "bb"',
+            'longestPalindrome("a")  # Output: "a"',
+        ],
     },
     "rob.py": {
         "title": "House Robber",
@@ -458,8 +474,8 @@ PROBLEM_DATA = {
         "returns": "int: Maximum amount of money that can be robbed",
         "examples": [
             "rob([1, 2, 3, 1])  # Output: 4",
-            "rob([2, 7, 9, 3, 1])  # Output: 12"
-        ]
+            "rob([2, 7, 9, 3, 1])  # Output: 12",
+        ],
     },
     "coin_change.py": {
         "title": "Coin Change",
@@ -474,8 +490,8 @@ PROBLEM_DATA = {
         "examples": [
             "coinChange([1, 2, 5], 11)  # Output: 3",
             "coinChange([2], 3)  # Output: -1",
-            "coinChange([1], 0)  # Output: 0"
-        ]
+            "coinChange([1], 0)  # Output: 0",
+        ],
     },
     # Sorting and Searching
     "merge.py": {
@@ -492,8 +508,8 @@ PROBLEM_DATA = {
             "nums1 = [1, 2, 3, 0, 0, 0]",
             "nums2 = [2, 5, 6]",
             "merge(nums1, 3, nums2, 3)",
-            "print(nums1)  # Output: [1, 2, 2, 3, 5, 6]"
-        ]
+            "print(nums1)  # Output: [1, 2, 2, 3, 5, 6]",
+        ],
     },
     "binary_search.py": {
         "title": "Binary Search",
@@ -507,35 +523,37 @@ PROBLEM_DATA = {
         "returns": "int: Index of target if found, otherwise -1",
         "examples": [
             "binarySearch([-1, 0, 3, 5, 9, 12], 9)  # Output: 4",
-            "binarySearch([-1, 0, 3, 5, 9, 12], 2)  # Output: -1"
-        ]
-    }
+            "binarySearch([-1, 0, 3, 5, 9, 12], 2)  # Output: -1",
+        ],
+    },
 }
 
 
 def enhance_file(file_path, problem_data):
     """Enhance a problem file with better documentation and examples"""
-    with open(file_path, 'r') as f:
+    with open(file_path, "r") as f:
         content = f.read()
-    
+
     # Extract function name and body
-    function_match = re.search(r'def\s+(\w+)\s*\((.*?)\)(?:\s*->\s*([^:]+))?\s*:', content, re.DOTALL)
+    function_match = re.search(
+        r"def\s+(\w+)\s*\((.*?)\)(?:\s*->\s*([^:]+))?\s*:", content, re.DOTALL
+    )
     if not function_match:
         print(f"Could not find function definition in {file_path}")
         return
-    
+
     func_name = function_match.group(1)
     func_params = function_match.group(2)
     func_return = function_match.group(3) if function_match.group(3) else "None"
-    
+
     # Fix return type format if needed
     if "List" in func_return and not func_return.startswith("List"):
         func_return = func_return.replace("list", "List")
-    
+
     # Get category from path
     category = os.path.basename(os.path.dirname(file_path))
     template = TEMPLATES.get(category, TEMPLATES["default"])
-    
+
     # Create docstring
     file_docstring = template["docstring"].format(
         title=problem_data["title"],
@@ -543,29 +561,29 @@ def enhance_file(file_path, problem_data):
         example_input=problem_data["example_input"],
         example_output=problem_data["example_output"],
         time_complexity=problem_data["time_complexity"],
-        space_complexity=problem_data["space_complexity"]
+        space_complexity=problem_data["space_complexity"],
     )
-    
+
     # Create function docstring
     func_docstring = template["function_docstring"].format(
         description=problem_data["description"],
         args=problem_data["args"],
         returns=problem_data["returns"],
         time_complexity=problem_data["time_complexity"],
-        space_complexity=problem_data["space_complexity"]
+        space_complexity=problem_data["space_complexity"],
     )
-    
+
     # Imports
     imports = "\n".join(problem_data.get("imports", []))
     if imports:
         imports += "\n\n"
-    
+
     # Examples
     examples = []
     for example in problem_data.get("examples", []):
         examples.append(f"    {example}")
     examples_str = "\n".join(examples) if examples else f"    print({func_name}())"
-    
+
     # Function body - extract the function implementation (not the signature or docstring)
     # Skip any existing docstrings
     func_body = ""
@@ -573,47 +591,49 @@ def enhance_file(file_path, problem_data):
     in_docstring = False
     indent = None
     triple_quote_count = 0
-    for line in content.split('\n'):
-        if re.match(r'\s*def\s+' + func_name, line):
+    for line in content.split("\n"):
+        if re.match(r"\s*def\s+" + func_name, line):
             in_func = True
             # Find indentation level
-            match = re.match(r'^(\s+)', line.rstrip())
+            match = re.match(r"^(\s+)", line.rstrip())
             if match:
                 indent = len(match.group(1))
             else:
                 indent = 0
             continue
-        
+
         # Check for docstring start/end
         if in_func and '"""' in line:
             triple_quote_count += 1
             in_docstring = triple_quote_count % 2 == 1  # Toggle docstring state
             continue
-            
+
         # Skip lines in docstring
         if in_func and in_docstring:
             continue
-            
+
         # Collect function body (excluding docstring)
         if in_func and not in_docstring:
             # Check if we're still in the function
-            if line.strip() and not line.startswith(" " * (indent if indent is not None else 0)):
+            if line.strip() and not line.startswith(
+                " " * (indent if indent is not None else 0)
+            ):
                 # We've reached the end of the function
                 in_func = False
             else:
                 # This is part of the function body
                 func_body += line + "\n"
-    
+
     # Extract only the actual implementation part (remove empty lines at start)
     func_body = func_body.lstrip()
-    
+
     # Special case fixes based on category
     if category == "linked_lists":
         # Make sure function body doesn't reference 'self'
         func_body = func_body.replace("self.", "")
-    
+
     # Handle indentation consistently
-    func_body_lines = func_body.split('\n')
+    func_body_lines = func_body.split("\n")
     indented_func_body = ""
     for line in func_body_lines:
         if line.strip():
@@ -621,9 +641,9 @@ def enhance_file(file_path, problem_data):
             indented_func_body += "    " + line.lstrip() + "\n"
         else:
             indented_func_body += "\n"
-    
+
     # Create the enhanced file content
-    enhanced_content = f'''{file_docstring}
+    enhanced_content = f"""{file_docstring}
 
 {imports}def {func_name}({func_params}) -> {func_return}:
     {func_docstring}
@@ -632,30 +652,30 @@ def enhance_file(file_path, problem_data):
 # Example usage
 if __name__ == "__main__":
 {examples_str}
-'''
-    
+"""
+
     # Write the enhanced content
-    with open(file_path, 'w') as f:
+    with open(file_path, "w") as f:
         f.write(enhanced_content)
-    
+
     print(f"Enhanced {file_path}")
 
 
 def main():
     """Enhance problem files with better documentation and examples"""
     print("Enhancing problem files...")
-    
+
     # Process priority problems first
     for category, problems in PRIORITY_PROBLEMS.items():
         category_dir = BASE_DIR / category
         if not category_dir.exists():
             continue
-            
+
         for problem in problems:
             file_path = category_dir / problem
             if file_path.exists() and problem in PROBLEM_DATA:
                 enhance_file(file_path, PROBLEM_DATA[problem])
-    
+
     print("Problem enhancement complete!")
 
 

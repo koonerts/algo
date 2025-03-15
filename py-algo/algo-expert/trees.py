@@ -1,5 +1,5 @@
 from collections import deque
-import math
+
 
 # This is an input class. Do not edit.
 class AncestralTree:
@@ -11,8 +11,8 @@ class AncestralTree:
 class BST:
     def __init__(self, value):
         self.value = value
-        self.left: 'BST' = None
-        self.right: 'BST' = None
+        self.left: "BST" = None
+        self.right: "BST" = None
 
     def insert(self, value):
         if value < self.value:
@@ -131,6 +131,7 @@ class Node:
                 q.append(child)
         return array
 
+
 # This is an input class. Do not edit.
 class OrgChart:
     def __init__(self, name):
@@ -139,49 +140,51 @@ class OrgChart:
 
 
 def create_binary_tree_from_map(bt_map) -> BinaryTree:
-    if 'tree' in bt_map:
-        tree = bt_map['tree']
+    if "tree" in bt_map:
+        tree = bt_map["tree"]
     else:
         tree = bt_map
 
     node_map = {}
     root: BinaryTree
-    for n in tree['nodes']:
-        node_map[n['id']] = BinaryTree(n['value'])
-        if n['id'] == tree['root']:
-            root = node_map[n['id']]
+    for n in tree["nodes"]:
+        node_map[n["id"]] = BinaryTree(n["value"])
+        if n["id"] == tree["root"]:
+            root = node_map[n["id"]]
 
-    for n in tree['nodes']:
-        node = node_map[n['id']]
+    for n in tree["nodes"]:
+        node = node_map[n["id"]]
 
-        if n['left']:
-            node.left = node_map[n['left']]
+        if n["left"]:
+            node.left = node_map[n["left"]]
             node.left.parent = node
 
-        if n['right']:
-            node.right = node_map[n['right']]
+        if n["right"]:
+            node.right = node_map[n["right"]]
             node.right.parent = node
 
     return root
 
 
 def create_bst_from_map(bst_map) -> BST:
-    if 'tree' in bst_map:
-        tree = bst_map['tree']
+    if "tree" in bst_map:
+        tree = bst_map["tree"]
     else:
         tree = bst_map
 
     node_map = {}
     root: BST
-    for n in tree['nodes']:
-        node_map[n['id']] = BST(n['value'])
-        if n['id'] == tree['root']:
-            root = node_map[n['id']]
+    for n in tree["nodes"]:
+        node_map[n["id"]] = BST(n["value"])
+        if n["id"] == tree["root"]:
+            root = node_map[n["id"]]
 
-    for n in tree['nodes']:
-        node = node_map[n['id']]
-        if n['left']: node.left = node_map[n['left']]
-        if n['right']: node.right = node_map[n['right']]
+    for n in tree["nodes"]:
+        node = node_map[n["id"]]
+        if n["left"]:
+            node.left = node_map[n["left"]]
+        if n["right"]:
+            node.right = node_map[n["right"]]
     return root
 
 
@@ -203,7 +206,8 @@ def findClosestValueInBst(tree: BST, target: int):
 
 def branchSums(root: BinaryTree):
     results = []
-    if not root: return results
+    if not root:
+        return results
 
     def recurse(node: BinaryTree, curr_sum=0):
         if not node:
@@ -220,27 +224,29 @@ def branchSums(root: BinaryTree):
 
 
 def nodeDepths(root: BinaryTree):
-
     def sum_depths(node: BinaryTree, level=0):
         nonlocal depth_sum
         if not node:
             return
         else:
             depth_sum += level
-            sum_depths(node.left, level+1)
-            sum_depths(node.right, level+1)
+            sum_depths(node.left, level + 1)
+            sum_depths(node.right, level + 1)
+
     depth_sum = 0
     sum_depths(root)
     return depth_sum
 
 
-def validateBst(tree: BST, low_limit=float('-inf'), high_limit=float('inf')):
+def validateBst(tree: BST, low_limit=float("-inf"), high_limit=float("inf")):
     if not tree:
         return True
     else:
-        return low_limit <= tree.value < high_limit \
-               and validateBst(tree.left, low_limit, tree.value) \
-               and validateBst(tree.right, tree.value, high_limit)
+        return (
+            low_limit <= tree.value < high_limit
+            and validateBst(tree.left, low_limit, tree.value)
+            and validateBst(tree.right, tree.value, high_limit)
+        )
 
 
 def minHeightBst(array):
@@ -248,12 +254,13 @@ def minHeightBst(array):
         if low > high:
             return None
 
-        mid = (low+high)//2
+        mid = (low + high) // 2
         root = BST(array[mid])
-        root.left = construct_bst(low, mid-1)
-        root.right = construct_bst(mid+1, high)
+        root.left = construct_bst(low, mid - 1)
+        root.right = construct_bst(mid + 1, high)
         return root
-    return construct_bst(0, len(array)-1)
+
+    return construct_bst(0, len(array) - 1)
 
 
 def invertBinaryTree(tree):
@@ -265,7 +272,8 @@ def invertBinaryTree(tree):
 
 
 def binaryTreeDiameter(tree):
-    if not tree: return 0
+    if not tree:
+        return 0
 
     def find_depths(node):
         nonlocal max_diameter
@@ -274,8 +282,9 @@ def binaryTreeDiameter(tree):
         else:
             left_depth = find_depths(node.left)
             right_depth = find_depths(node.right)
-            max_diameter = max(max_diameter, left_depth+right_depth)
+            max_diameter = max(max_diameter, left_depth + right_depth)
             return max(left_depth, right_depth) + 1
+
     max_diameter = 0
     find_depths(tree)
     return max_diameter
@@ -294,7 +303,11 @@ def findSuccessor(tree: BinaryTree, node: BinaryTree):
         return temp.parent
 
 
-def getYoungestCommonAncestor(topAncestor: AncestralTree, descendantOne: AncestralTree, descendantTwo: AncestralTree):
+def getYoungestCommonAncestor(
+    topAncestor: AncestralTree,
+    descendantOne: AncestralTree,
+    descendantTwo: AncestralTree,
+):
     d1_depth, d2_depth = 0, 0
     node1 = descendantOne
     while node1 != topAncestor:
@@ -306,7 +319,7 @@ def getYoungestCommonAncestor(topAncestor: AncestralTree, descendantOne: Ancestr
         d2_depth += 1
         node2 = node2.ancestor
 
-    depth_diff = abs(d1_depth-d2_depth)
+    depth_diff = abs(d1_depth - d2_depth)
     for _ in range(depth_diff):
         if d1_depth > d2_depth:
             descendantOne = descendantOne.ancestor
@@ -320,12 +333,15 @@ def getYoungestCommonAncestor(topAncestor: AncestralTree, descendantOne: Ancestr
 
 
 def topologicalSort(jobs, deps):
-    if not jobs or not deps: return jobs
+    if not jobs or not deps:
+        return jobs
 
-    graph, in_degree = {i:[] for i in jobs}, {i:0 for i in jobs}
+    graph, in_degree = {i: [] for i in jobs}, {i: 0 for i in jobs}
     for pre_req, job in deps:
-        if job not in graph: graph[pre_req] = [job]
-        else: graph[pre_req].append(job)
+        if job not in graph:
+            graph[pre_req] = [job]
+        else:
+            graph[pre_req].append(job)
         in_degree[job] = in_degree.get(job, 0) + 1
 
     q = deque()
@@ -388,8 +404,10 @@ def flattenBinaryTree(root):
 
 
 def maxPathSum(tree):
-    if not tree: return 0
-    elif not tree.left and not tree.right: return tree.value
+    if not tree:
+        return 0
+    elif not tree.left and not tree.right:
+        return tree.value
 
     def dfs_sum(node):
         nonlocal max_path_sum
@@ -399,10 +417,15 @@ def maxPathSum(tree):
             l_sum = dfs_sum(node.left)
             r_sum = dfs_sum(node.right)
 
-            max_path_sum = max(max_path_sum, l_sum + r_sum + node.value, l_sum + node.value, r_sum + node.value)
+            max_path_sum = max(
+                max_path_sum,
+                l_sum + r_sum + node.value,
+                l_sum + node.value,
+                r_sum + node.value,
+            )
             return max(l_sum, r_sum) + node.value
 
-    max_path_sum = float('-inf')
+    max_path_sum = float("-inf")
     dfs_sum(tree)
     return max_path_sum
 
@@ -412,12 +435,15 @@ def sameBsts(arrayOne, arrayTwo):
         return False
 
 
-def getLowestCommonManager(topManager: OrgChart, reportOne: OrgChart, reportTwo: OrgChart):
+def getLowestCommonManager(
+    topManager: OrgChart, reportOne: OrgChart, reportTwo: OrgChart
+):
     pass
 
 
 def rightSiblingTree(root):
-    if not root: return root
+    if not root:
+        return root
 
     q = deque([root.left, root.right])
 
@@ -430,24 +456,23 @@ def rightSiblingTree(root):
 
 
 def allKindsOfNodeDepths(root):
-
     def depths(node, level=0):
         nonlocal total_sum
         if not node:
             return
         else:
-            for i in range(1,level+1):
+            for i in range(1, level + 1):
                 total_sum += i
-            depths(node.left, level+1)
-            depths(node.right, level+1)
+            depths(node.left, level + 1)
+            depths(node.right, level + 1)
 
-    total_sum=0
+    total_sum = 0
     depths(root)
     return total_sum
 
 
 def cycleInGraph(edges):
-    in_degrees = {i:0 for i in range(len(edges))}
+    in_degrees = {i: 0 for i in range(len(edges))}
     for node, children in enumerate(edges):
         for child in children:
             in_degrees[child] += 1
@@ -470,13 +495,12 @@ def cycleInGraph(edges):
 
 
 def dijkstrasAlgorithm(start, edges):
-    result = [float('inf') for i in range(len(edges))]
+    result = [float("inf") for i in range(len(edges))]
     result[start] = 0
 
     def traverse(node):
         for children in edges[start]:
             pass
-
 
 
 print(cycleInGraph([[1, 3], [2, 3, 4], [0], [], [2, 5], []]))

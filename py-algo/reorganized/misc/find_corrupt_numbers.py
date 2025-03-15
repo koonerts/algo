@@ -16,6 +16,8 @@ We are given an unsorted array containing ‘n’ numbers taken from the range 1
     Output: [3, 5]
     Explanation: '3' is duplicated and '5' is missing.
 """
+
+
 def find_corrupt_numbers(nums):
     """
     We are given an unsorted array containing ‘n’ numbers taken from the range 1 to ‘n’.
@@ -47,7 +49,6 @@ def find_corrupt_numbers(nums):
             return_list.append(i + 1)
 
     return return_list
-
 
 
 # Example usage

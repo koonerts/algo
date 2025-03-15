@@ -42,7 +42,6 @@ class DoublyLinkedList:
             nodeToInsert.next = node
             node.prev = nodeToInsert
 
-
     def insertAfter(self, node, nodeToInsert):
         if node == self.tail:
             self.setTail(nodeToInsert)
@@ -54,7 +53,7 @@ class DoublyLinkedList:
 
     def insertAtPosition(self, position, nodeToInsert):
         iter_node = self.head
-        for _ in range(position-1):
+        for _ in range(position - 1):
             iter_node = iter_node.next
         self.insertBefore(iter_node, nodeToInsert)
 
@@ -70,7 +69,8 @@ class DoublyLinkedList:
         while iter_node and iter_node != node:
             iter_node = iter_node.next
 
-        if not iter_node: return None
+        if not iter_node:
+            return None
         else:
             if iter_node.prev:
                 iter_node.prev.next = iter_node.next

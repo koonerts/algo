@@ -45,18 +45,14 @@ Space Complexity: O(1) as we modify the array in-place
     print(nums)
 
 
-
-
     # Example usage
-    if __name__ == "__main__":
+if __name__ == "__main__":
     arr1 = [0, 1, 0, 3, 12]
     moveZeroes(arr1)
     print(arr1)  # Output: [1, 3, 12, 0, 0]
     arr2 = [0, 0, 1]
     moveZeroes(arr2)
     print(arr2)  # Output: [1, 0, 0]
-
-
 
 
 # Example usage

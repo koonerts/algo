@@ -5,14 +5,16 @@ Given a binary tree and a node, find the level order successor of the given node
     The level order successor is the node that appears right after the given node in the level order traversal.
 """
 
-
 from collections import deque
+
+
 def find_successor(root: TreeNode, key: int):
     """
     Given a binary tree and a node, find the level order successor of the given node in the tree.
     The level order successor is the node that appears right after the given node in the level order traversal.
     """
-    if not root: return None
+    if not root:
+        return None
     q = deque([root])
 
     while q:
@@ -20,8 +22,10 @@ def find_successor(root: TreeNode, key: int):
         key_found = False
         for i in range(level_size):
             node = q.popleft()
-            if node.left: q.append(node.left)
-            if node.right: q.append(node.right)
+            if node.left:
+                q.append(node.left)
+            if node.right:
+                q.append(node.right)
 
             if key_found:
                 return node
@@ -32,7 +36,6 @@ def find_successor(root: TreeNode, key: int):
                     key_found = True
 
     return None
-
 
 
 # Example usage

@@ -19,7 +19,6 @@ Given a string and a pattern, find all anagrams of the pattern in the given stri
 """
 
 
-import string
 def find_string_anagrams(str_: str, pattern: str) -> list[int]:
     """
     Given a string and a pattern, find all anagrams of the pattern in the given string.
@@ -63,7 +62,6 @@ def find_string_anagrams(str_: str, pattern: str) -> list[int]:
             start += 1
 
     return result_indexes
-
 
 
 # Example usage

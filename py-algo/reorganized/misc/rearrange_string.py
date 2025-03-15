@@ -18,6 +18,8 @@ Given a string, find if its letters can be rearranged in such a way that no two 
     Output: ""
     Explanation: In all arrangements of "aapa", atleast two 'a' will come together e.g., "apaa", "paaa".
 """
+
+
 def rearrange_string(str):
     """
     Given a string, find if its letters can be rearranged in such a way that no two same characters come next to each other.
@@ -39,7 +41,6 @@ def rearrange_string(str):
     """
     # TODO: Come back to
     return ""
-
 
 
 # Example usage

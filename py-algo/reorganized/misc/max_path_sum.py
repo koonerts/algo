@@ -21,7 +21,6 @@ def dfs_sum(node):
     return max_path_sum
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to maxPathSum

@@ -1,5 +1,3 @@
-import math
-
 def find_min_coins(v):
     """
     This function finds the minimum number of coins
@@ -7,19 +5,19 @@ def find_min_coins(v):
     :return: A list of total coins
     """
     result = []
-    while v//25 >= 1:
+    while v // 25 >= 1:
         result.append(25)
         v -= 25
 
-    while v//10 >= 1:
+    while v // 10 >= 1:
         result.append(10)
         v -= 10
 
-    while v//5 >= 1:
+    while v // 5 >= 1:
         result.append(5)
         v -= 5
 
-    while v//1 >= 1:
+    while v // 1 >= 1:
         result.append(1)
         v -= 1
     return result

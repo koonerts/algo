@@ -50,7 +50,7 @@ def smallest_subarray_with_given_sum(s: int, arr: list[int]) -> int:
     start, curr_sum, min_length = 0, 0, len(arr) + 1
     for window_end in range(0, len(arr)):
         curr_sum += arr[window_end]  # add the next element
-        
+
         # shrink the window as small as possible until the 'curr_sum' is smaller than 's'
         while curr_sum >= s:
             min_length = min(min_length, window_end - start + 1)
@@ -141,7 +141,7 @@ def fruits_into_baskets(fruits: list[str]) -> int:
 
             start += 1
 
-        max_ = max(max_, i-start+1)
+        max_ = max(max_, i - start + 1)
 
     return max_
 
@@ -179,7 +179,7 @@ def non_repeat_substring(str_: str) -> int:
 
             start += 1
 
-        max_ = max(max_, i-start+1)
+        max_ = max(max_, i - start + 1)
 
     return max_
 
@@ -396,7 +396,7 @@ def find_substring(str_: str, pattern: str) -> str:
 
         if solved == len(pattern_map):
             if min_substr == "" or i - start + 1 < len(min_substr):
-                min_substr = str_[start:i+1]
+                min_substr = str_[start : i + 1]
 
     return min_substr
 
@@ -421,4 +421,5 @@ def find_word_concatenation(str, words):
     result_indices = []
     return result_indices
 
-print(find_word_concatenation('abdbca', 'abc'))
+
+print(find_word_concatenation("abdbca", "abc"))

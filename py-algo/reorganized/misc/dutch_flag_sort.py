@@ -15,6 +15,8 @@ Given an array containing 0s, 1s and 2s, sort the array in-place.
     Input: [2, 2, 0, 1, 2, 0]
     Output: [0 0 1 2 2 2 ]
 """
+
+
 def dutch_flag_sort(arr: list[int]) -> list[int]:
     """
     Given an array containing 0s, 1s and 2s, sort the array in-place.
@@ -46,7 +48,6 @@ def dutch_flag_sort(arr: list[int]) -> list[int]:
             # decrement 'high' only, after the swap the number at index 'i' could be 0, 1 or 2
             high -= 1
     return arr
-
 
 
 # Example usage

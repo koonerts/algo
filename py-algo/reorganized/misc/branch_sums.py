@@ -19,7 +19,6 @@ def recurse(node: BinaryTree, curr_sum=0):
     return results
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to branchSums

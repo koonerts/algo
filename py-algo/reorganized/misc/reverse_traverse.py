@@ -3,10 +3,12 @@ Reverse_traverse
 
 """
 
-
 from collections import deque
+
+
 def reverse_traverse(root: TreeNode) -> deque:
-    if not root: return deque()
+    if not root:
+        return deque()
 
     q = deque([root])
     result = deque()
@@ -17,13 +19,14 @@ def reverse_traverse(root: TreeNode) -> deque:
         while level_size > 0:
             node = q.popleft()
             level_result.append(node.val)
-            if node.left: q.append(node.left)
-            if node.right: q.append(node.right)
+            if node.left:
+                q.append(node.left)
+            if node.right:
+                q.append(node.right)
             level_size -= 1
 
         result.appendleft(level_result)
     return result
-
 
 
 # Example usage

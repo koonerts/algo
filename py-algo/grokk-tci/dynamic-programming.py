@@ -1,5 +1,3 @@
-
-
 def solve_knapsack(profits, weights, capacity):
     """
     Given the weights and profits of ‘N’ items, we are asked to put these items in a knapsack with a capacity ‘C.’
@@ -31,7 +29,7 @@ def solve_knapsack(profits, weights, capacity):
     :return:
     """
     # create a two dimensional array for Memoization, each element is initialized to '-1'
-    dp = [[-1 for x in range(capacity+1)] for y in range(len(profits))]
+    dp = [[-1 for x in range(capacity + 1)] for y in range(len(profits))]
     return knapsack_memoized(dp, profits, weights, capacity, 0)
 
 
@@ -49,12 +47,12 @@ def knapsack_memoized(dp, profits, weights, capacity, currentIndex):
     # shouldn't process this
     profit1 = 0
     if weights[currentIndex] <= capacity:
-        profit1 = profits[currentIndex]+knapsack_memoized(
-            dp, profits, weights, capacity-weights[currentIndex], currentIndex+1)
+        profit1 = profits[currentIndex] + knapsack_memoized(
+            dp, profits, weights, capacity - weights[currentIndex], currentIndex + 1
+        )
 
     # recursive call after excluding the element at the currentIndex
-    profit2 = knapsack_memoized(
-        dp, profits, weights, capacity, currentIndex+1)
+    profit2 = knapsack_memoized(dp, profits, weights, capacity, currentIndex + 1)
 
     dp[currentIndex][capacity] = max(profit1, profit2)
     return dp[currentIndex][capacity]
@@ -67,23 +65,23 @@ def can_partition_to_equal_subsets_tabulated(nums):
     if s % 2 != 0:
         return False
 
-    dp = [[None for col in range(s//2)] for row in range(len(nums))]
+    dp = [[None for col in range(s // 2)] for row in range(len(nums))]
 
     for row in range(len(dp)):
         for col in range(len(dp[row])):
-            val = row-1 >= 0 and dp[row-1][col] is True
+            val = row - 1 >= 0 and dp[row - 1][col] is True
 
             if not val:
-                curr_sum = col+1
+                curr_sum = col + 1
                 num = nums[row]
-                remaining_sum = curr_sum-num
+                remaining_sum = curr_sum - num
 
                 if remaining_sum == 0:
                     val = True
                 elif remaining_sum < 0:
                     val = False
                 else:
-                    val = row-1 >= 0 and dp[row-1][remaining_sum-1] is True
+                    val = row - 1 >= 0 and dp[row - 1][remaining_sum - 1] is True
 
             dp[row][col] = val
 
@@ -98,7 +96,7 @@ def can_partition_to_equal_subsets_memoized(nums) -> bool:
         return False
 
     # initialize the 'dp' array, -1 for default, 1 for true and 0 for false
-    dp = [[None for row in range(s//2)] for col in range(len(nums))]
+    dp = [[None for row in range(s // 2)] for col in range(len(nums))]
 
     def can_partition_recursive(curr_sum: int, curr_index: int) -> bool:
         if curr_sum == 0:
@@ -112,11 +110,13 @@ def can_partition_to_equal_subsets_memoized(nums) -> bool:
         if dp[row][col] is None:
             num = nums[row]
             new_sum = curr_sum - num
-            dp[row][col] = (new_sum >= 0 and can_partition_recursive(new_sum, row+1)) or can_partition_recursive(curr_sum, row+1)
+            dp[row][col] = (
+                new_sum >= 0 and can_partition_recursive(new_sum, row + 1)
+            ) or can_partition_recursive(curr_sum, row + 1)
 
         return bool(dp[row][col])
 
-    return can_partition_recursive(s//2, 0)
+    return can_partition_recursive(s // 2, 0)
 
 
 def can_partition_with_subset_sum_equal_to_s_tabulated(nums: list[int], s: int) -> bool:
@@ -142,13 +142,17 @@ def can_partition_with_subset_sum_equal_to_s_tabulated(nums: list[int], s: int) 
 
     for row in range(len(dp)):
         for col in range(len(dp[row])):
-            val = row-1 >= 0 and dp[row-1][col] is True
+            val = row - 1 >= 0 and dp[row - 1][col] is True
 
             if not val:
                 num = nums[row]
-                curr_sum = col+1
+                curr_sum = col + 1
                 remaining_sum = curr_sum - num
-                val = remaining_sum == 0 or (remaining_sum > 0 and row-1 >= 0 and dp[row-1][remaining_sum-1] is True)
+                val = remaining_sum == 0 or (
+                    remaining_sum > 0
+                    and row - 1 >= 0
+                    and dp[row - 1][remaining_sum - 1] is True
+                )
 
             dp[row][col] = val
 
@@ -170,8 +174,9 @@ def can_partition_with_subset_sum_equal_to_s_memoized(nums: list[int], s: int) -
         else:
             num = nums[curr_row]
             new_sum = curr_sum + num
-            dp[curr_row][col] = ((new_sum <= s and can_partition_recursive(new_sum, curr_row+1))
-                                 or can_partition_recursive(curr_sum, curr_row+1))
+            dp[curr_row][col] = (
+                new_sum <= s and can_partition_recursive(new_sum, curr_row + 1)
+            ) or can_partition_recursive(curr_sum, curr_row + 1)
 
         return bool(dp[curr_row][col])
 
@@ -226,11 +231,13 @@ def partition_to_min_subset_difference_memoized(nums: list[int]):
                  between the sum of numbers is '92'. Here are the two subsets: {1, 3, 4} & {100}.
     """
     # TODO: Come back to
-    if not nums: return 0
-    elif len(nums) == 1: return nums[0]
+    if not nums:
+        return 0
+    elif len(nums) == 1:
+        return nums[0]
 
     s = sum(nums)
-    target = s//2
+    target = s // 2
     dp = [[None for col in range(target)] for row in range(len(nums))]
     pass
 
@@ -273,7 +280,10 @@ def find_target_subsets(nums, s):
 
 
 def main():
-    print("Can partition: " + str(can_partition_to_equal_subsets_memoized([1, 2, 3, 4, 5, 6, 7])))
+    print(
+        "Can partition: "
+        + str(can_partition_to_equal_subsets_memoized([1, 2, 3, 4, 5, 6, 7]))
+    )
 
 
 main()

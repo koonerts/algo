@@ -2,9 +2,11 @@
 Common Ancestor
 
 """
+
+
 def lowestCommonAncestor(root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
-        lca_node: TreeNode or None = None
-        pass
+    lca_node: TreeNode or None = None
+    pass
 
 
 # Example usage

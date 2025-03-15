@@ -13,6 +13,8 @@ Given a number ‘n’, write a function to return the count of structurally uni
     Output: 5
     Explanation: There will be 5 unique BSTs that can store numbers from 1 to 3.
 """
+
+
 def count_trees(n):
     """
     Given a number ‘n’, write a function to return the count of structurally unique Binary Search Trees (BST) that can store values 1 to ‘n’.
@@ -30,7 +32,6 @@ def count_trees(n):
     # TODO: Come back to
     count = -1
     return count
-
 
 
 # Example usage

@@ -21,7 +21,9 @@ Given an array of numbers sorted in ascending order, find the element in the arr
     Input: [4, 6, 10], key = 17
     Output: 10
 """
-def search_min_diff_element(arr: list[int], key:int) -> int:
+
+
+def search_min_diff_element(arr: list[int], key: int) -> int:
     """
     Given an array of numbers sorted in ascending order, find the element in the array
     that has the minimum difference with the given ‘key’.
@@ -43,13 +45,15 @@ def search_min_diff_element(arr: list[int], key:int) -> int:
     Input: [4, 6, 10], key = 17
     Output: 10
     """
-    if key <= arr[0]: return arr[0]
-    elif key >= arr[len(arr)-1]: return arr[len(arr)-1]
+    if key <= arr[0]:
+        return arr[0]
+    elif key >= arr[len(arr) - 1]:
+        return arr[len(arr) - 1]
 
-    start, end = 0, len(arr)-1
+    start, end = 0, len(arr) - 1
 
     while start <= end:
-        mid = (start+end)//2
+        mid = (start + end) // 2
 
         if arr[mid] == key:
             return key
@@ -65,7 +69,6 @@ def search_min_diff_element(arr: list[int], key:int) -> int:
         return arr[start]
     else:
         return arr[end]
-
 
 
 # Example usage

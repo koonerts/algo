@@ -320,8 +320,10 @@ def search_quadruplets(arr: list[int], target: int) -> list[list[int]]:
                 sum_ = ival + jval + kval + lval
                 if sum_ == target:
                     quadruplets.append([ival, jval, kval, lval])
-                    while k < l and arr[k] == kval: k += 1
-                    while l > k and arr[l] == lval: l -= 1
+                    while k < l and arr[k] == kval:
+                        k += 1
+                    while l > k and arr[l] == lval:
+                        l -= 1
                 elif sum_ > target:
                     l -= 1
                 else:
@@ -407,17 +409,20 @@ def shortest_window_sort(arr: list[int]) -> int:
         if arr[end] >= arr[end - 1]:
             end -= 1
 
-    if start >= end: return 0
+    if start >= end:
+        return 0
 
-    min_, max_ = float('inf'), float('-inf')
+    min_, max_ = float("inf"), float("-inf")
     for i in range(start, end + 1):
         min_ = min(min_, arr[i])
         max_ = max(max_, arr[i])
 
-    while start > 0 and arr[start-1] > min_: start -= 1
-    while end < len(arr) - 1 and arr[end + 1] < max_: end += 1
+    while start > 0 and arr[start - 1] > min_:
+        start -= 1
+    while end < len(arr) - 1 and arr[end + 1] < max_:
+        end += 1
 
     return end - start + 1
 
 
-print(backspace_compare('xy#z', 'xzz#'))
+print(backspace_compare("xy#z", "xzz#"))

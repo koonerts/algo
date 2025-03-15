@@ -18,6 +18,8 @@ Given an array of numbers which is sorted in ascending order and is
     Output: 4
     Explanation: '10' is present in the array at index '4'.
 """
+
+
 def search_rotated_array(arr, key) -> int:
     """
     Given an array of numbers which is sorted in ascending order and is
@@ -39,7 +41,6 @@ def search_rotated_array(arr, key) -> int:
     """
     # TODO: Come back to
     return -1
-
 
 
 # Example usage

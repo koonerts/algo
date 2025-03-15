@@ -2,9 +2,11 @@
 Palindrome
 
 """
+
+
 def longestPalindrome(s: str) -> str:
-        left, right = 0, 0
-        isValid = True
+    left, right = 0, 0
+    isValid = True
 
 
 # Example usage

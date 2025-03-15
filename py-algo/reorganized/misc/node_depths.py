@@ -16,7 +16,6 @@ def sum_depths(node: BinaryTree, level=0):
     return depth_sum
 
 
-
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to nodeDepths

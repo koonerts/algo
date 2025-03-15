@@ -15,6 +15,8 @@ Given an array arr of unsorted numbers and a target sum, count all triplets in i
     Output: 4
     Explanation: There are four triplets whose sum is less than the target: [-1, 1, 4], [-1, 1, 3], [-1, 1, 2], [-1, 2, 3]
 """
+
+
 def triplet_with_smaller_sum(arr: list[int], target: int) -> int:
     """
     Given an array arr of unsorted numbers and a target sum, count all triplets in it
@@ -47,7 +49,6 @@ def triplet_with_smaller_sum(arr: list[int], target: int) -> int:
                 end -= 1
 
     return count
-
 
 
 # Example usage
