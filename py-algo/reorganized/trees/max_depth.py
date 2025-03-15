@@ -10,16 +10,17 @@ Example:
 Time Complexity: O(n) where n is the number of nodes in the tree
 Space Complexity: O(h) where h is the height of the tree (for recursion stack)
 """
+from typing import Optional
 
 
 class TreeNode:
-def __init__(self, val=0, left=None, right=None):
-    self.val = val
-    self.left = left
-    self.right = right
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
 
-def __init__(self, val=0, left=None, right=None) -> None:
+def maxDepth(root: Optional[TreeNode]) -> int:
     """
     Given the root of a binary tree, return its maximum depth. A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
 
@@ -32,9 +33,15 @@ def __init__(self, val=0, left=None, right=None) -> None:
     Time Complexity: O(n) where n is the number of nodes in the tree
     Space Complexity: O(h) where h is the height of the tree (for recursion stack)
     """
-    self.val = val
-    self.left = left
-    self.right = right
+    # Base case: empty tree has depth 0
+    if not root:
+        return 0
+
+    # Recursive case: depth is 1 (for current node) + max depth of subtrees
+    left_depth = maxDepth(root.left)
+    right_depth = maxDepth(root.right)
+
+    return 1 + max(left_depth, right_depth)
 
 
 # Example usage

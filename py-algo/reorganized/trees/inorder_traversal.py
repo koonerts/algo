@@ -10,16 +10,17 @@ Example:
 Time Complexity: O(n) where n is the number of nodes in the tree
 Space Complexity: O(n) for the output list and recursion stack
 """
+from typing import Optional, List
 
 
 class TreeNode:
-def __init__(self, val=0, left=None, right=None):
-    self.val = val
-    self.left = left
-    self.right = right
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
 
-def __init__(self, val=0, left=None, right=None) -> None:
+def inorderTraversal(root: Optional[TreeNode]) -> List[int]:
     """
     Given the root of a binary tree, return the inorder traversal of its nodes' values.
 
@@ -32,9 +33,16 @@ def __init__(self, val=0, left=None, right=None) -> None:
     Time Complexity: O(n) where n is the number of nodes in the tree
     Space Complexity: O(n) for the output list and recursion stack
     """
-    self.val = val
-    self.left = left
-    self.right = right
+    result = []
+
+    def traverse(node):
+        if node:
+            traverse(node.left)
+            result.append(node.val)
+            traverse(node.right)
+
+    traverse(root)
+    return result
 
 
 # Example usage
