@@ -1,5 +1,18 @@
 # Trees Algorithms Cheatsheet for SWE Interviews
 
+## When to Use
+
+- **Trie (Prefix Tree)**: When working with string dictionaries, auto-complete, spell-checkers, or prefix matching
+- **Union-Find (Disjoint Set)**: When tracking connected components, detecting cycles in undirected graphs, or in Kruskal's algorithm
+- **Segment Tree**: When performing range queries (sum, min, max) with frequent updates to array elements
+- **Binary Search Tree**: When you need ordered data with efficient insertion, deletion, and lookup
+- **AVL/Red-Black Trees**: When you need a self-balancing search tree for guaranteed O(log n) operations
+- **Binary Indexed Tree (Fenwick Tree)**: For efficient prefix sums and range sum queries with updates
+- **Quadtree/Octree**: For spatial partitioning, collision detection, or image compression
+- **Heap**: When you need to repeatedly find and remove the minimum/maximum element
+- **B-Tree/B+ Tree**: When working with data too large to fit in memory (databases, file systems)
+- **Decision Trees**: For classification, regression, and other machine learning applications
+
 ## Trie Data Structure
 
 A trie (prefix tree) is a tree-like data structure used for efficient retrieval of keys in a dataset of strings.

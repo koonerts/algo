@@ -1,5 +1,19 @@
 # Graphs Algorithms Cheatsheet for SWE Interviews
 
+## When to Use
+
+- **Dijkstra's Algorithm**: When finding the shortest path between nodes in a weighted graph with non-negative weights
+- **Breadth-First Search (BFS)**: When finding shortest paths in unweighted graphs or exploring level by level
+- **Depth-First Search (DFS)**: When exploring all paths, detecting cycles, or searching deeply first
+- **Prim's Algorithm**: When finding minimum spanning tree in a connected, undirected graph
+- **Kruskal's Algorithm**: When finding minimum spanning tree, especially in sparse graphs
+- **Topological Sort**: When ordering tasks with dependencies (directed acyclic graphs)
+- **Bellman-Ford**: When finding shortest paths with negative edge weights
+- **Floyd-Warshall**: When finding shortest paths between all pairs of vertices
+- **Strongly Connected Components**: When identifying groups of vertices where each vertex is reachable from others
+- **Union-Find**: When grouping elements and detecting cycles in undirected graphs
+- **A* Search**: When finding shortest path with heuristic guidance in pathfinding
+
 ## Dijkstra's Algorithm
 
 Dijkstra's algorithm finds the shortest path from a source vertex to all other vertices in a weighted graph with non-negative edge weights.

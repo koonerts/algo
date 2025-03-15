@@ -1,5 +1,17 @@
 # Linked Lists Algorithms Cheatsheet for SWE Interviews
 
+## When to Use
+
+- **Fast & Slow Pointers**: When detecting cycles, finding the middle node, or locating a node at a specific position from the end
+- **Reversing Linked Lists**: When you need to reverse part or all of a linked list
+- **Two Pointers**: When manipulating the linked list structure (removing elements, merging lists, etc.)
+- **Merge Intervals**: When working with sorted linked lists that need to be combined
+- **In-place Operations**: When you need to modify a linked list without using extra space
+- **Recursive Solutions**: When traversing or modifying the list using the call stack
+- **Dummy Head**: When the head of the list might change during operations
+- **Stack/Queue Implementation**: When implementing these data structures using linked lists
+- **LRU Cache**: When building a cache with linked list + hashmap for constant-time operations
+
 ## Fast & Slow Pointers Algorithm
 
 The Fast & Slow pointers technique (also known as Floyd's Tortoise and Hare algorithm) uses two pointers moving at different speeds to solve various linked list problems efficiently.

@@ -1,5 +1,18 @@
 # Heaps Algorithms Cheatsheet for SWE Interviews
 
+## When to Use
+
+- When you need to repeatedly find the minimum or maximum element efficiently
+- When processing elements in order of priority or importance
+- When tracking statistics about the median or middle elements of a dataset
+- In streaming data scenarios where you need running statistics
+- For implementing priority queues in algorithms like Dijkstra's or Prim's
+- When you need to efficiently merge multiple sorted lists (using min heap)
+- For problems requiring "top-k" or "k-largest/smallest" elements
+- When balancing workloads or distributing resources optimally
+- For efficient implementation of scheduling algorithms
+- When you need to maintain a sorted subset of a larger collection
+
 ## Two Heaps Algorithm
 
 The Two Heaps pattern uses two heaps (usually a min-heap and a max-heap) to efficiently track elements like medians or balancing values in a stream.

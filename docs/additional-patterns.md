@@ -1,5 +1,18 @@
 # Additional Algorithm Patterns for SWE Interviews
 
+## When to Use
+
+- **Binary Search**: When searching in a sorted array or when the search space can be monotonically divided
+- **Greedy Algorithms**: When making locally optimal choices leads to a global optimum solution
+- **Divide and Conquer**: When a problem can be broken down into independent subproblems
+- **Bucket Sort**: When the input is uniformly distributed over a range, or when linear time sorting is needed
+- **Bit Manipulation**: When working with binary operations, optimizing space, or solving numeric problems
+- **Cyclic Sort**: When array contains numbers in a given range and you need to sort in-place
+- **Reservoir Sampling**: When sampling from a large or streaming dataset
+- **Line Sweep**: When processing intervals, rectangles, or geometric problems
+- **Meet in the Middle**: When the search space is too large for brute force but can be split
+- **Monotonic Stack/Queue**: When finding the next greater/smaller element or when processing ranges
+
 ## Binary Search Variations
 
 ### Standard Binary Search and Its Variants

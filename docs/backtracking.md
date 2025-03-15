@@ -1,8 +1,20 @@
 # Backtracking Algorithms Cheatsheet for SWE Interviews
 
-## Step 1: Understanding Backtracking
+## Overview
 
 Backtracking is an algorithmic technique that builds solutions incrementally by exploring all possible candidates and abandoning a candidate ("backtracking") when it's determined that it cannot lead to a valid solution.
+
+## When to Use
+
+- Problems requiring exhaustive search of all possible solutions
+- Constraint satisfaction problems (e.g., Sudoku, N-Queens)
+- When you need to find all combinations, permutations, or subsets
+- Problems that involve making sequential decisions with constraints
+- Scenarios where you need to explore all paths in a decision tree
+- When greedy or dynamic programming approaches aren't applicable
+- When the problem involves recursive enumeration of possibilities
+
+## Step 1: Understanding Backtracking
 
 ### Key Components:
 

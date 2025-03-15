@@ -1,5 +1,17 @@
 # Dynamic Programming Algorithms Cheatsheet for SWE Interviews
 
+## When to Use
+
+- Problems with overlapping subproblems (computed results can be reused)
+- Problems with optimal substructure (optimal solution can be built from optimal solutions of subproblems)
+- When you need to find a minimum, maximum, or optimal count
+- Optimization problems where you need to make choices to achieve the best result
+- When a problem can be broken down recursively, but direct recursion would be too slow
+- Problems involving sequences (arrays, strings) where decision at each step depends on previous decisions
+- Resource allocation problems with constraints
+- Many counting problems (number of ways to achieve a certain goal)
+- When the problem exhibits the principle of choice (take or not take an item)
+
 ## 0/1 Knapsack Problem
 
 The 0/1 Knapsack problem involves selecting items with given weights and values to maximize total value without exceeding a weight capacity.
