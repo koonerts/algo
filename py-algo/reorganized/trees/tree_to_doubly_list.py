@@ -1,7 +1,14 @@
 """
 To Doubly List
-
+Convert a binary search tree to a sorted circular doubly linked list.
 """
+
+
+class Node:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
 
 def treeToDoublyList(root: Node) -> Node:
@@ -36,5 +43,22 @@ def treeToDoublyList(root: Node) -> Node:
 
 # Example usage
 if __name__ == "__main__":
-    # TODO: Add example calls to treeToDoublyList
-    print(treeToDoublyList([]))
+    # Create a sample BST
+    root = Node(4)
+    root.left = Node(2)
+    root.right = Node(5)
+    root.left.left = Node(1)
+    root.left.right = Node(3)
+
+    # Convert to doubly linked list
+    head = treeToDoublyList(root)
+
+    # Print the linked list (will stop after one cycle)
+    if head:
+        current = head
+        print(current.val, end=" ")
+        current = current.right
+        while current != head:
+            print(current.val, end=" ")
+            current = current.right
+        print()  # Final newline
