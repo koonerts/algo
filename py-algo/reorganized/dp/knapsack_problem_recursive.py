@@ -5,7 +5,7 @@ Problem Recursive
 def knapsackProblemRecursive(items, capacity):
     PRICE, WEIGHT = 0, 1
     memo = [[-1 for j in range(capacity + 1)] for i in range(len(items) + 1)]
-def helper(i, j):
+    def helper(i, j):
         if i >= len(memo) or j <= 0:
             return 0
         elif memo[i][j] != -1:
