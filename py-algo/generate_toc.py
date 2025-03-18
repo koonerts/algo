@@ -1,42 +1,66 @@
 #!/usr/bin/env python3
 """
 Script to generate a table of contents for category README files.
+
+This script:
+1. Scans problem files in each category directory
+2. Extracts problem names and descriptions from docstrings
+3. Creates/updates README.md files for each category with a table of contents
+4. Updates the main README.md with category counts and links
 """
 
 import os
 import re
+import sys
 from pathlib import Path
 
 BASE_DIR = Path("/Users/koonerts/.proj/algo/py-algo/reorganized")
 
 
 def extract_problem_info(file_path):
-    """Extract problem name and description from a Python file"""
-    with open(file_path, "r") as f:
-        content = f.read()
+    """
+    Extract problem name and description from a Python file
 
-    # Extract title from docstring
-    title_match = re.search(r'"""[\s\n]*(.*?)[\s\n]*(?:\n|$)', content)
-    title = (
-        title_match.group(1)
-        if title_match
-        else os.path.basename(file_path).replace(".py", "").replace("_", " ").title()
-    )
+    Args:
+        file_path: Path to the Python file
 
-    # Extract description
-    desc_match = re.search(r'"""[\s\n]*.*?[\s\n]*(.*?)[\s\n]*"""', content, re.DOTALL)
-    description = desc_match.group(1).strip() if desc_match else ""
-    if description:
-        # Take only the first sentence or line
-        description = description.split("\n")[0].strip()
-        if len(description) > 100:
-            description = description[:97] + "..."
+    Returns:
+        tuple: (title, description)
+    """
+    try:
+        with open(file_path, "r") as f:
+            content = f.read()
 
-    return title, description
+        # Extract title from docstring
+        title_match = re.search(r'"""[\s\n]*(.*?)[\s\n]*(?:\n|$)', content)
+        title = (
+            title_match.group(1)
+            if title_match
+            else os.path.basename(file_path).replace(".py", "").replace("_", " ").title()
+        )
+
+        # Extract description
+        desc_match = re.search(r'"""[\s\n]*.*?[\s\n]*(.*?)[\s\n]*"""', content, re.DOTALL)
+        description = desc_match.group(1).strip() if desc_match else ""
+        if description:
+            # Take only the first sentence or line
+            description = description.split("\n")[0].strip()
+            if len(description) > 100:
+                description = description[:97] + "..."
+
+        return title, description
+    except Exception as e:
+        print(f"Error extracting info from {file_path}: {e}")
+        return os.path.basename(file_path).replace(".py", "").replace("_", " ").title(), ""
 
 
 def update_category_readme(category):
-    """Update category README with a table of contents"""
+    """
+    Update category README with a table of contents
+
+    Args:
+        category: Category name/directory
+    """
     category_dir = BASE_DIR / category
     readme_path = category_dir / "README.md"
 
@@ -45,9 +69,13 @@ def update_category_readme(category):
         return
 
     # Get all problem files
-    problem_files = [
-        f for f in os.listdir(category_dir) if f.endswith(".py") and f != "__init__.py"
-    ]
+    try:
+        problem_files = [
+            f for f in os.listdir(category_dir) if f.endswith(".py") and f != "__init__.py"
+        ]
+    except Exception as e:
+        print(f"Error listing files in {category_dir}: {e}")
+        return
 
     # Get problem info
     problems = []
@@ -76,28 +104,39 @@ This directory contains algorithm problems related to {title.lower()}.
         content += f"| [{title}](./{file_name}) | {description} |\n"
 
     # Write the README
-    with open(readme_path, "w") as f:
-        f.write(content)
-
-    print(f"Updated README for {category} with {len(problems)} problems")
+    try:
+        with open(readme_path, "w") as f:
+            f.write(content)
+        print(f"Updated README for {category} with {len(problems)} problems")
+    except Exception as e:
+        print(f"Error writing README for {category}: {e}")
 
 
 def update_main_readme():
     """Update main README with category info and counts"""
-    categories = [
-        d
-        for d in os.listdir(BASE_DIR)
-        if os.path.isdir(BASE_DIR / d) and d not in [".git", "__pycache__"]
-    ]
+    try:
+        categories = [
+            d
+            for d in os.listdir(BASE_DIR)
+            if os.path.isdir(BASE_DIR / d) and d not in [".git", "__pycache__"]
+        ]
+    except Exception as e:
+        print(f"Error listing categories in {BASE_DIR}: {e}")
+        return
+
     category_counts = {}
 
     for category in categories:
-        problem_files = [
-            f
-            for f in os.listdir(BASE_DIR / category)
-            if f.endswith(".py") and f != "__init__.py"
-        ]
-        category_counts[category] = len(problem_files)
+        try:
+            problem_files = [
+                f
+                for f in os.listdir(BASE_DIR / category)
+                if f.endswith(".py") and f != "__init__.py"
+            ]
+            category_counts[category] = len(problem_files)
+        except Exception as e:
+            print(f"Error counting problems in {category}: {e}")
+            category_counts[category] = 0
 
     # Sort categories by count (descending)
     sorted_categories = sorted(
@@ -125,22 +164,28 @@ Each problem is in its own file with:
         content += f"- [{title}](./{category}/) - {count} problems\n"
 
     # Write the README
-    with open(BASE_DIR / "README.md", "w") as f:
-        f.write(content)
-
-    print(f"Updated main README with {len(categories)} categories")
+    try:
+        with open(BASE_DIR / "README.md", "w") as f:
+            f.write(content)
+        print(f"Updated main README with {len(categories)} categories")
+    except Exception as e:
+        print(f"Error writing main README: {e}")
 
 
 def main():
     """Generate table of contents for all category README files"""
     print("Generating table of contents for READMEs...")
 
-    # Get all categories
-    categories = [
-        d
-        for d in os.listdir(BASE_DIR)
-        if os.path.isdir(BASE_DIR / d) and d not in [".git", "__pycache__"]
-    ]
+    try:
+        # Get all categories
+        categories = [
+            d
+            for d in os.listdir(BASE_DIR)
+            if os.path.isdir(BASE_DIR / d) and d not in [".git", "__pycache__"]
+        ]
+    except Exception as e:
+        print(f"Error accessing base directory {BASE_DIR}: {e}")
+        sys.exit(1)
 
     # Update each category README
     for category in categories:

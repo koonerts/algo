@@ -13,6 +13,8 @@
 - **Meet in the Middle**: When the search space is too large for brute force but can be split
 - **Monotonic Stack/Queue**: When finding the next greater/smaller element or when processing ranges
 
+---
+
 ## Binary Search Variations
 
 ### Standard Binary Search and Its Variants
@@ -20,18 +22,19 @@
 ```python
 def binary_search(nums, target):
     left, right = 0, len(nums) - 1
-    
+
     while left <= right:
         mid = left + (right - left) // 2
-        
+
         if nums[mid] == target:
             return mid
         elif nums[mid] < target:
             left = mid + 1
         else:
             right = mid - 1
-            
+
     return -1
+# Time: O(log n), Space: O(1)
 ```
 
 ### Finding First and Last Occurrence
@@ -40,10 +43,10 @@ def binary_search(nums, target):
 def first_occurrence(nums, target):
     left, right = 0, len(nums) - 1
     result = -1
-    
+
     while left <= right:
         mid = left + (right - left) // 2
-        
+
         if nums[mid] == target:
             result = mid  # Found a target, but continue searching left side
             right = mid - 1
@@ -51,16 +54,16 @@ def first_occurrence(nums, target):
             left = mid + 1
         else:
             right = mid - 1
-            
+
     return result
 
 def last_occurrence(nums, target):
     left, right = 0, len(nums) - 1
     result = -1
-    
+
     while left <= right:
         mid = left + (right - left) // 2
-        
+
         if nums[mid] == target:
             result = mid  # Found a target, but continue searching right side
             left = mid + 1
@@ -68,8 +71,9 @@ def last_occurrence(nums, target):
             left = mid + 1
         else:
             right = mid - 1
-            
+
     return result
+# Time: O(log n), Space: O(1)
 ```
 
 ### Binary Search on Answer
@@ -86,19 +90,22 @@ def minimum_capacity(weights, days):
             else:
                 current_load += weight
         return days_needed <= days
-    
+
     left = max(weights)  # Minimum capacity is the largest single weight
     right = sum(weights) # Maximum capacity is sum of all weights
-    
+
     while left < right:
         mid = left + (right - left) // 2
         if feasible(mid):
             right = mid
         else:
             left = mid + 1
-            
+
     return left
+# Time: O(n log W) where W is the sum of weights, Space: O(1)
 ```
+
+---
 
 ## Monotonic Stack/Queue
 
@@ -111,16 +118,17 @@ def next_greater_element(nums):
     n = len(nums)
     result = [-1] * n
     stack = []  # Stack will store indices
-    
+
     for i in range(n):
         # Pop elements from stack while current element is greater
         while stack and nums[stack[-1]] < nums[i]:
             result[stack.pop()] = nums[i]
-        
+
         # Push current index to stack
         stack.append(i)
-        
+
     return result
+# Time: O(n), Space: O(n)
 ```
 
 ### Largest Rectangle in Histogram
@@ -129,129 +137,147 @@ def next_greater_element(nums):
 def largest_rectangle_area(heights):
     stack = []  # (index, height)
     max_area = 0
-    
+
     for i, h in enumerate(heights):
         start = i
-        
+
         # Pop taller heights from stack
         while stack and stack[-1][1] > h:
             index, height = stack.pop()
             max_area = max(max_area, height * (i - index))
             start = index
-            
+
         # Push current height with the earliest possible start index
         stack.append((start, h))
-        
+
     # Process the remaining heights in the stack
     for i, h in stack:
         max_area = max(max_area, h * (len(heights) - i))
-        
+
     return max_area
+# Time: O(n), Space: O(n)
 ```
 
-## BFS for Shortest Path in Unweighted Graph
+---
+
+## BFS for Shortest Path
+
+Breadth-First Search is the go-to algorithm for finding shortest paths in unweighted graphs.
 
 ```python
 from collections import deque
 
-def shortest_path(graph, start, end):
-    if start == end:
+def shortest_path(graph, start, target):
+    if start == target:
         return 0
-        
-    visited = set([start])
+
     queue = deque([(start, 0)])  # (node, distance)
-    
+    visited = set([start])
+
     while queue:
         node, distance = queue.popleft()
-        
+
         for neighbor in graph[node]:
-            if neighbor == end:
+            if neighbor == target:
                 return distance + 1
-                
+
             if neighbor not in visited:
                 visited.add(neighbor)
                 queue.append((neighbor, distance + 1))
-                
+
     return -1  # No path found
+# Time: O(V + E), Space: O(V)
 ```
 
-## Bit Manipulation Techniques
+---
 
-### Counting Bits
+## Bit Manipulation
+
+Bit manipulation techniques are useful for optimizing space and solving numeric problems.
+
+### Common Bit Operations
 
 ```python
-def count_bits(n):
-    """Returns number of 1s in binary representation of n."""
-    count = 0
-    while n:
-        count += n & 1
-        n >>= 1
-    return count
+# Check if the i-th bit is set
+def is_bit_set(num, i):
+    return (num & (1 << i)) != 0
 
-# More efficient for large numbers with few 1 bits
-def count_bits_kernighan(n):
-    """Kernighan's algorithm - only iterates through set bits."""
+# Set the i-th bit
+def set_bit(num, i):
+    return num | (1 << i)
+
+# Clear the i-th bit
+def clear_bit(num, i):
+    return num & ~(1 << i)
+
+# Toggle the i-th bit
+def toggle_bit(num, i):
+    return num ^ (1 << i)
+
+# Count number of set bits (1s)
+def count_set_bits(num):
     count = 0
-    while n:
-        n &= (n - 1)  # Clear the least significant set bit
+    while num:
+        num &= (num - 1)  # Clear the least significant set bit
         count += 1
     return count
 ```
 
-### Single Number Among Duplicates
+### XOR Properties for Solving Problems
 
 ```python
-def single_number(nums):
-    """Find the single number in an array where all others appear twice."""
+# Find the single non-duplicated number in an array where others appear twice
+def find_single(nums):
     result = 0
     for num in nums:
         result ^= num
     return result
+# Time: O(n), Space: O(1)
 ```
 
-### Power of Two Check
+---
+
+## Dutch National Flag
+
+An algorithm for three-way partitioning, commonly used for sorting arrays with three distinct values.
 
 ```python
-def is_power_of_two(n):
-    """Check if n is a power of 2."""
-    if n <= 0:
-        return False
-    return (n & (n - 1)) == 0
-```
-
-## Dutch National Flag / Three-Way Partitioning
-
-Used for sorting arrays with limited distinct values, like the classic "Sort Colors" problem.
-
-```python
-def sort_colors(nums):
+def dutch_national_flag(nums, pivot):
     """
-    Sort array in-place where nums[i] is 0, 1, or 2.
-    Aka Dutch National Flag problem.
+    Partition array into three parts:
+    - Values less than pivot
+    - Values equal to pivot
+    - Values greater than pivot
     """
     low, mid, high = 0, 0, len(nums) - 1
-    
+
     while mid <= high:
-        if nums[mid] == 0:
+        if nums[mid] < pivot:
             nums[low], nums[mid] = nums[mid], nums[low]
             low += 1
             mid += 1
-        elif nums[mid] == 1:
-            mid += 1
-        else:  # nums[mid] == 2
+        elif nums[mid] > pivot:
             nums[mid], nums[high] = nums[high], nums[mid]
             high -= 1
+        else:
+            mid += 1
+
+    return nums
+# Time: O(n), Space: O(1)
 ```
 
-## Boyer-Moore Voting Algorithm (Majority Element)
+---
 
-Finds the majority element (appears more than n/2 times) in linear time and constant space.
+## Boyer-Moore Voting Algorithm
+
+Used to find the majority element (occurring more than n/2 times) in linear time and constant space.
 
 ```python
 def majority_element(nums):
     candidate = None
     count = 0
-    
+
+    # Find candidate
     for num in nums:
         if count == 0:
             candidate = num
@@ -260,251 +286,39 @@ def majority_element(nums):
             count += 1
         else:
             count -= 1
-            
-    return candidate
+
+    # Verify candidate (optional if guaranteed to have majority)
+    count = sum(1 for num in nums if num == candidate)
+    return candidate if count > len(nums) // 2 else None
+# Time: O(n), Space: O(1)
 ```
+
+---
 
 ## Floyd's Cycle Finding (Tortoise and Hare)
 
-Another variation useful for finding cycles in sequences.
+Algorithm for cycle detection in sequences, especially useful for linked lists.
 
 ```python
-def find_duplicate(nums):
-    """Find duplicate in array of n+1 integers in range 1 to n."""
-    slow = fast = nums[0]
-    
-    # Find meeting point inside the cycle
-    while True:
-        slow = nums[slow]
-        fast = nums[nums[fast]]
+def detect_cycle(head):
+    # Phase 1: Detect if there's a cycle
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
         if slow == fast:
             break
-            
-    # Find cycle entrance
-    slow = nums[0]
+    else:
+        return None  # No cycle
+
+    # Phase 2: Find the start of the cycle
+    slow = head
     while slow != fast:
-        slow = nums[slow]
-        fast = nums[fast]
-        
-    return slow
-```
+        slow = slow.next
+        fast = fast.next
 
-## Greedy Algorithms
-
-### Activity Selection
-
-```python
-def max_activities(start, finish):
-    """Select maximum number of non-overlapping activities."""
-    n = len(start)
-    # Sort by finish time
-    activities = sorted(zip(start, finish), key=lambda x: x[1])
-    
-    count = 0
-    last_finish = 0
-    
-    for s, f in activities:
-        if s >= last_finish:
-            count += 1
-            last_finish = f
-            
-    return count
-```
-
-### Interval Merging
-
-```python
-def merge_intervals(intervals):
-    if not intervals:
-        return []
-        
-    # Sort by start time
-    intervals.sort(key=lambda x: x[0])
-    
-    result = [intervals[0]]
-    
-    for interval in intervals[1:]:
-        # If current interval overlaps with the last merged interval
-        if interval[0] <= result[-1][1]:
-            # Update the end time of previous interval if needed
-            result[-1][1] = max(result[-1][1], interval[1])
-        else:
-            # Add as a new interval
-            result.append(interval)
-            
-    return result
-```
-
-## Matrix Traversal Techniques
-
-### Spiral Traversal
-
-```python
-def spiral_order(matrix):
-    if not matrix:
-        return []
-        
-    result = []
-    rows, cols = len(matrix), len(matrix[0])
-    top, bottom = 0, rows - 1
-    left, right = 0, cols - 1
-    
-    while top <= bottom and left <= right:
-        # Traverse right
-        for j in range(left, right + 1):
-            result.append(matrix[top][j])
-        top += 1
-        
-        # Traverse down
-        for i in range(top, bottom + 1):
-            result.append(matrix[i][right])
-        right -= 1
-        
-        # Traverse left
-        if top <= bottom:
-            for j in range(right, left - 1, -1):
-                result.append(matrix[bottom][j])
-            bottom -= 1
-            
-        # Traverse up
-        if left <= right:
-            for i in range(bottom, top - 1, -1):
-                result.append(matrix[i][left])
-            left += 1
-            
-    return result
-```
-
-### Rotate Matrix
-
-```python
-def rotate_matrix(matrix):
-    """Rotate matrix 90 degrees clockwise in-place."""
-    n = len(matrix)
-    
-    # Transpose
-    for i in range(n):
-        for j in range(i, n):
-            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
-    
-    # Reverse each row
-    for i in range(n):
-        matrix[i].reverse()
-```
-
-## Reservoir Sampling
-
-For sampling k elements from a stream of unknown length with equal probability.
-
-```python
-import random
-
-def reservoir_sampling(stream, k):
-    """Sample k elements from a stream with equal probability."""
-    result = []
-    
-    for i, item in enumerate(stream):
-        if i < k:
-            result.append(item)
-        else:
-            j = random.randint(0, i)
-            if j < k:
-                result[j] = item
-                
-    return result
-```
-
-## Quick Select (Kth Largest Element)
-
-```python
-def find_kth_largest(nums, k):
-    """Find the kth largest element in an unsorted array."""
-    def partition(left, right, pivot_index):
-        pivot = nums[pivot_index]
-        # Move pivot to end
-        nums[pivot_index], nums[right] = nums[right], nums[pivot_index]
-        
-        # Move all elements smaller than pivot to the left
-        store_index = left
-        for i in range(left, right):
-            if nums[i] < pivot:
-                nums[store_index], nums[i] = nums[i], nums[store_index]
-                store_index += 1
-                
-        # Move pivot to its final position
-        nums[store_index], nums[right] = nums[right], nums[store_index]
-        
-        return store_index
-        
-    def select(left, right, k_smallest):
-        if left == right:
-            return nums[left]
-            
-        # Select a random pivot
-        pivot_index = random.randint(left, right)
-        
-        # Find the position of the pivot after partition
-        pivot_index = partition(left, right, pivot_index)
-        
-        if k_smallest == pivot_index:
-            return nums[k_smallest]
-        elif k_smallest < pivot_index:
-            return select(left, pivot_index - 1, k_smallest)
-        else:
-            return select(pivot_index + 1, right, k_smallest)
-            
-    # Find kth largest = (n - k)th smallest
-    return select(0, len(nums) - 1, len(nums) - k)
-```
-
-## Rabin-Karp String Matching
-
-```python
-def rabin_karp(text, pattern):
-    """Find all occurrences of pattern in text."""
-    n, m = len(text), len(pattern)
-    if m > n:
-        return []
-        
-    prime = 101  # A prime number
-    d = 256      # Number of characters in input alphabet
-    
-    # Calculate hash for pattern and first window of text
-    pattern_hash = 0
-    text_hash = 0
-    h = 1
-    
-    # Calculate h = d^(m-1) % prime
-    for i in range(m - 1):
-        h = (h * d) % prime
-        
-    for i in range(m):
-        pattern_hash = (d * pattern_hash + ord(pattern[i])) % prime
-        text_hash = (d * text_hash + ord(text[i])) % prime
-        
-    result = []
-    
-    # Slide the pattern over text one by one
-    for i in range(n - m + 1):
-        # Check if hash values match
-        if pattern_hash == text_hash:
-            # Check for characters one by one
-            match = True
-            for j in range(m):
-                if text[i + j] != pattern[j]:
-                    match = False
-                    break
-                    
-            if match:
-                result.append(i)
-                
-        # Calculate hash for next window
-        if i < n - m:
-            text_hash = (d * (text_hash - ord(text[i]) * h) + ord(text[i + m])) % prime
-            if text_hash < 0:
-                text_hash += prime
-                
-    return result
+    return slow  # Cycle start node
+# Time: O(n), Space: O(1)
 ```
 
 ## Time & Space Complexity Analysis

@@ -6,151 +6,172 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 2. **Example Problem Types:** Typical problems that use this pattern
 3. **Time & Space Complexity:** General complexity characteristics
 
+---
+
 ## Array Patterns
 
 ### Sliding Window
 
 **How to Identify:**
-
 - Problems involving contiguous subarrays or substrings
 - Finding max/min/sum over a contiguous sequence of fixed or variable size
 - Problems asking for longest/shortest subarray with a given property
 
 **Example Problem Types:**
-
 - Maximum sum subarray of size K
 - Longest substring with K distinct characters
 - Minimum size subarray with a given sum
 - String permutations or anagrams
 
 **Time & Space Complexity:**
-
 - Time: O(n) where n is array length (each element processed at most twice)
 - Space: O(1) for fixed window, O(k) where k is window size for variable window
 
 ### Two Pointers
 
 **How to Identify:**
-
 - Problems involving sorted arrays or linked lists
 - Need to find pairs or triplets satisfying certain conditions
 - Problems asking for in-place array modification
 - Finding intersections or palindromes
 
 **Example Problem Types:**
-
 - Two Sum, Three Sum
 - Container with Most Water
 - Remove duplicates from sorted array
 - Palindrome verification
 
 **Time & Space Complexity:**
-
 - Time: O(n) for most implementations or O(n²) for nested two pointers
 - Space: O(1) as typically implemented in-place
 
 ### Kadane's Algorithm
 
 **How to Identify:**
-
 - Finding maximum/minimum sum subarray
 - Requiring contiguous elements with optimal value
 - When greedy approach with local/global optimal values works
 
 **Example Problem Types:**
-
 - Maximum sum subarray
 - Maximum product subarray
 - Circular array maximum sum
 
 **Time & Space Complexity:**
-
 - Time: O(n)
 - Space: O(1)
 
 ### Prefix Sums
 
 **How to Identify:**
-
 - Range sum queries
 - Cumulative operations on arrays
 - Checking for specific sum conditions over subarrays
 
 **Example Problem Types:**
-
 - Range sum queries
 - Subarray sum equals K
 - Count number of subarrays with specific properties
 
 **Time & Space Complexity:**
-
 - Time: O(n) for preprocessing, O(1) for queries
 - Space: O(n) for storing prefix sums
+
+---
 
 ## Linked List Patterns
 
 ### Fast & Slow Pointers
 
 **How to Identify:**
-
 - Cycle detection problems
 - Finding middle element
 - Finding nth element from the end
 - Identifying if linked list has a cycle
 
 **Example Problem Types:**
-
 - Detect cycle in linked list
 - Find cycle start point
 - Find middle of linked list
 - Palindrome linked list
 
 **Time & Space Complexity:**
-
 - Time: O(n)
 - Space: O(1)
 
 ### Linked List Reversal
 
 **How to Identify:**
-
 - Problems requiring reversal of all or part of a linked list
 - Problems involving K-groups or alternative reverse operations
 
 **Example Problem Types:**
-
 - Reverse linked list
 - Reverse nodes in K-group
 - Reverse alternating K elements
 
 **Time & Space Complexity:**
-
 - Time: O(n)
 - Space: O(1) for iterative solutions, O(n) for recursive solutions
+
+---
 
 ## Tree Patterns
 
 ### Tree Traversal
 
 **How to Identify:**
-
 - Problems requiring visiting all nodes in a tree
 - Node relationship problems
 - Searching or collecting data from all nodes
 
 **Example Problem Types:**
-
 - Preorder, inorder, postorder traversal
 - Level order traversal
 - Path sum problems
 - Tree serialization/deserialization
 
 **Time & Space Complexity:**
-
 - Time: O(n) where n is number of nodes
 - Space: O(h) where h is tree height for recursion, O(n) worst case
 
-### Binary Search Tree
+### Depth-First Search (DFS)
+
+**How to Identify:**
+- Problems requiring exhaustive tree/graph exploration
+- Path finding problems
+- Problems requiring backtracking
+- Problems that need to go as deep as possible before backtracking
+
+**Example Problem Types:**
+- Path existence between nodes
+- Connected components
+- Topological sorting
+- Cycle detection
+
+**Time & Space Complexity:**
+- Time: O(V + E) where V is vertices and E is edges
+- Space: O(h) for recursion stack where h is maximum depth
+
+### Breadth-First Search (BFS)
+
+**How to Identify:**
+- Finding shortest path in unweighted graph/tree
+- Level-order traversal
+- Problems requiring exploration in layers
+- Finding nodes at k distance
+
+**Example Problem Types:**
+- Shortest path in unweighted graph
+- Level order traversal
+- Word ladder problems
+- Connected components
+
+**Time & Space Complexity:**
+- Time: O(V + E) where V is vertices and E is edges
+- Space: O(w) where w is maximum width of tree/graph
+
+## Binary Search Tree
 
 **How to Identify:**
 
@@ -192,48 +213,6 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 - Space: O(n * m) where n is number of keys, m is average key length
 
 ## Graph Patterns
-
-### Breadth-First Search (BFS)
-
-**How to Identify:**
-
-- Shortest path in unweighted graphs
-- Level-by-level exploration
-- Finding minimum steps to reach a target
-- Connected components
-
-**Example Problem Types:**
-
-- Shortest path between two nodes
-- Web crawler
-- Connected components
-- Level order traversal of tree
-
-**Time & Space Complexity:**
-
-- Time: O(V + E) where V is vertices and E is edges
-- Space: O(V) for queue
-
-### Depth-First Search (DFS)
-
-**How to Identify:**
-
-- Exploring all possible paths
-- Backtracking problems
-- Cycle detection
-- Topological sorting
-
-**Example Problem Types:**
-
-- Maze solving
-- Generating all paths between two vertices
-- Detecting cycles
-- Islands in a grid (connected components)
-
-**Time & Space Complexity:**
-
-- Time: O(V + E) where V is vertices and E is edges
-- Space: O(V) for recursion stack
 
 ### Dijkstra's Algorithm
 

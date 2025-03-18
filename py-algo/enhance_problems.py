@@ -2,10 +2,18 @@
 """
 Script to enhance algorithm problem files with better documentation,
 complexity analysis, and example test cases.
+
+This script:
+1. Processes Python files in the reorganized directory
+2. Adds improved docstrings with detailed problem descriptions
+3. Adds time and space complexity analysis
+4. Adds example test cases to demonstrate usage
+5. Prioritizes certain important problems
 """
 
 import os
 import re
+import sys
 from pathlib import Path
 
 BASE_DIR = Path("/Users/koonerts/.proj/algo/py-algo/reorganized")
@@ -55,7 +63,7 @@ TEMPLATES = {
 Example:
     Input: {example_input}
     Output: {example_output}
-    
+
 Time Complexity: {time_complexity}
 Space Complexity: {space_complexity}
 """''',
@@ -64,10 +72,10 @@ Space Complexity: {space_complexity}
 
 Args:
     {args}
-    
+
 Returns:
     {returns}
-    
+
 Time Complexity: {time_complexity}
 Space Complexity: {space_complexity}
 """''',
@@ -81,7 +89,7 @@ Space Complexity: {space_complexity}
 Example:
     Input: {example_input}
     Output: {example_output}
-    
+
 Time Complexity: {time_complexity}
 Space Complexity: {space_complexity}
 """''',
@@ -90,10 +98,10 @@ Space Complexity: {space_complexity}
 
 Args:
     {args}
-    
+
 Returns:
     {returns}
-    
+
 Time Complexity: {time_complexity}
 Space Complexity: {space_complexity}
 """''',
@@ -107,7 +115,7 @@ Space Complexity: {space_complexity}
 Example:
     Input: {example_input}
     Output: {example_output}
-    
+
 Time Complexity: {time_complexity}
 Space Complexity: {space_complexity}
 """''',
@@ -116,10 +124,10 @@ Space Complexity: {space_complexity}
 
 Args:
     {args}
-    
+
 Returns:
     {returns}
-    
+
 Time Complexity: {time_complexity}
 Space Complexity: {space_complexity}
 """''',
@@ -528,155 +536,219 @@ PROBLEM_DATA = {
     },
 }
 
-
 def enhance_file(file_path, problem_data):
-    """Enhance a problem file with better documentation and examples"""
-    with open(file_path, "r") as f:
-        content = f.read()
+    """
+    Enhance a problem file with better documentation and examples
 
-    # Extract function name and body
-    function_match = re.search(
-        r"def\s+(\w+)\s*\((.*?)\)(?:\s*->\s*([^:]+))?\s*:", content, re.DOTALL
-    )
-    if not function_match:
-        print(f"Could not find function definition in {file_path}")
-        return
+    Args:
+        file_path (Path): Path to the problem file
+        problem_data (dict): Dictionary containing problem information
 
-    func_name = function_match.group(1)
-    func_params = function_match.group(2)
-    func_return = function_match.group(3) if function_match.group(3) else "None"
+    Returns:
+        bool: True if enhancement was successful, False otherwise
+    """
+    try:
+        with open(file_path, "r") as f:
+            content = f.read()
+    except Exception as e:
+        print(f"Error reading {file_path}: {e}")
+        return False
 
-    # Fix return type format if needed
-    if "List" in func_return and not func_return.startswith("List"):
-        func_return = func_return.replace("list", "List")
+    # Extract existing parts
+    function_name = os.path.basename(file_path).replace(".py", "")
 
-    # Get category from path
-    category = os.path.basename(os.path.dirname(file_path))
+    # Get the category from the path
+    category = file_path.parent.name
+
+    # Select appropriate template
     template = TEMPLATES.get(category, TEMPLATES["default"])
 
-    # Create docstring
+    # Try to find function definition
+    function_match = re.search(r'def\s+([a-zA-Z0-9_]+)\s*\(', content)
+    if function_match:
+        function_name = function_match.group(1)
+
+    # Create enhanced file content
+    new_content = []
+
+    # Add file docstring
+    title = problem_data.get("title", " ".join(function_name.split("_")).title())
+    description = problem_data.get("description", "")
+    example_input = problem_data.get("example_input", "")
+    example_output = problem_data.get("example_output", "")
+    time_complexity = problem_data.get("time_complexity", "")
+    space_complexity = problem_data.get("space_complexity", "")
+
     file_docstring = template["docstring"].format(
-        title=problem_data["title"],
-        description=problem_data["description"],
-        example_input=problem_data["example_input"],
-        example_output=problem_data["example_output"],
-        time_complexity=problem_data["time_complexity"],
-        space_complexity=problem_data["space_complexity"],
+        title=title,
+        description=description,
+        example_input=example_input,
+        example_output=example_output,
+        time_complexity=time_complexity,
+        space_complexity=space_complexity,
     )
 
-    # Create function docstring
-    func_docstring = template["function_docstring"].format(
-        description=problem_data["description"],
-        args=problem_data["args"],
-        returns=problem_data["returns"],
-        time_complexity=problem_data["time_complexity"],
-        space_complexity=problem_data["space_complexity"],
-    )
+    new_content.append(file_docstring)
+    new_content.append("")
 
-    # Imports
-    imports = "\n".join(problem_data.get("imports", []))
+    # Add imports
+    imports = problem_data.get("imports", [])
     if imports:
-        imports += "\n\n"
+        for imp in imports:
+            new_content.append(imp)
+        new_content.append("")
 
-    # Examples
-    examples = []
-    for example in problem_data.get("examples", []):
-        examples.append(f"    {example}")
-    examples_str = "\n".join(examples) if examples else f"    print({func_name}())"
+    # Find function definition and add function docstring
+    try:
+        lines = content.splitlines()
+        function_found = False
 
-    # Function body - extract the function implementation (not the signature or docstring)
-    # Skip any existing docstrings
-    func_body = ""
-    in_func = False
-    in_docstring = False
-    indent = None
-    triple_quote_count = 0
-    for line in content.split("\n"):
-        if re.match(r"\s*def\s+" + func_name, line):
-            in_func = True
-            # Find indentation level
-            match = re.match(r"^(\s+)", line.rstrip())
-            if match:
-                indent = len(match.group(1))
+        for i, line in enumerate(lines):
+            if not function_found and re.match(r'def\s+[a-zA-Z0-9_]+\s*\(', line):
+                function_found = True
+                new_content.append(line)
+
+                # Add function docstring
+                if "args" in problem_data:
+                    indentation = len(line) - len(line.lstrip()) + 4
+                    indent = " " * indentation
+
+                    function_docstring = template["function_docstring"].format(
+                        description=description,
+                        args=problem_data.get("args", ""),
+                        returns=problem_data.get("returns", ""),
+                        time_complexity=time_complexity,
+                        space_complexity=space_complexity,
+                    )
+
+                    # Indent docstring
+                    function_docstring_lines = function_docstring.splitlines()
+                    for j, doc_line in enumerate(function_docstring_lines):
+                        if j == 0:
+                            new_content.append(f"{indent}{doc_line}")
+                        else:
+                            new_content.append(f"{indent}{doc_line}")
+
+                # Continue with function body
+                in_docstring = False
+                for j in range(i + 1, len(lines)):
+                    line = lines[j]
+
+                    # Skip existing docstring
+                    if '"""' in line or "'''" in line:
+                        if not in_docstring:
+                            in_docstring = True
+                        else:
+                            in_docstring = False
+                        continue
+
+                    if in_docstring:
+                        continue
+
+                    new_content.append(line)
+            elif not function_found:
+                # Add lines before function definition
+                if not (line.startswith('"""') or line.startswith("'''") or
+                        in_docstring or line.strip() == ""):
+                    new_content.append(line)
+
+                # Track docstring state to skip existing docstring
+                if line.startswith('"""') or line.startswith("'''"):
+                    in_docstring = not in_docstring
+
+        # Add example usage at the end if we have examples
+        examples = problem_data.get("examples", [])
+        if examples:
+            if not new_content[-1].strip():
+                new_content[-1] = "\n\n# Example usage"
             else:
-                indent = 0
-            continue
+                new_content.append("\n\n# Example usage")
 
-        # Check for docstring start/end
-        if in_func and '"""' in line:
-            triple_quote_count += 1
-            in_docstring = triple_quote_count % 2 == 1  # Toggle docstring state
-            continue
+            new_content.append('if __name__ == "__main__":')
+            for example in examples:
+                new_content.append(f"    # {example}")
 
-        # Skip lines in docstring
-        if in_func and in_docstring:
-            continue
+            # Add assertion tests if available
+            test_assertions = problem_data.get("test_assertions", [])
+            if test_assertions:
+                new_content.append("\n    # Run tests")
+                for assertion in test_assertions:
+                    new_content.append(f"    assert {assertion}")
+                new_content.append("    print('All tests passed!')")
 
-        # Collect function body (excluding docstring)
-        if in_func and not in_docstring:
-            # Check if we're still in the function
-            if line.strip() and not line.startswith(
-                " " * (indent if indent is not None else 0)
-            ):
-                # We've reached the end of the function
-                in_func = False
-            else:
-                # This is part of the function body
-                func_body += line + "\n"
+        # Write back to file
+        try:
+            with open(file_path, "w") as f:
+                f.write("\n".join(new_content))
+            print(f"Enhanced {file_path}")
+            return True
+        except Exception as e:
+            print(f"Error writing to {file_path}: {e}")
+            return False
 
-    # Extract only the actual implementation part (remove empty lines at start)
-    func_body = func_body.lstrip()
-
-    # Special case fixes based on category
-    if category == "linked_lists":
-        # Make sure function body doesn't reference 'self'
-        func_body = func_body.replace("self.", "")
-
-    # Handle indentation consistently
-    func_body_lines = func_body.split("\n")
-    indented_func_body = ""
-    for line in func_body_lines:
-        if line.strip():
-            # Add consistent indentation (4 spaces)
-            indented_func_body += "    " + line.lstrip() + "\n"
-        else:
-            indented_func_body += "\n"
-
-    # Create the enhanced file content
-    enhanced_content = f"""{file_docstring}
-
-{imports}def {func_name}({func_params}) -> {func_return}:
-    {func_docstring}
-{indented_func_body}
-
-# Example usage
-if __name__ == "__main__":
-{examples_str}
-"""
-
-    # Write the enhanced content
-    with open(file_path, "w") as f:
-        f.write(enhanced_content)
-
-    print(f"Enhanced {file_path}")
+    except Exception as e:
+        print(f"Error processing {file_path}: {e}")
+        return False
 
 
 def main():
-    """Enhance problem files with better documentation and examples"""
-    print("Enhancing problem files...")
+    """
+    Main function to enhance problem files
+    """
+    print("Enhancing algorithm problem files...")
 
-    # Process priority problems first
+    # Check if base directory exists
+    if not BASE_DIR.exists():
+        print(f"Error: Base directory {BASE_DIR} does not exist")
+        sys.exit(1)
+
+    # Process high-priority problems first
     for category, problems in PRIORITY_PROBLEMS.items():
         category_dir = BASE_DIR / category
         if not category_dir.exists():
+            print(f"Warning: Category directory {category_dir} does not exist")
             continue
 
-        for problem in problems:
-            file_path = category_dir / problem
-            if file_path.exists() and problem in PROBLEM_DATA:
-                enhance_file(file_path, PROBLEM_DATA[problem])
+        for problem_file in problems:
+            file_path = category_dir / problem_file
+            if not file_path.exists():
+                print(f"Warning: Priority problem {file_path} does not exist")
+                continue
 
-    print("Problem enhancement complete!")
+            from inspect import currentframe, getframeinfo
+            frameinfo = getframeinfo(currentframe())
+            print(f"Processing {file_path} at {frameinfo.lineno}")
+
+            # Check if we have specific data for this problem
+            problem_data = {}
+            if problem_file in globals().get("PROBLEM_DATA", {}):
+                problem_data = globals()["PROBLEM_DATA"].get(problem_file, {})
+
+            # Enhance the file
+            enhance_file(file_path, problem_data)
+
+    # Process remaining files
+    try:
+        for category_dir in [d for d in BASE_DIR.iterdir() if d.is_dir() and d.name not in [".git", "__pycache__"]]:
+            for file_path in category_dir.glob("*.py"):
+                if file_path.name == "__init__.py":
+                    continue
+
+                # Skip already processed priority problems
+                if category_dir.name in PRIORITY_PROBLEMS and file_path.name in PRIORITY_PROBLEMS[category_dir.name]:
+                    continue
+
+                # Check if we have specific data for this problem
+                problem_data = {}
+                if file_path.name in globals().get("PROBLEM_DATA", {}):
+                    problem_data = globals()["PROBLEM_DATA"].get(file_path.name, {})
+
+                # Enhance the file
+                enhance_file(file_path, problem_data)
+    except Exception as e:
+        print(f"Error processing files: {e}")
+
+    print("Enhancement complete!")
 
 
 if __name__ == "__main__":

@@ -1,12 +1,19 @@
 #!/usr/bin/env python3
 """
 Script to restructure the py-algo directory into one problem per file.
-Extracts methods from Solution classes and creates individual files.
+
+This script:
+1. Extracts individual algorithm problems from larger files
+2. Processes multiple source directories
+3. Organizes problems by category
+4. Converts class methods to standalone functions
+5. Creates appropriate directory structure with READMEs
 """
 
 import os
 import re
 import ast
+import sys
 from pathlib import Path
 
 # Configuration
@@ -17,12 +24,17 @@ OUTPUT_DIR = BASE_DIR / "reorganized"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # Create an __init__.py file in the output directory
-with open(OUTPUT_DIR / "__init__.py", "w") as f:
-    f.write("# This file marks the directory as a Python package\n")
+try:
+    with open(OUTPUT_DIR / "__init__.py", "w") as f:
+        f.write("# This file marks the directory as a Python package\n")
+except Exception as e:
+    print(f"Error creating __init__.py: {e}")
+    sys.exit(1)
 
 # Create a README.md file in the output directory
-with open(OUTPUT_DIR / "README.md", "w") as f:
-    f.write("""# Python Algorithm Problems
+try:
+    with open(OUTPUT_DIR / "README.md", "w") as f:
+        f.write("""# Python Algorithm Problems
 
 This directory contains algorithm problems organized by category, with one problem per file.
 
@@ -36,6 +48,9 @@ Each problem is in its own file with:
 ## Categories
 
 """)
+except Exception as e:
+    print(f"Error creating README.md: {e}")
+    sys.exit(1)
 
 # Category mappings
 CATEGORIES = {
@@ -57,14 +72,30 @@ CATEGORIES = {
 DIRS_TO_PROCESS = ["leetcode", "algo-expert", "grokk-tci"]
 
 
-# Utility function to convert method name to snake_case
 def camel_to_snake(name):
+    """
+    Convert a camelCase or PascalCase name to snake_case
+
+    Args:
+        name (str): The camelCase or PascalCase name
+
+    Returns:
+        str: The name in snake_case
+    """
     name = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
     return re.sub("([a-z0-9])([A-Z])", r"\1_\2", name).lower()
 
 
 def extract_docstring(func_node):
-    """Extract docstring from AST function node"""
+    """
+    Extract docstring from AST function node
+
+    Args:
+        func_node: AST function node
+
+    Returns:
+        str: The docstring or empty string if none exists
+    """
     if (
         isinstance(func_node, ast.FunctionDef)
         and func_node.body
@@ -77,18 +108,31 @@ def extract_docstring(func_node):
 
 
 def process_file(file_path, category_problems=None):
-    """Process a single file to extract problems"""
+    """
+    Process a single file to extract problems
+
+    Args:
+        file_path (str): Path to the file to process
+        category_problems (dict, optional): Dictionary to track problems by category
+
+    Returns:
+        list: List of processed problems as (title, filename) tuples
+    """
     print(f"Processing {file_path}...")
 
-    with open(file_path, "r") as f:
-        content = f.read()
+    try:
+        with open(file_path, "r") as f:
+            content = f.read()
+    except Exception as e:
+        print(f"Error reading {file_path}: {e}")
+        return []
 
     # Parse the file
     try:
         tree = ast.parse(content)
     except SyntaxError as e:
         print(f"Error parsing {file_path}: {e}")
-        return
+        return []
 
     # Determine category from filename
     filename = os.path.basename(file_path)
@@ -96,7 +140,11 @@ def process_file(file_path, category_problems=None):
 
     # Create category directory
     category_dir = OUTPUT_DIR / category
-    os.makedirs(category_dir, exist_ok=True)
+    try:
+        os.makedirs(category_dir, exist_ok=True)
+    except Exception as e:
+        print(f"Error creating directory {category_dir}: {e}")
+        return []
 
     # Extract all functions
     extracted_functions = []
@@ -133,40 +181,44 @@ def process_file(file_path, category_problems=None):
         if not problem_title:
             problem_title = func_name.capitalize()
 
-        with open(output_path, "w") as f:
-            f.write(f'"""\n{problem_title}\n\n')
-            if docstring:
-                f.write(f"{docstring.strip()}\n")
-            f.write('"""\n\n\n')
+        try:
+            with open(output_path, "w") as f:
+                f.write(f'"""\n{problem_title}\n\n')
+                if docstring:
+                    f.write(f"{docstring.strip()}\n")
+                f.write('"""\n\n\n')
 
-            # Add imports if needed (basic ones)
-            if "collections" in func_code:
-                f.write("import collections\n")
-            if "heapq" in func_code:
-                f.write("from heapq import *\n")
-            if "defaultdict" in func_code:
-                f.write("from collections import defaultdict\n")
-            if "Counter" in func_code:
-                f.write("from collections import Counter\n")
-            if "deque" in func_code:
-                f.write("from collections import deque\n")
-            if any(x in func_code for x in ["math.", "sqrt", "ceil", "floor"]):
-                f.write("import math\n")
-            if "string." in func_code:
-                f.write("import string\n")
+                # Add imports if needed (basic ones)
+                if "collections" in func_code:
+                    f.write("import collections\n")
+                if "heapq" in func_code:
+                    f.write("from heapq import *\n")
+                if "defaultdict" in func_code:
+                    f.write("from collections import defaultdict\n")
+                if "Counter" in func_code:
+                    f.write("from collections import Counter\n")
+                if "deque" in func_code:
+                    f.write("from collections import deque\n")
+                if any(x in func_code for x in ["math.", "sqrt", "ceil", "floor"]):
+                    f.write("import math\n")
+                if "string." in func_code:
+                    f.write("import string\n")
 
-            f.write("\n")
+                f.write("\n")
 
-            # Write the function definition
-            f.write(func_code)
+                # Write the function definition
+                f.write(func_code)
 
-            # Add example usage
-            f.write("\n\n# Example usage\n")
-            f.write('if __name__ == "__main__":\n')
-            f.write(f"    # TODO: Add example calls to {func_name}\n")
-            f.write(f"    print({func_name}([]))\n")
+                # Add example usage
+                f.write("\n\n# Example usage\n")
+                f.write('if __name__ == "__main__":\n')
+                f.write(f"    # TODO: Add example calls to {func_name}\n")
+                f.write(f"    print({func_name}([]))\n")
 
-        print(f"Created {output_path}")
+            print(f"Created {output_path}")
+        except Exception as e:
+            print(f"Error writing to {output_path}: {e}")
+            continue
 
         # Track this problem for README updates
         processed_problems.append((problem_title, file_name))
@@ -179,7 +231,16 @@ def process_file(file_path, category_problems=None):
 
 
 def extract_function(func_node, source):
-    """Extract standalone function from AST node"""
+    """
+    Extract standalone function from AST node
+
+    Args:
+        func_node: AST function node
+        source (str): Source code string
+
+    Returns:
+        tuple: (function_name, function_code, docstring)
+    """
     func_name = func_node.name
 
     # Get line numbers
@@ -215,7 +276,16 @@ def extract_function(func_node, source):
 
 
 def extract_method(method_node, source):
-    """Extract method from a class and convert to standalone function"""
+    """
+    Extract method from a class and convert to standalone function
+
+    Args:
+        method_node: AST method node
+        source (str): Source code string
+
+    Returns:
+        tuple: (method_name, converted_function_code, docstring)
+    """
     method_name = method_node.name
 
     # Get line numbers
@@ -248,10 +318,10 @@ def extract_method(method_node, source):
                     break
             method_source.append(line)
 
-    func_code = "\n".join(method_source)
+    method_code = "\n".join(method_source)
     docstring = extract_docstring(method_node)
 
-    return method_name, func_code, docstring
+    return method_name, method_code, docstring
 
 
 def create_category_structure():

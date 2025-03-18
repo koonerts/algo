@@ -4,7 +4,7 @@
 
 1. [Introduction](#introduction)
 2. [Array Algorithms](#array-algorithms)
-   * [Kadane&#39;s Algorithm](#kadanes-algorithm)
+   * [Kadane's Algorithm](#kadanes-algorithm)
    * [Sliding Window (Fixed Size)](#sliding-window-fixed-size)
    * [Sliding Window (Variable Size)](#sliding-window-variable-size)
    * [Two Pointers Technique](#two-pointers-technique)
@@ -12,7 +12,7 @@
 3. [Linked Lists](#linked-lists)
    * [Fast/Slow Pointers](#fast--slow-pointers)
    * [Iterative Linked List Reversal](#iterative-linked-list-reversal)
-4. [Trees &amp; Advanced Data Structures](#trees--advanced-data-structures)
+4. [Trees & Advanced Data Structures](#trees--advanced-data-structures)
    * [Trie (Prefix Tree)](#trie-data-structure)
    * [Union-Find (Disjoint Set)](#union-find-disjoint-set)
    * [Segment Tree](#segment-tree)
@@ -24,9 +24,9 @@
    * [Combinations Algorithm](#combinations-algorithm)
    * [Permutations Algorithm](#permutations-algorithm)
 7. [Graphs](#graphs)
-   * [Dijkstra&#39;s Algorithm](#dijkstras-algorithm)
-   * [Prim&#39;s Algorithm](#prims-algorithm)
-   * [Kruskal&#39;s Algorithm](#kruskals-algorithm)
+   * [Dijkstra's Algorithm](#dijkstras-algorithm)
+   * [Prim's Algorithm](#prims-algorithm)
+   * [Kruskal's Algorithm](#kruskals-algorithm)
    * [Topological Sort](#topological-sort)
 8. [Dynamic Programming](#dynamic-programming)
    * [0/1 Knapsack](#01-knapsack)
@@ -40,7 +40,7 @@
    * [Bit Manipulation](#bit-manipulation)
    * [Dutch National Flag](#dutch-national-flag)
    * [Boyer-Moore Voting Algorithm](#boyer-moore-voting-algorithm)
-   * [Floyd&#39;s Cycle Finding](#floyds-cycle-finding)
+   * [Floyd's Cycle Finding](#floyds-cycle-finding)
 10. [Learning Plan](#learning-plan)
 11. [Glossary](#glossary)
 12. [Learning Activities](#learning-activities)
@@ -62,6 +62,8 @@ If you're new to algorithms or need a refresher:
 3. Practice with examples of increasing difficulty (Easy → Medium → Hard)
 4. Use the interactive activities to reinforce your understanding
 
+---
+
 ## Array Algorithms
 
 ### Kadane's Algorithm
@@ -71,14 +73,12 @@ If you're new to algorithms or need a refresher:
 Kadane's algorithm efficiently finds the maximum sum contiguous subarray within a one-dimensional array of numbers. It uses dynamic programming to track the maximum sum ending at each position.
 
 **When to Use**:
-
-* Finding maximum/minimum sum subarray
-* Problems requiring contiguous elements with optimal value
-* When you need O(n) solution for subarray sum problems
+- Finding maximum/minimum sum subarray
+- Problems requiring contiguous elements with optimal value
+- When you need O(n) solution for subarray sum problems
 
 **Key Insight**:
 At each position, you have two choices:
-
 1. Start a new subarray from current position
 2. Extend the previous subarray by including current element
 
@@ -104,9 +104,8 @@ def kadane(nums):
 The fixed-size sliding window algorithm maintains a subarray/substring of constant length `k` that "slides" through the data from left to right, updating results at each step.
 
 **When to Use**:
-
-* Computing running averages, sums, or statistics over a fixed-size range
-* Finding subarrays/substrings of fixed length with certain properties
+- Computing running averages, sums, or statistics over a fixed-size range
+- Finding subarrays/substrings of fixed length with certain properties
 
 **Implementation**:
 
@@ -152,61 +151,76 @@ def sliding_window_variable(arr, condition):
             left += 1
 
         # Update result based on current window
+        result = max/min/update(result, calculation)
 
     return result
+# Time: O(n), Space: O(1) or O(k) depending on state tracking
 ```
+
+**Example Problems**:
+- Longest substring with K distinct characters
+- Minimum size subarray with sum ≥ target
+- Longest substring without repeating characters
 
 ### Two Pointers Technique
 
-> **Difficulty**: ⭐ Easy
+> **Difficulty**: ⭐⭐ Medium
 
-Uses two pointers to solve problems in linear time O(n) by eliminating nested loops.
+The two pointers technique involves using two pointers to traverse an array or linked list in a coordinated way, often from opposite ends or at different speeds.
 
-**Key Patterns**:
+**When to Use**:
+- Searching pairs in a sorted array
+- Finding triplets/subarrays with a target sum
+- Partitioning arrays
+- Manipulating linked lists
 
-* From both ends: left → | ← right
-* Same direction: slow → fast →
-* Fast/slow: slow → fast →→ (different speeds)
-
-**Implementation (from both ends)**:
+**Implementation**:
 
 ```python
-def two_pointers_from_ends(arr):
+def two_pointers(arr, target):
     left, right = 0, len(arr) - 1
 
     while left < right:
-        # Process elements at left and right
+        current_sum = arr[left] + arr[right]
 
-        if condition:
+        if current_sum == target:
+            return [left, right]
+        elif current_sum < target:
             left += 1
         else:
             right -= 1
 
-    return result
+    return [-1, -1]  # No solution found
+# Time: O(n), Space: O(1)
 ```
 
 ### Prefix Sums
 
 > **Difficulty**: ⭐ Easy
 
-Precompute cumulative sums to efficiently answer range queries. Transforms O(n) range sum operations into O(1).
+Prefix sums precompute cumulative sums of array elements to enable efficient range sum queries and subarray calculations.
+
+**When to Use**:
+- Range sum queries
+- Finding subarrays with a target sum
+- Problems involving cumulative operations
 
 **Implementation**:
 
 ```python
-def prefix_sum_setup(arr):
-    n = len(arr)
-    prefix = [0] * (n + 1)  # +1 for convenience
-
-    for i in range(n):
-        prefix[i+1] = prefix[i] + arr[i]
-
+def build_prefix_sum(arr):
+    prefix = [0] * (len(arr) + 1)
+    for i in range(len(arr)):
+        prefix[i + 1] = prefix[i] + arr[i]
     return prefix
 
-# Get sum of range [i,j] inclusive (0-indexed)
-def range_sum(prefix, i, j):
-    return prefix[j+1] - prefix[i]
+def range_sum(prefix, left, right):
+    # Sum from arr[left] to arr[right] inclusive
+    return prefix[right + 1] - prefix[left]
+# Build: O(n), Query: O(1)
 ```
+
+---
 
 ## Linked Lists
 
@@ -214,15 +228,14 @@ def range_sum(prefix, i, j):
 
 > **Difficulty**: ⭐⭐ Medium
 
-Uses two pointers moving at different speeds to solve problems like finding cycles or the middle node.
+Fast & slow pointers (or "tortoise and hare") use two pointers moving at different speeds to solve linked list problems, especially for cycle detection.
 
-**Key Applications**:
+**When to Use**:
+- Detecting cycles in linked lists
+- Finding middle elements
+- Finding list length and nth elements from end
 
-* Cycle detection
-* Finding the middle element
-* Finding the kth element from the end
-
-**Implementation (cycle detection)**:
+**Implementation**:
 
 ```python
 def has_cycle(head):
@@ -239,6 +252,7 @@ def has_cycle(head):
         fast = fast.next.next
 
     return True
+# Time: O(n), Space: O(1)
 ```
 
 ### Iterative Linked List Reversal
