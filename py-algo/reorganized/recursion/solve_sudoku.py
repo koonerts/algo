@@ -37,10 +37,10 @@ class Solution:
 def solveSudoku(board):
     """
     Solve a Sudoku puzzle by filling the empty cells.
-    
+
     Args:
         board (List[List[str]]): 9x9 Sudoku board with '.' for empty cells
-        
+
     Returns:
         None: The board is modified in-place
     """
@@ -48,17 +48,17 @@ def solveSudoku(board):
     Solution.rows = [[False for _ in range(9)] for _ in range(9)]
     Solution.cols = [[False for _ in range(9)] for _ in range(9)]
     Solution.boxes = [[False for _ in range(9)] for _ in range(9)]
-    
+
     def can_place(row, col, val):
         return not Solution.rows[row][val-1] and not Solution.cols[col][val-1] and not Solution.boxes[row//3 * 3 + col//3][val-1]
-    
+
     def place(row, col, val):
         val = int(val)
         Solution.rows[row][val-1] = True
         Solution.cols[col][val-1] = True
         Solution.boxes[row//3 * 3 + col//3][val-1] = True
         Solution.board[row][col] = str(val)
-    
+
     def remove(row, col):
         val = int(Solution.board[row][col])
         Solution.rows[row][val-1] = False
@@ -71,7 +71,7 @@ def solveSudoku(board):
         for j in range(9):
             if Solution.board[i][j] != '.':
                 place(i, j, Solution.board[i][j])
-    
+
     def dfs(row, col):
         if row >= 8 and col >= 9:
             return True
@@ -96,18 +96,18 @@ def solveSudoku(board):
 # Example usage
 if __name__ == "__main__":
     board = [
-        ["5","3",".",".","7",".",".",".","."],
-        ["6",".",".","1","9","5",".",".","."],
-        [".","9","8",".",".",".",".","6","."],
-        ["8",".",".",".","6",".",".",".","3"],
-        ["4",".",".","8",".","3",".",".","1"],
-        ["7",".",".",".","2",".",".",".","6"],
-        [".","6",".",".",".",".","2","8","."],
-        [".",".",".","4","1","9",".",".","5"],
-        [".",".",".",".","8",".",".","7","9"]
+        ["5", "3", ".", ".", "7", ".", ".", ".", "."],
+        ["6", ".", ".", "1", "9", "5", ".", ".", "."],
+        [".", "9", "8", ".", ".", ".", ".", "6", "."],
+        ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
+        ["4", ".", ".", "8", ".", "3", ".", ".", "1"],
+        ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
+        [".", "6", ".", ".", ".", ".", "2", "8", "."],
+        [".", ".", ".", "4", "1", "9", ".", ".", "5"],
+        [".", ".", ".", ".", "8", ".", ".", "7", "9"]
     ]
     solved_board = solveSudoku(board)
-    
+
     # Print the solved board
     for row in solved_board:
         print(" ".join(row))

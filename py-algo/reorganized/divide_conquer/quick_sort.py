@@ -3,7 +3,7 @@ Quick_sort
 
 """
 def quick_sort(arr):
-def quick_sort_recursive(lo, hi):
+    def quick_sort_recursive(lo, hi):
         if lo > hi:
             return
 
@@ -24,6 +24,7 @@ def quick_sort_recursive(lo, hi):
         arr[i], arr[hi] = arr[hi], arr[i]
         quick_sort_recursive(lo, i-1)
         quick_sort_recursive(i+1, hi)
+
     quick_sort_recursive(0, len(arr)-1)
 
 

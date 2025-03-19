@@ -14,7 +14,7 @@ class Node:
     def __init__(self, value, next=None):
         self.value = value
         self.next = next
-    
+
     def __str__(self):
         result = []
         current = self
@@ -35,7 +35,7 @@ def reverse_alternate_k_elements(head: Node, k: int) -> Node:
     """
     if not head or k <= 1:
         return head
-        
+
     node, prev, sublist_tail, non_reverse_tail = head, None, head, None
     k_cntr, should_reverse, is_head_set = k, True, False
 
@@ -82,7 +82,7 @@ if __name__ == "__main__":
     head.next.next.next.next.next = Node(6)
     head.next.next.next.next.next.next = Node(7)
     head.next.next.next.next.next.next.next = Node(8)
-    
+
     print("Original:", head)
     result = reverse_alternate_k_elements(head, 2)
     print("After reversing alternate k elements:", result)

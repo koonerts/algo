@@ -21,16 +21,16 @@ Example:
 def maxDistToClosest(seats: list[int]) -> int:
     """
     Calculate the maximum possible distance to the closest person in a row of seats.
-    
+
     Args:
         seats (list[int]): A list of 0s and 1s, where 1 represents a person sitting
-        
+
     Returns:
         int: The maximum distance to the closest person
     """
     if not seats:
         return 0
-        
+
     prev = None
     max_dist = 0
 
@@ -42,7 +42,7 @@ def maxDistToClosest(seats: list[int]) -> int:
                 dist = (i - prev) // 2  # Distance between two people
                 max_dist = max(max_dist, dist)
             prev = i
-    
+
     # Check the distance from the last person to the end
     if prev is not None and prev < len(seats) - 1:
         max_dist = max(max_dist, len(seats) - 1 - prev)
@@ -58,7 +58,7 @@ if __name__ == "__main__":
         [0, 1],                 # Expected: 1
         [0, 0, 1]               # Expected: 2
     ]
-    
+
     for seats in test_cases:
         print(f"Seats: {seats}")
         print(f"Max distance to closest person: {maxDistToClosest(seats)}")

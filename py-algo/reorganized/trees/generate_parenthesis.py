@@ -2,9 +2,12 @@
 Parenthesis
 
 """
+
+
 def generateParenthesis(n: int) -> list[str]:
     result = []
-    if n <= 0: return result
+    if n <= 0:
+        return result
 
     def add_parenthesis(curr_str, open_cnt, closed_cnt):
         if closed_cnt == n:
@@ -17,6 +20,7 @@ def generateParenthesis(n: int) -> list[str]:
 
     add_parenthesis('', 0, 0)
     return result
+
 
 # Example usage
 if __name__ == "__main__":

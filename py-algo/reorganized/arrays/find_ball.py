@@ -2,6 +2,8 @@
 Ball
 
 """
+
+
 def findBall(grid: list[list[int]]) -> list[int]:
     LEFT, RIGHT = -1, 1
     ret = [-1]*len(grid[0])
@@ -23,6 +25,7 @@ def findBall(grid: list[list[int]]) -> list[int]:
     for i in range(len(ret)):
         ret[i] = traverse(0, i)//10
     return ret
+
 
 # Example usage
 if __name__ == "__main__":

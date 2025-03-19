@@ -53,7 +53,8 @@ def deserialize(data: str) -> Optional[TreeNode]:
 # Example usage
 if __name__ == "__main__":
     # Example: Create a serialized tree representation
-    serialized_tree = json.dumps({"inorder": [9, 3, 15, 20, 7], "preorder": [3, 9, 20, 15, 7]})
+    serialized_tree = json.dumps(
+        {"inorder": [9, 3, 15, 20, 7], "preorder": [3, 9, 20, 15, 7]})
 
     # Deserialize it back to a tree
     tree = deserialize(serialized_tree)

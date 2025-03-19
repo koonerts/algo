@@ -5,6 +5,7 @@ Depth2
 
 from max_depth import TreeNode
 
+
 def maxDepth2(root: TreeNode) -> int:
     if not root:
         return 0

@@ -2,8 +2,12 @@
 Fill
 
 """
+
+
 def floodFill(image: list[list[int]], sr: int, sc: int, new_color: int) -> list[list[int]]:
-    if not image: return image
+    if not image:
+        return image
+
     def fill(x, y, orig_color):
         if x >= len(image) \
                 or x < 0 \

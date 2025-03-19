@@ -15,10 +15,10 @@ For example, the path `/foo/../bar/./baz` should be shortened to `/bar/baz`.
 def shortenPath(path):
     """
     Shortens a Unix-shell path by resolving '.', '..' and removing unnecessary slashes.
-    
+
     Args:
         path (str): A string representing a file system path
-        
+
     Returns:
         str: A shortened version of the path
     """
@@ -59,7 +59,7 @@ if __name__ == "__main__":
         ".",                         # should be "."
         "..",                        # should be ".."
     ]
-    
+
     for p in paths:
         print(f"Original: {p}")
         print(f"Shortened: {shortenPath(p)}")

@@ -11,7 +11,8 @@ def can_partition_to_equal_subsets_memoized(nums) -> bool:
 
     # initialize the 'dp' array, -1 for default, 1 for true and 0 for false
     dp = [[None for row in range(s//2)] for col in range(len(nums))]
-def can_partition_recursive(curr_sum: int, curr_index: int) -> bool:
+
+    def can_partition_recursive(curr_sum: int, curr_index: int) -> bool:
         if curr_sum == 0:
             return True
         elif curr_index >= len(nums):

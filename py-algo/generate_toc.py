@@ -40,7 +40,8 @@ def extract_problem_info(file_path):
         )
 
         # Extract description
-        desc_match = re.search(r'"""[\s\n]*.*?[\s\n]*(.*?)[\s\n]*"""', content, re.DOTALL)
+        desc_match = re.search(
+            r'"""[\s\n]*.*?[\s\n]*(.*?)[\s\n]*"""', content, re.DOTALL)
         description = desc_match.group(1).strip() if desc_match else ""
         if description:
             # Take only the first sentence or line

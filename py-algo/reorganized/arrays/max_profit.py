@@ -6,7 +6,7 @@ You are given an array prices where prices[i] is the price of a given stock on t
 Example:
     Input: [7, 1, 5, 3, 6, 4]
     Output: 5 (buy on day 2 when price = 1, sell on day 5 when price = 6, profit = 6-1 = 5)
-    
+
 Time Complexity: O(n) where n is the number of days
 Space Complexity: O(1) using constant extra space
 """
@@ -19,10 +19,10 @@ You are given an array prices where prices[i] is the price of a given stock on t
 
 Args:
     prices (List[int]): Array of prices where prices[i] is the price on day i
-    
+
 Returns:
     int: The maximum profit that can be achieved
-    
+
 Time Complexity: O(n) where n is the number of days
 Space Complexity: O(1) using constant extra space
 """
@@ -31,21 +31,15 @@ Space Complexity: O(1) using constant extra space
     profit = 0
     peak, valley = 0, 0
     for i in range(1, len(prices)):
-    if prices[i] > prices[i - 1]:
-    peak = i
-    if i == len(prices) - 1:
-    profit += prices[peak] - prices[valley]
-    else:
-    if peak > valley:
-    profit += prices[peak] - prices[valley]
-    valley = i
+        if prices[i] > prices[i - 1]:
+            peak = i
+            if i == len(prices) - 1:
+                profit += prices[peak] - prices[valley]
+        else:
+            if peak > valley:
+                profit += prices[peak] - prices[valley]
+            valley = i
     return profit
-
-
-    # Example usage
-if __name__ == "__main__":
-    maxProfit([7, 1, 5, 3, 6, 4])  # Output: 5
-    maxProfit([7, 6, 4, 3, 1])  # Output: 0
 
 
 # Example usage

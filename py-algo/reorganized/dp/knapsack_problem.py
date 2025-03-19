@@ -18,17 +18,17 @@ Example:
 def knapsackProblem(items, capacity):
     """
     Solves the 0/1 knapsack problem using dynamic programming.
-    
+
     Args:
         items (list): List of [value, weight] pairs
         capacity (int): Maximum weight capacity of the knapsack
-        
+
     Returns:
         tuple: (maximum profit, list of indices of selected items)
     """
     if not items or capacity <= 0:
         return 0, []
-        
+
     PROFIT, WEIGHT = 0, 1
     max_profits = [[0 for _ in range(capacity + 1)] for _ in range(len(items))]
 
@@ -38,7 +38,8 @@ def knapsackProblem(items, capacity):
             profit_with = 0
             if items[i][WEIGHT] <= j:
                 profit_with = items[i][PROFIT] + (
-                    0 if i - 1 < 0 else max_profits[i - 1][j - items[i][WEIGHT]]
+                    0 if i -
+                    1 < 0 else max_profits[i - 1][j - items[i][WEIGHT]]
                 )
 
             profit_without = 0
@@ -59,7 +60,7 @@ def knapsackProblem(items, capacity):
                 picked_items.append(i)
                 profit -= items[i][PROFIT]
                 cap -= items[i][WEIGHT]
-    
+
     return max_profits[-1][-1], sorted(picked_items)
 
 
@@ -72,11 +73,11 @@ if __name__ == "__main__":
         [6, 7]   # value: 6, weight: 7
     ]
     capacity = 10
-    
+
     max_profit, selected_items = knapsackProblem(items, capacity)
     print(f"Maximum profit: {max_profit}")
     print(f"Selected items (indices): {selected_items}")
-    
+
     # Show selected items details
     print("\nSelected items details:")
     total_weight = 0

@@ -536,6 +536,7 @@ PROBLEM_DATA = {
     },
 }
 
+
 def enhance_file(file_path, problem_data):
     """
     Enhance a problem file with better documentation and examples
@@ -572,7 +573,8 @@ def enhance_file(file_path, problem_data):
     new_content = []
 
     # Add file docstring
-    title = problem_data.get("title", " ".join(function_name.split("_")).title())
+    title = problem_data.get("title", " ".join(
+        function_name.split("_")).title())
     description = problem_data.get("description", "")
     example_input = problem_data.get("example_input", "")
     example_output = problem_data.get("example_output", "")
@@ -741,7 +743,8 @@ def main():
                 # Check if we have specific data for this problem
                 problem_data = {}
                 if file_path.name in globals().get("PROBLEM_DATA", {}):
-                    problem_data = globals()["PROBLEM_DATA"].get(file_path.name, {})
+                    problem_data = globals()["PROBLEM_DATA"].get(
+                        file_path.name, {})
 
                 # Enhance the file
                 enhance_file(file_path, problem_data)
