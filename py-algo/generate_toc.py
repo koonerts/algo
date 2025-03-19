@@ -36,12 +36,16 @@ def extract_problem_info(file_path):
         title = (
             title_match.group(1)
             if title_match
-            else os.path.basename(file_path).replace(".py", "").replace("_", " ").title()
+            else os.path.basename(file_path)
+            .replace(".py", "")
+            .replace("_", " ")
+            .title()
         )
 
         # Extract description
         desc_match = re.search(
-            r'"""[\s\n]*.*?[\s\n]*(.*?)[\s\n]*"""', content, re.DOTALL)
+            r'"""[\s\n]*.*?[\s\n]*(.*?)[\s\n]*"""', content, re.DOTALL
+        )
         description = desc_match.group(1).strip() if desc_match else ""
         if description:
             # Take only the first sentence or line
@@ -52,7 +56,9 @@ def extract_problem_info(file_path):
         return title, description
     except Exception as e:
         print(f"Error extracting info from {file_path}: {e}")
-        return os.path.basename(file_path).replace(".py", "").replace("_", " ").title(), ""
+        return os.path.basename(file_path).replace(".py", "").replace(
+            "_", " "
+        ).title(), ""
 
 
 def update_category_readme(category):
@@ -72,7 +78,9 @@ def update_category_readme(category):
     # Get all problem files
     try:
         problem_files = [
-            f for f in os.listdir(category_dir) if f.endswith(".py") and f != "__init__.py"
+            f
+            for f in os.listdir(category_dir)
+            if f.endswith(".py") and f != "__init__.py"
         ]
     except Exception as e:
         print(f"Error listing files in {category_dir}: {e}")

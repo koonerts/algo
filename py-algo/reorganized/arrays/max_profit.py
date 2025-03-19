@@ -13,20 +13,22 @@ Space Complexity: O(1) using constant extra space
 
 from typing import List
 
+
 def maxProfit(prices: list[int]) -> int:
     """
-You are given an array prices where prices[i] is the price of a given stock on the ith day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock. Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+    You are given an array prices where prices[i] is the price of a given stock on the ith day. You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock. Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
 
-Args:
-    prices (List[int]): Array of prices where prices[i] is the price on day i
+    Args:
+        prices (List[int]): Array of prices where prices[i] is the price on day i
 
-Returns:
-    int: The maximum profit that can be achieved
+    Returns:
+        int: The maximum profit that can be achieved
 
-Time Complexity: O(n) where n is the number of days
-Space Complexity: O(1) using constant extra space
-"""
-    if len(prices) == 1: return 0
+    Time Complexity: O(n) where n is the number of days
+    Space Complexity: O(1) using constant extra space
+    """
+    if len(prices) == 1:
+        return 0
 
     profit = 0
     peak, valley = 0, 0

@@ -2,8 +2,11 @@
 Majority Element
 
 """
+
+
 def isMajorityElement(nums: list[int], target: int) -> bool:
-    if not nums: return False
+    if not nums:
+        return False
 
     def binary_search_low():
         low = -1
@@ -34,7 +37,8 @@ def isMajorityElement(nums: list[int], target: int) -> bool:
         return high
 
     lower = binary_search_low()
-    if lower == -1: return False
+    if lower == -1:
+        return False
     higher = binary_search_high()
 
     cnt = higher - lower + 1
@@ -44,4 +48,4 @@ def isMajorityElement(nums: list[int], target: int) -> bool:
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to isMajorityElement
-    print(isMajorityElement([]))
+    print(isMajorityElement([1, 2, 3, 4, 5], 3))

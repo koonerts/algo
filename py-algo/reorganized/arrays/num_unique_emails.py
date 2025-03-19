@@ -2,14 +2,16 @@
 Unique Emails
 
 """
+
+
 def numUniqueEmails(emails: list[str]) -> int:
     def clean_email(email: str):
         local, domain = email.split("@")
-        ignore_idx = local.find('+')
+        ignore_idx = local.find("+")
         if ignore_idx >= 0:
-            local = local[:ignore_idx].replace('.', '')
+            local = local[:ignore_idx].replace(".", "")
         else:
-            local = local.replace('.', '')
+            local = local.replace(".", "")
 
         return local, domain
 

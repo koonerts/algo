@@ -565,7 +565,7 @@ def enhance_file(file_path, problem_data):
     template = TEMPLATES.get(category, TEMPLATES["default"])
 
     # Try to find function definition
-    function_match = re.search(r'def\s+([a-zA-Z0-9_]+)\s*\(', content)
+    function_match = re.search(r"def\s+([a-zA-Z0-9_]+)\s*\(", content)
     if function_match:
         function_name = function_match.group(1)
 
@@ -573,8 +573,7 @@ def enhance_file(file_path, problem_data):
     new_content = []
 
     # Add file docstring
-    title = problem_data.get("title", " ".join(
-        function_name.split("_")).title())
+    title = problem_data.get("title", " ".join(function_name.split("_")).title())
     description = problem_data.get("description", "")
     example_input = problem_data.get("example_input", "")
     example_output = problem_data.get("example_output", "")
@@ -606,7 +605,7 @@ def enhance_file(file_path, problem_data):
         function_found = False
 
         for i, line in enumerate(lines):
-            if not function_found and re.match(r'def\s+[a-zA-Z0-9_]+\s*\(', line):
+            if not function_found and re.match(r"def\s+[a-zA-Z0-9_]+\s*\(", line):
                 function_found = True
                 new_content.append(line)
 
@@ -650,8 +649,12 @@ def enhance_file(file_path, problem_data):
                     new_content.append(line)
             elif not function_found:
                 # Add lines before function definition
-                if not (line.startswith('"""') or line.startswith("'''") or
-                        in_docstring or line.strip() == ""):
+                if not (
+                    line.startswith('"""')
+                    or line.startswith("'''")
+                    or in_docstring
+                    or line.strip() == ""
+                ):
                     new_content.append(line)
 
                 # Track docstring state to skip existing docstring
@@ -718,6 +721,7 @@ def main():
                 continue
 
             from inspect import currentframe, getframeinfo
+
             frameinfo = getframeinfo(currentframe())
             print(f"Processing {file_path} at {frameinfo.lineno}")
 
@@ -731,20 +735,26 @@ def main():
 
     # Process remaining files
     try:
-        for category_dir in [d for d in BASE_DIR.iterdir() if d.is_dir() and d.name not in [".git", "__pycache__"]]:
+        for category_dir in [
+            d
+            for d in BASE_DIR.iterdir()
+            if d.is_dir() and d.name not in [".git", "__pycache__"]
+        ]:
             for file_path in category_dir.glob("*.py"):
                 if file_path.name == "__init__.py":
                     continue
 
                 # Skip already processed priority problems
-                if category_dir.name in PRIORITY_PROBLEMS and file_path.name in PRIORITY_PROBLEMS[category_dir.name]:
+                if (
+                    category_dir.name in PRIORITY_PROBLEMS
+                    and file_path.name in PRIORITY_PROBLEMS[category_dir.name]
+                ):
                     continue
 
                 # Check if we have specific data for this problem
                 problem_data = {}
                 if file_path.name in globals().get("PROBLEM_DATA", {}):
-                    problem_data = globals()["PROBLEM_DATA"].get(
-                        file_path.name, {})
+                    problem_data = globals()["PROBLEM_DATA"].get(file_path.name, {})
 
                 # Enhance the file
                 enhance_file(file_path, problem_data)

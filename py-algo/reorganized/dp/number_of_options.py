@@ -2,14 +2,17 @@
 Number_of_options
 
 """
+
 from functools import lru_cache
+
 
 def number_of_options(a, b, c, d, target):
     sources = [a, b, c, d]
 
     @lru_cache(None)
     def dfs(count, i):
-        if count > target: return 0
+        if count > target:
+            return 0
 
         if i == 4:
             return 1

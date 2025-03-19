@@ -3,6 +3,7 @@ Deserialize
 
 Decodes your encoded data to tree.
 """
+
 import json
 from typing import Optional
 
@@ -43,7 +44,11 @@ def deserialize(data: str) -> Optional[TreeNode]:
 
     try:
         parsed_data = json.loads(data)
-        if isinstance(parsed_data, dict) and "inorder" in parsed_data and "preorder" in parsed_data:
+        if (
+            isinstance(parsed_data, dict)
+            and "inorder" in parsed_data
+            and "preorder" in parsed_data
+        ):
             return buildTree_Pre(parsed_data["inorder"], parsed_data["preorder"])
         return None
     except json.JSONDecodeError:
@@ -54,7 +59,8 @@ def deserialize(data: str) -> Optional[TreeNode]:
 if __name__ == "__main__":
     # Example: Create a serialized tree representation
     serialized_tree = json.dumps(
-        {"inorder": [9, 3, 15, 20, 7], "preorder": [3, 9, 20, 15, 7]})
+        {"inorder": [9, 3, 15, 20, 7], "preorder": [3, 9, 20, 15, 7]}
+    )
 
     # Deserialize it back to a tree
     tree = deserialize(serialized_tree)

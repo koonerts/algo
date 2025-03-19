@@ -22,7 +22,7 @@ def shortenPath(path):
     Returns:
         str: A shortened version of the path
     """
-    is_absolute = path[0] == '/'
+    is_absolute = path[0] == "/"
     path_elements = path.split("/")
     stk = []
 
@@ -50,14 +50,14 @@ def shortenPath(path):
 if __name__ == "__main__":
     # Examples of path shortening
     paths = [
-        "/foo/../bar/./baz",         # should be "/bar/baz"
-        "foo/../bar/./baz",          # should be "bar/baz"
-        "../../foo/bar/baz",         # should be "../../foo/bar/baz"
-        "/",                         # should be "/"
-        "/foo/./bar/",               # should be "/foo/bar"
-        "./foo/bar",                 # should be "foo/bar"
-        ".",                         # should be "."
-        "..",                        # should be ".."
+        "/foo/../bar/./baz",  # should be "/bar/baz"
+        "foo/../bar/./baz",  # should be "bar/baz"
+        "../../foo/bar/baz",  # should be "../../foo/bar/baz"
+        "/",  # should be "/"
+        "/foo/./bar/",  # should be "/foo/bar"
+        "./foo/bar",  # should be "foo/bar"
+        ".",  # should be "."
+        "..",  # should be ".."
     ]
 
     for p in paths:

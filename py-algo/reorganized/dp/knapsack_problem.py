@@ -1,16 +1,16 @@
 """
 Knapsack Problem
 
-Given a set of items, each with a weight and a value, determine the maximum value subset of items you can include in a knapsack 
+Given a set of items, each with a weight and a value, determine the maximum value subset of items you can include in a knapsack
 so that the total weight is less than or equal to a given capacity.
 
 Each item can only be selected once (0/1 knapsack problem).
 
 Example:
-    Input: 
+    Input:
         items = [[1, 2], [4, 3], [5, 6], [6, 7]]  # [value, weight]
         capacity = 10
-    Output: 
+    Output:
         [10, [0, 2, 3]]  # Maximum profit of 10, using items at indices 0, 2, and 3
 """
 
@@ -38,8 +38,7 @@ def knapsackProblem(items, capacity):
             profit_with = 0
             if items[i][WEIGHT] <= j:
                 profit_with = items[i][PROFIT] + (
-                    0 if i -
-                    1 < 0 else max_profits[i - 1][j - items[i][WEIGHT]]
+                    0 if i - 1 < 0 else max_profits[i - 1][j - items[i][WEIGHT]]
                 )
 
             profit_without = 0
@@ -70,7 +69,7 @@ if __name__ == "__main__":
         [1, 2],  # value: 1, weight: 2
         [4, 3],  # value: 4, weight: 3
         [5, 6],  # value: 5, weight: 6
-        [6, 7]   # value: 6, weight: 7
+        [6, 7],  # value: 6, weight: 7
     ]
     capacity = 10
 

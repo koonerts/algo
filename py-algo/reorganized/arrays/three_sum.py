@@ -6,7 +6,7 @@ Given an array of integers, find all unique triplets in the array that give the 
 Example:
     Input: [-1, 0, 1, 2, -1, -4]
     Output: [[-1, -1, 2], [-1, 0, 1]]
-    
+
 Time Complexity: O(n²) where n is the length of the array
 Space Complexity: O(n) for the result (not counting the input)
 """
@@ -34,7 +34,7 @@ def threeSum(nums: list[int]) -> list[list[int]]:
     i = 0
     while i < len(nums):
         # Skip duplicates for the first element
-        if i > 0 and nums[i] == nums[i-1]:
+        if i > 0 and nums[i] == nums[i - 1]:
             i += 1
             continue
 
@@ -67,8 +67,8 @@ def threeSum(nums: list[int]) -> list[list[int]]:
 if __name__ == "__main__":
     test_cases = [
         [-1, 0, 1, 2, -1, -4],  # Output: [[-1, -1, 2], [-1, 0, 1]]
-        [0, 0, 0],              # Output: [[0, 0, 0]]
-        [1, 2, -2, -1],         # Output: []
+        [0, 0, 0],  # Output: [[0, 0, 0]]
+        [1, 2, -2, -1],  # Output: []
     ]
 
     for nums in test_cases:

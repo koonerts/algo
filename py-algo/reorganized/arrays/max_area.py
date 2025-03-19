@@ -2,6 +2,8 @@
 Area
 
 """
+
+
 def maxArea(heights: list[int]) -> int:
     if not heights or len(heights) <= 1:
         return 0

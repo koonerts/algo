@@ -16,17 +16,17 @@ from typing import List
 
 def containsDuplicate(nums: List[int]) -> bool:
     """
-Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+    Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
 
-Args:
-    nums (List[int]): Array of integers
+    Args:
+        nums (List[int]): Array of integers
 
-Returns:
-    bool: True if the array contains duplicates, False otherwise
+    Returns:
+        bool: True if the array contains duplicates, False otherwise
 
-Time Complexity: O(n) where n is the length of the array
-Space Complexity: O(n) for the hash set
-"""
+    Time Complexity: O(n) where n is the length of the array
+    Space Complexity: O(n) for the hash set
+    """
     set_ = set()
     for num in nums:
         if num in set_:

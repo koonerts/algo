@@ -14,11 +14,11 @@ def generateParenthesis(n: int) -> list[str]:
             result.append(curr_str)
         else:
             if open_cnt < n:
-                add_parenthesis(curr_str+'(', open_cnt+1, closed_cnt)
+                add_parenthesis(curr_str + "(", open_cnt + 1, closed_cnt)
             if closed_cnt < open_cnt:
-                add_parenthesis(curr_str+')', open_cnt, closed_cnt+1)
+                add_parenthesis(curr_str + ")", open_cnt, closed_cnt + 1)
 
-    add_parenthesis('', 0, 0)
+    add_parenthesis("", 0, 0)
     return result
 
 

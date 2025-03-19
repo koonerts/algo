@@ -14,6 +14,7 @@ Return the following binary tree:
     /  \
    15   7
 """
+
 from typing import Optional, List
 
 

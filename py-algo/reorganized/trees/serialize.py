@@ -3,6 +3,7 @@ Serialize
 
 Encodes a tree to a single string.
 """
+
 import json
 from typing import Optional, List
 

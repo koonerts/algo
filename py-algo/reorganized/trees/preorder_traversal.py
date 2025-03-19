@@ -10,6 +10,7 @@ Example:
 Time Complexity: O(n) where n is the number of nodes in the tree
 Space Complexity: O(n) for the output list and recursion stack
 """
+
 from typing import Optional, List
 
 

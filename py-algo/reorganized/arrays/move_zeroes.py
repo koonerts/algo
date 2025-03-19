@@ -13,20 +13,22 @@ Space Complexity: O(1) as we modify the array in-place
 
 from typing import List
 
+
 def moveZeroes(nums: list[int]) -> None:
     """
-Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+    Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
 
-Args:
-    nums (List[int]): Array of integers
+    Args:
+        nums (List[int]): Array of integers
 
-Returns:
-    None: The array is modified in-place
+    Returns:
+        None: The array is modified in-place
 
-Time Complexity: O(n) where n is the length of the array
-Space Complexity: O(1) as we modify the array in-place
-"""
-    if len(nums) <= 1: return
+    Time Complexity: O(n) where n is the length of the array
+    Space Complexity: O(1) as we modify the array in-place
+    """
+    if len(nums) <= 1:
+        return
 
     left, i = 0, 1
     while i < len(nums) and left < len(nums):
