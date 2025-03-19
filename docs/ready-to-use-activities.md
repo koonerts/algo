@@ -37,7 +37,7 @@ Output: 6 (the subarray [4, -1, 2, 1])
 
 **Problem 2:**
 
-```
+```python-repl
 Find a pair of numbers in a sorted array that add up to a target sum.
 
 Example:
@@ -58,7 +58,7 @@ Output: [3, 6] (indices of numbers 4 and 5)
 
 **Problem 3:**
 
-```
+```python-repl
 Find the longest substring with at most K distinct characters.
 
 Example:
@@ -79,7 +79,7 @@ Output: 3 ("ece")
 
 **Problem 4:**
 
-```
+```python-repl
 Search for a target in a rotated sorted array.
 
 Example:
@@ -100,7 +100,7 @@ Output: 4 (index of target)
 
 **Problem 5:**
 
-```
+```python-repl
 Check if a linked list has a cycle.
 
 Example:
@@ -121,7 +121,7 @@ Output: true
 
 **Problem 6:**
 
-```
+```python-repl
 Find all subsets of a set of distinct integers.
 
 Example:
@@ -142,7 +142,7 @@ Output: [[], [1], [2], [3], [1,2], [1,3], [2,3], [1,2,3]]
 
 **Problem 7:**
 
-```
+```python-repl
 Given a grid of 1s (land) and 0s (water), count the number of islands.
 
 Example:
@@ -168,7 +168,7 @@ Output: 3
 
 **Problem 8:**
 
-```
+```python-repl
 Find the median of two sorted arrays.
 
 Example:
@@ -189,7 +189,7 @@ Output: 2.0
 
 **Problem 9:**
 
-```
+```python-repl
 Determine if a string can be segmented into words from a dictionary.
 
 Example:
@@ -210,7 +210,7 @@ Output: true
 
 **Problem 10:**
 
-```
+```python-repl
 Design a data structure that supports insert, remove, and getRandom operations in O(1) time.
 
 Example:
@@ -229,6 +229,331 @@ getRandom() // should return 2
   **Why**: Combination of data structures to achieve O(1) for all operations.
 
   **Key Insight**: Use array for O(1) random access, hash table for O(1) lookup, and array swap trick for O(1) removal.
+
+</details>
+
+**Problem 11:**
+
+```python-repl
+Given a knapsack with capacity W and a list of items with weights and values, determine the maximum value that can be obtained by selecting items such that their total weight doesn't exceed W. Each item can only be selected once.
+
+Example:
+Input: capacity = 10, weights = [2, 3, 5, 7], values = [1, 5, 2, 4]
+Output: 9 (by selecting items with weights 3 and 7, values 5 and 4)
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: 0/1 Knapsack (Dynamic Programming)**
+
+  **Why**: Need to make binary decisions (include/exclude) for each item while maximizing value under a weight constraint.
+
+  **Key Insight**: Build a 2D DP table where dp[i][w] represents the maximum value achievable with first i items and weight limit w.
+
+</details>
+
+**Problem 12:**
+
+```python-repl
+Given a set of coins with different denominations and a total amount of money, find the minimum number of coins needed to make up that amount. You may assume you have an infinite supply of each coin.
+
+Example:
+Input: coins = [1, 2, 5], amount = 11
+Output: 3 (5 + 5 + 1)
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Unbounded Knapsack**
+
+  **Why**: Items (coins) can be used multiple times to achieve a target sum while optimizing a value (minimum coins).
+
+  **Key Insight**: Use DP where each state represents the minimum coins needed for a specific amount, and transitions consider using each coin denomination repeatedly.
+
+</details>
+
+**Problem 13:**
+
+```python-repl
+Given two strings text1 and text2, return the length of their longest common subsequence. A subsequence is a sequence that can be derived from another sequence by deleting some or no elements without changing the order of the remaining elements.
+
+Example:
+Input: text1 = "abcde", text2 = "ace" 
+Output: 3 (The longest common subsequence is "ace")
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Longest Common Subsequence (LCS)**
+
+  **Why**: Need to compare and find common elements between two sequences while maintaining their relative order.
+
+  **Key Insight**: Use a 2D DP table to build the solution character by character, considering two options at each step: include the character if matching or skip it.
+
+</details>
+
+**Problem 14:**
+
+```python-repl
+You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+Example:
+Input: n = 3
+Output: 3 (1+1+1, 1+2, 2+1)
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Fibonacci Sequence**
+
+  **Why**: The number of ways to reach step n depends on ways to reach steps n-1 and n-2, forming a recursive relation.
+
+  **Key Insight**: Each step can be reached from either one or two steps before, creating the recurrence relation f(n) = f(n-1) + f(n-2).
+
+</details>
+
+**Problem 15:**
+
+```python-repl
+Design and implement a data structure for a prefix tree (Trie) that supports insert, search, and startsWith operations.
+
+Example:
+insert("apple")
+search("apple")   // returns true
+search("app")     // returns false
+startsWith("app") // returns true
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Trie (Prefix Tree)**
+
+  **Why**: Efficient storage and retrieval of words with prefix matching capabilities.
+
+  **Key Insight**: Use a tree structure where each node represents a character, and paths from root to nodes form words or prefixes.
+
+</details>
+
+**Problem 16:**
+
+```python-repl
+Given an array of meeting time intervals where intervals[i] = [start_i, end_i], determine the minimum number of conference rooms required.
+
+Example:
+Input: intervals = [[0,30],[5,10],[15,20]]
+Output: 2
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Heap (Priority Queue)**
+
+  **Why**: Need to track the ending times of ongoing meetings to determine resource allocation.
+
+  **Key Insight**: Sort intervals by start time and use a min-heap to track the earliest ending meeting room, allocating a new room only when no existing room is available.
+
+</details>
+
+**Problem 17:**
+
+```python-repl
+Implement a data structure that can efficiently find the median from a stream of numbers. The median is the middle value in an ordered list of numbers.
+
+Example:
+addNum(1)
+addNum(2)
+findMedian() // returns 1.5
+addNum(3)
+findMedian() // returns 2
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Two Heaps**
+
+  **Why**: Need to efficiently maintain the median as new elements arrive.
+
+  **Key Insight**: Use a max-heap for the smaller half and a min-heap for the larger half, ensuring they remain balanced to easily calculate the median.
+
+</details>
+
+**Problem 18:**
+
+```python-repl
+Given a network of nodes represented as a weighted graph, find the shortest time it takes for a signal to reach all nodes from a given source node.
+
+Example:
+Input: times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2
+Output: 2 (Time to reach node 1 is 1, node 3 is 1, node 4 is 2)
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Dijkstra's Algorithm**
+
+  **Why**: Finding shortest paths in a weighted graph with non-negative weights.
+
+  **Key Insight**: Use a priority queue to greedily explore the closest unvisited nodes first, updating distances as shorter paths are found.
+
+</details>
+
+**Problem 19:**
+
+```python-repl
+There are n computers numbered from 0 to n-1 connected by ethernet cables forming a network where connections[i] = [a, b] represents a connection between computers a and b. Determine if all computers can communicate with each other, either directly or indirectly.
+
+Example:
+Input: n = 4, connections = [[0,1],[0,2],[1,2]]
+Output: false (Computer 3 cannot communicate with others)
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Union-Find (Disjoint Set)**
+
+  **Why**: Need to track connected components and determine if all elements belong to the same component.
+
+  **Key Insight**: Use union-find data structure to efficiently merge connected components and count distinct groups.
+
+</details>
+
+**Problem 20:**
+
+```python-repl
+Given a set of activities with start and finish times, select the maximum number of activities that can be performed by a single person, assuming the person can only work on a single activity at a time.
+
+Example:
+Input: start = [1, 3, 0, 5, 8, 5], finish = [2, 4, 6, 7, 9, 9]
+Output: 4 (Activities at index 0, 1, 3, 4)
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Greedy Algorithm**
+
+  **Why**: Local optimal choice (selecting activity that ends earliest) leads to global optimum.
+
+  **Key Insight**: Sort activities by finish time and always select the next compatible activity that ends earliest.
+
+</details>
+
+**Problem 21:**
+
+```python-repl
+Given an array where every element appears twice except for one element which appears only once, find that single element.
+
+Example:
+Input: [2, 2, 1, 3, 3, 4, 4]
+Output: 1
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Bit Manipulation**
+
+  **Why**: XOR operations allow efficient cancellation of duplicate numbers.
+
+  **Key Insight**: XOR of all elements will result in the single number because a⊕a=0 and a⊕0=a.
+
+</details>
+
+**Problem 22:**
+
+```python-repl
+Given a collection of intervals, merge all overlapping intervals.
+
+Example:
+Input: [[1,3],[2,6],[8,10],[15,18]]
+Output: [[1,6],[8,10],[15,18]]
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Interval Merging**
+
+  **Why**: Need to identify and combine overlapping intervals.
+
+  **Key Insight**: Sort intervals by start time, then iterate through them, merging when current interval overlaps with the previous merged interval.
+
+</details>
+
+**Problem 23:**
+
+```python-repl
+There are a total of n courses you have to take, labeled from 0 to n-1. Some courses have prerequisite courses that must be completed first. Determine if it's possible to finish all courses.
+
+Example:
+Input: n = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]
+Output: true (One possible order: 0,1,2,3)
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Topological Sort**
+
+  **Why**: Need to find a valid ordering of nodes in a directed graph that respects dependencies.
+
+  **Key Insight**: Use DFS or BFS to detect cycles and find a valid ordering. If a cycle exists, no valid ordering is possible.
+
+</details>
+
+**Problem 24:**
+
+```python-repl
+Given an array nums of n integers where n > 1, return an array output such that output[i] is equal to the product of all elements of nums except nums[i].
+
+Example:
+Input: [1,2,3,4]
+Output: [24,12,8,6]
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Prefix/Suffix Products**
+
+  **Why**: Efficiently compute products that depend on all elements except the current one.
+
+  **Key Insight**: Calculate products from left to right (prefix) and right to left (suffix), then multiply corresponding prefix and suffix for each position.
+
+</details>
+
+**Problem 25:**
+
+```python-repl
+Given a 2D grid of '1's (land) and '0's (water), count the number of islands (connected components of land).
+
+Example:
+Input: [
+  ["1","1","0","0","0"],
+  ["1","1","0","0","0"],
+  ["0","0","1","0","0"],
+  ["0","0","0","1","1"]
+]
+Output: 3
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Flood Fill (DFS/BFS on Matrix)**
+
+  **Why**: Need to identify and count connected components in a grid.
+
+  **Key Insight**: Use DFS or BFS to explore each land cell and mark connected cells as visited to avoid counting them again.
 
 </details>
 
@@ -407,7 +732,7 @@ Use this decision tree to help identify which algorithm pattern to use for a giv
 2. Follow the path based on your answers about the problem
 3. The leaf nodes suggest algorithm patterns to consider
 
-```
+```text
 Is the problem about finding a subarray/substring?
 ├── Yes → Does it involve fixed size segments?
 │   ├── Yes → Use SLIDING WINDOW (FIXED)
@@ -1130,6 +1455,772 @@ def fibonacci_optimized(n):
 
 </details>
 
+## 8. Algorithm Pattern Drill Cards
+
+Use these drill cards to help you quickly identify which algorithm patterns to apply based on key problem characteristics.
+
+### Instructions:
+
+1. Read the problem characteristic
+2. Try to identify which algorithm pattern would be most appropriate
+3. Check the answer and review examples
+
+**Card 1: Contiguous Subarrays**
+
+When you see problems involving:
+- Finding maximum/minimum subarrays of fixed or variable size
+- Finding longest substring with a condition
+- Processing a "window" of elements
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Sliding Window**
+  
+  **Examples:**
+  - Maximum sum subarray of size K
+  - Longest substring with K distinct characters
+  - Minimum size subarray with a given sum
+  - Find all anagrams in a string
+  
+  **Time Complexity:** O(n) where n is array length (each element processed at most twice)
+  
+  **Space Complexity:** O(1) for fixed window, O(k) where k is window size for variable window
+</details>
+
+**Card 2: Sorted Arrays or Linked Lists**
+
+When you see problems involving:
+- Finding pairs in sorted arrays
+- Removing duplicates
+- Palindrome verification
+- Merging sorted arrays
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Two Pointers**
+  
+  **Examples:**
+  - Two Sum in sorted array
+  - Remove duplicates from sorted array
+  - Container with Most Water
+  - Palindrome verification
+  
+  **Time Complexity:** O(n) for most implementations or O(n²) for nested two pointers
+  
+  **Space Complexity:** O(1) as typically implemented in-place
+</details>
+
+**Card 3: Maximum/Minimum Subarray Sum**
+
+When you see problems involving:
+- Finding maximum sum contiguous subarray
+- Maximum product subarray
+- Local vs global optimal values
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Kadane's Algorithm**
+  
+  **Examples:**
+  - Maximum sum subarray
+  - Maximum product subarray
+  - Circular array maximum sum
+  
+  **Time Complexity:** O(n)
+  
+  **Space Complexity:** O(1)
+</details>
+
+**Card 4: Range Sum Queries**
+
+When you see problems involving:
+- Cumulative operations on arrays
+- Checking for specific sum conditions over subarrays
+- Range-based queries
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Prefix Sums**
+  
+  **Examples:**
+  - Range sum queries
+  - Subarray sum equals K
+  - Count number of subarrays with specific properties
+  
+  **Time Complexity:** O(n) for preprocessing, O(1) for queries
+  
+  **Space Complexity:** O(n) for storing prefix sums
+</details>
+
+**Card 5: Cycle Detection in Linked Lists**
+
+When you see problems involving:
+- Finding cycles in linked list
+- Finding middle element
+- Finding nth element from the end
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Fast & Slow Pointers**
+  
+  **Examples:**
+  - Detect cycle in linked list
+  - Find cycle start point
+  - Find middle of linked list
+  - Palindrome linked list
+  
+  **Time Complexity:** O(n)
+  
+  **Space Complexity:** O(1)
+</details>
+
+**Card 6: Linked List Reversal**
+
+When you see problems involving:
+- Reversing all or part of a linked list
+- Problems with K-groups or alternative operations
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Linked List Reversal**
+  
+  **Examples:**
+  - Reverse linked list
+  - Reverse nodes in K-group
+  - Reverse alternating K elements
+  
+  **Time Complexity:** O(n)
+  
+  **Space Complexity:** O(1) for iterative solutions, O(n) for recursive solutions
+</details>
+
+**Card 7: Tree Traversal**
+
+When you see problems involving:
+- Visiting all nodes in a tree
+- Node relationship problems
+- Collecting data from all nodes
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Tree Traversal**
+  
+  **Examples:**
+  - Preorder, inorder, postorder traversal
+  - Level order traversal
+  - Path sum problems
+  - Tree serialization/deserialization
+  
+  **Time Complexity:** O(n) where n is number of nodes
+  
+  **Space Complexity:** O(h) where h is tree height for recursion, O(n) worst case
+</details>
+
+**Card 8: Path Finding**
+
+When you see problems involving:
+- Finding shortest path in unweighted graph/tree
+- Level-order traversal
+- Finding nodes at k distance
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Breadth-First Search (BFS)**
+  
+  **Examples:**
+  - Shortest path in unweighted graph
+  - Level order traversal
+  - Word ladder problems
+  - Connected components
+  
+  **Time Complexity:** O(V + E) where V is vertices and E is edges
+  
+  **Space Complexity:** O(w) where w is maximum width of tree/graph
+</details>
+
+**Card 9: Exhaustive Exploration**
+
+When you see problems involving:
+- Exhaustive tree/graph exploration
+- Path finding problems
+- Problems requiring backtracking
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Depth-First Search (DFS)**
+  
+  **Examples:**
+  - Path existence between nodes
+  - Connected components
+  - Topological sorting
+  - Cycle detection
+  
+  **Time Complexity:** O(V + E) where V is vertices and E is edges
+  
+  **Space Complexity:** O(h) for recursion stack where h is maximum depth
+</details>
+
+**Card 10: Binary Search Applications**
+
+When you see problems involving:
+- Sorted arrays or matrices
+- Search space that can be halved each time
+- Minimize maximum value problems
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Binary Search Variations**
+  
+  **Examples:**
+  - Search in rotated sorted array
+  - Find peak element
+  - Find minimum in rotated sorted array
+  - Search for a range
+  
+  **Time Complexity:** O(log n)
+  
+  **Space Complexity:** O(1) iterative, O(log n) recursive
+</details>
+
+**Card 11: Knapsack Problems**
+
+When you see problems involving:
+- Items with values/weights and capacity constraints
+- Including/excluding items to maximize value
+- Subset sum problems
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: 0/1 Knapsack**
+  
+  **Examples:**
+  - 0/1 Knapsack problem
+  - Subset Sum
+  - Partition Equal Subset Sum
+  - Minimum Subset Sum Difference
+  
+  **Time Complexity:** O(n*W) where n is number of items and W is capacity
+  
+  **Space Complexity:** O(n*W), can be optimized to O(W)
+</details>
+
+**Card 12: Problems with Reusable Items**
+
+When you see problems involving:
+- Items that can be used multiple times
+- Combinations to achieve a target sum
+- Coin change problems
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Unbounded Knapsack**
+  
+  **Examples:**
+  - Coin Change (minimum coins)
+  - Coin Change II (number of ways)
+  - Rod Cutting
+  - Maximum Ribbon Cut
+  
+  **Time Complexity:** O(n*W) where n is item types and W is capacity
+  
+  **Space Complexity:** O(W)
+</details>
+
+**Card 13: String Comparison**
+
+When you see problems involving:
+- Finding common elements between strings
+- Edit distance variations
+- String transformations
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Longest Common Subsequence (LCS)**
+  
+  **Examples:**
+  - Longest Common Subsequence
+  - Shortest Common Supersequence
+  - Edit Distance
+  - Longest Palindromic Subsequence
+  
+  **Time Complexity:** O(m*n) where m and n are string lengths
+  
+  **Space Complexity:** O(m*n)
+</details>
+
+**Card 14: Sequence with Recursive Relation**
+
+When you see problems involving:
+- Current state depends on previous states
+- Pattern like f(n) = f(n-1) + f(n-2)
+- Counting ways to reach a target
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Fibonacci Sequence**
+  
+  **Examples:**
+  - Fibonacci Numbers
+  - Climbing Stairs
+  - House Robber
+  - Jump Game variations
+  
+  **Time Complexity:** O(n)
+  
+  **Space Complexity:** O(n), can be optimized to O(1)
+</details>
+
+**Card 15: Generating Combinations**
+
+When you see problems involving:
+- Generate all possible subsets/combinations
+- Permutations of elements
+- Building combinations with specific constraints
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Subsets/Backtracking**
+  
+  **Examples:**
+  - Generate All Subsets
+  - Letter Combinations of Phone Number
+  - Permutations
+  - Combinations
+  
+  **Time Complexity:** O(2^n) for subsets, O(n!) for permutations
+  
+  **Space Complexity:** O(n) for recursion stack
+</details>
+
+**Card 16: Complex Constraints**
+
+When you see problems involving:
+- Complex rule-based constraints
+- Need to explore all valid solutions
+- Search space can be pruned early
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Constraint Satisfaction**
+  
+  **Examples:**
+  - N-Queens
+  - Sudoku Solver
+  - Word Search
+  - Palindrome Partitioning
+  
+  **Time Complexity:** Exponential, but pruning reduces actual runtime
+  
+  **Space Complexity:** O(n) for recursion stack
+</details>
+
+**Card 17: Finding Top/Smallest K Elements**
+
+When you see problems involving:
+- Finding top/smallest K elements
+- Processing stream with limited memory
+- K frequent elements
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Top K Elements**
+  
+  **Examples:**
+  - Kth Largest Element
+  - K Closest Points to Origin
+  - Top K Frequent Elements
+  - Sort K-sorted Array
+  
+  **Time Complexity:** O(n log k) for processing n elements with heap of size k
+  
+  **Space Complexity:** O(k) for the heap
+</details>
+
+**Card 18: Median Calculation Problems**
+
+When you see problems involving:
+- Finding median from data stream
+- Maintaining statistics on both sides of a midpoint
+- Balancing elements
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Two Heaps**
+  
+  **Examples:**
+  - Find Median from Data Stream
+  - Sliding Window Median
+  - IPO (maximize capital)
+  
+  **Time Complexity:** O(log n) per insertion
+  
+  **Space Complexity:** O(n) for storing all elements
+</details>
+
+**Card 19: Shortest Path in Weighted Graphs**
+
+When you see problems involving:
+- Finding shortest path in weighted graph
+- Path finding with cost considerations
+- Network routing problems
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Dijkstra's Algorithm**
+  
+  **Examples:**
+  - Network Delay Time
+  - Cheapest Flights Within K Stops
+  - Path With Maximum Probability
+  
+  **Time Complexity:** O((V+E) log V) with binary heap
+  
+  **Space Complexity:** O(V)
+</details>
+
+**Card 20: Connected Components**
+
+When you see problems involving:
+- Grouping connected elements
+- Dynamic connectivity
+- Component membership queries
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Union-Find (Disjoint Set)**
+  
+  **Examples:**
+  - Number of Connected Components
+  - Redundant Connection
+  - Account Merge
+  - Graph Valid Tree
+  
+  **Time Complexity:** O(α(n)) amortized per operation (α is inverse Ackermann function)
+  
+  **Space Complexity:** O(n)
+</details>
+
+**Card 21: Prefix Tree Operations**
+
+When you see problems involving:
+- Dictionary operations on strings
+- Prefix matching
+- Autocomplete functionality
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Trie (Prefix Tree)**
+  
+  **Examples:**
+  - Implement Trie
+  - Word Search II
+  - Replace Words
+  - Design Search Autocomplete System
+  
+  **Time Complexity:** O(m) for operations, where m is key length
+  
+  **Space Complexity:** O(n*m) where n is number of keys and m is average key length
+</details>
+
+**Card 22: Locally Optimal Choices**
+
+When you see problems involving:
+- Local optimal choice leads to global optimum
+- Optimization with "obvious" next steps
+- Activity selection problems
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Greedy Algorithms**
+  
+  **Examples:**
+  - Activity Selection
+  - Minimum Number of Arrows
+  - Task Scheduler
+  - Gas Station
+  
+  **Time Complexity:** Often O(n log n) due to sorting
+  
+  **Space Complexity:** Usually O(1) or O(n)
+</details>
+
+**Card 23: Binary Representation**
+
+When you see problems involving:
+- Binary operations (AND, OR, XOR)
+- Bit counting or manipulation
+- Space optimization with bits
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Bit Manipulation**
+  
+  **Examples:**
+  - Single Number
+  - Counting Bits
+  - Number of 1 Bits
+  - Power of Two
+  
+  **Time Complexity:** O(1) to O(n) depending on problem
+  
+  **Space Complexity:** Usually O(1)
+</details>
+
+**Card 24: Overlapping Intervals**
+
+When you see problems involving:
+- Merging intervals
+- Finding non-overlapping intervals
+- Minimum rooms/resources needed
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Interval Merging/Sorting**
+  
+  **Examples:**
+  - Merge Intervals
+  - Insert Interval
+  - Meeting Rooms
+  - Non-overlapping Intervals
+  
+  **Time Complexity:** O(n log n) due to sorting
+  
+  **Space Complexity:** O(n) or O(1) depending on in-place operation
+</details>
+
+**Card 25: Dependency Ordering**
+
+When you see problems involving:
+- Task scheduling with prerequisites
+- Detecting cycles in directed graphs
+- Finding valid processing order
+
+<details>
+  <summary>Recommended Pattern</summary>
+
+  **Pattern: Topological Sort**
+  
+  **Examples:**
+  - Course Schedule
+  - Course Schedule II
+  - Alien Dictionary
+  - Reconstruct Itinerary
+  
+  **Time Complexity:** O(V+E)
+  
+  **Space Complexity:** O(V+E)
+</details>
+
+## 9. Problem-to-Pattern Matching Exercise
+
+This exercise will help you develop the skill of identifying which algorithm pattern to use when faced with different problem types.
+
+### Instructions:
+
+1. For each problem statement, analyze the key characteristics
+2. Match it to the most appropriate algorithm pattern
+3. Explain your reasoning
+4. Check your answer with the solution
+
+**Problem 1:**
+
+```python-repl
+You are given an array of integers and a target value. Find all unique quadruplets in the array which give the sum of the target.
+
+Example:
+Input: nums = [1, 0, -1, 0, -2, 2], target = 0
+Output: [[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]
+```
+
+<details>
+  <summary>Analysis & Pattern Match</summary>
+
+  **Pattern: Two Pointers (with nested loops)**
+  
+  **Reasoning:**
+  - We're looking for combinations of values that sum to a target
+  - The problem involves finding elements that satisfy a condition
+  - Since we need all combinations, we'll need nested loops, but two pointers pattern can optimize the inner loop
+  
+  **Approach:**
+  1. Sort the array
+  2. Use two nested loops to fix the first two elements
+  3. Use two pointers for the remaining elements
+  4. Skip duplicates to ensure unique quadruplets
+  
+  **Time Complexity:** O(n³)
+  
+  **Space Complexity:** O(1) excluding output space
+</details>
+
+**Problem 2:**
+
+```python-repl
+Given a string, find the length of the longest substring that contains at most k distinct characters.
+
+Example:
+Input: s = "eceba", k = 2
+Output: 3
+Explanation: The substring is "ece" with length 3.
+```
+
+<details>
+  <summary>Analysis & Pattern Match</summary>
+
+  **Pattern: Sliding Window (Variable Size)**
+  
+  **Reasoning:**
+  - We're looking for a contiguous substring
+  - The constraint is a maximum number of distinct characters
+  - The window size needs to be adjusted dynamically based on this constraint
+  
+  **Approach:**
+  1. Use a sliding window approach with two pointers (start and end)
+  2. Use a hash map to track character frequencies within the window
+  3. Expand window until constraint is violated (more than k distinct characters)
+  4. Shrink window from left until constraint is satisfied again
+  5. Track maximum valid window size
+  
+  **Time Complexity:** O(n)
+  
+  **Space Complexity:** O(k) for the character frequency map
+</details>
+
+**Problem 3:**
+
+```python-repl
+Given a matrix of 0s and 1s, count the number of islands. An island is a connected group of 1s (horizontally or vertically) surrounded by 0s.
+
+Example:
+Input: 
+[
+  [1,1,0,0,0],
+  [1,1,0,0,0],
+  [0,0,1,0,0],
+  [0,0,0,1,1]
+]
+Output: 3
+```
+
+<details>
+  <summary>Analysis & Pattern Match</summary>
+
+  **Pattern: Depth-First Search (DFS) or Breadth-First Search (BFS) on Matrix**
+  
+  **Reasoning:**
+  - We need to identify connected components in a graph
+  - Each cell is connected to its four adjacent cells
+  - Once we find a '1', we need to explore and mark all connected '1's as visited
+  
+  **Approach:**
+  1. Iterate through each cell in the matrix
+  2. When we find a '1', increment our island count
+  3. Use DFS or BFS to explore all connected '1's and mark them as visited (change to '0')
+  4. Continue until all cells are checked
+  
+  **Time Complexity:** O(m*n) where m is number of rows and n is number of columns
+  
+  **Space Complexity:** O(m*n) in worst case for recursion stack
+</details>
+
+**Problem 4:**
+
+```python-repl
+Find the kth largest element in an unsorted array.
+
+Example:
+Input: [3,2,1,5,6,4], k = 2
+Output: 5
+```
+
+<details>
+  <summary>Analysis & Pattern Match</summary>
+
+  **Pattern: Heap (Priority Queue) / QuickSelect**
+  
+  **Reasoning:**
+  - We need to find an element based on its order statistic
+  - Sorting would work but is not optimal
+  - Heap or QuickSelect are more efficient
+  
+  **Approach 1 (Heap):**
+  1. Build a min-heap of size k
+  2. Insert the first k elements from the array
+  3. For remaining elements, if larger than the root, replace root and heapify
+  4. The root of the heap will be the kth largest element
+  
+  **Time Complexity:** O(n log k)
+  
+  **Space Complexity:** O(k)
+  
+  **Approach 2 (QuickSelect):**
+  1. Use a variation of quicksort where we only recurse into the half that contains our target
+  2. Partition the array around a pivot
+  3. If the pivot index is our target, return it
+  4. Otherwise, recurse into the appropriate half
+  
+  **Time Complexity:** O(n) average case, O(n²) worst case
+  
+  **Space Complexity:** O(1)
+</details>
+
+**Problem 5:**
+
+```python-repl
+Given a set of non-overlapping intervals, insert a new interval into the intervals (merge if necessary).
+
+Example:
+Input: intervals = [[1,3],[6,9]], newInterval = [2,5]
+Output: [[1,5],[6,9]]
+```
+
+<details>
+  <summary>Analysis & Pattern Match</summary>
+
+  **Pattern: Interval Merging/Sorting**
+  
+  **Reasoning:**
+  - We're working with intervals that may need to be merged
+  - We need to handle overlapping intervals
+  - The intervals are already sorted
+  
+  **Approach:**
+  1. Initialize result list
+  2. Add all intervals that come before newInterval (end < newInterval.start)
+  3. Merge overlapping intervals with newInterval (update newInterval boundaries)
+  4. Add the merged newInterval to result
+  5. Add all remaining intervals
+  
+  **Time Complexity:** O(n)
+  
+  **Space Complexity:** O(n) for the result list
+</details>
+
 ---
 
 These ready-to-use activities provide immediate practice opportunities for various algorithm learning strategies. Use them to test your current knowledge, reinforce pattern recognition, and improve implementation skills. As you get comfortable with these exercises, you can create your own variations or move on to more complex challenges.
+
