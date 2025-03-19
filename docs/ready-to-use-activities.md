@@ -557,6 +557,238 @@ Output: 3
 
 </details>
 
+### Netflix Interview Problem Flash Cards
+
+The following flash cards contain common problems from Netflix interviews. Use these to practice pattern recognition specific to Netflix's interview process.
+
+**Netflix Problem 1:**
+
+```python-repl
+Design a time-based key-value data structure that can store multiple values for the same key at different time stamps and retrieve the key's value at a certain timestamp.
+
+Example:
+set("foo", "bar", 1);  // store the key "foo" and value "bar" along with timestamp = 1
+get("foo", 1);         // return "bar"
+get("foo", 3);         // return "bar" since it was the value at the most recent time
+set("foo", "bar2", 4); // store key "foo", value "bar2", timestamp = 4
+get("foo", 4);         // return "bar2"
+get("foo", 5);         // return "bar2"
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Binary Search + Hash Map**
+
+  **Why**: Need to efficiently store and retrieve values based on timestamps.
+
+  **Key Insight**: Use a hash map where each key maps to a list of [timestamp, value] pairs sorted by timestamp. Then use binary search to find the closest timestamp.
+
+</details>
+
+**Netflix Problem 2:**
+
+```python-repl
+Given a string s containing only three types of characters: '(', ')' and '*', return true if s is valid.
+'*' can be treated as a single right parenthesis ')' or a single left parenthesis '(' or an empty string.
+
+Example:
+Input: s = "(*)"
+Output: true
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Stack + Greedy**
+
+  **Why**: Need to track opening and closing parentheses while handling wildcards optimally.
+
+  **Key Insight**: Track the minimum and maximum possible open parentheses as you scan from left to right, considering * as either open, close, or empty.
+
+</details>
+
+**Netflix Problem 3:**
+
+```python-repl
+Given an array of meeting time intervals where intervals[i] = [start_i, end_i], determine the minimum number of meeting rooms required.
+
+Example:
+Input: intervals = [[0,30],[5,10],[15,20]]
+Output: 2
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Heap (Priority Queue) + Sorting**
+
+  **Why**: Need to track overlapping intervals to determine resource allocation.
+
+  **Key Insight**: Sort intervals by start time and use a min-heap to track end times of active meetings. The size of the heap represents the number of rooms needed.
+
+</details>
+
+**Netflix Problem 4:**
+
+```python-repl
+Design and implement a data structure for Least Recently Used (LRU) cache.
+It should support get and put operations with O(1) time complexity.
+
+Example:
+LRUCache cache = new LRUCache(2); // capacity = 2
+cache.put(1, 1);
+cache.put(2, 2);
+cache.get(1);       // returns 1
+cache.put(3, 3);    // evicts key 2
+cache.get(2);       // returns -1 (not found)
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Hash Map + Doubly Linked List**
+
+  **Why**: Need O(1) access time and a way to track usage order.
+
+  **Key Insight**: Use a hash map for O(1) lookup and a doubly linked list to maintain order of usage, moving elements to the front when accessed.
+
+</details>
+
+**Netflix Problem 5:**
+
+```python-repl
+Given an array of integers temperatures representing daily temperatures, return an array answer such that answer[i] is the number of days you have to wait after the ith day to get a warmer temperature.
+
+Example:
+Input: temperatures = [73,74,75,71,69,72,76,73]
+Output: [1,1,4,2,1,1,0,0]
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Monotonic Stack**
+
+  **Why**: Need to find the next greater element for each temperature efficiently.
+
+  **Key Insight**: Use a stack to keep track of indices of temperatures in decreasing order. When you find a higher temperature, pop from the stack and calculate the difference in days.
+
+</details>
+
+**Netflix Problem 6:**
+
+```python-repl
+You are given an array of k linked-lists lists, each linked-list is sorted in ascending order. Merge all the linked-lists into one sorted linked-list and return it.
+
+Example:
+Input: lists = [[1,4,5],[1,3,4],[2,6]]
+Output: [1,1,2,3,4,4,5,6]
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Heap (Priority Queue) + Linked List**
+
+  **Why**: Need to efficiently select the smallest element from multiple sorted lists.
+
+  **Key Insight**: Use a min-heap to track the smallest current node from each list, continuously extracting the minimum and adding the next node from that list.
+
+</details>
+
+**Netflix Problem 7:**
+
+```python-repl
+Implement the RandomizedSet class:
+- insert(val): Inserts an item val if not present, returns true if inserted, false otherwise
+- remove(val): Removes an item val if present, returns true if removed, false otherwise
+- getRandom(): Returns a random element from the current set of elements with equal probability
+
+Example:
+RandomizedSet randomizedSet = new RandomizedSet();
+randomizedSet.insert(1); // return true
+randomizedSet.remove(2); // return false
+randomizedSet.insert(2); // return true
+randomizedSet.getRandom(); // return 1 or 2 randomly
+randomizedSet.remove(1); // return true
+randomizedSet.insert(2); // return false (already exists)
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Hash Map + Array**
+
+  **Why**: Need O(1) operations for all methods, including random access.
+
+  **Key Insight**: Use a hash map for O(1) lookup and an array for O(1) random access. When removing, swap the element with the last element in the array to maintain O(1) time.
+
+</details>
+
+**Netflix Problem 8:**
+
+```python-repl
+Given a string containing digits from 2-9, return all possible letter combinations that the number could represent (like on a phone keypad).
+
+Example:
+Input: "23"
+Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Backtracking**
+
+  **Why**: Need to generate all possible combinations.
+
+  **Key Insight**: Use recursive backtracking to build each combination, mapping each digit to its corresponding letters and exploring all possibilities.
+
+</details>
+
+**Netflix Problem 9:**
+
+```python-repl
+Given n courses and a list of prerequisites where prerequisites[i] = [ai, bi] indicates you must take course bi before course ai, return the ordering of courses you should take to finish all courses.
+
+Example:
+Input: numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]
+Output: [0,1,2,3] or [0,2,1,3] (both valid)
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Topological Sort**
+
+  **Why**: Need to find a valid order of courses that respects prerequisites.
+
+  **Key Insight**: Create a directed graph from prerequisites and use topological sorting (either BFS with in-degree tracking or DFS with three states) to find a valid course order.
+
+</details>
+
+**Netflix Problem 10:**
+
+```python-repl
+You are given a network delay time matrix representing how long it takes for a signal to travel from source to destination. Return the maximum signal travel time. If it's impossible for all nodes to receive the signal, return -1.
+
+Example:
+Input: times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2
+Output: 2
+```
+
+<details>
+  <summary>Click to reveal pattern</summary>
+
+  **Pattern: Dijkstra's Algorithm**
+
+  **Why**: Finding shortest paths in a weighted graph with non-negative weights.
+
+  **Key Insight**: Use Dijkstra's algorithm to find the shortest path from the source to every other node. The answer is the maximum path length among all nodes.
+
+</details>
+
 ## 2. Template Skeleton Exercise
 
 ### Instructions:

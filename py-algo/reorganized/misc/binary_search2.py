@@ -26,4 +26,5 @@ def binary_search2(arr, key, findMaxIndex):
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to binary_search2
-    print(binary_search2([]))
+    print(binary_search2([1, 2, 3, 4, 5], 3, False))
+    print(binary_search2([1, 2, 3, 4, 5], 3, True))
