@@ -6,11 +6,11 @@
 
 - [Algorithm Templates](#algorithm-templates)
   - [Table of Contents](#table-of-contents)
-  - [1. Backtracking](#1-backtracking)
-    - [Basic Template](#basic-template)
-    - [Aggregation Template](#aggregation-template)
-    - [Common Aggregation Patterns](#common-aggregation-patterns)
-  - [2. Binary Search](#2-binary-search)
+  - [1. Two Pointers](#1-two-pointers)
+  - [2. Sliding Window](#2-sliding-window)
+    - [Fixed Size Window](#fixed-size-window)
+    - [Flexible Size - Find Longest](#flexible-size---find-longest)
+    - [Flexible Size - Find Shortest](#flexible-size---find-shortest)
   - [3. Breadth First Search (BFS)](#3-breadth-first-search-bfs)
     - [Tree BFS](#tree-bfs)
     - [Graph BFS](#graph-bfs)
@@ -18,120 +18,140 @@
   - [4. Depth First Search (DFS)](#4-depth-first-search-dfs)
     - [Tree DFS](#tree-dfs)
     - [Graph DFS](#graph-dfs)
-  - [5. Matrix as Graph](#5-matrix-as-graph)
-  - [6. Monotonic Stack](#6-monotonic-stack)
-  - [7. Sliding Window](#7-sliding-window)
-    - [Fixed Size Window](#fixed-size-window)
-    - [Flexible Size - Find Longest](#flexible-size---find-longest)
-    - [Flexible Size - Find Shortest](#flexible-size---find-shortest)
-  - [8. Topological Sort](#8-topological-sort)
-  - [9. Trie](#9-trie)
-  - [10. Union Find (Disjoint Set)](#10-union-find-disjoint-set)
+  - [5. Backtracking](#5-backtracking)
+    - [Basic Template](#basic-template)
+    - [Aggregation Template](#aggregation-template)
+    - [Common Aggregation Patterns](#common-aggregation-patterns)
+  - [6. Binary Search](#6-binary-search)
+  - [7. Heap](#7-heap)
+  - [8. Matrix as Graph](#8-matrix-as-graph)
+  - [9. Monotonic Stack](#9-monotonic-stack)
+  - [10. Topological Sort](#10-topological-sort)
+  - [11. Trie](#11-trie)
+  - [12. Union Find (Disjoint Set)](#12-union-find-disjoint-set)
     - [Basic Implementation](#basic-implementation)
     - [Optimized with Rank](#optimized-with-rank)
 
 ---
 
-## 1. Backtracking
+## 1. Two Pointers
 
-Backtracking is a systematic way to explore all potential solutions through recursive trial and error.
+A technique where two pointers iterate through data structures in a coordinated way.
 
 **When to use**:
 
-- Generating all possible combinations/permutations
-- Finding paths through a maze
-- Constraint satisfaction problems (like Sudoku)
-
-### Basic Template
+- Processing arrays or linked lists in linear time
+- Finding pairs with certain constraints
+- Merging sorted arrays
 
 ```python
-def backtrack(start_index, path):
-    if is_leaf(start_index):  # Base case
-        report(path)
-        return
+def two_pointers(arr):
+    left, right = 0, len(arr) - 1
+    result = []
 
-    for choice in get_choices(start_index):
-        path.append(choice)      # Make choice
-        backtrack(start_index + 1, path)  # Explore
-        path.pop()               # Undo choice
-```
-
-### Aggregation Template
-
-```python
-def backtrack(index, state):
-    # Base case
-    if is_leaf(index):
-        return 1
-
-    result = initial_value
-
-    for choice in get_choices(index, state):
-        # Make choice and update state
-        update_state(state, choice)
-
-        # Explore and aggregate results
-        result = aggregate(result, backtrack(index + 1, state))
-
-        # Undo choice
-        revert_state(state, choice)
+    while left < right:
+        if condition(arr[left], arr[right]):
+            # Process result
+            result.append((arr[left], arr[right]))
+            left += 1
+            right -= 1
+        elif needs_left_increment(arr[left], arr[right]):
+            left += 1
+        else:
+            right -= 1
 
     return result
 ```
 
-### Common Aggregation Patterns
-
-| Problem Type | Initial Value | Aggregation Function |
-|--------------|---------------|---------------------|
-| Existence/Possibility | False | OR (∥) |
-| Count ways | 0 | Addition (+) |
-| Optimize (max/min) | 0/-∞/∞ | max()/min() |
-
-**Time Complexity**: O(k^n) where k is the branching factor and n is the depth
-**Space Complexity**: O(n) for recursion stack
+**Time Complexity**: O(n) for most implementations
+**Space Complexity**: O(1) excluding output storage
 
 **Example Use Cases**:
 
-- N-Queens
-- Subset/Combination Sum problems
-- Permutations
+- Two Sum problems
+- Container with most water
+- Remove duplicates from sorted array
 
 ---
 
-## 2. Binary Search
+## 2. Sliding Window
 
-A divide-and-conquer algorithm that finds elements in a sorted array in logarithmic time.
+Efficiently processes array segments of dynamic or fixed size by sliding a window.
 
 **When to use**:
 
-- Searching in sorted arrays
-- Finding the boundary between two distinct regions
-- Optimizing minimum/maximum values that satisfy a condition
+- Finding subarrays that meet certain criteria
+- String problems with substring constraints
+- Maximum/minimum subarray of fixed size
+
+### Fixed Size Window
 
 ```python
-def binary_search(arr):
-    left, right = 0, len(arr) - 1
-    result = -1
+def fixed_window(arr, k):
+    # Process first window
+    window_sum = sum(arr[:k])
+    result = window_sum
 
-    while left <= right:
-        mid = (left + right) // 2
-        if condition(arr[mid]):
-            result = mid       # Potential answer
-            right = mid - 1    # Search left for better answer
-        else:
-            left = mid + 1     # Search right
+    # Slide window
+    for i in range(k, len(arr)):
+        window_sum += arr[i] - arr[i - k]  # Add new, remove old
+        result = max(result, window_sum)
 
     return result
 ```
 
-**Time Complexity**: O(log n)
-**Space Complexity**: O(1)
+### Flexible Size - Find Longest
+
+```python
+def longest_window(arr, target):
+    left = 0
+    current_sum = 0
+    max_length = 0
+
+    for right in range(len(arr)):
+        # Expand window
+        current_sum += arr[right]
+
+        # Shrink window until valid
+        while current_sum > target:
+            current_sum -= arr[left]
+            left += 1
+
+        # Update result if valid
+        max_length = max(max_length, right - left + 1)
+
+    return max_length
+```
+
+### Flexible Size - Find Shortest
+
+```python
+def shortest_window(arr, target):
+    left = 0
+    current_sum = 0
+    min_length = float('inf')
+
+    for right in range(len(arr)):
+        # Expand window
+        current_sum += arr[right]
+
+        # Shrink window while valid
+        while current_sum >= target:
+            min_length = min(min_length, right - left + 1)
+            current_sum -= arr[left]
+            left += 1
+
+    return min_length if min_length != float('inf') else 0
+```
+
+**Time Complexity**: O(n) for most implementations
+**Space Complexity**: O(1) for numeric windows, O(k) for string/object windows
 
 **Example Use Cases**:
 
-- Finding element in sorted array
-- Finding first/last occurrence
-- Search in rotated sorted array
+- Maximum sum subarray of size k
+- Longest substring with k distinct characters
+- Minimum window substring
 
 ---
 
@@ -262,7 +282,174 @@ def dfs(node, graph, visited=None):
 
 ---
 
-## 5. Matrix as Graph
+## 5. Backtracking
+
+Backtracking is a systematic way to explore all potential solutions through recursive trial and error.
+
+**When to use**:
+
+- Generating all possible combinations/permutations
+- Finding paths through a maze
+- Constraint satisfaction problems (like Sudoku)
+
+### Basic Template
+
+```python
+def backtrack(start_index, path):
+    if is_leaf(start_index):  # Base case
+        report(path)
+        return
+
+    for choice in get_choices(start_index):
+        path.append(choice)      # Make choice
+        backtrack(start_index + 1, path)  # Explore
+        path.pop()               # Undo choice
+```
+
+### Aggregation Template
+
+```python
+def backtrack(index, state):
+    # Base case
+    if is_leaf(index):
+        return 1
+
+    result = initial_value
+
+    for choice in get_choices(index, state):
+        # Make choice and update state
+        update_state(state, choice)
+
+        # Explore and aggregate results
+        result = aggregate(result, backtrack(index + 1, state))
+
+        # Undo choice
+        revert_state(state, choice)
+
+    return result
+```
+
+### Common Aggregation Patterns
+
+| Problem Type          | Initial Value | Aggregation Function |
+| --------------------- | ------------- | -------------------- |
+| Existence/Possibility | False         | OR (∥)              |
+| Count ways            | 0             | Addition (+)         |
+| Optimize (max/min)    | 0/-∞/∞      | max()/min()          |
+
+**Time Complexity**: O(k^n) where k is the branching factor and n is the depth
+**Space Complexity**: O(n) for recursion stack
+
+**Example Use Cases**:
+
+- N-Queens
+- Subset/Combination Sum problems
+- Permutations
+
+---
+
+## 6. Binary Search
+
+A divide-and-conquer algorithm that finds elements in a sorted array in logarithmic time.
+
+**When to use**:
+
+- Searching in sorted arrays
+- Finding the boundary between two distinct regions
+- Optimizing minimum/maximum values that satisfy a condition
+
+```python
+def binary_search(arr):
+    left, right = 0, len(arr) - 1
+    result = -1
+
+    while left <= right:
+        mid = (left + right) // 2
+        if condition(arr[mid]):
+            result = mid       # Potential answer
+            right = mid - 1    # Search left for better answer
+        else:
+            left = mid + 1     # Search right
+
+    return result
+```
+
+**Time Complexity**: O(log n)
+**Space Complexity**: O(1)
+
+**Example Use Cases**:
+
+- Finding element in sorted array
+- Finding first/last occurrence
+- Search in rotated sorted array
+
+---
+
+## 7. Heap
+
+A specialized tree-based data structure that satisfies the heap property.
+
+**When to use**:
+
+- Priority queue implementation
+- Finding k largest/smallest elements
+- Efficient median tracking
+
+```python
+import heapq
+
+def heap_operations():
+    # Min heap (default in Python)
+    min_heap = []
+    heapq.heappush(min_heap, 5)
+    heapq.heappush(min_heap, 3)
+    heapq.heappush(min_heap, 7)
+
+    # Get smallest element without removing
+    smallest = min_heap[0]
+
+    # Remove and return smallest element
+    smallest = heapq.heappop(min_heap)
+
+    # Max heap (negate values)
+    max_heap = []
+    heapq.heappush(max_heap, -5)
+    heapq.heappush(max_heap, -3)
+    heapq.heappush(max_heap, -7)
+
+    # Get largest element without removing
+    largest = -max_heap[0]
+
+    # Remove and return largest element
+    largest = -heapq.heappop(max_heap)
+
+    # Convert list to heap in-place
+    arr = [5, 3, 7, 1, 9]
+    heapq.heapify(arr)  # Now arr is a min heap
+
+    # K largest elements
+    k_largest = heapq.nlargest(3, arr)
+
+    # K smallest elements
+    k_smallest = heapq.nsmallest(3, arr)
+```
+
+**Time Complexity**:
+- Push/Pop: O(log n)
+- Peek: O(1)
+- Heapify: O(n)
+- K largest/smallest: O(n + k log n)
+
+**Space Complexity**: O(n)
+
+**Example Use Cases**:
+- Dijkstra's algorithm
+- K closest points
+- Merge k sorted lists
+
+---
+
+## 8. Matrix as Graph
 
 Treating a 2D grid as a graph with neighboring cells as connected nodes.
 
@@ -295,7 +482,7 @@ def get_neighbors(row, col, matrix):
 
 ---
 
-## 6. Monotonic Stack
+## 9. Monotonic Stack
 
 A stack that maintains elements in either increasing or decreasing order.
 
@@ -331,88 +518,7 @@ def monotonic_increasing_stack(arr):
 
 ---
 
-## 7. Sliding Window
-
-Efficiently processes array segments of dynamic or fixed size by sliding a window.
-
-**When to use**:
-
-- Finding subarrays that meet certain criteria
-- String problems with substring constraints
-- Maximum/minimum subarray of fixed size
-
-### Fixed Size Window
-
-```python
-def fixed_window(arr, k):
-    # Process first window
-    window_sum = sum(arr[:k])
-    result = window_sum
-
-    # Slide window
-    for i in range(k, len(arr)):
-        window_sum += arr[i] - arr[i - k]  # Add new, remove old
-        result = max(result, window_sum)
-
-    return result
-```
-
-### Flexible Size - Find Longest
-
-```python
-def longest_window(arr, target):
-    left = 0
-    current_sum = 0
-    max_length = 0
-
-    for right in range(len(arr)):
-        # Expand window
-        current_sum += arr[right]
-
-        # Shrink window until valid
-        while current_sum > target:
-            current_sum -= arr[left]
-            left += 1
-
-        # Update result if valid
-        max_length = max(max_length, right - left + 1)
-
-    return max_length
-```
-
-### Flexible Size - Find Shortest
-
-```python
-def shortest_window(arr, target):
-    left = 0
-    current_sum = 0
-    min_length = float('inf')
-
-    for right in range(len(arr)):
-        # Expand window
-        current_sum += arr[right]
-
-        # Shrink window while valid
-        while current_sum >= target:
-            min_length = min(min_length, right - left + 1)
-            current_sum -= arr[left]
-            left += 1
-
-    return min_length if min_length != float('inf') else 0
-```
-
-**Time Complexity**: O(n) for most implementations
-**Space Complexity**: O(1) for numeric windows, O(k) for string/object windows
-
-**Example Use Cases**:
-
-- Maximum sum subarray of size k
-- Longest substring with k distinct characters
-- Minimum window substring
-
----
-
-## 8. Topological Sort
+## 10. Topological Sort
 
 Ordering of vertices in a directed acyclic graph where for each edge (u,v), u comes before v.
 
@@ -460,7 +566,7 @@ def topological_sort(graph):
 
 ---
 
-## 9. Trie
+## 11. Trie
 
 A tree-like data structure for efficient string search operations.
 
@@ -521,7 +627,7 @@ class Trie:
 
 ---
 
-## 10. Union Find (Disjoint Set)
+## 12. Union Find (Disjoint Set)
 
 Data structure for tracking elements partitioned into disjoint sets.
 
@@ -602,3 +708,4 @@ class UnionFind:
 - Network connectivity
 - Image segmentation
 - Friends circles
+
