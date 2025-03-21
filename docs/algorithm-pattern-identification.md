@@ -248,12 +248,14 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 - Finding shortest path in weighted graph with non-negative weights
 - Optimizing distance between nodes
 - Pathfinding with cost considerations
+- Network routing problems with weights
 
 **Example Problem Types:**
 
 - Network routing
 - GPS navigation
 - Flight scheduling
+- Network Delay Time (LC#743)
 
 **Time & Space Complexity:**
 
@@ -778,7 +780,7 @@ This section categorizes common Amazon interview problems from LeetCode by their
 
 | If you see this...                            | Consider this pattern... | Example problems                                                                                | Key characteristics                                             |
 | --------------------------------------------- | ------------------------ | ----------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| Contiguous subarrays/substrings               | Sliding Window           | Max sum subarray of size K, Longest substring with K distinct chars, LC#3, LC#76, LC#438        | Fixed or variable size window that "slides" through array       |
+| Contiguous subarrays/substrings               | Sliding Window           | Max sum subarray of size K, Longest substring with K distinct chars, LC#3, LC#76, LC#438, LC#2251 (Number of Flowers in Full Bloom) | Fixed or variable size window that "slides" through array       |
 | Need max/min/sum over window of elements      | Sliding Window           | Minimum size subarray with given sum, Fruit into baskets, LC#1358                               | Often involves expanding/contracting window based on conditions |
 | String pattern matching within another string | Sliding Window           | Find all anagrams in a string (LC#438), Permutation in string, Minimum window substring (LC#76) | Track character frequencies within current window               |
 | Repeated characters in window                 | Sliding Window           | Longest substring without repeating characters (LC#3), Longest repeating character replacement  | Use hash map/set to track seen characters                       |
@@ -797,7 +799,7 @@ This section categorizes common Amazon interview problems from LeetCode by their
 | Minimum/maximum subsequence                   | Greedy + Array           | Increasing triplet subsequence, Longest increasing subsequence (LC#300)                         | Maintain minimum values seen so far                             |
 | Array rotation problems                       | Array Manipulation       | Rotate array (LC#189), Search in rotated sorted array (LC#33)                                   | Identify pattern after rotation                                 |
 | Majority element                              | Boyer-Moore Voting       | Majority element (LC#169), Majority element II                                                  | Cancel out non-majority elements                                |
-| Cyclic sort                                   | In-place Sorting         | Missing number, Find all disappeared numbers (LC#448)                                           | Place each number in its correct position                       |
+| Cyclic sort                                   | In-place Sorting         | Missing number, Find all disappeared numbers (LC#448), LC#41 (First Missing Positive)           | Place each number in its correct position                       |
 
 ### Linked List Problems
 
@@ -916,10 +918,10 @@ This section categorizes common Amazon interview problems from LeetCode by their
 | Sorted array search          | Binary Search            | Search in rotated array (LC#33), Find peak element (LC#162), Search range (LC#34) | Repeatedly divide search space in half                      |
 | Search space halving         | Binary Search            | Sqrt(x), Search 2D sorted matrix, Find minimum in rotated sorted array (LC#153)   | Identify which half contains answer                         |
 | Minimize maximum value       | Binary Search            | Split array largest sum, Capacity to ship packages, Koko eating bananas (LC#875)  | Binary search on possible answers                           |
-| Matrix search                | Binary Search            | Search 2D matrix, Search 2D matrix II                                             | Use binary search on rows/columns                           |
-| Rotated array search         | Binary Search            | Search in rotated sorted array I and II (LC#33)                                   | Identify sorted half, search accordingly                    |
+| Matrix search                | Binary Search            | Search 2D matrix, Search 2D matrix II, LC#48 (Rotate Image)                      | Use binary search on rows/columns                           |
+| Rotated array search         | Binary Search            | Search in rotated sorted array I and II (LC#33), LC#189 (Rotate Array)           | Identify sorted half, search accordingly                    |
 | Finding boundary             | Binary Search            | First bad version, H-index, Find the duplicate number                             | Find first/last occurrence of condition                     |
-| Floating point binary search | Binary Search            | Find median of two sorted arrays (LC#4), Sqrt(x)                                  | Similar to integer binary search but with decimal precision |
+| Floating point binary search | Binary Search            | Find median of two sorted arrays (LC#4), Sqrt(x), LC#528 (Random Pick with Weight) | Similar to integer binary search but with decimal precision |
 
 ### Stack & Queue Problems
 
@@ -927,13 +929,13 @@ This section categorizes common Amazon interview problems from LeetCode by their
 | ------------------------ | ------------------------ | ----------------------------------------------------------------------------------------- | --------------------------------------------- |
 | Monotonic stack problems | Stack                    | Next greater element, Daily temperatures (LC#739), Largest rectangle in histogram         | Maintain decreasing/increasing order in stack |
 | Expression evaluation    | Stack                    | Calculator (LC#224, LC#227), Evaluate reverse polish notation (LC#150), Basic calculator  | Process operators based on precedence         |
-| Parenthesis matching     | Stack                    | Valid parentheses (LC#20), Remove invalid parentheses, Minimum add to make valid (LC#921) | Use stack to track opening brackets           |
-| String parsing           | Stack                    | Decode string, Remove duplicate letters, Simplify path (LC#71)                            | Process characters sequentially with stack    |
+| Parenthesis matching     | Stack                    | Valid parentheses (LC#20), Remove invalid parentheses, Minimum add to make valid (LC#921), LC#1249 (Minimum Remove to Make Valid Parentheses) | Use stack to track opening brackets           |
+| String parsing           | Stack                    | Decode string, Remove duplicate letters, Simplify path (LC#71), LC#341 (Flatten Nested List Iterator) | Process characters sequentially with stack    |
 | Min/max stack            | Stack                    | Min stack (LC#155), Max stack, Largest rectangle in histogram                             | Track minimum/maximum at each position        |
-| Queue implementation     | Queue                    | Implement queue using stacks, Design circular queue                                       | FIFO data structure                           |
+| Queue implementation     | Queue                    | Implement queue using stacks (LC#232), Design circular queue                              | FIFO data structure                           |
 | BFS implementation       | Queue                    | Level order traversal (LC#102), Word ladder (LC#127)                                      | Process elements in order they're found       |
 | Sliding window maximum   | Deque                    | Sliding window maximum (LC#239), Sliding window minimum                                   | Maintain relevant elements in window          |
-| Browser history/stack    | Deque                    | Design browser history (LC#1472), Max sliding window                                      | Support operations from both ends             |
+| Browser history/stack    | Deque                    | Design browser history (LC#1472), Max sliding window, LC#228 (Summary Ranges)             | Support operations from both ends             |
 
 ### Additional Pattern Categories
 
@@ -942,14 +944,14 @@ This section categorizes common Amazon interview problems from LeetCode by their
 | Local -> global optimization | Greedy                   | Jump game (LC#55), Gas station (LC#134), Task scheduler (LC#621)                                       | Make locally optimal choice at each step              |
 | Activity scheduling          | Greedy                   | Meeting rooms (LC#253), Non-overlapping intervals (LC#435), Minimum number of arrows                   | Sort by end time and select non-overlapping intervals |
 | Optimal ordering             | Greedy                   | Queue reconstruction by height, Create maximum number, Reorganize string (LC#767)                      | Sort by specific criteria                             |
-| Binary operations            | Bit Manipulation         | Single number, Counting bits, Sum of two integers                                                      | Use logical operations (&,                            |
+| Binary operations            | Bit Manipulation         | Single number, Counting bits, Sum of two integers, LC#3191 (Minimum Operations to Make Binary Array Elements Equal to One I) | Use logical operations (&, |, ^, ~)                   |
 | XOR properties               | Bit Manipulation         | Maximum XOR of two numbers, Find the duplicate, Single number II                                       | Exploit XOR characteristics (a^a=0, a^0=a)            |
 | Bit counting                 | Bit Manipulation         | Hamming distance, Number of 1 bits, Power of two                                                       | Count or check specific bits                          |
 | Interval problems            | Interval Merging/Sorting | Merge intervals (LC#56), Insert interval, Meeting rooms (LC#253), Non-overlapping intervals (LC#435)   | Sort intervals, then process in order                 |
 | Rabin-Karp algorithm         | String Hashing           | Repeated substring pattern, Implement strStr() (LC#28), Longest duplicate substring                    | Use rolling hash to compare substrings                |
 | Unique elements              | Hash Set                 | Contains duplicate, Intersection of arrays (LC#349), Find the difference                               | Track seen elements                                   |
-| Element counting             | Hash Map                 | Two sum (LC#1), First unique character (LC#387), Longest substring without repeating characters (LC#3) | Count occurrences or map elements to indices          |
-| LRU/LFU cache                | Hash Map + Linked List   | LRU cache (LC#146), LFU cache (LC#460), All O(1) data structure                                        | Combine fast lookup with ordered access               |
+| Element counting             | Hash Map                 | Two sum (LC#1), First unique character (LC#387), Longest substring without repeating characters (LC#3), LC#219 (Contains Duplicate II), LC#609 (Find Duplicate File in System) | Count occurrences or map elements to indices          |
+| LRU/LFU cache                | Hash Map + Linked List   | LRU cache (LC#146), LFU cache (LC#460), All O(1) data structure, LC#359 (Logger Rate Limiter), LC#2622 (Cache With Time Limit) | Combine fast lookup with ordered access               |
 | Sparse data representation   | Matrix Manipulation      | Sparse matrix multiplication, Diagonal traverse                                                        | Efficiently store and process sparse matrices         |
 | Island problems              | Flood Fill/DFS/BFS       | Number of islands (LC#200), Making a large island, Surrounded regions (LC#130)                         | Connected components in 2D grid                       |
 | Mathematical series          | Math                     | Pascal's triangle (LC#118), Gray code, Pow(x, n)                                                       | Use mathematical properties and patterns              |
@@ -957,8 +959,8 @@ This section categorizes common Amazon interview problems from LeetCode by their
 | Factorials and combinations  | Math                     | Factorial trailing zeroes, Unique paths (LC#62), Binomial coefficients                                 | Use combinatorial formulas                            |
 | Random selection             | Reservoir Sampling       | Random node in a linked list, Random pick index, Random pick with weight (LC#528)                      | Select items from stream with equal probability       |
 | Randomized algorithms        | Shuffle/Fisher-Yates     | Shuffle an array, Random pick with weight (LC#528)                                                     | Generate permutations with equal probability          |
-| Strings with constraints     | State Machines           | Valid number, Regular expression matching                                                              | Process input character by character                  |
-| Design problems              | Object-Oriented Design   | Design HashMap (LC#706), Design Twitter, Design browser history (LC#1472)                              | Combine appropriate data structures                   |
+| Strings with constraints     | State Machines           | Valid number, Regular expression matching, LC#68 (Text Justification)                                  | Process input character by character                  |
+| Design problems              | Object-Oriented Design   | Design HashMap (LC#706), Design Twitter, Design browser history (LC#1472), LC#380 (Insert Delete GetRandom O(1)), LC#981 (Time Based Key-Value Store) | Combine appropriate data structures                   |
 | Circular array               | Circular Array           | Circular array loop, Maximum sum circular subarray                                                     | Handle wrapping around array bounds                   |
 | Boyer-Moore Voting           | Majority Element         | Majority element (LC#169), Majority element II                                                         | Find elements appearing more than n/k times           |
 | Topological sort             | Directed Acyclic Graph   | Course schedule (LC#207), Course schedule II (LC#210), Alien dictionary                                | Process nodes with no incoming edges first            |
@@ -1072,3 +1074,5 @@ This section categorizes common Netflix interview problems from LeetCode by thei
 
 ### Bit Manipulation
 - 3191: Minimum Operations to Make Binary Array Elements Equal to One I
+
+## Problem-to-Pattern Matching Table
