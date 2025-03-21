@@ -3,16 +3,32 @@
 > A curated collection of essential algorithm patterns and templates for problem solving. Each template includes implementation, time/space complexity, and common applications.
 
 ## Table of Contents
-1. [Backtracking](#1-backtracking)
-2. [Binary Search](#2-binary-search)
-3. [Breadth First Search (BFS)](#3-breadth-first-search-bfs)
-4. [Depth First Search (DFS)](#4-depth-first-search-dfs)
-5. [Matrix as Graph](#5-matrix-as-graph)
-6. [Monotonic Stack](#6-monotonic-stack)
-7. [Sliding Window](#7-sliding-window)
-8. [Topological Sort](#8-topological-sort)
-9. [Trie](#9-trie)
-10. [Union Find (Disjoint Set)](#10-union-find-disjoint-set)
+
+- [Algorithm Templates](#algorithm-templates)
+  - [Table of Contents](#table-of-contents)
+  - [1. Backtracking](#1-backtracking)
+    - [Basic Template](#basic-template)
+    - [Aggregation Template](#aggregation-template)
+    - [Common Aggregation Patterns](#common-aggregation-patterns)
+  - [2. Binary Search](#2-binary-search)
+  - [3. Breadth First Search (BFS)](#3-breadth-first-search-bfs)
+    - [Tree BFS](#tree-bfs)
+    - [Graph BFS](#graph-bfs)
+    - [BFS with Level Tracking](#bfs-with-level-tracking)
+  - [4. Depth First Search (DFS)](#4-depth-first-search-dfs)
+    - [Tree DFS](#tree-dfs)
+    - [Graph DFS](#graph-dfs)
+  - [5. Matrix as Graph](#5-matrix-as-graph)
+  - [6. Monotonic Stack](#6-monotonic-stack)
+  - [7. Sliding Window](#7-sliding-window)
+    - [Fixed Size Window](#fixed-size-window)
+    - [Flexible Size - Find Longest](#flexible-size---find-longest)
+    - [Flexible Size - Find Shortest](#flexible-size---find-shortest)
+  - [8. Topological Sort](#8-topological-sort)
+  - [9. Trie](#9-trie)
+  - [10. Union Find (Disjoint Set)](#10-union-find-disjoint-set)
+    - [Basic Implementation](#basic-implementation)
+    - [Optimized with Rank](#optimized-with-rank)
 
 ---
 
@@ -20,12 +36,14 @@
 
 Backtracking is a systematic way to explore all potential solutions through recursive trial and error.
 
-**When to use**: 
+**When to use**:
+
 - Generating all possible combinations/permutations
 - Finding paths through a maze
 - Constraint satisfaction problems (like Sudoku)
 
 ### Basic Template
+
 ```python
 def backtrack(start_index, path):
     if is_leaf(start_index):  # Base case
@@ -39,6 +57,7 @@ def backtrack(start_index, path):
 ```
 
 ### Aggregation Template
+
 ```python
 def backtrack(index, state):
     # Base case
@@ -71,7 +90,8 @@ def backtrack(index, state):
 **Time Complexity**: O(k^n) where k is the branching factor and n is the depth
 **Space Complexity**: O(n) for recursion stack
 
-**Example Use Cases**: 
+**Example Use Cases**:
+
 - N-Queens
 - Subset/Combination Sum problems
 - Permutations
@@ -83,6 +103,7 @@ def backtrack(index, state):
 A divide-and-conquer algorithm that finds elements in a sorted array in logarithmic time.
 
 **When to use**:
+
 - Searching in sorted arrays
 - Finding the boundary between two distinct regions
 - Optimizing minimum/maximum values that satisfy a condition
@@ -107,6 +128,7 @@ def binary_search(arr):
 **Space Complexity**: O(1)
 
 **Example Use Cases**:
+
 - Finding element in sorted array
 - Finding first/last occurrence
 - Search in rotated sorted array
@@ -118,11 +140,13 @@ def binary_search(arr):
 Explores all neighbors at the current depth before moving to nodes at the next depth level.
 
 **When to use**:
+
 - Finding shortest path in unweighted graphs
 - Level-order traversal of trees
 - Connected components in graphs
 
 ### Tree BFS
+
 ```python
 from collections import deque
 
@@ -139,6 +163,7 @@ def bfs(root):
 ```
 
 ### Graph BFS
+
 ```python
 from collections import deque
 
@@ -156,6 +181,7 @@ def bfs(start, graph):
 ```
 
 ### BFS with Level Tracking
+
 ```python
 from collections import deque
 
@@ -181,6 +207,7 @@ def bfs_by_level(start, graph):
 **Space Complexity**: O(V)
 
 **Example Use Cases**:
+
 - Shortest path in maze
 - Word ladder
 - Web crawler
@@ -192,11 +219,13 @@ def bfs_by_level(start, graph):
 Explores as far as possible along each branch before backtracking.
 
 **When to use**:
+
 - Pathfinding
 - Topological ordering
 - Exploring all possibilities in a graph
 
 ### Tree DFS
+
 ```python
 def dfs(root):
     if not root:
@@ -208,6 +237,7 @@ def dfs(root):
 ```
 
 ### Graph DFS
+
 ```python
 def dfs(node, graph, visited=None):
     if visited is None:
@@ -225,6 +255,7 @@ def dfs(node, graph, visited=None):
 **Space Complexity**: O(V) in worst case
 
 **Example Use Cases**:
+
 - Cycle detection
 - Connected components
 - Solving mazes
@@ -236,6 +267,7 @@ def dfs(node, graph, visited=None):
 Treating a 2D grid as a graph with neighboring cells as connected nodes.
 
 **When to use**:
+
 - Pathfinding in grids/mazes
 - Island/connected region problems
 - Game board traversals
@@ -256,6 +288,7 @@ def get_neighbors(row, col, matrix):
 ```
 
 **Example Use Cases**:
+
 - Number of islands
 - Flood fill
 - Shortest path in maze
@@ -267,6 +300,7 @@ def get_neighbors(row, col, matrix):
 A stack that maintains elements in either increasing or decreasing order.
 
 **When to use**:
+
 - Finding the next greater/smaller element
 - Problems involving histograms
 - Trapping rain water
@@ -290,6 +324,7 @@ def monotonic_increasing_stack(arr):
 **Space Complexity**: O(n)
 
 **Example Use Cases**:
+
 - Next greater element
 - Largest rectangle in histogram
 - Daily temperatures
@@ -301,11 +336,13 @@ def monotonic_increasing_stack(arr):
 Efficiently processes array segments of dynamic or fixed size by sliding a window.
 
 **When to use**:
+
 - Finding subarrays that meet certain criteria
 - String problems with substring constraints
 - Maximum/minimum subarray of fixed size
 
 ### Fixed Size Window
+
 ```python
 def fixed_window(arr, k):
     # Process first window
@@ -321,6 +358,7 @@ def fixed_window(arr, k):
 ```
 
 ### Flexible Size - Find Longest
+
 ```python
 def longest_window(arr, target):
     left = 0
@@ -343,6 +381,7 @@ def longest_window(arr, target):
 ```
 
 ### Flexible Size - Find Shortest
+
 ```python
 def shortest_window(arr, target):
     left = 0
@@ -366,6 +405,7 @@ def shortest_window(arr, target):
 **Space Complexity**: O(1) for numeric windows, O(k) for string/object windows
 
 **Example Use Cases**:
+
 - Maximum sum subarray of size k
 - Longest substring with k distinct characters
 - Minimum window substring
@@ -377,6 +417,7 @@ def shortest_window(arr, target):
 Ordering of vertices in a directed acyclic graph where for each edge (u,v), u comes before v.
 
 **When to use**:
+
 - Task scheduling with prerequisites
 - Course scheduling
 - Dependency resolution
@@ -412,6 +453,7 @@ def topological_sort(graph):
 **Space Complexity**: O(V)
 
 **Example Use Cases**:
+
 - Course prerequisites
 - Build systems
 - Parallel job scheduling
@@ -423,6 +465,7 @@ def topological_sort(graph):
 A tree-like data structure for efficient string search operations.
 
 **When to use**:
+
 - Prefix matching
 - Autocomplete functionality
 - Spell checkers
@@ -465,11 +508,13 @@ class Trie:
 ```
 
 **Time Complexity**:
+
 - Insert: O(m) where m is word length
 - Search: O(m) where m is word length
 - Space Complexity: O(n*m) where n is number of words and m is average length
 
 **Example Use Cases**:
+
 - Word dictionary
 - Autocomplete
 - IP routing tables
@@ -481,11 +526,13 @@ class Trie:
 Data structure for tracking elements partitioned into disjoint sets.
 
 **When to use**:
+
 - Finding connected components
 - Cycle detection in undirected graphs
 - Kruskal's algorithm for minimum spanning trees
 
 ### Basic Implementation
+
 ```python
 class UnionFind:
     def __init__(self, n=0):
@@ -510,6 +557,7 @@ class UnionFind:
 ```
 
 ### Optimized with Rank
+
 ```python
 class UnionFind:
     def __init__(self):
@@ -543,12 +591,14 @@ class UnionFind:
 ```
 
 **Time Complexity**:
+
 - With path compression and union by rank:
   - Amortized O(α(n)) per operation, where α is the inverse Ackermann function (nearly constant)
 - Without optimizations:
   - O(n) worst case per operation
 
 **Example Use Cases**:
+
 - Network connectivity
 - Image segmentation
 - Friends circles
