@@ -575,7 +575,7 @@ The Floyd's Cycle-Finding Algorithm (tortoise and hare) uses two pointers moving
 **Find the middle node of a linked list in a single pass.**
 
 - [ ] A. First count the nodes, then traverse to the middle
-- [ ] B. Use recursion to find the depth and middle node simultaneously 
+- [ ] B. Use recursion to find the depth and middle node simultaneously
 - [ ] C. Use a slow pointer and a fast pointer that moves twice as fast
 - [ ] D. Use a stack to store nodes and find the middle
 

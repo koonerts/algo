@@ -1,8 +1,45 @@
-# Algorithm Patterns Speedrun Quiz
+# Algorithm Patterns Speedrun Quiz (Prioritized)
 
-This speedrun quiz tests your ability to quickly identify algorithm patterns and apply the correct techniques to solve problems. For each question, select the correct option and check your answers below.
+This speedrun quiz tests your ability to quickly identify algorithm patterns and apply the correct techniques to solve problems. Questions are organized by return on investment (ROI) - starting with patterns that are easiest to learn and offer the highest return.
 
-## 1. Two Pointers (Opposite Direction)
+## Table of Contents
+
+- [High ROI Patterns](#high-roi-patterns)
+  - [Two Pointers](#two-pointers)
+  - [Sliding Window](#sliding-window)
+  - [Breadth-First Search](#breadth-first-search)
+- [Medium ROI Patterns](#medium-roi-patterns)
+  - [Depth-First Search](#depth-first-search)
+  - [Backtracking](#backtracking)
+  - [Binary Search](#binary-search)
+  - [Heap](#heap)
+  - [Binary Search Tree](#binary-search-tree)
+  - [Fast & Slow Pointers](#fast--slow-pointers)
+  - [Dynamic Programming](#dynamic-programming)
+- [Low ROI Patterns](#low-roi-patterns)
+  - [Divide and Conquer](#divide-and-conquer)
+  - [Trie](#trie)
+  - [Union Find](#union-find)
+  - [Greedy Algorithms](#greedy-algorithms)
+- [Additional Patterns](#additional-patterns)
+  - [Matrix as Graph](#matrix-as-graph)
+  - [Monotonic Stack](#monotonic-stack)
+  - [Topological Sort](#topological-sort)
+  - [Linked List Techniques](#linked-list-techniques)
+  - [Prefix Sums](#prefix-sums)
+  - [Bit Manipulation](#bit-manipulation)
+  - [Advanced Graph Algorithms](#advanced-graph-algorithms)
+  - [Advanced Data Structures](#advanced-data-structures)
+  - [String Algorithms](#string-algorithms)
+  - [Specialized Patterns](#specialized-patterns)
+
+---
+
+# High ROI Patterns
+
+## Two Pointers
+
+### 1. Two Pointers (Opposite Direction)
 
 **You need to find if there's a pair of elements in a sorted array that sum to a target value.**
 
@@ -21,7 +58,7 @@ Since the array is sorted, we can use two pointers - one at the beginning and on
 
 ---
 
-## 2. Two Pointers (Same Direction)
+### 2. Two Pointers (Same Direction)
 
 **Find the longest subarray containing only 1's after flipping at most k 0's to 1's.**
 
@@ -40,7 +77,9 @@ This is a classic sliding window problem with two pointers moving in the same di
 
 ---
 
-## 3. Sliding Window (Fixed Size)
+## Sliding Window
+
+### 3. Sliding Window (Fixed Size)
 
 **Find the maximum sum of any contiguous subarray of fixed size k in an array.**
 
@@ -59,7 +98,7 @@ With a fixed-size sliding window, we start by calculating the sum of the first k
 
 ---
 
-## 4. Sliding Window (Variable Size)
+### 4. Sliding Window (Variable Size)
 
 **Find the shortest subarray with a sum at least k.**
 
@@ -78,83 +117,47 @@ We use a variable-size sliding window. We expand the window by moving the right 
 
 ---
 
-## 5. Fast & Slow Pointers
+### 5. Sliding Window (Variable Size - Alternative)
 
-**Determine if a linked list has a cycle.**
+**Find the length of the longest subarray with a sum less than or equal to a given value.**
 
-- [ ] A. Use a hash set to track visited nodes
-- [ ] B. Use two pointers moving at different speeds
-- [ ] C. Count the number of nodes and check against a threshold
-- [ ] D. Use recursion to mark visited nodes
-
-<details>
-<summary>View Answer</summary>
-
-**B. Use two pointers moving at different speeds**
-
-Floyd's Cycle-Finding Algorithm (tortoise and hare) uses two pointers moving at different speeds. The slow pointer moves one step at a time, while the fast pointer moves two steps. If there's a cycle, the fast pointer will eventually catch up to the slow pointer.
-</details>
-
----
-
-## 6. Fast & Slow Pointers (Advanced)
-
-**Find the middle node of a linked list in a single pass.**
-
-- [ ] A. First count the nodes, then traverse to the middle
-- [ ] B. Use recursion to find the depth and middle node simultaneously 
-- [ ] C. Use a slow pointer and a fast pointer that moves twice as fast
-- [ ] D. Use a stack to store nodes and find the middle
+- [ ] A. Use two pointers to define a window, expand until invalid, then contract
+- [ ] B. Build a trie to store all possible subarrays
+- [ ] C. Sort the array and use binary search
+- [ ] D. Use Dijkstra's algorithm to find the shortest path
 
 <details>
 <summary>View Answer</summary>
 
-**C. Use a slow pointer and a fast pointer that moves twice as fast**
+**A. Use two pointers to define a window, expand until invalid, then contract**
 
-When the fast pointer reaches the end of the list, the slow pointer will be at the middle. The fast pointer moves two steps for every one step of the slow pointer. When the fast pointer reaches the end (or null), the slow pointer will be at the middle.
+This is a classic variable-size sliding window problem. We maintain a window using two pointers and a running sum. We expand the window by moving the right pointer until the sum exceeds our target, then contract by moving the left pointer until valid again, tracking the maximum valid window size.
 </details>
 
 ---
 
-## 7. Linked List Reversal
+## Breadth-First Search
 
-**Reverse a linked list in-place.**
+### 6. Breadth-First Search (Trees)
 
-- [ ] A. Use a stack to temporarily store all nodes
-- [ ] B. Create a new linked list in reverse order
-- [ ] C. Use three pointers (prev, current, next) and reverse links one by one
-- [ ] D. Use recursion to reverse sublists and connect them
+**Find the level with the largest sum in a binary tree.**
+
+- [ ] A. Use a recursive depth-first approach with a global maximum
+- [ ] B. Use a level-order traversal with a queue, tracking level sums
+- [ ] C. Convert the tree to a graph and use Dijkstra's algorithm
+- [ ] D. Apply a dynamic programming approach with memoization
 
 <details>
 <summary>View Answer</summary>
 
-**C. Use three pointers (prev, current, next) and reverse links one by one**
+**B. Use a level-order traversal with a queue, tracking level sums**
 
-The iterative in-place approach uses three pointers: prev (initially null), current (head), and next. For each node, we save the next node, reverse the current node's pointer to point to prev, move prev to current, and current to next.
+BFS is perfect for level-order traversal. We use a queue to process nodes level by level, calculating the sum at each level and tracking the maximum sum level.
 </details>
 
 ---
 
-## 8. Linked List Reversal (Advanced)
-
-**Reverse nodes in a linked list in groups of k.**
-
-- [ ] A. Use recursion to reverse each group and connect them
-- [ ] B. Create k separate lists and then merge them
-- [ ] C. Use a stack to reverse every k elements
-- [ ] D. Count nodes first, then reverse only complete groups
-
-<details>
-<summary>View Answer</summary>
-
-**A. Use recursion to reverse each group and connect them**
-
-We recursively reverse the first k nodes using the same technique as reversing a whole linked list. Then, we connect the reversed part with the recursively processed rest of the list (which will have its own k-groups reversed).
-</details>
-
----
-
-## 9. Breadth-First Search (Trees)
+### 7. Breadth-First Search (Trees - Width)
 
 **Find the maximum width of a binary tree (maximum number of nodes at any level).**
 
@@ -173,7 +176,26 @@ BFS is naturally level-by-level. We use a queue to process nodes level by level,
 
 ---
 
-## 10. Breadth-First Search (Graphs)
+### 8. Breadth-First Search (Graphs)
+
+**Find the shortest path between two nodes in an unweighted graph.**
+
+- [ ] A. Use depth-first search with backtracking
+- [ ] B. Apply Dijkstra's algorithm with priority queue
+- [ ] C. Use breadth-first search with a queue and visited set
+- [ ] D. Use Union-Find to determine connectivity
+
+<details>
+<summary>View Answer</summary>
+
+**C. Use breadth-first search with a queue and visited set**
+
+For unweighted graphs, BFS naturally finds the shortest path by processing nodes in order of their distance from the start node. We use a queue and a visited set to avoid cycles.
+</details>
+
+---
+
+### 9. Breadth-First Search (Grid Graphs)
 
 **Find the shortest path from start to end in a grid where some cells are blocked.**
 
@@ -192,7 +214,30 @@ For unweighted graphs (where each step has the same cost), BFS naturally finds t
 
 ---
 
-## 11. Depth-First Search (Trees)
+# Medium ROI Patterns
+
+## Depth-First Search
+
+### 10. Depth-First Search (Trees)
+
+**Check if a binary tree is a valid binary search tree.**
+
+- [ ] A. Do an inorder traversal and verify if the result is sorted
+- [ ] B. Calculate the sum of all node values
+- [ ] C. Use level-order traversal with constraints checking
+- [ ] D. Apply the Union-Find algorithm to detect cycles
+
+<details>
+<summary>View Answer</summary>
+
+**A. Do an inorder traversal and verify if the result is sorted**
+
+This is one approach. Alternatively, we can use DFS with min/max constraints, where each node's value must be within a range determined by its ancestors. For a BST, inorder traversal produces elements in sorted order.
+</details>
+
+---
+
+### 11. Depth-First Search (Trees - Balance)
 
 **Check if a binary tree is balanced (the depth of any two leaf nodes differs by at most 1).**
 
@@ -211,7 +256,7 @@ Use post-order traversal (a type of DFS) to compute heights bottom-up. For each 
 
 ---
 
-## 12. Depth-First Search (Graphs)
+### 12. Depth-First Search (Graphs)
 
 **Determine if there's a path between two nodes in a directed graph.**
 
@@ -230,26 +275,47 @@ DFS can be used to check if there's a path from source to destination. We recurs
 
 ---
 
-## 13. Cycle Detection (Directed Graphs)
+### 13. Depth-First Search (Cycle Detection)
 
-**Detect if a directed graph contains a cycle.**
+**Detect if a directed graph has a cycle.**
 
-- [ ] A. Use Union-Find data structure
-- [ ] B. Use a single DFS with three node states: unvisited, in-progress, and finished
-- [ ] C. Apply Kahn's topological sort algorithm
-- [ ] D. Use two separate BFS traversals
+- [ ] A. Use a union-find data structure
+- [ ] B. Apply BFS and count nodes at each level
+- [ ] C. Use DFS with three node states: unvisited, in-progress, and visited
+- [ ] D. Sort the adjacency list and check for repeated edges
 
 <details>
 <summary>View Answer</summary>
 
-**B. Use a single DFS with three node states: unvisited, in-progress, and finished**
+**C. Use DFS with three node states: unvisited, in-progress, and visited**
 
-For directed graphs, we use DFS with three node states: unvisited, in-progress (currently in our DFS path), and finished. If during DFS we encounter a node that is in-progress, we've found a cycle because we're revisiting a node in our current path.
+To detect cycles in a directed graph using DFS, we maintain three states for nodes: unvisited, in-progress (in the current DFS path), and visited (finished processing). If we encounter an in-progress node during DFS, we've found a cycle.
 </details>
 
 ---
 
-## 14. Backtracking (Basic)
+## Backtracking
+
+### 14. Backtracking (Basic)
+
+**Generate all possible combinations of k numbers from 1 to n.**
+
+- [ ] A. Use dynamic programming with a 2D table
+- [ ] B. Apply BFS with branching at each level
+- [ ] C. Use recursion with backtracking, adding and removing elements
+- [ ] D. Build a mathematical formula to calculate all combinations
+
+<details>
+<summary>View Answer</summary>
+
+**C. Use recursion with backtracking, adding and removing elements**
+
+Backtracking is perfect for generating all combinations. We recursively build combinations by adding one element at a time, exploring all possibilities, and backtracking by removing the last element before trying the next option.
+</details>
+
+---
+
+### 15. Backtracking (Subsets)
 
 **Generate all possible subsets of a set of distinct integers.**
 
@@ -268,7 +334,7 @@ Classic backtracking approach: for each element, we have two choices - include i
 
 ---
 
-## 15. Backtracking (Permutations)
+### 16. Backtracking (Permutations)
 
 **Generate all permutations of a string with distinct characters.**
 
@@ -287,7 +353,7 @@ For each position, we try all possible characters that can be placed there (by s
 
 ---
 
-## 16. Backtracking (Constraint Satisfaction)
+### 17. Backtracking (Constraint Satisfaction)
 
 **Solve a Sudoku puzzle.**
 
@@ -306,7 +372,28 @@ For each empty cell, we try all valid digits (1-9) that don't violate Sudoku con
 
 ---
 
-## 17. Binary Search (Basic)
+### 18. Backtracking (N-Queens)
+
+**Count the number of ways to arrange n queens on an n×n chessboard so that no two queens threaten each other.**
+
+- [ ] A. Use a greedy algorithm to place queens optimally
+- [ ] B. Apply dynamic programming with state tables
+- [ ] C. Use backtracking with constraint checking and counting valid arrangements
+- [ ] D. Calculate mathematically using combinatorics
+
+<details>
+<summary>View Answer</summary>
+
+**C. Use backtracking with constraint checking and counting valid arrangements**
+
+The N-Queens problem is a classic backtracking problem. We place queens one row at a time, checking if each position is valid (not threatened by previously placed queens). We backtrack when necessary and count all valid arrangements.
+</details>
+
+---
+
+## Binary Search
+
+### 19. Binary Search (Basic)
 
 **Find a specific value in a sorted array.**
 
@@ -325,7 +412,7 @@ Binary search compares the target value to the middle element of the array. If t
 
 ---
 
-## 18. Binary Search (Boundary)
+### 20. Binary Search (Boundary)
 
 **Find the index of the first occurrence of a value in a sorted array with duplicates.**
 
@@ -344,7 +431,7 @@ Standard binary search finds any occurrence. To find the first occurrence, when 
 
 ---
 
-## 19. Binary Search (Rotated Array)
+### 21. Binary Search (Rotated Array)
 
 **Find a value in a sorted array that was rotated at an unknown pivot point.**
 
@@ -363,7 +450,7 @@ We use a modified binary search. At each step, we determine which half of the ar
 
 ---
 
-## 20. Binary Search (On Answer)
+### 22. Binary Search (On Answer)
 
 **Find the minimum capacity of ships needed to transport packages within a given number of days.**
 
@@ -382,121 +469,268 @@ Instead of searching for a value in an array, we binary search on the potential 
 
 ---
 
-## 21. Binary Search Trees
+### 23. Binary Search (First Bad Version)
 
-**Find the kth smallest element in a Binary Search Tree.**
+**Find the first bad version in a series of versions where all versions after a bad one are also bad.**
 
-- [ ] A. Convert the BST to a sorted array and return the kth element
-- [ ] B. Use inorder traversal with a counter to find the kth element
-- [ ] C. Modify the BST nodes to store subtree size and use that for selection
-- [ ] D. Use level-order traversal with priority queue
+- [ ] A. Check versions sequentially from the beginning
+- [ ] B. Use binary search to find the first bad version
+- [ ] C. Apply two-pointer technique from both ends
+- [ ] D. Use a breadth-first search starting from the middle version
 
 <details>
 <summary>View Answer</summary>
 
-**B. Use inorder traversal with a counter to find the kth element**
+**B. Use binary search to find the first bad version**
 
-Inorder traversal of a BST visits nodes in ascending order. We perform an inorder traversal with a counter. When the counter reaches k, we've found our kth smallest element.
+This is a classic binary search problem for finding the boundary between good and bad versions. We search for the first occurrence where isBadVersion(version) returns true.
 </details>
 
 ---
 
-## 22. Heap (Top K Elements)
+## Heap
 
-**Find the k largest elements in an unsorted array.**
+### 24. Heap (Top K Elements)
+
+**Find the k largest elements in an array.**
 
 - [ ] A. Sort the array and return the last k elements
 - [ ] B. Use quickselect algorithm to find the kth largest element
-- [ ] C. Use a min-heap of size k to track largest elements
-- [ ] D. Use a max-heap containing all elements and extract k times
+- [ ] C. Maintain a min-heap of size k while processing the array
+- [ ] D. Use two pointers to partition the array around k
 
 <details>
 <summary>View Answer</summary>
 
-**C. Use a min-heap of size k to track largest elements**
+**C. Maintain a min-heap of size k while processing the array**
 
-We maintain a min-heap of size k. For each element, we add it to the heap and remove the smallest element if the heap size exceeds k. After processing all elements, the heap contains the k largest elements. Time complexity: O(n log k).
+To find the k largest elements, we can maintain a min-heap of size k. For each element, we add it to the heap and remove the smallest element if the heap size exceeds k. This gives us O(n log k) time complexity.
 </details>
 
 ---
 
-## 23. Heap (Two Heaps)
+### 25. Heap (Two Heaps)
 
-**Design a data structure that can efficiently find the median of a stream of numbers.**
+**Find the median of a data stream.**
 
-- [ ] A. Keep the stream sorted in an array
-- [ ] B. Use a balanced binary search tree
-- [ ] C. Use two heaps: max-heap for smaller half, min-heap for larger half
-- [ ] D. Use a single heap with custom comparison logic
+- [ ] A. Sort the stream after each addition
+- [ ] B. Maintain a balanced binary search tree
+- [ ] C. Use two heaps: a max-heap for the smaller half and a min-heap for the larger half
+- [ ] D. Track the sum and count to calculate average
 
 <details>
 <summary>View Answer</summary>
 
-**C. Use two heaps: max-heap for smaller half, min-heap for larger half**
+**C. Use two heaps: a max-heap for the smaller half and a min-heap for the larger half**
 
-We use two heaps: a max-heap for the smaller half of the numbers and a min-heap for the larger half. We keep them balanced (size difference ≤ 1). The median is either the top of the max-heap (if it has more elements) or the average of both tops (if equal size).
+We maintain two heaps: a max-heap for the smaller half of the numbers and a min-heap for the larger half. We balance the heaps so their sizes differ by at most 1, allowing us to find the median in O(1) time after insertion.
 </details>
 
 ---
 
-## 24. Matrix as Graph
+## Binary Search Tree
 
-**Count the number of islands in a binary grid (connected 1's surrounded by 0's or the boundary).**
+### 26. Binary Search Tree (Traversal)
 
-- [ ] A. Use Union-Find to connect all land cells
-- [ ] B. Use DFS/BFS from each unvisited land cell, marking visited cells
-- [ ] C. Use dynamic programming to identify isolated regions
-- [ ] D. Convert to a graph adjacency matrix and count components
+**Find the kth smallest element in a binary search tree.**
+
+- [ ] A. Do an inorder traversal and return the kth element
+- [ ] B. Use a min-heap to track the k smallest elements
+- [ ] C. Apply Morris traversal for constant space
+- [ ] D. Convert the BST to a sorted array and return the kth element
 
 <details>
 <summary>View Answer</summary>
 
-**B. Use DFS/BFS from each unvisited land cell, marking visited cells**
+**A. Do an inorder traversal and return the kth element**
 
-We treat the grid as a graph where adjacent land cells (1's) are connected. For each unvisited land cell, we perform DFS/BFS to visit all connected land cells and mark them as visited. Each such traversal corresponds to one island.
+Since inorder traversal of a BST visits nodes in ascending order, we can simply perform an inorder traversal and return the kth element visited.
 </details>
 
 ---
 
-## 25. Monotonic Stack
+## Fast & Slow Pointers
 
-**Find the next greater element for each element in an array.**
+### 27. Fast & Slow Pointers (Cycle Detection)
 
-- [ ] A. Use nested loops to find the next greater element for each position
-- [ ] B. Sort the array with indices and process in order
-- [ ] C. Use a monotonic decreasing stack to track potential next greater elements
-- [ ] D. Use a priority queue to find greater elements efficiently
+**Detect if a linked list has a cycle.**
+
+- [ ] A. Use a hash set to track visited nodes
+- [ ] B. Use fast and slow pointers to detect a cycle
+- [ ] C. Count the number of nodes and check if it exceeds the expected length
+- [ ] D. Use a stack to track the traversal path
 
 <details>
 <summary>View Answer</summary>
 
-**C. Use a monotonic decreasing stack to track potential next greater elements**
+**B. Use fast and slow pointers to detect a cycle**
 
-We use a stack to keep track of indices of elements waiting for their next greater element. When we find a greater element, we pop indices from the stack and update their next greater element. This approach processes each element at most twice (push & pop).
+The Floyd's Cycle-Finding Algorithm (tortoise and hare) uses two pointers moving at different speeds. If there's a cycle, the fast pointer will eventually catch up to the slow pointer.
 </details>
 
 ---
 
-## 26. Topological Sort
+### 28. Fast & Slow Pointers (Middle Finding)
 
-**Given a list of courses with prerequisites, find a valid order to take all courses.**
+**Find the middle node of a linked list in a single pass.**
 
-- [ ] A. Use depth-first search with a cycle check
-- [ ] B. Apply Kahn's algorithm using indegree counts and a queue
-- [ ] C. Sort courses by their number of prerequisites
-- [ ] D. Use Union-Find to identify course groups
+- [ ] A. First count the nodes, then traverse to the middle
+- [ ] B. Use recursion to find the depth and middle node simultaneously
+- [ ] C. Use a slow pointer and a fast pointer that moves twice as fast
+- [ ] D. Use a stack to store nodes and find the middle
 
 <details>
 <summary>View Answer</summary>
 
-**B. Apply Kahn's algorithm using indegree counts and a queue**
+**C. Use a slow pointer and a fast pointer that moves twice as fast**
 
-We use Kahn's algorithm: calculate indegree (number of prerequisites) for each course, start with courses having no prerequisites (indegree 0), and as we take each course, decrement the indegree of courses that depend on it. When a course's indegree becomes 0, add it to the queue.
+When the fast pointer reaches the end of the list, the slow pointer will be at the middle. The fast pointer moves two steps for every one step of the slow pointer. When the fast pointer reaches the end (or null), the slow pointer will be at the middle.
 </details>
 
 ---
 
-## 27. Trie (Prefix Tree)
+## Dynamic Programming
+
+### 29. Dynamic Programming (Kadane's Algorithm)
+
+**Find the maximum sum of a contiguous subarray in an array of integers.**
+
+- [ ] A. Sort the array and take the largest elements
+- [ ] B. Use dynamic programming to track maximum subarray ending at each position
+- [ ] C. Apply two pointers to track the subarray boundaries
+- [ ] D. Calculate the prefix sum and find the maximum difference
+
+<details>
+<summary>View Answer</summary>
+
+**B. Use dynamic programming to track maximum subarray ending at each position**
+
+Kadane's algorithm is a dynamic programming approach that maintains two variables: the maximum subarray sum ending at the current position, and the global maximum subarray sum. We iterate through the array once, updating these values.
+</details>
+
+---
+
+### 30. Dynamic Programming (0/1 Knapsack)
+
+**Given weights and values of n items, put them in a knapsack of capacity W to get the maximum value.**
+
+- [ ] A. Use a greedy approach by selecting items with the highest value/weight ratio
+- [ ] B. Apply BFS to explore all possible combinations
+- [ ] C. Use dynamic programming with a 2D table to track optimal values
+- [ ] D. Sort items by value and add them until capacity is reached
+
+<details>
+<summary>View Answer</summary>
+
+**C. Use dynamic programming with a 2D table to track optimal values**
+
+The 0/1 Knapsack problem is solved using dynamic programming. We create a 2D table where dp[i][w] represents the maximum value achievable with the first i items and weight limit w.
+</details>
+
+---
+
+### 31. Dynamic Programming (Unbounded Knapsack)
+
+**Given coins of different denominations and a total amount, find the minimum number of coins needed to make up that amount.**
+
+- [ ] A. Sort the coins and use a greedy approach
+- [ ] B. Use BFS to find the shortest path to the target amount
+- [ ] C. Apply DFS with memoization to explore all combinations
+- [ ] D. Use dynamic programming with a 1D array to track minimum coins
+
+<details>
+<summary>View Answer</summary>
+
+**D. Use dynamic programming with a 1D array to track minimum coins**
+
+The Coin Change problem is an unbounded knapsack problem. We use a 1D DP array where dp[i] represents the minimum number of coins needed to make amount i. For each coin, we update dp[i] = min(dp[i], dp[i - coin] + 1).
+</details>
+
+---
+
+### 32. Dynamic Programming (Longest Common Subsequence)
+
+**Find the length of the longest common subsequence between two strings.**
+
+- [ ] A. Use a sliding window to compare substrings
+- [ ] B. Apply a hash map to count common characters
+- [ ] C. Use dynamic programming with a 2D table to build the LCS
+- [ ] D. Convert both strings to character frequency arrays and compare
+
+<details>
+<summary>View Answer</summary>
+
+**C. Use dynamic programming with a 2D table to build the LCS**
+
+The Longest Common Subsequence problem uses a 2D DP table where dp[i][j] represents the length of the LCS of the first i characters of string 1 and the first j characters of string 2.
+</details>
+
+---
+
+### 33. Dynamic Programming (Fibonacci Pattern)
+
+**Count the number of ways to reach the nth stair when you can climb 1 or 2 stairs at a time.**
+
+- [ ] A. Use recursion to try all combinations
+- [ ] B. Apply BFS to find all possible paths
+- [ ] C. Use dynamic programming with Fibonacci pattern
+- [ ] D. Apply combinatorial formula directly
+
+<details>
+<summary>View Answer</summary>
+
+**C. Use dynamic programming with Fibonacci pattern**
+
+This is the classic climbing stairs problem, which follows the Fibonacci pattern. The number of ways to reach the nth stair is the sum of the ways to reach the (n-1)th and (n-2)th stairs.
+</details>
+
+---
+
+# Low ROI Patterns
+
+## Divide and Conquer
+
+### 34. Divide and Conquer
+
+**Implement a function to find the maximum subarray sum using divide and conquer.**
+
+- [ ] A. Use Kadane's algorithm to track maximum sum ending at each position
+- [ ] B. Divide the array in half recursively and find the maximum subarray crossing the midpoint
+- [ ] C. Sort the array and take the largest elements
+- [ ] D. Use dynamic programming with a 2D table
+
+<details>
+<summary>View Answer</summary>
+
+**B. Divide the array in half recursively and find the maximum subarray crossing the midpoint**
+
+The divide and conquer approach splits the array in half and recursively finds the maximum subarray in the left half, right half, and crossing the middle. The maximum of these three is the answer. This is different from Kadane's algorithm which uses dynamic programming.
+</details>
+
+---
+
+## Trie
+
+### 35. Trie (Prefix Tree)
+
+**Implement an autocomplete system that suggests words based on a prefix.**
+
+- [ ] A. Use a hash map to store all possible prefixes
+- [ ] B. Apply binary search on a sorted list of words
+- [ ] C. Build a trie data structure for efficient prefix matching
+- [ ] D. Use a bloom filter to check if prefixes exist
+
+<details>
+<summary>View Answer</summary>
+
+**C. Build a trie data structure for efficient prefix matching**
+
+A trie is designed for prefix operations. We can navigate to the node corresponding to the prefix and then traverse all paths from that node to get all words with that prefix.
+</details>
+
+---
+
+### 36. Trie (Advanced Usage)
 
 **Design a data structure for efficiently searching words by prefix.**
 
@@ -515,7 +749,28 @@ A trie is optimized for prefix operations. Each node represents a character and 
 
 ---
 
-## 28. Union Find
+## Union Find
+
+### 37. Union Find (Basics)
+
+**Given a list of edges, determine if they form a valid tree (connected graph without cycles).**
+
+- [ ] A. Use DFS to detect cycles in the graph
+- [ ] B. Apply BFS to check connectivity
+- [ ] C. Use Union-Find to merge connected components and detect cycles
+- [ ] D. Sort the edges by weight and use a greedy algorithm
+
+<details>
+<summary>View Answer</summary>
+
+**C. Use Union-Find to merge connected components and detect cycles**
+
+Union-Find is perfect for this problem. We process each edge, unioning the sets of the connected nodes. If we attempt to union nodes already in the same set, we've found a cycle. A valid tree has n-1 edges and no cycles.
+</details>
+
+---
+
+### 38. Union Find (Component Counting)
 
 **Determine the number of connected components in an undirected graph.**
 
@@ -534,140 +789,28 @@ Union-Find efficiently tracks disjoint sets. For each edge (u,v), we union the s
 
 ---
 
-## 29. Kadane's Algorithm
+## Greedy Algorithms
 
-**Find the contiguous subarray with the largest sum in an array that may contain negative numbers.**
+### 39. Greedy Algorithms (Activity Selection)
 
-- [ ] A. Use a sliding window approach
-- [ ] B. Implement Kadane's algorithm tracking local and global maxima
-- [ ] C. Sort the array and select the largest elements
-- [ ] D. Create a prefix sum array and find maximum difference
+**Given a set of activities with start and end times, find the maximum number of activities that can be performed by a single person.**
 
-<details>
-<summary>View Answer</summary>
-
-**B. Implement Kadane's algorithm tracking local and global maxima**
-
-Kadane's algorithm uses dynamic programming to find the maximum subarray sum. We track two values: the maximum sum ending at the current position (local_max) and the overall maximum seen so far (global_max). For each element, we decide whether to extend the current subarray or start a new one.
-</details>
-
----
-
-## 30. Prefix Sums
-
-**Given an array, find the number of subarrays whose sum equals a target value.**
-
-- [ ] A. Use nested loops to check all possible subarrays
-- [ ] B. Use sliding window to find valid subarrays
-- [ ] C. Calculate prefix sums and count pairs with a difference of the target
-- [ ] D. Sort the array and use binary search to find pairs
+- [ ] A. Sort activities by their duration and select the shortest ones
+- [ ] B. Sort activities by start time and select non-overlapping ones
+- [ ] C. Sort activities by end time and select non-overlapping ones
+- [ ] D. Use dynamic programming to explore all possible combinations
 
 <details>
 <summary>View Answer</summary>
 
-**C. Calculate prefix sums and count pairs with a difference of the target**
+**C. Sort activities by end time and select non-overlapping ones**
 
-We calculate the prefix sum array where prefix[i] = sum of elements from 0 to i. A subarray from i to j has sum = prefix[j] - prefix[i-1]. We use a hash map to count prefix sums. For each prefix sum, we check how many previous prefix sums equal (current prefix sum - target).
+This is the Activity Selection problem. The greedy approach is to sort activities by their end times and select activities that don't overlap with the previously selected activity.
 </details>
 
 ---
 
-## 31. Dynamic Programming (0/1 Knapsack)
-
-**Given n items with values and weights, determine the maximum value you can put in a knapsack of capacity W.**
-
-- [ ] A. Use a greedy approach taking items with highest value/weight ratio
-- [ ] B. Try all possible combinations using backtracking
-- [ ] C. Use dynamic programming with a 2D table of items vs. capacity
-- [ ] D. Sort items by value and take until capacity is reached
-
-<details>
-<summary>View Answer</summary>
-
-**C. Use dynamic programming with a 2D table of items vs. capacity**
-
-The 0/1 Knapsack problem is solved with a 2D DP table where dp[i][w] = maximum value achievable with first i items and weight limit w. For each item, we have two choices: include it if there's capacity, or exclude it. We take the maximum of these two options.
-</details>
-
----
-
-## 32. Dynamic Programming (Unbounded Knapsack)
-
-**Given unlimited quantities of coins with different values, find the minimum number of coins to make a specific amount.**
-
-- [ ] A. Use a greedy approach always selecting the largest coin possible
-- [ ] B. Use BFS to find the shortest path to the target amount
-- [ ] C. Use dynamic programming with a 1D array tracking minimum coins
-- [ ] D. Use a recursive approach with memoization
-
-<details>
-<summary>View Answer</summary>
-
-**C. Use dynamic programming with a 1D array tracking minimum coins**
-
-In the Coin Change problem, we use a 1D DP array where dp[i] = minimum coins needed to make amount i. For each coin value, we update dp[i] = min(dp[i], dp[i-coin] + 1) for all valid i. This accounts for using each coin value multiple times.
-</details>
-
----
-
-## 33. Dynamic Programming (Longest Common Subsequence)
-
-**Find the length of the longest common subsequence between two strings.**
-
-- [ ] A. Use a greedy approach matching characters from left to right
-- [ ] B. Apply the longest common substring algorithm
-- [ ] C. Use dynamic programming with a 2D table comparing all prefixes
-- [ ] D. Convert to character frequency arrays and calculate intersection
-
-<details>
-<summary>View Answer</summary>
-
-**C. Use dynamic programming with a 2D table comparing all prefixes**
-
-For the LCS problem, we create a 2D DP table where dp[i][j] = length of LCS for first i characters of string1 and first j characters of string2. If the current characters match, dp[i][j] = dp[i-1][j-1] + 1. Otherwise, dp[i][j] = max(dp[i-1][j], dp[i][j-1]).
-</details>
-
----
-
-## 34. Dynamic Programming (Fibonacci Pattern)
-
-**Find the number of distinct ways to climb n stairs if you can take 1 or 2 steps at a time.**
-
-- [ ] A. Use a recursive approach with memoization
-- [ ] B. Use dynamic programming with a 1D array tracking ways
-- [ ] C. Apply a mathematical formula based on the Fibonacci sequence
-- [ ] D. Use a combinatorial approach with binomial coefficients
-
-<details>
-<summary>View Answer</summary>
-
-**B. Use dynamic programming with a 1D array tracking ways**
-
-This is the classic climbing stairs problem. Let dp[i] = number of ways to reach step i. We have dp[i] = dp[i-1] + dp[i-2] (we can reach step i by taking 1 step from i-1 or 2 steps from i-2). This follows the Fibonacci pattern with dp[1] = 1 and dp[2] = 2.
-</details>
-
----
-
-## 35. Bit Manipulation
-
-**Find the only element that appears once in an array where all other elements appear exactly three times.**
-
-- [ ] A. Sort the array and check adjacent elements
-- [ ] B. Use a hash map to count occurrences
-- [ ] C. Use bit manipulation to count bits modulo 3
-- [ ] D. Use a mathematical formula with sums
-
-<details>
-<summary>View Answer</summary>
-
-**C. Use bit manipulation to count bits modulo 3**
-
-We count the number of 1s at each bit position for all numbers. Since each bit of a number that appears three times contributes either 0 or 3 to the count, the bits from the unique number will make the count not divisible by 3. We construct our answer from these bits.
-</details>
-
----
-
-## 36. Greedy Algorithms
+### 40. Greedy Algorithms (Interval Scheduling)
 
 **Determine the minimum number of intervals to remove to make all remaining intervals non-overlapping.**
 
@@ -686,83 +829,215 @@ We sort intervals by end time and greedily select intervals that don't overlap w
 
 ---
 
-## 37. Graph Algorithms (Dijkstra)
+# Additional Patterns
+
+## Matrix as Graph
+
+### 41. Matrix as Graph (Island Counting)
+
+**Find the number of distinct islands in a 2D grid, where an island is a group of connected 1's.**
+
+- [ ] A. Use dynamic programming to count islands
+- [ ] B. Apply DFS or BFS from each unvisited '1' cell, marking visited cells
+- [ ] C. Use a union-find data structure to merge connected components
+- [ ] D. Apply Dijkstra's algorithm to find shortest paths between islands
+
+<details>
+<summary>View Answer</summary>
+
+**B. Apply DFS or BFS from each unvisited '1' cell, marking visited cells**
+
+We can treat the matrix as a graph where adjacent cells are connected. For each unvisited '1' cell, we perform DFS or BFS to explore and mark the entire island as visited, incrementing our count for each new island we discover.
+</details>
+
+---
+
+## Monotonic Stack
+
+### 42. Monotonic Stack
+
+**Find the next greater element for each element in an array.**
+
+- [ ] A. Use a doubly linked list to store elements
+- [ ] B. Sort the array and binary search for each element
+- [ ] C. Use a stack to keep track of elements waiting for their next greater element
+- [ ] D. Apply a heap to track maximum elements
+
+<details>
+<summary>View Answer</summary>
+
+**C. Use a stack to keep track of elements waiting for their next greater element**
+
+A monotonic stack is perfect for this problem. We maintain a stack of elements waiting for their next greater element. When we encounter a greater element, we pop from the stack and update their results.
+</details>
+
+---
+
+## Topological Sort
+
+### 43. Topological Sort
+
+**Given a list of tasks with dependencies, find a valid order to complete all tasks.**
+
+- [ ] A. Sort the tasks by their number of dependencies
+- [ ] B. Use DFS to explore the dependency graph and detect cycles
+- [ ] C. Apply BFS with indegree tracking to build the topological order
+- [ ] D. Use a union-find data structure to merge related tasks
+
+<details>
+<summary>View Answer</summary>
+
+**C. Apply BFS with indegree tracking to build the topological order**
+
+Topological sorting can be implemented using BFS with indegree tracking. We start with nodes that have no dependencies (indegree=0), remove them, update the indegrees of their neighbors, and continue until all nodes are processed or we detect a cycle.
+</details>
+
+---
+
+## Linked List Techniques
+
+### 44. Linked List Reversal
+
+**Reverse a linked list.**
+
+- [ ] A. Use a stack to store nodes and rebuild in reverse order
+- [ ] B. Maintain three pointers (prev, current, next) and reverse links
+- [ ] C. Use a queue to reorder nodes
+- [ ] D. Create a new list in reverse order
+
+<details>
+<summary>View Answer</summary>
+
+**B. Maintain three pointers (prev, current, next) and reverse links**
+
+The iterative approach to reversing a linked list involves maintaining three pointers: prev, current, and next. We traverse the list once, reversing the next pointer of each node to point to the previous node.
+</details>
+
+---
+
+### 45. Linked List Reversal (Advanced)
+
+**Reverse nodes in a linked list in groups of k.**
+
+- [ ] A. Use recursion to reverse each group and connect them
+- [ ] B. Create k separate lists and then merge them
+- [ ] C. Use a stack to reverse every k elements
+- [ ] D. Count nodes first, then reverse only complete groups
+
+<details>
+<summary>View Answer</summary>
+
+**A. Use recursion to reverse each group and connect them**
+
+We recursively reverse the first k nodes using the same technique as reversing a whole linked list. Then, we connect the reversed part with the recursively processed rest of the list (which will have its own k-groups reversed).
+</details>
+
+---
+
+## Prefix Sums
+
+### 46. Prefix Sums (Subarray Sum)
+
+**Find the number of subarrays with a sum equal to a given target.**
+
+- [ ] A. Use a sliding window with variable size
+- [ ] B. Apply two pointers to track subarray boundaries
+- [ ] C. Use a hash map to store prefix sums and their frequencies
+- [ ] D. Sort the array and use binary search
+
+<details>
+<summary>View Answer</summary>
+
+**C. Use a hash map to store prefix sums and their frequencies**
+
+We calculate the prefix sum while iterating through the array. For each position, we check if (prefix_sum - target) exists in our hash map, which would indicate a subarray with the target sum ending at the current position.
+</details>
+
+---
+
+## Bit Manipulation
+
+### 47. Bit Manipulation (XOR Technique)
+
+**Find the single number in an array where every other number appears twice.**
+
+- [ ] A. Sort the array and check adjacent elements
+- [ ] B. Use a hash map to count occurrences
+- [ ] C. Apply XOR to all elements in the array
+- [ ] D. Use a binary search tree to track unique elements
+
+<details>
+<summary>View Answer</summary>
+
+**C. Apply XOR to all elements in the array**
+
+This is a classic bit manipulation problem. XORing a number with itself results in 0, and XORing with 0 leaves the number unchanged. By XORing all elements, the duplicates cancel out, leaving only the single number.
+</details>
+
+---
+
+### 48. Bit Manipulation (Advanced)
+
+**Find the only element that appears once in an array where all other elements appear exactly three times.**
+
+- [ ] A. Sort the array and check adjacent elements
+- [ ] B. Use a hash map to count occurrences
+- [ ] C. Use bit manipulation to count bits modulo 3
+- [ ] D. Use a mathematical formula with sums
+
+<details>
+<summary>View Answer</summary>
+
+**C. Use bit manipulation to count bits modulo 3**
+
+We count the number of 1s at each bit position for all numbers. Since each bit of a number that appears three times contributes either 0 or 3 to the count, the bits from the unique number will make the count not divisible by 3. We construct our answer from these bits.
+</details>
+
+---
+
+## Advanced Graph Algorithms
+
+### 49. Graph Algorithms (Dijkstra)
 
 **Find the shortest path from a source node to all other nodes in a weighted graph with non-negative edges.**
 
-- [ ] A. Use BFS to find shortest paths in terms of edge count
-- [ ] B. Apply Dijkstra's algorithm with a priority queue
-- [ ] C. Use the Bellman-Ford algorithm for all pairs shortest paths
-- [ ] D. Apply Floyd-Warshall algorithm to find all shortest paths
+- [ ] A. Use BFS to explore nodes level by level
+- [ ] B. Apply DFS with a visited set
+- [ ] C. Use Dijkstra's algorithm with a priority queue
+- [ ] D. Apply the Bellman-Ford algorithm for shortest paths
 
 <details>
 <summary>View Answer</summary>
 
-**B. Apply Dijkstra's algorithm with a priority queue**
+**C. Use Dijkstra's algorithm with a priority queue**
 
-Dijkstra's algorithm finds shortest paths in weighted graphs with non-negative edges. We use a priority queue to always process the node with the smallest current distance. For each node, we update the distances to its neighbors if going through this node provides a shorter path.
+Dijkstra's algorithm is designed for this exact problem. It uses a priority queue to always process the node with the smallest current distance, guaranteeing the shortest path to each node.
 </details>
 
 ---
 
-## 38. Graph Algorithms (Minimum Spanning Tree)
+### 50. Graph Coloring
 
-**Find the minimum weight spanning tree in a connected, undirected graph.**
+**Determine if a graph can be colored with at most 2 colors such that no adjacent vertices have the same color.**
 
-- [ ] A. Use Dijkstra's algorithm starting from any vertex
-- [ ] B. Apply Kruskal's algorithm sorting edges by weight
-- [ ] C. Use BFS and include all edges traversed
-- [ ] D. Apply topological sort and select edges in order
+- [ ] A. Use a greedy algorithm to assign colors
+- [ ] B. Apply BFS/DFS to color vertices and check for conflicts
+- [ ] C. Use Union-Find to detect odd-length cycles
+- [ ] D. Sort vertices by degree and color in order
 
 <details>
 <summary>View Answer</summary>
 
-**B. Apply Kruskal's algorithm sorting edges by weight**
+**B. Apply BFS/DFS to color vertices and check for conflicts**
 
-Kruskal's algorithm finds a minimum spanning tree by sorting all edges by weight and adding them to the tree if they don't create a cycle (checked using Union-Find). This greedy approach guarantees a minimum weight spanning tree by always selecting the lightest valid edge.
+This is a bipartite graph check. We use BFS or DFS to color the graph with 2 colors, alternating colors for adjacent vertices. If at any point we can't assign a different color to an adjacent vertex, the graph is not bipartite.
 </details>
 
 ---
 
-## 39. String Algorithms (KMP)
+## Advanced Data Structures
 
-**Find all occurrences of a pattern string in a text string efficiently.**
-
-- [ ] A. Use naive approach checking all possible positions
-- [ ] B. Apply the Knuth-Morris-Pratt (KMP) algorithm using partial matches
-- [ ] C. Use the Boyer-Moore algorithm with bad character and good suffix rules
-- [ ] D. Apply a rolling hash (Rabin-Karp) algorithm
-
-<details>
-<summary>View Answer</summary>
-
-**B. Apply the Knuth-Morris-Pratt (KMP) algorithm using partial matches**
-
-KMP avoids unnecessary comparisons by using information from previous matches. It preprocesses the pattern to create a "partial match" table, which indicates how much of the pattern can be skipped when a mismatch occurs. This reduces the time complexity to O(n+m) where n and m are the lengths of text and pattern.
-</details>
-
----
-
-## 40. Combinatorial Search
-
-**Generate all possible valid combinations of n pairs of parentheses.**
-
-- [ ] A. Use dynamic programming to build up valid strings
-- [ ] B. Apply backtracking ensuring valid balance of parentheses
-- [ ] C. Use BFS to build strings level by level
-- [ ] D. Create a mathematical formula for Catalan numbers and generate directly
-
-<details>
-<summary>View Answer</summary>
-
-**B. Apply backtracking ensuring valid balance of parentheses**
-
-We use backtracking with two rules: we can add an opening parenthesis if we haven't used all n, and we can add a closing parenthesis if there are unclosed opening parentheses. This ensures all generated combinations are valid.
-</details>
-
----
-
-## 41. Design Problems (LRU Cache)
+### 51. Design Problems (LRU Cache)
 
 **Implement a data structure for an LRU (Least Recently Used) cache.**
 
@@ -781,140 +1056,7 @@ An efficient LRU cache combines a hash map for O(1) lookups with a doubly linked
 
 ---
 
-## 42. System Design Patterns (Rate Limiter)
-
-**Implement a rate limiter that allows n requests per minute per user.**
-
-- [ ] A. Use a simple counter reset every minute
-- [ ] B. Implement a token bucket algorithm
-- [ ] C. Use a sliding window with timestamps for each request
-- [ ] D. Apply a leaky bucket algorithm that processes requests at a fixed rate
-
-<details>
-<summary>View Answer</summary>
-
-**C. Use a sliding window with timestamps for each request**
-
-A sliding window approach keeps track of timestamps of requests in the last minute. For each new request, we clean out timestamps older than 1 minute and check if the remaining count is less than the limit. This ensures exactly n requests per minute regardless of distribution within the minute.
-</details>
-
----
-
-## 43. Memory Management (Garbage Collection)
-
-**Which algorithm marks objects for garbage collection by starting from root objects and marking everything reachable?**
-
-- [ ] A. Reference counting
-- [ ] B. Mark and sweep
-- [ ] C. Generational garbage collection
-- [ ] D. Compaction
-
-<details>
-<summary>View Answer</summary>
-
-**B. Mark and sweep**
-
-Mark and Sweep is a garbage collection algorithm that works in two phases: 1) Mark: start from root objects and recursively mark all reachable objects as "in use" 2) Sweep: scan the entire memory and free any objects not marked as "in use". This identifies and collects all unreachable objects.
-</details>
-
----
-
-## 44. Concurrency Patterns (Reader-Writer Lock)
-
-**Implement a mechanism that allows multiple readers but only one writer to access a resource simultaneously.**
-
-- [ ] A. Use a simple mutex that locks for both readers and writers
-- [ ] B. Implement a semaphore with initial value of maximum readers
-- [ ] C. Use a reader-writer lock with reader count and writer flag
-- [ ] D. Apply the actor model with message passing
-
-<details>
-<summary>View Answer</summary>
-
-**C. Use a reader-writer lock with reader count and writer flag**
-
-A reader-writer lock allows multiple readers to access the resource simultaneously, but grants exclusive access to writers. It typically uses a mutex to protect a reader count and a writer flag. Readers increment/decrement the count, while writers check for zero readers and set the writer flag.
-</details>
-
----
-
-## 45. Network Flow (Max Flow)
-
-**Find the maximum flow in a flow network from source to sink.**
-
-- [ ] A. Use Dijkstra's algorithm to find the path with maximum capacity
-- [ ] B. Apply the Ford-Fulkerson algorithm with augmenting paths
-- [ ] C. Use a greedy approach selecting highest capacity edges
-- [ ] D. Implement Kruskal's algorithm on flow capacities
-
-<details>
-<summary>View Answer</summary>
-
-**B. Apply the Ford-Fulkerson algorithm with augmenting paths**
-
-The Ford-Fulkerson algorithm finds maximum flow by repeatedly finding augmenting paths (paths with available capacity) from source to sink and sending flow through them. We continue until no augmenting path exists. The Edmonds-Karp variant uses BFS to find the shortest augmenting path each time.
-</details>
-
----
-
-## 46. Computational Geometry
-
-**Find the convex hull of a set of points in a plane (smallest convex polygon containing all points).**
-
-- [ ] A. Use brute force checking all possible polygons
-- [ ] B. Apply Graham's scan algorithm
-- [ ] C. Implement a divide-and-conquer approach
-- [ ] D. Use a dynamic programming solution
-
-<details>
-<summary>View Answer</summary>
-
-**B. Apply Graham's scan algorithm**
-
-Graham's scan finds the convex hull in O(n log n) time. It starts with the lowest point, sorts all other points by polar angle, and then processes them in order, maintaining a stack of hull points. For each point, it removes points that would create a non-convex angle before adding the new point.
-</details>
-
----
-
-## 47. String Matching (Approximate)
-
-**Find strings that approximately match a pattern allowing for k errors (edit distance).**
-
-- [ ] A. Use dynamic programming to calculate edit distance for all substrings
-- [ ] B. Apply the Rabin-Karp algorithm with hash comparisons
-- [ ] C. Use a modified KMP algorithm with allowed errors
-- [ ] D. Implement a bit-parallel algorithm like Bitap
-
-<details>
-<summary>View Answer</summary>
-
-**D. Implement a bit-parallel algorithm like Bitap**
-
-The Bitap algorithm (also known as Shift-OR or Baeza-Yates-Gonnet algorithm) uses bit manipulation for approximate string matching. It can be modified to handle up to k errors by maintaining k+1 bit arrays. This approach is particularly efficient for patterns shorter than the word size.
-</details>
-
----
-
-## 48. Randomized Algorithms
-
-**Implement a reservoir sampling algorithm to select k items uniformly at random from a stream of unknown size.**
-
-- [ ] A. Store all elements and randomly select k at the end
-- [ ] B. Use a frequency counting approach
-- [ ] C. Apply reservoir sampling with decreasing probability of replacement
-- [ ] D. Use a min-heap to maintain the k largest random values
-
-<details>
-<summary>View Answer</summary>
-
-**C. Apply reservoir sampling with decreasing probability of replacement**
-
-Reservoir sampling selects k elements uniformly from a stream of unknown size. We keep the first k elements, then for each subsequent element i, we select it with probability k/i and randomly replace one of our k elements. This guarantees each element has equal probability of being selected.
-</details>
-
----
-
-## 49. Advanced Data Structures (Segment Tree)
+### 52. Advanced Data Structures (Segment Tree)
 
 **Which data structure would be most efficient for range queries and updates on an array?**
 
@@ -933,7 +1075,144 @@ A segment tree is specialized for range queries and updates. It's a binary tree 
 
 ---
 
-## 50. Specialized Trees (B-Tree)
+## String Algorithms
+
+### 53. String Algorithms (KMP)
+
+**Find all occurrences of a pattern string in a text string efficiently.**
+
+- [ ] A. Use naive approach checking all possible positions
+- [ ] B. Apply the Knuth-Morris-Pratt (KMP) algorithm using partial matches
+- [ ] C. Use the Boyer-Moore algorithm with bad character and good suffix rules
+- [ ] D. Apply a rolling hash (Rabin-Karp) algorithm
+
+<details>
+<summary>View Answer</summary>
+
+**B. Apply the Knuth-Morris-Pratt (KMP) algorithm using partial matches**
+
+KMP avoids unnecessary comparisons by using information from previous matches. It preprocesses the pattern to create a "partial match" table, which indicates how much of the pattern can be skipped when a mismatch occurs. This reduces the time complexity to O(n+m) where n and m are the lengths of text and pattern.
+</details>
+
+---
+
+### 54. String Matching (Approximate)
+
+**Find strings that approximately match a pattern allowing for k errors (edit distance).**
+
+- [ ] A. Use dynamic programming to calculate edit distance for all substrings
+- [ ] B. Apply the Rabin-Karp algorithm with hash comparisons
+- [ ] C. Use a modified KMP algorithm with allowed errors
+- [ ] D. Implement a bit-parallel algorithm like Bitap
+
+<details>
+<summary>View Answer</summary>
+
+**D. Implement a bit-parallel algorithm like Bitap**
+
+The Bitap algorithm (also known as Shift-OR or Baeza-Yates-Gonnet algorithm) uses bit manipulation for approximate string matching. It can be modified to handle up to k errors by maintaining k+1 bit arrays. This approach is particularly efficient for patterns shorter than the word size.
+</details>
+
+---
+
+## Specialized Patterns
+
+### 55. Combinatorial Search
+
+**Generate all possible valid combinations of n pairs of parentheses.**
+
+- [ ] A. Use dynamic programming to build up valid strings
+- [ ] B. Apply backtracking ensuring valid balance of parentheses
+- [ ] C. Use BFS to build strings level by level
+- [ ] D. Create a mathematical formula for Catalan numbers and generate directly
+
+<details>
+<summary>View Answer</summary>
+
+**B. Apply backtracking ensuring valid balance of parentheses**
+
+We use backtracking with two rules: we can add an opening parenthesis if we haven't used all n, and we can add a closing parenthesis if there are unclosed opening parentheses. This ensures all generated combinations are valid.
+</details>
+
+---
+
+### 56. System Design Patterns (Rate Limiter)
+
+**Implement a rate limiter that allows n requests per minute per user.**
+
+- [ ] A. Use a simple counter reset every minute
+- [ ] B. Implement a token bucket algorithm
+- [ ] C. Use a sliding window with timestamps for each request
+- [ ] D. Apply a leaky bucket algorithm that processes requests at a fixed rate
+
+<details>
+<summary>View Answer</summary>
+
+**C. Use a sliding window with timestamps for each request**
+
+A sliding window approach keeps track of timestamps of requests in the last minute. For each new request, we clean out timestamps older than 1 minute and check if the remaining count is less than the limit. This ensures exactly n requests per minute regardless of distribution within the minute.
+</details>
+
+---
+
+### 57. Memory Management (Garbage Collection)
+
+**Which algorithm marks objects for garbage collection by starting from root objects and marking everything reachable?**
+
+- [ ] A. Reference counting
+- [ ] B. Mark and sweep
+- [ ] C. Generational garbage collection
+- [ ] D. Compaction
+
+<details>
+<summary>View Answer</summary>
+
+**B. Mark and sweep**
+
+Mark and Sweep is a garbage collection algorithm that works in two phases: 1) Mark: start from root objects and recursively mark all reachable objects as "in use" 2) Sweep: scan the entire memory and free any objects not marked as "in use". This identifies and collects all unreachable objects.
+</details>
+
+---
+
+### 58. Concurrency Patterns (Reader-Writer Lock)
+
+**Implement a mechanism that allows multiple readers but only one writer to access a resource simultaneously.**
+
+- [ ] A. Use a simple mutex that locks for both readers and writers
+- [ ] B. Implement a semaphore with initial value of maximum readers
+- [ ] C. Use a reader-writer lock with reader count and writer flag
+- [ ] D. Apply the actor model with message passing
+
+<details>
+<summary>View Answer</summary>
+
+**C. Use a reader-writer lock with reader count and writer flag**
+
+A reader-writer lock allows multiple readers to access the resource simultaneously, but grants exclusive access to writers. It typically uses a mutex to protect a reader count and a writer flag. Readers increment/decrement the count, while writers check for zero readers and set the writer flag.
+</details>
+
+---
+
+### 59. Network Flow (Max Flow)
+
+**Find the maximum flow in a flow network from source to sink.**
+
+- [ ] A. Use Dijkstra's algorithm to find the path with maximum capacity
+- [ ] B. Apply the Ford-Fulkerson algorithm with augmenting paths
+- [ ] C. Use a greedy approach selecting highest capacity edges
+- [ ] D. Implement Kruskal's algorithm on flow capacities
+
+<details>
+<summary>View Answer</summary>
+
+**B. Apply the Ford-Fulkerson algorithm with augmenting paths**
+
+The Ford-Fulkerson algorithm finds maximum flow by repeatedly finding augmenting paths (paths with available capacity) from source to sink and sending flow through them. We continue until no augmenting path exists. The Edmonds-Karp variant uses BFS to find the shortest augmenting path each time.
+</details>
+
+---
+
+### 60. Specialized Trees (B-Tree)
 
 **Which tree structure is commonly used in databases and file systems for efficient disk access?**
 
