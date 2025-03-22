@@ -615,7 +615,7 @@ def searchRange(nums, target):
     # Implementation for finding last position and overall solution not shown
 ```
 
-- [ ] .
+- [ ] A.
 
   ```python
   if nums[mid] == target:
@@ -627,7 +627,7 @@ def searchRange(nums, target):
       right = mid - 1
   ```
 
-- [ ] .
+- [ ] B.
 
   ```python
   if nums[mid] == target:
@@ -639,7 +639,7 @@ def searchRange(nums, target):
       right = mid - 1
   ```
 
-- [ ] .
+- [ ] C.
 
   ```python
   if nums[mid] == target:
@@ -651,7 +651,7 @@ def searchRange(nums, target):
       right = mid - 1
   ```
 
-- [ ] .
+- [ ] D.
 
   ```python
   if nums[mid] == target:
@@ -733,7 +733,7 @@ def maxSubArray(nums):
     return max_sum
 ```
 
-- [ ] .
+- [ ] A.
 
   ```python
   max_sum = float('-inf')
@@ -743,7 +743,7 @@ def maxSubArray(nums):
   return max_sum
   ```
 
-- [ ] .
+- [ ] B.
 
   ```python
   max_sum = current_sum = nums[0]
@@ -753,7 +753,7 @@ def maxSubArray(nums):
   return max_sum
   ```
 
-- [ ] .
+- [ ] C.
 
   ```python
   max_sum = 0
@@ -766,7 +766,7 @@ def maxSubArray(nums):
   return max_sum
   ```
 
-- [ ] .
+- [ ] D.
 
   ```python
   max_sum = float('-inf')
@@ -852,7 +852,7 @@ def hasCycle(head):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] .
+- [ ] A.
 
   ```python
   visited = set()
@@ -865,7 +865,7 @@ def hasCycle(head):
   return False
   ```
 
-- [ ] .
+- [ ] B.
 
   ```python
   if not head or not head.next:
@@ -880,7 +880,7 @@ def hasCycle(head):
   return True
   ```
 
-- [ ] .
+- [ ] C.
 
   ```python
   slow = fast = head
@@ -892,7 +892,7 @@ def hasCycle(head):
   return False
   ```
 
-- [ ] .
+- [ ] D.
 
   ```python
   slow = head
@@ -969,7 +969,7 @@ def middleNode(head):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] .
+- [ ] A.
 
   ```python
   slow = fast = head
@@ -979,7 +979,7 @@ def middleNode(head):
   return slow
   ```
 
-- [ ] .
+- [ ] B.
 
   ```python
   nodes = []
@@ -990,7 +990,7 @@ def middleNode(head):
   return nodes[len(nodes) // 2]
   ```
 
-- [ ] .
+- [ ] C.
 
   ```python
   slow = head
@@ -1001,7 +1001,7 @@ def middleNode(head):
   return slow
   ```
 
-- [ ] .
+- [ ] D.
 
   ```python
   count = 0
