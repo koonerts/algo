@@ -1633,7 +1633,7 @@ def canFinish(numCourses, prerequisites):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] .
+- [ ] A.
 
   ```python
   # Build adjacency list
@@ -1673,7 +1673,7 @@ def canFinish(numCourses, prerequisites):
   return True
   ```
 
-- [ ] .
+- [ ] B.
 
   ```python
   # Build adjacency list
@@ -1713,7 +1713,7 @@ def canFinish(numCourses, prerequisites):
   return True
   ```
 
-- [ ] .
+- [ ] C.
 
   ```python
   # Count in-degrees for each course
@@ -1743,7 +1743,7 @@ def canFinish(numCourses, prerequisites):
   return courses_taken == numCourses
   ```
 
-- [ ] .
+- [ ] D.
 
   ```python
   # Build adjacency matrix
