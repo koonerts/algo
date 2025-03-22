@@ -3191,7 +3191,7 @@ def mergeAlternately(word1, word2):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] .
+- [ ] A.
 
   ```python
   result = []
@@ -3210,7 +3210,7 @@ def mergeAlternately(word1, word2):
   return ''.join(result)
   ```
 
-- [ ] .
+- [ ] B.
 
   ```python
   result = []
@@ -3226,7 +3226,7 @@ def mergeAlternately(word1, word2):
   return ''.join(result)
   ```
 
-- [ ] .
+- [ ] C.
 
   ```python
   result = []
@@ -3252,7 +3252,7 @@ def mergeAlternately(word1, word2):
   return ''.join(result)
   ```
 
-- [ ] .
+- [ ] D.
 
   ```python
   n = min(len(word1), len(word2))
@@ -3333,14 +3333,14 @@ def moveZeroes(nums):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] .
+- [ ] A.
 
   ```python
   zeros = nums.count(0)
   nums[:] = [num for num in nums if num != 0] + [0] * zeros
   ```
 
-- [ ] .
+- [ ] B.
 
   ```python
   for i in range(len(nums)):
@@ -3348,7 +3348,7 @@ def moveZeroes(nums):
           nums.append(nums.pop(i))
   ```
 
-- [ ] .
+- [ ] C.
 
   ```python
   left = 0  # Position to insert non-zero element
@@ -3360,7 +3360,7 @@ def moveZeroes(nums):
           left += 1
   ```
 
-- [ ] .
+- [ ] D.
 
   ```python
   left = 0  # Position to insert non-zero element
@@ -3440,7 +3440,7 @@ def isSubsequence(s, t):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] .
+- [ ] A.
 
   ```python
   i, j = 0, 0
@@ -3453,7 +3453,7 @@ def isSubsequence(s, t):
   return i == len(s)
   ```
 
-- [ ] .
+- [ ] B.
 
   ```python
   if not s:
@@ -3469,7 +3469,7 @@ def isSubsequence(s, t):
   return False
   ```
 
-- [ ] .
+- [ ] C.
 
   ```python
   i = 0
@@ -3483,7 +3483,7 @@ def isSubsequence(s, t):
   return True
   ```
 
-- [ ] .
+- [ ] D.
 
   ```python
   def check(i, j):
