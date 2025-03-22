@@ -23,7 +23,7 @@ AlgoMonster's Speedrun feature is designed to help you go through as many questi
 
 ### Sliding Window Pattern
 
-#### Problem 1: Maximum Average Subarray
+#### Problem 1: Maximum Average Subarray I
 
 Given an array of integers and an integer k, find the maximum average value of any contiguous subarray of length k.
 
@@ -51,11 +51,11 @@ def findMaxAverage(nums, k):
     # Calculate the sum of first k elements
     current_sum = sum(nums[:k])
     max_sum = current_sum
-    
+
     # Slide the window and update the maximum sum
     for i in range(k, len(nums)):
         ### YOUR IMPLEMENTATION HERE ###
-        
+
     return max_sum / k
 ```
 
@@ -71,7 +71,7 @@ def findMaxAverage(nums, k):
 
 - [ ] ```
     window_sum = sum(nums[i-k+1:i+1])
-    max_sum = max(max_sum, window_sum) 
+    max_sum = max(max_sum, window_sum)
     ```
 
 - [ ] ```
@@ -132,14 +132,14 @@ def minSubArrayLen(target, nums):
     left = 0
     current_sum = 0
     min_length = float('inf')
-    
+
     for right in range(len(nums)):
         # Expand window
         current_sum += nums[right]
-        
+
         # Shrink window if possible
         ### YOUR IMPLEMENTATION HERE ###
-            
+
     return min_length if min_length != float('inf') else 0
 ```
 
@@ -221,10 +221,10 @@ Constraints:
 def maxArea(height):
     left, right = 0, len(height) - 1
     max_area = 0
-    
+
     while left < right:
         ### YOUR IMPLEMENTATION HERE ###
-        
+
     return max_area
 ```
 
@@ -313,10 +313,10 @@ Constraints:
 def trap(height):
     left, right = 0, len(height) - 1
     left_max = right_max = water = 0
-    
+
     while left < right:
         ### YOUR IMPLEMENTATION HERE ###
-        
+
     return water
 ```
 
@@ -424,15 +424,15 @@ Constraints:
 ```python
 def search(nums, target):
     left, right = 0, len(nums) - 1
-    
+
     while left <= right:
         mid = (left + right) // 2
-        
+
         if nums[mid] == target:
             return mid
-        
+
         ### YOUR IMPLEMENTATION HERE ###
-            
+
     return -1
 ```
 
@@ -548,13 +548,13 @@ def searchRange(nums, target):
     def find_first():
         left, right = 0, len(nums) - 1
         first_pos = -1
-        
+
         while left <= right:
             mid = (left + right) // 2
             ### YOUR IMPLEMENTATION HERE ###
-                
+
         return first_pos
-    
+
     # Implementation for finding last position and overall solution not shown
 ```
 
@@ -900,7 +900,7 @@ def middleNode(head):
     while current:
         count += 1
         current = current.next
-    
+
     middle = count // 2
     current = head
     for _ in range(middle):
@@ -972,45 +972,45 @@ def levelOrder(root):
 - [ ] ```
     if not root:
         return []
-    
+
     result = []
     queue = [root]
-    
+
     while queue:
         level_size = len(queue)
         level = []
-        
+
         for _ in range(level_size):
             node = queue.pop(0)
             level.append(node.val)
-            
+
             if node.left:
                 queue.append(node.left)
             if node.right:
                 queue.append(node.right)
-                
+
         result.append(level)
-    
+
     return result
     ```
 
 - [ ] ```
     if not root:
         return []
-    
+
     result = []
-    
+
     def dfs(node, level):
         if not node:
             return
-        
+
         if len(result) <= level:
             result.append([])
-        
+
         result[level].append(node.val)
         dfs(node.left, level + 1)
         dfs(node.right, level + 1)
-    
+
     dfs(root, 0)
     return result
     ```
@@ -1018,44 +1018,44 @@ def levelOrder(root):
 - [ ] ```
     if not root:
         return []
-    
+
     result = []
     queue = [root]
-    
+
     while queue:
         node = queue.pop(0)
         result.append(node.val)
-        
+
         if node.left:
             queue.append(node.left)
         if node.right:
             queue.append(node.right)
-    
+
     return [result]
     ```
 
 - [ ] ```
     if not root:
         return []
-    
+
     result = []
     current_level = [root]
-    
+
     while current_level:
         values = []
         next_level = []
-        
+
         for node in current_level:
             values.append(node.val)
-            
+
             if node.left:
                 next_level.append(node.left)
             if node.right:
                 next_level.append(node.right)
-        
+
         result.append(values)
         current_level = next_level
-    
+
     return result
     ```
 
@@ -1073,15 +1073,15 @@ current_level = [root]
 while current_level:
     values = []
     next_level = []
-    
+
     for node in current_level:
         values.append(node.val)
-        
+
         if node.left:
             next_level.append(node.left)
         if node.right:
             next_level.append(node.right)
-    
+
     result.append(values)
     current_level = next_level
 
@@ -1143,68 +1143,68 @@ def hasPathSum(root, targetSum):
     def dfs(node, current_sum):
         if not node:
             return False
-        
+
         current_sum += node.val
-        
+
         # If it's a leaf node, check if the sum matches
         if not node.left and not node.right:
             return current_sum == targetSum
-        
+
         # Check left and right subtrees
         return dfs(node.left, current_sum) or dfs(node.right, current_sum)
-    
+
     return dfs(root, 0)
     ```
 
 - [ ] ```
     if not root:
         return False
-    
+
     targetSum -= root.val
-    
+
     # If it's a leaf and the remaining sum is 0, we found a valid path
     if not root.left and not root.right:
         return targetSum == 0
-    
+
     # Check both subtrees
     return hasPathSum(root.left, targetSum) or hasPathSum(root.right, targetSum)
     ```
 
 - [ ] ```
     stack = [(root, targetSum)]
-    
+
     while stack:
         node, remaining = stack.pop()
         if not node:
             continue
-        
+
         remaining -= node.val
         if not node.left and not node.right and remaining == 0:
             return True
-        
+
         stack.append((node.right, remaining))
         stack.append((node.left, remaining))
-    
+
     return False
     ```
 
 - [ ] ```
     if not root:
         return targetSum == 0
-    
+
     queue = [(root, root.val)]
-    
+
     while queue:
         node, current_sum = queue.pop(0)
-        
+
         if not node.left and not node.right and current_sum == targetSum:
             return True
-        
+
         if node.left:
             queue.append((node.left, current_sum + node.left.val))
         if node.right:
             queue.append((node.right, current_sum + node.right.val))
-    
+
     return False
     ```
 
@@ -1286,21 +1286,21 @@ def numIslands(grid):
 - [ ] ```
     if not grid:
         return 0
-    
+
     rows, cols = len(grid), len(grid[0])
     count = 0
-    
+
     for i in range(rows):
         for j in range(cols):
             if grid[i][j] == '1':
                 count += 1
                 grid[i][j] = '0'  # Mark as visited
-                
+
                 # BFS to find all connected land cells
                 queue = [(i, j)]
                 while queue:
                     row, col = queue.pop(0)
-                    
+
                     # Check all 4 adjacent cells
                     directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
                     for dr, dc in directions:
@@ -1309,36 +1309,36 @@ def numIslands(grid):
                             grid[r][c] == '1'):
                             queue.append((r, c))
                             grid[r][c] = '0'  # Mark as visited
-    
+
     return count
     ```
 
 - [ ] ```
     if not grid:
         return 0
-    
+
     rows, cols = len(grid), len(grid[0])
     count = 0
     visited = set()
-    
+
     for i in range(rows):
         for j in range(cols):
             if grid[i][j] == '1' and (i, j) not in visited:
                 count += 1
                 queue = [(i, j)]
                 visited.add((i, j))
-                
+
                 while queue:
                     row, col = queue.pop(0)
                     directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
-                    
+
                     for dr, dc in directions:
                         r, c = row + dr, col + dc
                         if (0 <= r < rows and 0 <= c < cols and
                             grid[r][c] == '1' and (r, c) not in visited):
                             queue.append((r, c))
                             visited.add((r, c))
-    
+
     return count
     ```
 
@@ -1348,46 +1348,46 @@ def numIslands(grid):
             j < 0 or j >= len(grid[0]) or
             grid[i][j] == '0'):
             return
-        
+
         grid[i][j] = '0'  # Mark as visited
-        
+
         # Check all 4 adjacent cells
         dfs(grid, i + 1, j)
         dfs(grid, i - 1, j)
         dfs(grid, i, j + 1)
         dfs(grid, i, j - 1)
-    
+
     if not grid:
         return 0
-    
+
     count = 0
     for i in range(len(grid)):
         for j in range(len(grid[0])):
             if grid[i][j] == '1':
                 count += 1
                 dfs(grid, i, j)
-    
+
     return count
     ```
 
 - [ ] ```
     if not grid:
         return 0
-    
+
     rows, cols = len(grid), len(grid[0])
     count = 0
     visited = set()
-    
+
     for i in range(rows):
         for j in range(cols):
             if grid[i][j] == '1':
                 count += 1
                 for di, dj in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
                     ni, nj = i + di, j + dj
-                    if (0 <= ni < rows and 0 <= nj < cols and 
+                    if (0 <= ni < rows and 0 <= nj < cols and
                         grid[ni][nj] == '1'):
                         grid[ni][nj] = '0'  # Mark as visited
-    
+
     return count
     ```
 
@@ -1407,12 +1407,12 @@ for i in range(rows):
         if grid[i][j] == '1':
             count += 1
             grid[i][j] = '0'  # Mark as visited
-            
+
             # BFS to find all connected land cells
             queue = [(i, j)]
             while queue:
                 row, col = queue.pop(0)
-                
+
                 # Check all 4 adjacent cells
                 directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
                 for dr, dc in directions:
@@ -1479,36 +1479,36 @@ def canFinish(numCourses, prerequisites):
     graph = [[] for _ in range(numCourses)]
     for course, prereq in prerequisites:
         graph[course].append(prereq)
-    
+
     # 0 = unvisited, 1 = visiting, 2 = visited
     visited = [0] * numCourses
-    
+
     def dfs(course):
         # If currently visiting this node, we found a cycle
         if visited[course] == 1:
             return False
-        
+
         # If already visited and found no cycle, skip
         if visited[course] == 2:
             return True
-        
+
         # Mark as currently visiting
         visited[course] = 1
-        
+
         # Visit all prerequisites
         for prereq in graph[course]:
             if not dfs(prereq):
                 return False
-        
+
         # Mark as completely visited
         visited[course] = 2
         return True
-    
+
     # Check all courses
     for course in range(numCourses):
         if not dfs(course):
             return False
-    
+
     return True
     ```
 
@@ -1517,36 +1517,36 @@ def canFinish(numCourses, prerequisites):
     graph = [[] for _ in range(numCourses)]
     for course, prereq in prerequisites:
         graph[prereq].append(course)
-    
+
     # 0 = unvisited, 1 = visiting, 2 = visited
     visited = [0] * numCourses
-    
+
     def dfs(course):
         # If currently visiting this node, we found a cycle
         if visited[course] == 1:
             return False
-        
+
         # If already visited and found no cycle, skip
         if visited[course] == 2:
             return True
-        
+
         # Mark as currently visiting
         visited[course] = 1
-        
+
         # Visit all dependent courses
         for next_course in graph[course]:
             if not dfs(next_course):
                 return False
-        
+
         # Mark as completely visited
         visited[course] = 2
         return True
-    
+
     # Check all courses
     for course in range(numCourses):
         if not dfs(course):
             return False
-    
+
     return True
     ```
 
@@ -1554,27 +1554,27 @@ def canFinish(numCourses, prerequisites):
     # Count in-degrees for each course
     in_degree = [0] * numCourses
     graph = [[] for _ in range(numCourses)]
-    
+
     # Build graph and count in-degrees
     for course, prereq in prerequisites:
         graph[prereq].append(course)
         in_degree[course] += 1
-    
+
     # Start with courses that have no prerequisites
     queue = [course for course in range(numCourses) if in_degree[course] == 0]
-    
+
     # Process courses
     courses_taken = 0
     while queue:
         current = queue.pop(0)
         courses_taken += 1
-        
+
         # Update in-degrees of dependent courses
         for next_course in graph[current]:
             in_degree[next_course] -= 1
             if in_degree[next_course] == 0:
                 queue.append(next_course)
-    
+
     return courses_taken == numCourses
     ```
 
@@ -1583,18 +1583,18 @@ def canFinish(numCourses, prerequisites):
     matrix = [[False] * numCourses for _ in range(numCourses)]
     for course, prereq in prerequisites:
         matrix[course][prereq] = True
-    
+
     # Floyd-Warshall algorithm to find cycles
     for k in range(numCourses):
         for i in range(numCourses):
             for j in range(numCourses):
                 matrix[i][j] = matrix[i][j] or (matrix[i][k] and matrix[k][j])
-    
+
     # Check for cycles (a course depends on itself)
     for i in range(numCourses):
         if matrix[i][i]:
             return False
-    
+
     return True
     ```
 
@@ -1615,19 +1615,19 @@ def dfs(course):
     # If currently visiting this node, we found a cycle
     if visited[course] == 1:
         return False
-    
+
     # If already visited and found no cycle, skip
     if visited[course] == 2:
         return True
-    
+
     # Mark as currently visiting
     visited[course] = 1
-    
+
     # Visit all dependent courses
     for next_course in graph[course]:
         if not dfs(next_course):
             return False
-    
+
     # Mark as completely visited
     visited[course] = 2
     return True
@@ -1686,21 +1686,21 @@ def canPartition(nums):
 
 - [ ] ```
     total_sum = sum(nums)
-    
+
     # If the total sum is odd, we can't partition into equal subsets
     if total_sum % 2 != 0:
         return False
-    
+
     target = total_sum // 2
     n = len(nums)
-    
+
     # dp[i][j] = can we make sum j using the first i elements
     dp = [[False] * (target + 1) for _ in range(n + 1)]
-    
+
     # Base case: we can always make sum 0 with any number of elements
     for i in range(n + 1):
         dp[i][0] = True
-    
+
     for i in range(1, n + 1):
         for j in range(1, target + 1):
             if j < nums[i-1]:
@@ -1710,79 +1710,79 @@ def canPartition(nums):
             else:
                 # Either include current number or exclude it
                 dp[i][j] = dp[i-1][j] or dp[i-1][j-nums[i-1]]
-    
+
     return dp[n][target]
     ```
 
 - [ ] ```
     total_sum = sum(nums)
-    
+
     # If the total sum is odd, we can't partition into equal subsets
     if total_sum % 2 != 0:
         return False
-    
+
     target = total_sum // 2
-    
+
     # dp[j] = can we make sum j
     dp = [False] * (target + 1)
     dp[0] = True
-    
+
     for num in nums:
         # We need to iterate backwards to avoid using the same element multiple times
         for j in range(target, num - 1, -1):
             dp[j] = dp[j] or dp[j - num]
-    
+
     return dp[target]
     ```
 
 - [ ] ```
     total_sum = sum(nums)
-    
+
     # If the total sum is odd, we can't partition into equal subsets
     if total_sum % 2 != 0:
         return False
-    
+
     target = total_sum // 2
     memo = {}
-    
+
     def dfs(index, remaining):
         # Base case: found a valid subset
         if remaining == 0:
             return True
-        
+
         # Base case: out of bounds or remaining is negative
         if index >= len(nums) or remaining < 0:
             return False
-        
+
         # Use memoization
         if (index, remaining) in memo:
             return memo[(index, remaining)]
-        
+
         # Either include the current number or skip it
-        memo[(index, remaining)] = (dfs(index + 1, remaining - nums[index]) or 
+        memo[(index, remaining)] = (dfs(index + 1, remaining - nums[index]) or
                                   dfs(index + 1, remaining))
-        
+
         return memo[(index, remaining)]
-    
+
     return dfs(0, target)
     ```
 
 - [ ] ```
     total_sum = sum(nums)
-    
+
     # If the total sum is odd, we can't partition into equal subsets
     if total_sum % 2 != 0:
         return False
-    
+
     target = total_sum // 2
     dp = set([0])
-    
+
     for num in nums:
         next_dp = dp.copy()
         for val in dp:
             next_dp.add(val + num)
         dp = next_dp
-    
+
     return target in dp
     ```
 
@@ -1867,10 +1867,10 @@ def climbStairs(n):
         return 1
     if n == 2:
         return 2
-    
+
     # Calculate using recursion with memoization
     memo = {}
-    
+
     def dp(i):
         if i <= 0:
             return 0
@@ -1878,13 +1878,13 @@ def climbStairs(n):
             return 1
         if i == 2:
             return 2
-        
+
         if i in memo:
             return memo[i]
-        
+
         memo[i] = dp(i-1) + dp(i-2)
         return memo[i]
-    
+
     return dp(n)
     ```
 
@@ -1896,12 +1896,12 @@ def climbStairs(n):
         return 1
     if n == 2:
         return 2
-    
+
     # Calculate using iterative approach
     a, b = 1, 2
     for _ in range(3, n+1):
         a, b = b, a + b
-    
+
     return b
     ```
 
@@ -1911,15 +1911,15 @@ def climbStairs(n):
         return 0
     if n == 1:
         return 1
-    
+
     # Calculate using DP array
     dp = [0] * (n + 1)
     dp[1] = 1
     dp[2] = 2
-    
+
     for i in range(3, n + 1):
         dp[i] = dp[i-1] + dp[i-2]
-    
+
     return dp[n]
     ```
 
@@ -1930,7 +1930,7 @@ def climbStairs(n):
         # Choose i positions for 2-steps out of n-i total steps
         from math import comb
         ways += comb(n - i, i)
-    
+
     return ways
     ```
 
@@ -2002,34 +2002,34 @@ def subsets(nums):
 
 - [ ] ```
     result = []
-    
+
     def backtrack(start, current):
         # Add the current subset to the result
         result.append(current[:])
-        
+
         # Generate all other subsets by adding one more element
         for i in range(start, len(nums)):
             current.append(nums[i])
             backtrack(i + 1, current)
             current.pop()
-    
+
     backtrack(0, [])
     return result
     ```
 
 - [ ] ```
     result = [[]]
-    
+
     for num in nums:
         result += [curr + [num] for curr in result]
-    
+
     return result
     ```
 
 - [ ] ```
     n = len(nums)
     result = []
-    
+
     # Generate all subsets using bit manipulation
     for i in range(1 << n):  # 2^n combinations
         subset = []
@@ -2038,7 +2038,7 @@ def subsets(nums):
             if i & (1 << j):
                 subset.append(nums[j])
         result.append(subset)
-    
+
     return result
     ```
 
@@ -2046,18 +2046,18 @@ def subsets(nums):
     def recursive_subsets(index):
         if index == len(nums):
             return [[]]
-        
+
         # Generate all subsets without current element
         subsets_without = recursive_subsets(index + 1)
-        
+
         # Generate all subsets with current element
         subsets_with = []
         for subset in subsets_without:
             subsets_with.append(subset + [nums[index]])
-        
+
         # Combine them
         return subsets_without + subsets_with
-    
+
     return recursive_subsets(0)
     ```
 
@@ -2071,7 +2071,7 @@ result = []
 def backtrack(start, current):
     # Add the current subset to the result
     result.append(current[:])
-    
+
     # Generate all other subsets by adding one more element
     for i in range(start, len(nums)):
         current.append(nums[i])
@@ -2133,7 +2133,7 @@ def findKthLargest(nums, k):
 
 - [ ] ```
     import heapq
-    
+
     # Use a min heap of size k
     heap = []
     for num in nums:
@@ -2142,21 +2142,21 @@ def findKthLargest(nums, k):
         elif num > heap[0]:
             heapq.heappop(heap)
             heapq.heappush(heap, num)
-    
+
     return heap[0]
     ```
 
 - [ ] ```
     import heapq
-    
+
     # Build a max heap (by negating values)
     heap = [-num for num in nums]
     heapq.heapify(heap)
-    
+
     # Pop k-1 elements
     for _ in range(k - 1):
         heapq.heappop(heap)
-    
+
     # Return the kth largest
     return -heapq.heappop(heap)
     ```
@@ -2167,29 +2167,29 @@ def findKthLargest(nums, k):
         pivot = nums[pivot_index]
         # Move pivot to the end
         nums[pivot_index], nums[right] = nums[right], nums[pivot_index]
-        
+
         # Move elements smaller than pivot to the left
         store_index = left
         for i in range(left, right):
             if nums[i] < pivot:
                 nums[store_index], nums[i] = nums[i], nums[store_index]
                 store_index += 1
-        
+
         # Move pivot to its final place
         nums[store_index], nums[right] = nums[right], nums[store_index]
         return store_index
-    
+
     def select(left, right, k_smallest):
         if left == right:
             return nums[left]
-        
+
         # Choose a random pivot
         import random
         pivot_index = random.randint(left, right)
-        
+
         # Find the pivot position in a sorted array
         pivot_index = partition(left, right, pivot_index)
-        
+
         # If the pivot is in the right position
         if k_smallest == pivot_index:
             return nums[k_smallest]
@@ -2199,7 +2199,7 @@ def findKthLargest(nums, k):
         # If the pivot is smaller than k_smallest
         else:
             return select(pivot_index + 1, right, k_smallest)
-    
+
     # Find the kth largest element
     return select(0, len(nums) - 1, len(nums) - k)
     ```
@@ -2279,10 +2279,10 @@ def isValid(s):
 
 - [ ] ```
     stack = []
-    
+
     # Map closing brackets to their opening counterparts
     mapping = {')': '(', '}': '{', ']': '['}
-    
+
     for char in s:
         # If it's an opening bracket, push to stack
         if char in '({[':
@@ -2292,7 +2292,7 @@ def isValid(s):
             # If stack is empty or brackets don't match
             if not stack or mapping[char] != stack.pop():
                 return False
-    
+
     # Valid if stack is empty (all brackets matched)
     return len(stack) == 0
     ```
@@ -2302,7 +2302,7 @@ def isValid(s):
     count_parentheses = 0
     count_brackets = 0
     count_braces = 0
-    
+
     for char in s:
         if char == '(':
             count_parentheses += 1
@@ -2316,11 +2316,11 @@ def isValid(s):
             count_braces += 1
         elif char == '}':
             count_braces -= 1
-        
+
         # If any count becomes negative, brackets are not matched
         if count_parentheses < 0 or count_brackets < 0 or count_braces < 0:
             return False
-    
+
     # Valid if all counts are 0
     return count_parentheses == 0 and count_brackets == 0 and count_braces == 0
     ```
@@ -2329,7 +2329,7 @@ def isValid(s):
     # Replace matched pairs until no more replacements can be made
     while '()' in s or '{}' in s or '[]' in s:
         s = s.replace('()', '').replace('{}', '').replace('[]', '')
-    
+
     # Valid if no brackets remain
     return s == ''
     ```
@@ -2338,7 +2338,7 @@ def isValid(s):
     def check(s, left, right):
         if left >= right:
             return True
-        
+
         # Find matching closing bracket
         if s[left] == '(':
             match = ')'
@@ -2348,7 +2348,7 @@ def isValid(s):
             match = '}'
         else:
             return False
-        
+
         # Find matching closing bracket position
         nested = 1
         for i in range(left + 1, right + 1):
@@ -2359,9 +2359,9 @@ def isValid(s):
                 if nested == 0:
                     # Check substring validity
                     return check(s, left + 1, i - 1) and check(s, i + 1, right)
-        
+
         return False
-    
+
     return check(s, 0, len(s) - 1)
     ```
 
@@ -2439,29 +2439,29 @@ def dailyTemperatures(temperatures):
     n = len(temperatures)
     answer = [0] * n
     stack = []  # Store indices of temperatures
-    
+
     for i in range(n):
         # Pop elements from stack while current temperature is higher
         while stack and temperatures[i] > temperatures[stack[-1]]:
             prev_idx = stack.pop()
             answer[prev_idx] = i - prev_idx
-        
+
         stack.append(i)
-    
+
     return answer
     ```
 
 - [ ] ```
     n = len(temperatures)
     answer = [0] * n
-    
+
     # Brute force approach
     for i in range(n):
         for j in range(i + 1, n):
             if temperatures[j] > temperatures[i]:
                 answer[i] = j - i
                 break
-    
+
     return answer
     ```
 
@@ -2469,19 +2469,19 @@ def dailyTemperatures(temperatures):
     n = len(temperatures)
     hottest = 0
     answer = [0] * n
-    
+
     # Traverse from right to left
     for i in range(n - 1, -1, -1):
         if temperatures[i] >= hottest:
             hottest = temperatures[i]
             continue
-        
+
         days = 1
         while temperatures[i + days] <= temperatures[i]:
             days += answer[i + days]
-        
+
         answer[i] = days
-    
+
     return answer
     ```
 
@@ -2489,17 +2489,17 @@ def dailyTemperatures(temperatures):
     n = len(temperatures)
     answer = [0] * n
     stack = []  # Store indices of temperatures
-    
+
     for i in range(n-1, -1, -1):
         # Pop elements from stack while current temperature is higher or equal
         while stack and temperatures[i] >= temperatures[stack[-1]]:
             stack.pop()
-        
+
         if stack:
             answer[i] = stack[-1] - i
-        
+
         stack.append(i)
-    
+
     return answer
     ```
 
@@ -2517,7 +2517,7 @@ for i in range(n):
     while stack and temperatures[i] > temperatures[stack[-1]]:
         prev_idx = stack.pop()
         answer[prev_idx] = i - prev_idx
-    
+
     stack.append(i)
 
 return answer
