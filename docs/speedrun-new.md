@@ -2536,6 +2536,1468 @@ The time complexity is O(n) where n is the length of the temperatures array. The
 
 ---
 
+#### Problem 20: Maximum Number of Vowels in a Substring of Given Length
+
+Given a string `s` and an integer `k`, return the maximum number of vowel letters in any substring of `s` with length `k`.
+
+Vowel letters in English are 'a', 'e', 'i', 'o', and 'u'.
+
+Example 1:
+```
+Input: s = "abciiidef", k = 3
+Output: 3
+Explanation: The substring "iii" contains 3 vowel letters.
+```
+
+Example 2:
+```
+Input: s = "aeiou", k = 2
+Output: 2
+Explanation: Any substring of length 2 contains 2 vowels.
+```
+
+Example 3:
+```
+Input: s = "leetcode", k = 3
+Output: 2
+Explanation: "lee", "eet" and "ode" contain 2 vowels.
+```
+
+Constraints:
+- 1 <= s.length <= 10^5
+- s consists of lowercase English letters
+- 1 <= k <= s.length
+
+**Question**: Which implementation correctly finds the maximum number of vowels in a substring of length k?
+
+```python
+def maxVowels(s, k):
+    ### YOUR IMPLEMENTATION HERE ###
+```
+
+- [ ] ```
+    vowels = set('aeiou')
+    max_count = 0
+
+    for i in range(len(s) - k + 1):
+        count = sum(1 for char in s[i:i+k] if char in vowels)
+        max_count = max(max_count, count)
+
+    return max_count
+    ```
+
+- [ ] ```
+    vowels = set('aeiou')
+    current_count = 0
+
+    # Count vowels in the first window
+    for i in range(k):
+        if s[i] in vowels:
+            current_count += 1
+
+    max_count = current_count
+
+    # Slide the window
+    for i in range(k, len(s)):
+        # Remove the leftmost character
+        if s[i-k] in vowels:
+            current_count -= 1
+        # Add the rightmost character
+        if s[i] in vowels:
+            current_count += 1
+
+        max_count = max(max_count, current_count)
+
+    return max_count
+    ```
+
+- [ ] ```
+    vowels = set('aeiou')
+    max_count = 0
+
+    for i in range(len(s)):
+        count = 0
+        for j in range(i, min(i+k, len(s))):
+            if s[j] in vowels:
+                count += 1
+        max_count = max(max_count, count)
+
+    return max_count
+    ```
+
+- [ ] ```
+    vowels = set('aeiou')
+    count = 0
+    max_count = 0
+
+    for i in range(len(s)):
+        if i >= k and s[i-k] in vowels:
+            count -= 1
+        if s[i] in vowels:
+            count += 1
+        if i >= k-1:
+            max_count = max(max_count, count)
+
+    return max_count
+    ```
+
+<details>
+<summary>Answer</summary>
+
+The correct answer is:
+```
+vowels = set('aeiou')
+current_count = 0
+
+# Count vowels in the first window
+for i in range(k):
+    if s[i] in vowels:
+        current_count += 1
+
+max_count = current_count
+
+# Slide the window
+for i in range(k, len(s)):
+    # Remove the leftmost character
+    if s[i-k] in vowels:
+        current_count -= 1
+    # Add the rightmost character
+    if s[i] in vowels:
+        current_count += 1
+
+    max_count = max(max_count, current_count)
+
+return max_count
+```
+
+This implementation uses the sliding window technique efficiently:
+1. First, it counts the vowels in the initial window of size k
+2. Then it slides the window one character at a time
+3. For each slide, it removes the contribution of the leftmost character and adds the contribution of the new rightmost character
+4. It keeps track of the maximum count seen so far
+
+The time complexity is O(n) where n is the length of the string, and the space complexity is O(1).
+</details>
+
+---
+
+#### Problem 21: Longest Subarray of 1's After Deleting One Element
+
+Given a binary array `nums`, you should delete one element from it.
+
+Return the size of the longest non-empty subarray containing only 1's in the resulting array. Return 0 if there is no such subarray.
+
+Example 1:
+```
+Input: nums = [1,1,0,1]
+Output: 3
+Explanation: After deleting the number at index 2 (0-indexed), the array becomes [1,1,1], which has 3 consecutive 1's.
+```
+
+Example 2:
+```
+Input: nums = [0,1,1,1,0,1,1,0,1]
+Output: 5
+Explanation: After deleting the number at index 4 (0-indexed), the array becomes [0,1,1,1,1,1,0,1], which has 5 consecutive 1's.
+```
+
+Example 3:
+```
+Input: nums = [1,1,1]
+Output: 2
+Explanation: You must delete one element.
+```
+
+Constraints:
+- 1 <= nums.length <= 10^5
+- nums[i] is either 0 or 1
+
+**Question**: Which implementation correctly finds the longest subarray of 1's after deleting exactly one element?
+
+```python
+def longestSubarray(nums):
+    ### YOUR IMPLEMENTATION HERE ###
+```
+
+- [ ] ```
+    max_length = 0
+
+    for i in range(len(nums)):
+        # Create a new array with the ith element deleted
+        new_nums = nums[:i] + nums[i+1:]
+
+        # Find the longest subarray of 1's
+        current_length = 0
+        longest = 0
+
+        for num in new_nums:
+            if num == 1:
+                current_length += 1
+            else:
+                current_length = 0
+            longest = max(longest, current_length)
+
+        max_length = max(max_length, longest)
+
+    return max_length
+    ```
+
+- [ ] ```
+    left = 0
+    zeros = 0
+    max_length = 0
+
+    for right in range(len(nums)):
+        if nums[right] == 0:
+            zeros += 1
+
+        # If we have more than one zero, shrink the window
+        while zeros > 1:
+            if nums[left] == 0:
+                zeros -= 1
+            left += 1
+
+        # The window size minus the zero we're allowed to delete
+        max_length = max(max_length, right - left)
+
+    # Edge case: if all elements are 1, we must delete one
+    return min(max_length, len(nums) - 1)
+    ```
+
+- [ ] ```
+    left = 0
+    zeros = 0
+    max_length = 0
+
+    for right in range(len(nums)):
+        if nums[right] == 0:
+            zeros += 1
+
+        # If we have more than one zero, shrink the window
+        while zeros > 1:
+            if nums[left] == 0:
+                zeros -= 1
+            left += 1
+
+        # Current window size minus the deleted zero
+        max_length = max(max_length, right - left)
+
+    return max_length
+    ```
+
+- [ ] ```
+    # Count consecutive 1's groups
+    groups = []
+    count = 0
+
+    for num in nums:
+        if num == 1:
+            count += 1
+        else:
+            if count > 0:
+                groups.append(count)
+                count = 0
+            groups.append(0)
+
+    if count > 0:
+        groups.append(count)
+
+    # Calculate max length after removing one zero
+    max_length = 0
+    for i in range(len(groups) - 1):
+        if groups[i] == 0 or groups[i+1] == 0:
+            max_length = max(max_length, groups[i] + groups[i+1])
+
+    # Edge case: all ones
+    if len(groups) == 1 and groups[0] > 0:
+        return groups[0] - 1
+
+    return max_length
+    ```
+
+<details>
+<summary>Answer</summary>
+
+The correct answer is:
+```
+left = 0
+zeros = 0
+max_length = 0
+
+for right in range(len(nums)):
+    if nums[right] == 0:
+        zeros += 1
+
+    # If we have more than one zero, shrink the window
+    while zeros > 1:
+        if nums[left] == 0:
+            zeros -= 1
+        left += 1
+
+    # Current window size minus the deleted zero
+    max_length = max(max_length, right - left)
+
+return max_length
+```
+
+This implementation uses the sliding window technique with these key insights:
+1. We maintain a window that has at most one zero (since we can delete exactly one element)
+2. When we encounter a second zero, we shrink the window from the left until we have only one zero again
+3. The length of this window minus the one zero is the length of consecutive ones after deletion
+4. We keep track of the maximum such length across all positions
+
+The time complexity is O(n) as we process each element at most twice, and the space complexity is O(1).
+</details>
+
+---
+
+### Two Pointers Pattern
+
+#### Problem 22: Merge Strings Alternately
+
+You are given two strings `word1` and `word2`. Merge the strings by adding letters in alternating order, starting with `word1`. If a string is longer than the other, append the additional letters onto the end of the merged string.
+
+Return the merged string.
+
+Example 1:
+```
+Input: word1 = "abc", word2 = "pqr"
+Output: "apbqcr"
+Explanation: The merged string will be merged as so:
+word1:  a   b   c
+word2:    p   q   r
+merged: a p b q c r
+```
+
+Example 2:
+```
+Input: word1 = "ab", word2 = "pqrs"
+Output: "apbqrs"
+Explanation: The merged string will be merged as so:
+word1:  a   b
+word2:    p   q   r   s
+merged: a p b q   r   s
+```
+
+Example 3:
+```
+Input: word1 = "abcd", word2 = "pq"
+Output: "apbqcd"
+Explanation: The merged string will be merged as so:
+word1:  a   b   c   d
+word2:    p   q
+merged: a p b q c   d
+```
+
+Constraints:
+- 1 <= word1.length, word2.length <= 100
+- word1 and word2 consist of lowercase English letters
+
+**Question**: Which implementation correctly merges two strings alternately?
+
+```python
+def mergeAlternately(word1, word2):
+    ### YOUR IMPLEMENTATION HERE ###
+```
+
+- [ ] ```
+    result = []
+    i, j = 0, 0
+
+    while i < len(word1) and j < len(word2):
+        result.append(word1[i])
+        result.append(word2[j])
+        i += 1
+        j += 1
+
+    # Append any remaining characters
+    result.append(word1[i:])
+    result.append(word2[j:])
+
+    return ''.join(result)
+    ```
+
+- [ ] ```
+    result = []
+    i = 0
+
+    while i < len(word1) or i < len(word2):
+        if i < len(word1):
+            result.append(word1[i])
+        if i < len(word2):
+            result.append(word2[i])
+        i += 1
+
+    return ''.join(result)
+    ```
+
+- [ ] ```
+    result = []
+    i, j = 0, 0
+
+    while i < len(word1) and j < len(word2):
+        if i <= j:
+            result.append(word1[i])
+            i += 1
+        else:
+            result.append(word2[j])
+            j += 1
+
+    # Append any remaining characters
+    while i < len(word1):
+        result.append(word1[i])
+        i += 1
+
+    while j < len(word2):
+        result.append(word2[j])
+        j += 1
+
+    return ''.join(result)
+    ```
+
+- [ ] ```
+    n = min(len(word1), len(word2))
+    result = ''
+
+    for i in range(n):
+        result += word1[i] + word2[i]
+
+    if len(word1) > n:
+        result += word1[n:]
+    if len(word2) > n:
+        result += word2[n:]
+
+    return result
+    ```
+
+<details>
+<summary>Answer</summary>
+
+The correct answer is:
+```
+result = []
+i = 0
+
+while i < len(word1) or i < len(word2):
+    if i < len(word1):
+        result.append(word1[i])
+    if i < len(word2):
+        result.append(word2[i])
+    i += 1
+
+return ''.join(result)
+```
+
+This implementation correctly merges the two strings in alternating order:
+1. It uses a single pointer `i` to iterate through both strings simultaneously
+2. For each position, it first adds the character from `word1` (if available) and then the character from `word2` (if available)
+3. It continues until it has processed all characters from both strings
+4. Finally, it joins all characters to form the merged string
+
+The time complexity is O(m+n) where m and n are the lengths of the two strings. The space complexity is also O(m+n) for storing the result.
+</details>
+
+---
+
+#### Problem 23: Move Zeroes
+
+Given an integer array `nums`, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+
+Note that you must do this in-place without making a copy of the array.
+
+Example 1:
+```
+Input: nums = [0,1,0,3,12]
+Output: [1,3,12,0,0]
+```
+
+Example 2:
+```
+Input: nums = [0]
+Output: [0]
+```
+
+Constraints:
+- 1 <= nums.length <= 10^4
+- -2^31 <= nums[i] <= 2^31 - 1
+
+**Question**: Which implementation correctly moves all zeroes to the end of the array in-place while maintaining the relative order of non-zero elements?
+
+```python
+def moveZeroes(nums):
+    ### YOUR IMPLEMENTATION HERE ###
+```
+
+- [ ] ```
+    zeros = nums.count(0)
+    nums[:] = [num for num in nums if num != 0] + [0] * zeros
+    ```
+
+- [ ] ```
+    for i in range(len(nums)):
+        if nums[i] == 0:
+            nums.append(nums.pop(i))
+    ```
+
+- [ ] ```
+    left = 0  # Position to insert non-zero element
+
+    # Move all non-zero elements to the front
+    for right in range(len(nums)):
+        if nums[right] != 0:
+            nums[left], nums[right] = nums[right], nums[left]
+            left += 1
+    ```
+
+- [ ] ```
+    left = 0  # Position to insert non-zero element
+
+    # Move all non-zero elements to the front
+    for right in range(len(nums)):
+        if nums[right] != 0:
+            nums[left] = nums[right]
+            left += 1
+
+    # Fill the rest with zeroes
+    for i in range(left, len(nums)):
+        nums[i] = 0
+    ```
+
+<details>
+<summary>Answer</summary>
+
+The correct answer is:
+```
+left = 0  # Position to insert non-zero element
+
+# Move all non-zero elements to the front
+for right in range(len(nums)):
+    if nums[right] != 0:
+        nums[left] = nums[right]
+        left += 1
+
+# Fill the rest with zeroes
+for i in range(left, len(nums)):
+    nums[i] = 0
+```
+
+This two-pointer approach correctly solves the problem in-place:
+1. It uses a `left` pointer to track the position where the next non-zero element should be placed
+2. It iterates through the array with a `right` pointer, and whenever it finds a non-zero element, it places it at the `left` position and increments `left`
+3. After all non-zero elements are moved to the front (in their original order), it fills the remaining positions with zeroes
+
+The time complexity is O(n) and the space complexity is O(1), as required by the problem.
+</details>
+
+---
+
+#### Problem 24: Is Subsequence
+
+Given two strings `s` and `t`, return `true` if `s` is a subsequence of `t`, or `false` otherwise.
+
+A subsequence of a string is a new string that is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (i.e., "ace" is a subsequence of "abcde" while "aec" is not).
+
+Example 1:
+```
+Input: s = "abc", t = "ahbgdc"
+Output: true
+```
+
+Example 2:
+```
+Input: s = "axc", t = "ahbgdc"
+Output: false
+```
+
+Constraints:
+- 0 <= s.length <= 100
+- 0 <= t.length <= 10^4
+- s and t consist only of lowercase English letters
+
+**Question**: Which implementation correctly determines if s is a subsequence of t using a two-pointer approach?
+
+```python
+def isSubsequence(s, t):
+    ### YOUR IMPLEMENTATION HERE ###
+```
+
+- [ ] ```
+    i, j = 0, 0
+
+    while i < len(s) and j < len(t):
+        if s[i] == t[j]:
+            i += 1
+        j += 1
+
+    return i == len(s)
+    ```
+
+- [ ] ```
+    if not s:
+        return True
+
+    pos = 0
+    for char in t:
+        if pos < len(s) and char == s[pos]:
+            pos += 1
+            if pos == len(s):
+                return True
+
+    return False
+    ```
+
+- [ ] ```
+    i = 0
+
+    for char in s:
+        i = t.find(char, i)
+        if i == -1:
+            return False
+        i += 1
+
+    return True
+    ```
+
+- [ ] ```
+    def check(i, j):
+        # Base case: we've matched all chars in s
+        if i == len(s):
+            return True
+
+        # Base case: we've exhausted t but not s
+        if j == len(t):
+            return False
+
+        # If current characters match, try matching the rest
+        if s[i] == t[j]:
+            return check(i+1, j+1)
+
+        # If not, skip this character in t
+        return check(i, j+1)
+
+    return check(0, 0)
+    ```
+
+<details>
+<summary>Answer</summary>
+
+The correct answer is:
+```
+i, j = 0, 0
+
+while i < len(s) and j < len(t):
+    if s[i] == t[j]:
+        i += 1
+    j += 1
+
+return i == len(s)
+```
+
+This implementation uses a two-pointer approach:
+1. It maintains two pointers, `i` for string `s` and `j` for string `t`
+2. It iterates through both strings simultaneously
+3. When it finds a matching character, it advances the pointer for `s`
+4. It always advances the pointer for `t` after each comparison
+5. If all characters in `s` were matched (i.e., `i` equals the length of `s`), then `s` is a subsequence of `t`
+
+The time complexity is O(n) where n is the length of string `t`. The space complexity is O(1) as no extra space is used.
+</details>
+
+---
+
+### Prefix Sum Pattern
+
+#### Problem 25: Find Pivot Index
+
+Given an array of integers `nums`, calculate the pivot index of this array.
+
+The pivot index is the index where the sum of all the numbers strictly to the left of the index is equal to the sum of all the numbers strictly to the index's right.
+
+If the index is on the left edge of the array, then the left sum is 0 because there are no elements to the left. This also applies to the right edge of the array.
+
+Return the leftmost pivot index. If no such index exists, return -1.
+
+Example 1:
+```
+Input: nums = [1,7,3,6,5,6]
+Output: 3
+Explanation:
+The pivot index is 3.
+Left sum = nums[0] + nums[1] + nums[2] = 1 + 7 + 3 = 11
+Right sum = nums[4] + nums[5] = 5 + 6 = 11
+```
+
+Example 2:
+```
+Input: nums = [1,2,3]
+Output: -1
+Explanation:
+There is no index that satisfies the conditions in the problem statement.
+```
+
+Example 3:
+```
+Input: nums = [2,1,-1]
+Output: 0
+Explanation:
+The pivot index is 0.
+Left sum = 0 (no elements to the left of index 0)
+Right sum = nums[1] + nums[2] = 1 + -1 = 0
+```
+
+Constraints:
+- 1 <= nums.length <= 10^4
+- -1000 <= nums[i] <= 1000
+
+**Question**: Which implementation correctly finds the pivot index using a prefix sum approach?
+
+```python
+def pivotIndex(nums):
+    ### YOUR IMPLEMENTATION HERE ###
+```
+
+- [ ] ```
+    for i in range(len(nums)):
+        if sum(nums[:i]) == sum(nums[i+1:]):
+            return i
+    return -1
+    ```
+
+- [ ] ```
+    # Calculate the total sum
+    total_sum = sum(nums)
+    left_sum = 0
+
+    for i, num in enumerate(nums):
+        # Right sum is the total sum minus the left sum and the current element
+        if left_sum == total_sum - left_sum - num:
+            return i
+
+        left_sum += num
+
+    return -1
+    ```
+
+- [ ] ```
+    # Calculate prefix and suffix sums
+    prefix = [nums[0]]
+    for i in range(1, len(nums)):
+        prefix.append(prefix[-1] + nums[i])
+
+    suffix = [nums[-1]]
+    for i in range(len(nums)-2, -1, -1):
+        suffix.append(suffix[-1] + nums[i])
+    suffix.reverse()
+
+    # Find pivot index
+    for i in range(len(nums)):
+        left = prefix[i-1] if i > 0 else 0
+        right = suffix[i+1] if i < len(nums)-1 else 0
+
+        if left == right:
+            return i
+
+    return -1
+    ```
+
+- [ ] ```
+    left_sum = 0
+    right_sum = sum(nums)
+
+    for i, num in enumerate(nums):
+        right_sum -= num
+
+        if left_sum == right_sum:
+            return i
+
+        left_sum += num
+
+    return -1
+    ```
+
+<details>
+<summary>Answer</summary>
+
+The correct answer is:
+```
+# Calculate the total sum
+total_sum = sum(nums)
+left_sum = 0
+
+for i, num in enumerate(nums):
+    # Right sum is the total sum minus the left sum and the current element
+    if left_sum == total_sum - left_sum - num:
+        return i
+
+    left_sum += num
+
+return -1
+```
+
+This implementation efficiently finds the pivot index using a prefix sum approach:
+1. It first calculates the total sum of all elements
+2. It then iterates through the array, maintaining a running left sum
+3. For each index, the right sum can be efficiently calculated as the total sum minus the left sum and the current element
+4. If the left sum equals the right sum, we've found a pivot index
+5. If no such index is found, it returns -1
+
+The time complexity is O(n) where n is the length of the array. We spend O(n) time calculating the initial sum and O(n) time traversing the array once. The space complexity is O(1) as we only use a few variables.
+</details>
+
+---
+
+#### Problem 26: Find the Highest Altitude
+
+There is a biker going on a road trip. The road trip consists of `n + 1` points at different altitudes. The biker starts his trip on point 0 with altitude equal 0.
+
+You are given an integer array `gain` of length n where `gain[i]` is the net gain in altitude between points `i` and `i + 1` for all (0 <= i < n). Return the highest altitude of a point.
+
+Example 1:
+```
+Input: gain = [-5,1,5,0,-7]
+Output: 1
+Explanation: The altitudes are [0,-5,-4,1,1,-6]. The highest is 1.
+```
+
+Example 2:
+```
+Input: gain = [-4,-3,-2,-1,4,3,2]
+Output: 0
+Explanation: The altitudes are [0,-4,-7,-9,-10,-6,-3,-1]. The highest is 0.
+```
+
+Constraints:
+- n == gain.length
+- 1 <= n <= 100
+- -100 <= gain[i] <= 100
+
+**Question**: Which implementation correctly finds the highest altitude using a prefix sum approach?
+
+```python
+def largestAltitude(gain):
+    ### YOUR IMPLEMENTATION HERE ###
+```
+
+- [ ] ```
+    altitudes = [0]
+    for g in gain:
+        altitudes.append(altitudes[-1] + g)
+
+    return max(altitudes)
+    ```
+
+- [ ] ```
+    current = 0
+    highest = 0
+
+    for g in gain:
+        current += g
+        highest = max(highest, current)
+
+    return highest
+    ```
+
+- [ ] ```
+    # Calculate all altitudes
+    altitudes = [0]
+
+    for i in range(len(gain)):
+        altitudes.append(altitudes[i] + gain[i])
+
+    # Return the highest
+    return max(altitudes)
+    ```
+
+- [ ] ```
+    prefix_sum = [0]
+
+    for g in gain:
+        prefix_sum.append(prefix_sum[-1] + g)
+
+    # Remove the initial altitude
+    prefix_sum.pop(0)
+
+    # Return the highest altitude, minimum is 0
+    return max(0, max(prefix_sum))
+    ```
+
+<details>
+<summary>Answer</summary>
+
+The correct answer is:
+```
+current = 0
+highest = 0
+
+for g in gain:
+    current += g
+    highest = max(highest, current)
+
+return highest
+```
+
+This implementation efficiently finds the highest altitude:
+1. It keeps track of the current altitude as it traverses the gain array
+2. It updates the highest altitude seen so far at each step
+3. Since we start at altitude 0, we include 0 in our consideration for the highest altitude
+
+The time complexity is O(n) where n is the length of the gain array. The space complexity is O(1) as we only use two variables regardless of the input size.
+</details>
+
+---
+
+### Dynamic Programming Patterns
+
+#### Problem 27: Min Cost Climbing Stairs
+
+You are given an integer array `cost` where `cost[i]` is the cost of the ith step on a staircase. Once you pay the cost, you can either climb one or two steps.
+
+You can either start from the step with index 0, or the step with index 1.
+
+Return the minimum cost to reach the top of the floor.
+
+Example 1:
+```
+Input: cost = [10,15,20]
+Output: 15
+Explanation: You will start at index 1.
+- Pay 15 and climb one step to reach the top.
+The total cost is 15.
+```
+
+Example 2:
+```
+Input: cost = [1,100,1,1,1,100,1,1,100,1]
+Output: 6
+Explanation: You will start at index 0.
+- Pay 1 and climb two steps to reach index 2.
+- Pay 1 and climb two steps to reach index 4.
+- Pay 1 and climb two steps to reach index 6.
+- Pay 1 and climb one step to reach index 7.
+- Pay 1 and climb two steps to reach index 9.
+- Pay 1 and climb one step to reach the top.
+The total cost is 6.
+```
+
+Constraints:
+- 2 <= cost.length <= 1000
+- 0 <= cost[i] <= 999
+
+**Question**: Which implementation correctly calculates the minimum cost to climb the stairs?
+
+```python
+def minCostClimbingStairs(cost):
+    ### YOUR IMPLEMENTATION HERE ###
+```
+
+- [ ] ```
+    # Handle base cases
+    if len(cost) <= 1:
+        return 0
+
+    # Initialize dp array
+    dp = [0] * (len(cost) + 1)
+
+    # Build up solution from bottom to top
+    for i in range(2, len(cost) + 1):
+        dp[i] = min(dp[i-1] + cost[i-1], dp[i-2] + cost[i-2])
+
+    return dp[len(cost)]
+    ```
+
+- [ ] ```
+    def min_cost(i, memo={}):
+        # Base cases
+        if i <= 1:
+            return 0
+
+        # Check if already calculated
+        if i in memo:
+            return memo[i]
+
+        # Calculate minimum cost to reach step i
+        memo[i] = min(min_cost(i-1, memo) + cost[i-1],
+                      min_cost(i-2, memo) + cost[i-2])
+
+        return memo[i]
+
+    return min_cost(len(cost))
+    ```
+
+- [ ] ```
+    n = len(cost)
+    dp = [0] * n
+
+    dp[0] = cost[0]
+    dp[1] = cost[1]
+
+    for i in range(2, n):
+        dp[i] = cost[i] + min(dp[i-1], dp[i-2])
+
+    return min(dp[n-1], dp[n-2])
+    ```
+
+- [ ] ```
+    # We can optimize to O(1) space
+    first = cost[0]
+    second = cost[1]
+
+    for i in range(2, len(cost)):
+        current = cost[i] + min(first, second)
+        first = second
+        second = current
+
+    return min(first, second)
+    ```
+
+<details>
+<summary>Answer</summary>
+
+The correct answer is:
+```
+n = len(cost)
+dp = [0] * n
+
+dp[0] = cost[0]
+dp[1] = cost[1]
+
+for i in range(2, n):
+    dp[i] = cost[i] + min(dp[i-1], dp[i-2])
+
+return min(dp[n-1], dp[n-2])
+```
+
+This dynamic programming approach correctly solves the problem:
+1. It initializes a DP array where dp[i] represents the minimum cost to reach step i
+2. The base cases are dp[0] = cost[0] and dp[1] = cost[1]
+3. For each subsequent step, the minimum cost is the cost of the current step plus the minimum of the costs to reach the previous one or two steps
+4. Since we can reach the top from either the last or second-to-last step, we return the minimum of dp[n-1] and dp[n-2]
+
+The time complexity is O(n) where n is the length of the cost array. The space complexity is O(n) for the DP array.
+
+Note: The optimized O(1) space solution is also correct, but we chose the more illustrative DP array solution for clarity.
+</details>
+
+---
+
+#### Problem 28: House Robber
+
+You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
+
+Given an integer array `nums` representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
+
+Example 1:
+```
+Input: nums = [1,2,3,1]
+Output: 4
+Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
+Total amount you can rob = 1 + 3 = 4.
+```
+
+Example 2:
+```
+Input: nums = [2,7,9,3,1]
+Output: 12
+Explanation: Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1).
+Total amount you can rob = 2 + 9 + 1 = 12.
+```
+
+Constraints:
+- 1 <= nums.length <= 100
+- 0 <= nums[i] <= 400
+
+**Question**: Which implementation correctly solves the House Robber problem using dynamic programming?
+
+```python
+def rob(nums):
+    ### YOUR IMPLEMENTATION HERE ###
+```
+
+- [ ] ```
+    if not nums:
+        return 0
+
+    if len(nums) == 1:
+        return nums[0]
+
+    dp = [0] * len(nums)
+    dp[0] = nums[0]
+    dp[1] = max(nums[0], nums[1])
+
+    for i in range(2, len(nums)):
+        dp[i] = max(dp[i-1], dp[i-2] + nums[i])
+
+    return dp[-1]
+    ```
+
+- [ ] ```
+    if not nums:
+        return 0
+
+    # Only two houses
+    if len(nums) <= 2:
+        return max(nums)
+
+    # More than two houses
+    rob1 = nums[0]
+    rob2 = max(nums[0], nums[1])
+
+    for i in range(2, len(nums)):
+        current = max(rob2, rob1 + nums[i])
+        rob1 = rob2
+        rob2 = current
+
+    return rob2
+    ```
+
+- [ ] ```
+    def rob_helper(nums, i, memo={}):
+        if i >= len(nums):
+            return 0
+
+        if i in memo:
+            return memo[i]
+
+        # Either rob current house and skip next, or skip current house
+        memo[i] = max(nums[i] + rob_helper(nums, i+2, memo),
+                      rob_helper(nums, i+1, memo))
+
+        return memo[i]
+
+    return rob_helper(nums, 0)
+    ```
+
+- [ ] ```
+    even_sum = 0
+    odd_sum = 0
+
+    for i in range(len(nums)):
+        if i % 2 == 0:
+            even_sum += nums[i]
+        else:
+            odd_sum += nums[i]
+
+    return max(even_sum, odd_sum)
+    ```
+
+<details>
+<summary>Answer</summary>
+
+The correct answer is:
+```
+if not nums:
+    return 0
+
+if len(nums) == 1:
+    return nums[0]
+
+dp = [0] * len(nums)
+dp[0] = nums[0]
+dp[1] = max(nums[0], nums[1])
+
+for i in range(2, len(nums)):
+    dp[i] = max(dp[i-1], dp[i-2] + nums[i])
+
+return dp[-1]
+```
+
+This dynamic programming solution correctly handles the House Robber problem:
+1. It covers edge cases where there are 0 or 1 houses
+2. For each house, we decide whether to rob it by comparing:
+   - The maximum amount if we don't rob the current house (dp[i-1])
+   - The maximum amount if we rob the current house, which is the value of the current house plus the maximum amount if we didn't rob the previous house (dp[i-2] + nums[i])
+3. We build this decision for each house and return the maximum amount from the last house
+
+The time complexity is O(n) where n is the number of houses. The space complexity is O(n) for the DP array.
+
+Note: The solution with O(1) space complexity that uses two variables (rob1 and rob2) is also correct, but we chose the more illustrative DP array solution for clarity.
+</details>
+
+---
+
+## Tree Patterns
+
+### Depth-First Search (DFS)
+
+#### Problem 29: Maximum Depth of Binary Tree
+
+Given the root of a binary tree, return its maximum depth.
+
+A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+
+Example 1:
+```
+Input: root = [3,9,20,null,null,15,7]
+Output: 3
+```
+
+Example 2:
+```
+Input: root = [1,null,2]
+Output: 2
+```
+
+Constraints:
+- The number of nodes in the tree is in the range [0, 10^4]
+- -100 <= Node.val <= 100
+
+**Question**: Which implementation correctly calculates the maximum depth of a binary tree?
+
+```python
+def maxDepth(root):
+    ### YOUR IMPLEMENTATION HERE ###
+```
+
+- [ ] ```
+    if not root:
+        return 0
+
+    return 1 + max(maxDepth(root.left), maxDepth(root.right))
+    ```
+
+- [ ] ```
+    if not root:
+        return 0
+
+    # BFS approach
+    queue = [(root, 1)]  # (node, depth)
+    max_depth = 0
+
+    while queue:
+        node, depth = queue.pop(0)
+        max_depth = max(max_depth, depth)
+
+        if node.left:
+            queue.append((node.left, depth + 1))
+        if node.right:
+            queue.append((node.right, depth + 1))
+
+    return max_depth
+    ```
+
+- [ ] ```
+    def dfs(node, depth):
+        # Base case: leaf node
+        if not node:
+            return depth
+
+        # Recursively check left and right subtrees
+        left_depth = dfs(node.left, depth + 1)
+        right_depth = dfs(node.right, depth + 1)
+
+        return max(left_depth, right_depth)
+
+    return dfs(root, 0)
+    ```
+
+- [ ] ```
+    if not root:
+        return 0
+
+    # Iterative DFS using stack
+    stack = [(root, 1)]  # (node, depth)
+    max_depth = 0
+
+    while stack:
+        node, depth = stack.pop()
+        max_depth = max(max_depth, depth)
+
+        if node.right:
+            stack.append((node.right, depth + 1))
+        if node.left:
+            stack.append((node.left, depth + 1))
+
+    return max_depth
+    ```
+
+<details>
+<summary>Answer</summary>
+
+The correct answer is:
+```
+if not root:
+    return 0
+
+return 1 + max(maxDepth(root.left), maxDepth(root.right))
+```
+
+This is the most elegant and concise recursive DFS solution:
+1. If the tree is empty (root is null), the depth is 0
+2. Otherwise, the depth is 1 (counting the root node) plus the maximum depth of either the left or right subtree
+3. This recurses down the tree, calculating the depth of each subtree
+
+The time complexity is O(n) where n is the number of nodes in the tree, as we visit each node exactly once. The space complexity is O(h) where h is the height of the tree, due to the recursion stack.
+</details>
+
+---
+
+#### Problem 30: Count Good Nodes in Binary Tree
+
+Given a binary tree `root`, a node X in the tree is named good if in the path from root to X there are no nodes with a value greater than X.
+
+Return the number of good nodes in the binary tree.
+
+Example 1:
+```
+Input: root = [3,1,4,3,null,1,5]
+Output: 4
+Explanation: Nodes in blue are good.
+Root Node (3) is always a good node.
+Node 4 -> (3,4) is the maximum value in the path starting from the root.
+Node 5 -> (3,4,5) is the maximum value in the path starting from the root.
+Node 3 -> (3,1,3) is the maximum value in the path starting from the root.
+```
+
+Example 2:
+```
+Input: root = [3,3,null,4,2]
+Output: 3
+Explanation: Node 2 -> (3,3,2) is not good, because the maximum value in the path from root to 2 is 3.
+```
+
+Example 3:
+```
+Input: root = [1]
+Output: 1
+Explanation: Root is considered as good.
+```
+
+Constraints:
+- The number of nodes in the binary tree is in the range [1, 10^5]
+- Each node's value is between [-10^4, 10^4]
+
+**Question**: Which implementation correctly counts the number of good nodes in a binary tree?
+
+```python
+def goodNodes(root):
+    ### YOUR IMPLEMENTATION HERE ###
+```
+
+- [ ] ```
+    def dfs(node, max_so_far):
+        if not node:
+            return 0
+
+        # Current node is good if it's >= max value seen so far
+        count = 1 if node.val >= max_so_far else 0
+
+        # Update max value for children
+        max_so_far = max(max_so_far, node.val)
+
+        # Count good nodes in left and right subtrees
+        count += dfs(node.left, max_so_far)
+        count += dfs(node.right, max_so_far)
+
+        return count
+
+    return dfs(root, float('-inf'))
+    ```
+
+- [ ] ```
+    if not root:
+        return 0
+
+    # BFS
+    queue = [(root, root.val)]  # (node, max value so far)
+    good_count = 0
+
+    while queue:
+        node, max_val = queue.pop(0)
+
+        # Check if current node is good
+        if node.val >= max_val:
+            good_count += 1
+
+        # Update max value for children
+        max_val = max(max_val, node.val)
+
+        if node.left:
+            queue.append((node.left, max_val))
+        if node.right:
+            queue.append((node.right, max_val))
+
+    return good_count
+    ```
+
+- [ ] ```
+    def count_good(node, path):
+        if not node:
+            return 0
+
+        # Add current node to path
+        path.append(node.val)
+
+        # Check if current node is good
+        is_good = all(node.val >= val for val in path[:-1])
+
+        # Recursively count good nodes in subtrees
+        count = (1 if is_good else 0) + count_good(node.left, path[:]) + count_good(node.right, path[:])
+
+        return count
+
+    return count_good(root, [])
+    ```
+
+- [ ] ```
+    def is_good_node(node, ancestors):
+        return all(node.val >= val for val in ancestors)
+
+    def dfs(node, ancestors):
+        if not node:
+            return 0
+
+        # Check if current node is good
+        count = 1 if is_good_node(node, ancestors) else 0
+
+        # Add current node to ancestors for children
+        ancestors.append(node.val)
+
+        # Recursively count good nodes in subtrees
+        count += dfs(node.left, ancestors) + dfs(node.right, ancestors)
+
+        # Remove current node from ancestors before returning
+        ancestors.pop()
+
+        return count
+
+    return dfs(root, [])
+    ```
+
+<details>
+<summary>Answer</summary>
+
+The correct answer is:
+```
+def dfs(node, max_so_far):
+    if not node:
+        return 0
+
+    # Current node is good if it's >= max value seen so far
+    count = 1 if node.val >= max_so_far else 0
+
+    # Update max value for children
+    max_so_far = max(max_so_far, node.val)
+
+    # Count good nodes in left and right subtrees
+    count += dfs(node.left, max_so_far)
+    count += dfs(node.right, max_so_far)
+
+    return count
+
+return dfs(root, float('-inf'))
+```
+
+This implementation efficiently counts good nodes using DFS:
+1. It tracks the maximum value seen so far in the path from the root to the current node
+2. A node is "good" if its value is greater than or equal to the maximum value seen so far
+3. It recursively explores the left and right subtrees, updating the maximum value for each path
+4. It counts and sums up all the good nodes in the tree
+
+The time complexity is O(n) where n is the number of nodes in the tree, as we visit each node exactly once. The space complexity is O(h) where h is the height of the tree, due to the recursion stack.
+</details>
+
+---
+
 ## When to Speedrun?
 
 The following Speedrun sections are ready. Check back to this page or create a free account to receive email notifications when a new section comes out.
