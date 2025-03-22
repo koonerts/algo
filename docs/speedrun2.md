@@ -2077,7 +2077,7 @@ def climbStairs(n):
   return dp(n)
   ```
 
-- [ ] .
+- [ ] B.
 
   ```python
   # Base cases
@@ -2096,7 +2096,7 @@ def climbStairs(n):
   return b
   ```
 
-- [ ] .
+- [ ] C.
 
   ```python
   # Base cases
@@ -2116,7 +2116,7 @@ def climbStairs(n):
   return dp[n]
   ```
 
-- [ ] .
+- [ ] D.
 
   ```python
   # Calculate using binomial coefficients
@@ -2201,7 +2201,7 @@ def subsets(nums):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] .
+- [ ] A.
 
   ```python
   result = []
@@ -2220,7 +2220,7 @@ def subsets(nums):
   return result
   ```
 
-- [ ] .
+- [ ] B.
 
   ```python
   result = [[]]
