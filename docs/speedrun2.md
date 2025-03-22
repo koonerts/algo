@@ -2995,7 +2995,7 @@ def longestSubarray(nums):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] .
+- [ ] A.
 
   ```python
   max_length = 0
@@ -3020,7 +3020,7 @@ def longestSubarray(nums):
   return max_length
   ```
 
-- [ ] .
+- [ ] B.
 
   ```python
   left = 0
@@ -3044,7 +3044,7 @@ def longestSubarray(nums):
   return min(max_length, len(nums) - 1)
   ```
 
-- [ ] .
+- [ ] C.
 
   ```python
   left = 0
@@ -3067,7 +3067,7 @@ def longestSubarray(nums):
   return max_length
   ```
 
-- [ ] .
+- [ ] D.
 
   ```python
   # Count consecutive 1's groups
