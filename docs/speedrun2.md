@@ -3590,7 +3590,7 @@ def pivotIndex(nums):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] .
+- [ ] A.
 
   ```python
   for i in range(len(nums)):
