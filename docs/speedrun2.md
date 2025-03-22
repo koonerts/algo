@@ -3726,7 +3726,7 @@ def largestAltitude(gain):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] .
+- [ ] A.
 
   ```python
   altitudes = [0]
