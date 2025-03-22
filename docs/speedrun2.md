@@ -1085,7 +1085,7 @@ def levelOrder(root):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] .
+- [ ] A.
 
   ```python
   if not root:
@@ -1112,7 +1112,7 @@ def levelOrder(root):
   return result
   ```
 
-- [ ] .
+- [ ] B.
 
   ```python
   if not root:
@@ -1135,7 +1135,7 @@ def levelOrder(root):
   return result
   ```
 
-- [ ] .
+- [ ] C.
 
   ```python
   if not root:
@@ -1156,7 +1156,7 @@ def levelOrder(root):
   return [result]
   ```
 
-- [ ] .
+- [ ] D.
 
   ```python
   if not root:
