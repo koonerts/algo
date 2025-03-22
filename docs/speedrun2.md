@@ -2231,7 +2231,7 @@ def subsets(nums):
   return result
   ```
 
-- [ ] .
+- [ ] C.
 
   ```python
   n = len(nums)
@@ -2249,7 +2249,7 @@ def subsets(nums):
   return result
   ```
 
-- [ ] .
+- [ ] D.
 
   ```python
   def recursive_subsets(index):
@@ -2341,14 +2341,14 @@ def findKthLargest(nums, k):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] .
+- [ ] A.
 
   ```python
   nums.sort()
   return nums[len(nums) - k]
   ```
 
-- [ ] .
+- [ ] B.
 
   ```python
   import heapq
@@ -2365,7 +2365,7 @@ def findKthLargest(nums, k):
   return heap[0]
   ```
 
-- [ ] .
+- [ ] C.
 
   ```python
   import heapq
@@ -2382,7 +2382,7 @@ def findKthLargest(nums, k):
   return -heapq.heappop(heap)
   ```
 
-- [ ] .
+- [ ] D.
 
   ```python
   # Use QuickSelect algorithm
@@ -2508,7 +2508,7 @@ def isValid(s):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] .
+- [ ] A.
 
   ```python
   stack = []
@@ -2530,7 +2530,7 @@ def isValid(s):
   return len(stack) == 0
   ```
 
-- [ ] .
+- [ ] B.
 
   ```python
   # Count opening and closing brackets
@@ -2560,7 +2560,7 @@ def isValid(s):
   return count_parentheses == 0 and count_brackets == 0 and count_braces == 0
   ```
 
-- [ ] .
+- [ ] C.
 
   ```python
   # Replace matched pairs until no more replacements can be made
@@ -2571,7 +2571,7 @@ def isValid(s):
   return s == ''
   ```
 
-- [ ] .
+- [ ] D.
 
   ```python
   def check(s, left, right):
@@ -2681,7 +2681,7 @@ def dailyTemperatures(temperatures):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] .
+- [ ] A.
 
   ```python
   n = len(temperatures)
@@ -2699,7 +2699,7 @@ def dailyTemperatures(temperatures):
   return answer
   ```
 
-- [ ] .
+- [ ] B.
 
   ```python
   n = len(temperatures)
@@ -2715,7 +2715,7 @@ def dailyTemperatures(temperatures):
   return answer
   ```
 
-- [ ] .
+- [ ] C.
 
   ```python
   n = len(temperatures)
@@ -2737,7 +2737,7 @@ def dailyTemperatures(temperatures):
   return answer
   ```
 
-- [ ] .
+- [ ] D.
 
   ```python
   n = len(temperatures)
@@ -2836,7 +2836,7 @@ def maxVowels(s, k):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] .
+- [ ] A.
 
   ```python
   vowels = set('aeiou')
@@ -2849,7 +2849,7 @@ def maxVowels(s, k):
   return max_count
   ```
 
-- [ ] .
+- [ ] B.
 
   ```python
   vowels = set('aeiou')
@@ -2876,7 +2876,7 @@ def maxVowels(s, k):
   return max_count
   ```
 
-- [ ] .
+- [ ] C.
 
   ```python
   vowels = set('aeiou')
@@ -2892,7 +2892,7 @@ def maxVowels(s, k):
   return max_count
   ```
 
-- [ ] .
+- [ ] D.
 
   ```python
   vowels = set('aeiou')
