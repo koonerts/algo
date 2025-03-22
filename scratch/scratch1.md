@@ -62,30 +62,63 @@ def findMaxAverage(nums, k):
     return max_sum / k
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   current_sum += nums[i] - nums[i-1]
   max_sum = max(max_sum, current_sum)
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   current_sum = current_sum - nums[i-k] + nums[i]
   max_sum = max(max_sum, current_sum)
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   window_sum = sum(nums[i-k+1:i+1])
   max_sum = max(max_sum, window_sum)
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   current_sum += nums[i]
   if i >= k:
-      current_sum -= nums[i-k]
+  current_sum -= nums[i-k]
   max_sum = max(max_sum, current_sum)
+  ```
+
+  ```
+
+  ```
+
+  ```
+
   ```
 
 <details>
@@ -93,7 +126,7 @@ def findMaxAverage(nums, k):
 
 The correct answer is:
 
-```python
+```
 current_sum = current_sum - nums[i-k] + nums[i]
 max_sum = max(max_sum, current_sum)
 ```
@@ -156,34 +189,67 @@ def minSubArrayLen(target, nums):
     return min_length if min_length != float('inf') else 0
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   while current_sum >= target:
-      min_length = min(min_length, right - left + 1)
-      current_sum -= nums[left]
-      left += 1
+  min_length = min(min_length, right - left + 1)
+  current_sum -= nums[left]
+  left += 1
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   if current_sum >= target:
-      min_length = min(min_length, right - left + 1)
-      current_sum -= nums[left]
-      left += 1
+  min_length = min(min_length, right - left + 1)
+  current_sum -= nums[left]
+  left += 1
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   if current_sum >= target:
-      min_length = min(min_length, right - left + 1)
+  min_length = min(min_length, right - left + 1)
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   for left in range(len(nums)):
-      if current_sum >= target:
-          min_length = min(min_length, right - left + 1)
-          break
+  if current_sum >= target:
+  min_length = min(min_length, right - left + 1)
+  break
+  ```
+
+  ```
+
+  ```
+
+  ```
+
   ```
 
 <details>
@@ -191,7 +257,7 @@ def minSubArrayLen(target, nums):
 
 The correct answer is:
 
-```python
+```
 while current_sum >= target:
     min_length = min(min_length, right - left + 1)
     current_sum -= nums[left]
@@ -250,42 +316,75 @@ def maxArea(height):
     return max_area
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   area = min(height[left], height[right]) * (right - left)
   max_area = max(max_area, area)
   if height[left] <= height[right]:
-      left += 1
+  left += 1
   else:
-      right -= 1
+  right -= 1
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   area = max(height[left], height[right]) * (right - left)
   max_area = max(max_area, area)
   if height[left] <= height[right]:
-      left += 1
+  left += 1
   else:
-      right -= 1
+  right -= 1
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   area = min(height[left], height[right]) * (right - left)
   max_area = max(max_area, area)
   left += 1
   right -= 1
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   area = min(height[left], height[right]) * (right - left)
   max_area = max(max_area, area)
   if height[left] <= height[right]:
-      right -= 1
+  right -= 1
   else:
-      left += 1
+  left += 1
+  ```
+
+  ```
+
+  ```
+
+  ```
+
   ```
 
 <details>
@@ -293,7 +392,7 @@ def maxArea(height):
 
 The correct answer is:
 
-```python
+```
 area = min(height[left], height[right]) * (right - left)
 max_area = max(max_area, area)
 if height[left] <= height[right]:
@@ -352,47 +451,80 @@ def trap(height):
     return water
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   if height[left] < height[right]:
-      left_max = max(left_max, height[left])
-      water += left_max - height[left]
-      left += 1
+  left_max = max(left_max, height[left])
+  water += left_max - height[left]
+  left += 1
   else:
-      right_max = max(right_max, height[right])
-      water += right_max - height[right]
-      right -= 1
+  right_max = max(right_max, height[right])
+  water += right_max - height[right]
+  right -= 1
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   left_max = max(left_max, height[left])
   right_max = max(right_max, height[right])
   if left_max < right_max:
-      water += left_max - height[left]
-      left += 1
+  water += left_max - height[left]
+  left += 1
   else:
-      water += right_max - height[right]
-      right -= 1
+  water += right_max - height[right]
+  right -= 1
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   if height[left] < height[right]:
-      water += max(0, min(left_max, right_max) - height[left])
-      left += 1
+  water += max(0, min(left_max, right_max) - height[left])
+  left += 1
   else:
-      water += max(0, min(left_max, right_max) - height[right])
-      right -= 1
+  water += max(0, min(left_max, right_max) - height[right])
+  right -= 1
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   water += max(0, min(height[left], height[right]) - min(height[left:right+1]))
   if height[left] < height[right]:
-      left += 1
+  left += 1
   else:
-      right -= 1
+  right -= 1
+  ```
+
+  ```
+
+  ```
+
+  ```
+
   ```
 
 <details>
@@ -400,7 +532,7 @@ def trap(height):
 
 The correct answer is:
 
-```python
+```
 if height[left] < height[right]:
     left_max = max(left_max, height[left])
     water += left_max - height[left]
@@ -479,54 +611,87 @@ def search(nums, target):
     return -1
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   if nums[left] <= nums[mid]:  # Left portion is sorted
-      if nums[left] <= target <= nums[mid]:
-          right = mid - 1
-      else:
-          left = mid + 1
-  else:  # Right portion is sorted
-      if nums[mid] <= target <= nums[right]:
-          left = mid + 1
-      else:
-          right = mid - 1
-  ```
-
-- [ ] 
-  ```python
-  if nums[left] <= nums[mid]:  # Left portion is sorted
-      if nums[left] <= target and target < nums[mid]:
-          right = mid - 1
-      else:
-          left = mid + 1
-  else:  # Right portion is sorted
-      if nums[mid] < target and target <= nums[right]:
-          left = mid + 1
-      else:
-          right = mid - 1
-  ```
-
-- [ ] 
-  ```python
-  if nums[mid] <= nums[right]:  # Right portion is sorted
-      if nums[mid] < target <= nums[right]:
-          left = mid + 1
-      else:
-          right = mid - 1
-  else:  # Left portion is sorted
-      if nums[left] <= target < nums[mid]:
-          right = mid - 1
-      else:
-          left = mid + 1
-  ```
-
-- [ ] 
-  ```python
-  if target > nums[mid]:
-      left = mid + 1
+  if nums[left] <= target <= nums[mid]:
+  right = mid - 1
   else:
-      right = mid - 1
+  left = mid + 1
+  else:  # Right portion is sorted
+  if nums[mid] <= target <= nums[right]:
+  left = mid + 1
+  else:
+  right = mid - 1
+  ```
+
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
+  if nums[left] <= nums[mid]:  # Left portion is sorted
+  if nums[left] <= target and target < nums[mid]:
+  right = mid - 1
+  else:
+  left = mid + 1
+  else:  # Right portion is sorted
+  if nums[mid] < target and target <= nums[right]:
+  left = mid + 1
+  else:
+  right = mid - 1
+  ```
+
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
+  if nums[mid] <= nums[right]:  # Right portion is sorted
+  if nums[mid] < target <= nums[right]:
+  left = mid + 1
+  else:
+  right = mid - 1
+  else:  # Left portion is sorted
+  if nums[left] <= target < nums[mid]:
+  right = mid - 1
+  else:
+  left = mid + 1
+  ```
+
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
+  if target > nums[mid]:
+  left = mid + 1
+  else:
+  right = mid - 1
+  ```
+
+  ```
+
+  ```
+
+  ```
+
   ```
 
 <details>
@@ -534,7 +699,7 @@ def search(nums, target):
 
 The correct answer is:
 
-```python
+```
 if nums[left] <= nums[mid]:  # Left portion is sorted
     if nums[left] <= target and target < nums[mid]:
         right = mid - 1
@@ -612,49 +777,82 @@ def searchRange(nums, target):
     # Implementation for finding last position and overall solution not shown
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   if nums[mid] == target:
-      first_pos = mid
-      return first_pos
+  first_pos = mid
+  return first_pos
   elif nums[mid] < target:
-      left = mid + 1
+  left = mid + 1
   else:
-      right = mid - 1
+  right = mid - 1
   ```
 
-- [ ] 
-  ```python
-  if nums[mid] == target:
-      first_pos = mid
-      right = mid - 1
-  elif nums[mid] < target:
-      left = mid + 1
-  else:
-      right = mid - 1
   ```
 
-- [ ] 
-  ```python
-  if nums[mid] == target:
-      first_pos = mid
-      left = mid + 1
-  elif nums[mid] < target:
-      left = mid + 1
-  else:
-      right = mid - 1
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+- [ ]
+
+  ```
   if nums[mid] == target:
-      if mid == 0 or nums[mid-1] != target:
-          return mid
-      right = mid - 1
+  first_pos = mid
+  right = mid - 1
   elif nums[mid] < target:
-      left = mid + 1
+  left = mid + 1
   else:
-      right = mid - 1
+  right = mid - 1
+  ```
+
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
+  if nums[mid] == target:
+  first_pos = mid
+  left = mid + 1
+  elif nums[mid] < target:
+  left = mid + 1
+  else:
+  right = mid - 1
+  ```
+
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
+  if nums[mid] == target:
+  if mid == 0 or nums[mid-1] != target:
+  return mid
+  right = mid - 1
+  elif nums[mid] < target:
+  left = mid + 1
+  else:
+  right = mid - 1
+  ```
+
+  ```
+
+  ```
+
+  ```
+
   ```
 
 <details>
@@ -662,7 +860,7 @@ def searchRange(nums, target):
 
 The correct answer is:
 
-```python
+```
 if nums[mid] == target:
     first_pos = mid
     right = mid - 1
@@ -726,43 +924,76 @@ def maxSubArray(nums):
     return max_sum
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   max_sum = float('-inf')
   for i in range(len(nums)):
-      for j in range(i, len(nums)):
-          max_sum = max(max_sum, sum(nums[i:j+1]))
+  for j in range(i, len(nums)):
+  max_sum = max(max_sum, sum(nums[i:j+1]))
   return max_sum
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   max_sum = current_sum = nums[0]
   for num in nums[1:]:
-      current_sum = max(num, current_sum + num)
-      max_sum = max(max_sum, current_sum)
+  current_sum = max(num, current_sum + num)
+  max_sum = max(max_sum, current_sum)
   return max_sum
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   max_sum = 0
   current_sum = 0
   for num in nums:
-      current_sum += num
-      if current_sum < 0:
-          current_sum = 0
-      max_sum = max(max_sum, current_sum)
+  current_sum += num
+  if current_sum < 0:
+  current_sum = 0
+  max_sum = max(max_sum, current_sum)
   return max_sum
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   max_sum = float('-inf')
   for window_size in range(1, len(nums) + 1):
-      for i in range(len(nums) - window_size + 1):
-          max_sum = max(max_sum, sum(nums[i:i+window_size]))
+  for i in range(len(nums) - window_size + 1):
+  max_sum = max(max_sum, sum(nums[i:i+window_size]))
   return max_sum
+  ```
+
+  ```
+
+  ```
+
+  ```
+
   ```
 
 <details>
@@ -770,7 +1001,7 @@ def maxSubArray(nums):
 
 The correct answer is:
 
-```python
+```
 max_sum = current_sum = nums[0]
 for num in nums[1:]:
     current_sum = max(num, current_sum + num)
@@ -841,55 +1072,88 @@ def hasCycle(head):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   visited = set()
   current = head
   while current:
-      if current in visited:
-          return True
-      visited.add(current)
-      current = current.next
+  if current in visited:
+  return True
+  visited.add(current)
+  current = current.next
   return False
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   if not head or not head.next:
-      return False
+  return False
   slow = head
   fast = head.next
   while slow != fast:
-      if not fast or not fast.next:
-          return False
-      slow = slow.next
-      fast = fast.next.next
+  if not fast or not fast.next:
+  return False
+  slow = slow.next
+  fast = fast.next.next
   return True
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   slow = fast = head
   while fast and fast.next:
-      slow = slow.next
-      fast = fast.next.next
-      if slow == fast:
-          return True
+  slow = slow.next
+  fast = fast.next.next
+  if slow == fast:
+  return True
   return False
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   slow = head
   if not head or not head.next:
-      return False
+  return False
   fast = head.next
   while slow != fast:
-      slow = slow.next
-      if not fast or not fast.next:
-          return False
-      fast = fast.next
+  slow = slow.next
+  if not fast or not fast.next:
+  return False
+  fast = fast.next
   return True
+  ```
+
+  ```
+
+  ```
+
+  ```
+
   ```
 
 <details>
@@ -897,7 +1161,7 @@ def hasCycle(head):
 
 The correct answer is:
 
-```python
+```
 slow = fast = head
 while fast and fast.next:
     slow = slow.next
@@ -954,48 +1218,81 @@ def middleNode(head):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   slow = fast = head
   while fast and fast.next:
-      slow = slow.next
-      fast = fast.next.next
+  slow = slow.next
+  fast = fast.next.next
   return slow
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   nodes = []
   current = head
   while current:
-      nodes.append(current)
-      current = current.next
+  nodes.append(current)
+  current = current.next
   return nodes[len(nodes) // 2]
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   slow = head
   fast = head
   while fast.next and fast.next.next:
-      slow = slow.next
-      fast = fast.next.next
+  slow = slow.next
+  fast = fast.next.next
   return slow
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   count = 0
   current = head
   while current:
-      count += 1
-      current = current.next
-      
+  count += 1
+  current = current.next
+  ```
+
+  ```
+
+  ```
+
   middle = count // 2
   current = head
   for _ in range(middle):
-      current = current.next
+  current = current.next
   return current
+
+  ```
+
   ```
 
 <details>
@@ -1003,7 +1300,7 @@ def middleNode(head):
 
 The correct answer is:
 
-```python
+```
 slow = fast = head
 while fast and fast.next:
     slow = slow.next
@@ -1066,98 +1363,131 @@ def levelOrder(root):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   if not root:
-      return []
-      
-  result = []
-  queue = [root]
-  
-  while queue:
-      level_size = len(queue)
-      level = []
-      
-      for _ in range(level_size):
-          node = queue.pop(0)
-          level.append(node.val)
-          
-          if node.left:
-              queue.append(node.left)
-          if node.right:
-              queue.append(node.right)
-              
-      result.append(level)
-      
-  return result
+  return []
   ```
 
-- [ ] 
-  ```python
-  if not root:
-      return []
-      
+  ```
+
+  ```
+
   result = []
-  
+  queue = [root]
+
+  while queue:
+  level_size = len(queue)
+  level = []
+
+  for _ in range(level_size):
+  node = queue.pop(0)
+  level.append(node.val)
+
+  if node.left:
+  queue.append(node.left)
+  if node.right:
+  queue.append(node.right)
+
+  result.append(level)
+
+  return result
+
+  ```
+
+  ```
+- [ ]
+
+  ```
+  if not root:
+  return []
+  ```
+
+  ```
+
+  ```
+
+  result = []
+
   def dfs(node, level):
-      if not node:
-          return
-          
-      if len(result) <= level:
-          result.append([])
-          
-      result[level].append(node.val)
-      dfs(node.left, level + 1)
-      dfs(node.right, level + 1)
-      
+  if not node:
+  return
+
+  if len(result) <= level:
+  result.append([])
+
+  result[level].append(node.val)
+  dfs(node.left, level + 1)
+  dfs(node.right, level + 1)
+
   dfs(root, 0)
   return result
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   if not root:
-      return []
-      
+  return []
+  ```
+
+  ```
+
+  ```
+
   result = []
   queue = [root]
-  
+
   while queue:
-      node = queue.pop(0)
-      result.append(node.val)
-      
-      if node.left:
-          queue.append(node.left)
-      if node.right:
-          queue.append(node.right)
-          
+  node = queue.pop(0)
+  result.append(node.val)
+
+  if node.left:
+  queue.append(node.left)
+  if node.right:
+  queue.append(node.right)
+
   return [result]
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   if not root:
-      return []
-      
+  return []
+  ```
+
+  ```
+
+  ```
+
   result = []
   current_level = [root]
-  
+
   while current_level:
-      values = []
-      next_level = []
-      
-      for node in current_level:
-          values.append(node.val)
-          
-          if node.left:
-              next_level.append(node.left)
-          if node.right:
-              next_level.append(node.right)
-              
-      result.append(values)
-      current_level = next_level
-      
+  values = []
+  next_level = []
+
+  for node in current_level:
+  values.append(node.val)
+
+  if node.left:
+  next_level.append(node.left)
+  if node.right:
+  next_level.append(node.right)
+
+  result.append(values)
+  current_level = next_level
+
   return result
+
+  ```
+
   ```
 
 <details>
@@ -1165,7 +1495,7 @@ def levelOrder(root):
 
 The correct answer is:
 
-```python
+```
 if not root:
     return []
 
@@ -1247,77 +1577,112 @@ def hasPathSum(root, targetSum):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   def dfs(node, current_sum):
-      if not node:
-          return False
-          
-      current_sum += node.val
-      
-      # If it's a leaf node, check if the sum matches
-      if not node.left and not node.right:
-          return current_sum == targetSum
-          
-      # Check left and right subtrees
-      return dfs(node.left, current_sum) or dfs(node.right, current_sum)
-      
+  if not node:
+  return False
+  ```
+
+  ```
+
+  ```
+
+  current_sum += node.val
+
+  # If it's a leaf node, check if the sum matches
+  if not node.left and not node.right:
+  return current_sum == targetSum
+
+  # Check left and right subtrees
+  return dfs(node.left, current_sum) or dfs(node.right, current_sum)
+
   return dfs(root, 0)
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   if not root:
-      return False
-      
+  return False
+  ```
+
+  ```
+
+  ```
+
   targetSum -= root.val
-  
+
   # If it's a leaf and the remaining sum is 0, we found a valid path
+
   if not root.left and not root.right:
-      return targetSum == 0
-      
+  return targetSum == 0
+
   # Check both subtrees
+
   return hasPathSum(root.left, targetSum) or hasPathSum(root.right, targetSum)
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   stack = [(root, targetSum)]
-  
-  while stack:
-      node, remaining = stack.pop()
-      if not node:
-          continue
-          
-      remaining -= node.val
-      if not node.left and not node.right and remaining == 0:
-          return True
-          
-      stack.append((node.right, remaining))
-      stack.append((node.left, remaining))
-      
-  return False
   ```
 
-- [ ] 
-  ```python
-  if not root:
-      return targetSum == 0
-      
-  queue = [(root, root.val)]
-  
-  while queue:
-      node, current_sum = queue.pop(0)
-      
-      if not node.left and not node.right and current_sum == targetSum:
-          return True
-          
-      if node.left:
-          queue.append((node.left, current_sum + node.left.val))
-      if node.right:
-          queue.append((node.right, current_sum + node.right.val))
-          
+  ```
+
+  ```
+
+  while stack:
+  node, remaining = stack.pop()
+  if not node:
+  continue
+
+  remaining -= node.val
+  if not node.left and not node.right and remaining == 0:
+  return True
+
+  stack.append((node.right, remaining))
+  stack.append((node.left, remaining))
+
   return False
+
+  ```
+
+  ```
+- [ ]
+
+  ```
+  if not root:
+  return targetSum == 0
+  ```
+
+  ```
+
+  ```
+
+  queue = [(root, root.val)]
+
+  while queue:
+  node, current_sum = queue.pop(0)
+
+  if not node.left and not node.right and current_sum == targetSum:
+  return True
+
+  if node.left:
+  queue.append((node.left, current_sum + node.left.val))
+  if node.right:
+  queue.append((node.right, current_sum + node.right.val))
+
+  return False
+
+  ```
+
   ```
 
 <details>
@@ -1325,7 +1690,7 @@ def hasPathSum(root, targetSum):
 
 The correct answer is:
 
-```python
+```
 if not root:
     return False
 
@@ -1401,116 +1766,149 @@ def numIslands(grid):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   if not grid:
-      return 0
-      
-  rows, cols = len(grid), len(grid[0])
-  count = 0
-  
-  for i in range(rows):
-      for j in range(cols):
-          if grid[i][j] == '1':
-              count += 1
-              grid[i][j] = '0'  # Mark as visited
-              
-              # BFS to find all connected land cells
-              queue = [(i, j)]
-              while queue:
-                  row, col = queue.pop(0)
-                  
-                  # Check all 4 adjacent cells
-                  directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
-                  for dr, dc in directions:
-                      r, c = row + dr, col + dc
-                      if (0 <= r < rows and 0 <= c < cols and
-                          grid[r][c] == '1'):
-                          queue.append((r, c))
-                          grid[r][c] = '0'  # Mark as visited
-                          
-  return count
+  return 0
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  rows, cols = len(grid), len(grid[0])
+  count = 0
+
+  for i in range(rows):
+  for j in range(cols):
+  if grid[i][j] == '1':
+  count += 1
+  grid[i][j] = '0'  # Mark as visited
+
+  # BFS to find all connected land cells
+  queue = [(i, j)]
+  while queue:
+  row, col = queue.pop(0)
+
+  # Check all 4 adjacent cells
+  directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+  for dr, dc in directions:
+  r, c = row + dr, col + dc
+  if (0 <= r < rows and 0 <= c < cols and
+  grid[r][c] == '1'):
+  queue.append((r, c))
+  grid[r][c] = '0'  # Mark as visited
+
+  return count
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   if not grid:
-      return 0
-      
+  return 0
+  ```
+
+  ```
+
+  ```
+
   rows, cols = len(grid), len(grid[0])
   count = 0
   visited = set()
-  
+
   for i in range(rows):
-      for j in range(cols):
-          if grid[i][j] == '1' and (i, j) not in visited:
-              count += 1
-              queue = [(i, j)]
-              visited.add((i, j))
-              
-              while queue:
-                  row, col = queue.pop(0)
-                  directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
-                  
-                  for dr, dc in directions:
-                      r, c = row + dr, col + dc
-                      if (0 <= r < rows and 0 <= c < cols and
-                          grid[r][c] == '1' and (r, c) not in visited):
-                          queue.append((r, c))
-                          visited.add((r, c))
-                          
+  for j in range(cols):
+  if grid[i][j] == '1' and (i, j) not in visited:
+  count += 1
+  queue = [(i, j)]
+  visited.add((i, j))
+
+  while queue:
+  row, col = queue.pop(0)
+  directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+  for dr, dc in directions:
+  r, c = row + dr, col + dc
+  if (0 <= r < rows and 0 <= c < cols and
+  grid[r][c] == '1' and (r, c) not in visited):
+  queue.append((r, c))
+  visited.add((r, c))
+
   return count
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   def dfs(grid, i, j):
-      if (i < 0 or i >= len(grid) or
-          j < 0 or j >= len(grid[0]) or
-          grid[i][j] == '0'):
-          return
-          
-      grid[i][j] = '0'  # Mark as visited
-      
-      # Check all 4 adjacent cells
-      dfs(grid, i + 1, j)
-      dfs(grid, i - 1, j)
-      dfs(grid, i, j + 1)
-      dfs(grid, i, j - 1)
-  
+  if (i < 0 or i >= len(grid) or
+  j < 0 or j >= len(grid[0]) or
+  grid[i][j] == '0'):
+  return
+  ```
+
+  ```
+
+  ```
+
+  grid[i][j] = '0'  # Mark as visited
+
+  # Check all 4 adjacent cells
+  dfs(grid, i + 1, j)
+  dfs(grid, i - 1, j)
+  dfs(grid, i, j + 1)
+  dfs(grid, i, j - 1)
+
   if not grid:
-      return 0
-      
+  return 0
+
   count = 0
   for i in range(len(grid)):
-      for j in range(len(grid[0])):
-          if grid[i][j] == '1':
-              count += 1
-              dfs(grid, i, j)
-              
+  for j in range(len(grid[0])):
+  if grid[i][j] == '1':
+  count += 1
+  dfs(grid, i, j)
+
   return count
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   if not grid:
-      return 0
-      
+  return 0
+  ```
+
+  ```
+
+  ```
+
   rows, cols = len(grid), len(grid[0])
   count = 0
   visited = set()
-  
+
   for i in range(rows):
-      for j in range(cols):
-          if grid[i][j] == '1':
-              count += 1
-              for di, dj in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
-                  ni, nj = i + di, j + dj
-                  if (0 <= ni < rows and 0 <= nj < cols and
-                      grid[ni][nj] == '1'):
-                      grid[ni][nj] = '0'  # Mark as visited
-                      
+  for j in range(cols):
+  if grid[i][j] == '1':
+  count += 1
+  for di, dj in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+  ni, nj = i + di, j + dj
+  if (0 <= ni < rows and 0 <= nj < cols and
+  grid[ni][nj] == '1'):
+  grid[ni][nj] = '0'  # Mark as visited
+
   return count
+
+  ```
+
   ```
 
 <details>
@@ -1518,7 +1916,7 @@ def numIslands(grid):
 
 The correct answer is:
 
-```python
+```
 if not grid:
     return 0
 
@@ -1602,132 +2000,186 @@ def canFinish(numCourses, prerequisites):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
-  # Build adjacency list
-  graph = [[] for _ in range(numCourses)]
-  for course, prereq in prerequisites:
-      graph[course].append(prereq)
-      
-  # 0 = unvisited, 1 = visiting, 2 = visited
-  visited = [0] * numCourses
-  
-  def dfs(course):
-      # If currently visiting this node, we found a cycle
-      if visited[course] == 1:
-          return False
-          
-      # If already visited and found no cycle, skip
-      if visited[course] == 2:
-          return True
-          
-      # Mark as currently visiting
-      visited[course] = 1
-      
-      # Visit all prerequisites
-      for prereq in graph[course]:
-          if not dfs(prereq):
-              return False
-              
-      # Mark as completely visited
-      visited[course] = 2
-      return True
-      
-  # Check all courses
-  for course in range(numCourses):
-      if not dfs(course):
-          return False
-          
-  return True
+- [ ]
+
   ```
 
-- [ ] 
-  ```python
-  # Build adjacency list
-  graph = [[] for _ in range(numCourses)]
-  for course, prereq in prerequisites:
-      graph[prereq].append(course)
-      
-  # 0 = unvisited, 1 = visiting, 2 = visited
-  visited = [0] * numCourses
-  
-  def dfs(course):
-      # If currently visiting this node, we found a cycle
-      if visited[course] == 1:
-          return False
-          
-      # If already visited and found no cycle, skip
-      if visited[course] == 2:
-          return True
-          
-      # Mark as currently visiting
-      visited[course] = 1
-      
-      # Visit all dependent courses
-      for next_course in graph[course]:
-          if not dfs(next_course):
-              return False
-              
-      # Mark as completely visited
-      visited[course] = 2
-      return True
-      
-  # Check all courses
-  for course in range(numCourses):
-      if not dfs(course):
-          return False
-          
-  return True
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  # Build adjacency list
+
+  graph = [[] for _ in range(numCourses)]
+  for course, prereq in prerequisites:
+  graph[course].append(prereq)
+
+  # 0 = unvisited, 1 = visiting, 2 = visited
+
+  visited = [0] * numCourses
+
+  def dfs(course):
+  # If currently visiting this node, we found a cycle
+  if visited[course] == 1:
+  return False
+
+  # If already visited and found no cycle, skip
+  if visited[course] == 2:
+  return True
+
+  # Mark as currently visiting
+  visited[course] = 1
+
+  # Visit all prerequisites
+  for prereq in graph[course]:
+  if not dfs(prereq):
+  return False
+
+  # Mark as completely visited
+  visited[course] = 2
+  return True
+
+  # Check all courses
+
+  for course in range(numCourses):
+  if not dfs(course):
+  return False
+
+  return True
+
+  ```
+
+  ```
+- [ ]
+
+  ```
+
+  ```
+
+  ```
+
+  ```
+
+  # Build adjacency list
+
+  graph = [[] for _ in range(numCourses)]
+  for course, prereq in prerequisites:
+  graph[prereq].append(course)
+
+  # 0 = unvisited, 1 = visiting, 2 = visited
+
+  visited = [0] * numCourses
+
+  def dfs(course):
+  # If currently visiting this node, we found a cycle
+  if visited[course] == 1:
+  return False
+
+  # If already visited and found no cycle, skip
+  if visited[course] == 2:
+  return True
+
+  # Mark as currently visiting
+  visited[course] = 1
+
+  # Visit all dependent courses
+  for next_course in graph[course]:
+  if not dfs(next_course):
+  return False
+
+  # Mark as completely visited
+  visited[course] = 2
+  return True
+
+  # Check all courses
+
+  for course in range(numCourses):
+  if not dfs(course):
+  return False
+
+  return True
+
+  ```
+
+  ```
+- [ ]
+
+  ```
+
+  ```
+
+  ```
+
+  ```
+
   # Count in-degrees for each course
+
   in_degree = [0] * numCourses
   graph = [[] for _ in range(numCourses)]
-  
+
   # Build graph and count in-degrees
+
   for course, prereq in prerequisites:
-      graph[prereq].append(course)
-      in_degree[course] += 1
-      
+  graph[prereq].append(course)
+  in_degree[course] += 1
+
   # Start with courses that have no prerequisites
+
   queue = [course for course in range(numCourses) if in_degree[course] == 0]
-  
+
   # Process courses
+
   courses_taken = 0
   while queue:
-      current = queue.pop(0)
-      courses_taken += 1
-      
-      # Update in-degrees of dependent courses
-      for next_course in graph[current]:
-          in_degree[next_course] -= 1
-          if in_degree[next_course] == 0:
-              queue.append(next_course)
-              
+  current = queue.pop(0)
+  courses_taken += 1
+
+  # Update in-degrees of dependent courses
+  for next_course in graph[current]:
+  in_degree[next_course] -= 1
+  if in_degree[next_course] == 0:
+  queue.append(next_course)
+
   return courses_taken == numCourses
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
+
+  ```
+
+  ```
+
+  ```
+
   # Build adjacency matrix
+
   matrix = [[False] * numCourses for _ in range(numCourses)]
   for course, prereq in prerequisites:
-      matrix[course][prereq] = True
-      
+  matrix[course][prereq] = True
+
   # Floyd-Warshall algorithm to find cycles
+
   for k in range(numCourses):
-      for i in range(numCourses):
-          for j in range(numCourses):
-              matrix[i][j] = matrix[i][j] or (matrix[i][k] and matrix[k][j])
-              
-  # Check for cycles (a course depends on itself)
   for i in range(numCourses):
-      if matrix[i][i]:
-          return False
-          
+  for j in range(numCourses):
+  matrix[i][j] = matrix[i][j] or (matrix[i][k] and matrix[k][j])
+
+  # Check for cycles (a course depends on itself)
+
+  for i in range(numCourses):
+  if matrix[i][i]:
+  return False
+
   return True
+
+  ```
+
   ```
 
 <details>
@@ -1735,7 +2187,7 @@ def canFinish(numCourses, prerequisites):
 
 The correct answer is:
 
-```python
+```
 # Build adjacency list
 graph = [[] for _ in range(numCourses)]
 for course, prereq in prerequisites:
@@ -1822,110 +2274,150 @@ def canPartition(nums):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   total_sum = sum(nums)
-  
+  ```
+
+  ```
+
+  ```
+
   # If the total sum is odd, we can't partition into equal subsets
+
   if total_sum % 2 != 0:
-      return False
-      
+  return False
+
   target = total_sum // 2
   n = len(nums)
-  
+
   # dp[i][j] = can we make sum j using the first i elements
+
   dp = [[False] * (target + 1) for _ in range(n + 1)]
-  
+
   # Base case: we can always make sum 0 with any number of elements
+
   for i in range(n + 1):
-      dp[i][0] = True
-      
+  dp[i][0] = True
+
   for i in range(1, n + 1):
-      for j in range(1, target + 1):
-          if j < nums[i-1]:
-              # If current number is greater than current sum
-              # We can't include it, so use previous result
-              dp[i][j] = dp[i-1][j]
-          else:
-              # Either include current number or exclude it
-              dp[i][j] = dp[i-1][j] or dp[i-1][j-nums[i-1]]
-              
+  for j in range(1, target + 1):
+  if j < nums[i-1]:
+  # If current number is greater than current sum
+  # We can't include it, so use previous result
+  dp[i][j] = dp[i-1][j]
+  else:
+  # Either include current number or exclude it
+  dp[i][j] = dp[i-1][j] or dp[i-1][j-nums[i-1]]
+
   return dp[n][target]
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   total_sum = sum(nums)
-  
+  ```
+
+  ```
+
+  ```
+
   # If the total sum is odd, we can't partition into equal subsets
+
   if total_sum % 2 != 0:
-      return False
-      
+  return False
+
   target = total_sum // 2
-  
+
   # dp[j] = can we make sum j
+
   dp = [False] * (target + 1)
   dp[0] = True
-  
+
   for num in nums:
-      # We need to iterate backwards to avoid using the same element multiple times
-      for j in range(target, num - 1, -1):
-          dp[j] = dp[j] or dp[j - num]
-          
+  # We need to iterate backwards to avoid using the same element multiple times
+  for j in range(target, num - 1, -1):
+  dp[j] = dp[j] or dp[j - num]
+
   return dp[target]
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   total_sum = sum(nums)
-  
+  ```
+
+  ```
+
+  ```
+
   # If the total sum is odd, we can't partition into equal subsets
+
   if total_sum % 2 != 0:
-      return False
-      
+  return False
+
   target = total_sum // 2
   memo = {}
-  
+
   def dfs(index, remaining):
-      # Base case: found a valid subset
-      if remaining == 0:
-          return True
-          
-      # Base case: out of bounds or remaining is negative
-      if index >= len(nums) or remaining < 0:
-          return False
-          
-      # Use memoization
-      if (index, remaining) in memo:
-          return memo[(index, remaining)]
-          
-      # Either include the current number or skip it
-      memo[(index, remaining)] = (dfs(index + 1, remaining - nums[index]) or
-                                dfs(index + 1, remaining))
-                                
-      return memo[(index, remaining)]
-      
+  # Base case: found a valid subset
+  if remaining == 0:
+  return True
+
+  # Base case: out of bounds or remaining is negative
+  if index >= len(nums) or remaining < 0:
+  return False
+
+  # Use memoization
+  if (index, remaining) in memo:
+  return memo[(index, remaining)]
+
+  # Either include the current number or skip it
+  memo[(index, remaining)] = (dfs(index + 1, remaining - nums[index]) or
+  dfs(index + 1, remaining))
+
+  return memo[(index, remaining)]
+
   return dfs(0, target)
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   total_sum = sum(nums)
-  
+  ```
+
+  ```
+
+  ```
+
   # If the total sum is odd, we can't partition into equal subsets
+
   if total_sum % 2 != 0:
-      return False
-      
+  return False
+
   target = total_sum // 2
   dp = set([0])
-  
+
   for num in nums:
-      next_dp = dp.copy()
-      for val in dp:
-          next_dp.add(val + num)
-      dp = next_dp
-      
+  next_dp = dp.copy()
+  for val in dp:
+  next_dp.add(val + num)
+  dp = next_dp
+
   return target in dp
+
+  ```
+
   ```
 
 <details>
@@ -1933,7 +2425,7 @@ def canPartition(nums):
 
 The correct answer is:
 
-```python
+```
 total_sum = sum(nums)
 
 # If the total sum is odd, we can't partition into equal subsets
@@ -2007,83 +2499,131 @@ def climbStairs(n):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
-  # Base cases
-  if n <= 0:
-      return 0
-  if n == 1:
-      return 1
-  if n == 2:
-      return 2
-      
-  # Calculate using recursion with memoization
-  memo = {}
-  
-  def dp(i):
-      if i <= 0:
-          return 0
-      if i == 1:
-          return 1
-      if i == 2:
-          return 2
-          
-      if i in memo:
-          return memo[i]
-          
-      memo[i] = dp(i-1) + dp(i-2)
-      return memo[i]
-      
-  return dp(n)
+- [ ]
+
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
   # Base cases
+
   if n <= 0:
-      return 0
+  return 0
   if n == 1:
-      return 1
+  return 1
   if n == 2:
-      return 2
-      
+  return 2
+
+  # Calculate using recursion with memoization
+
+  memo = {}
+
+  def dp(i):
+  if i <= 0:
+  return 0
+  if i == 1:
+  return 1
+  if i == 2:
+  return 2
+
+  if i in memo:
+  return memo[i]
+
+  memo[i] = dp(i-1) + dp(i-2)
+  return memo[i]
+
+  return dp(n)
+
+  ```
+
+  ```
+- [ ]
+
+  ```
+
+  ```
+
+  ```
+
+  ```
+
+  # Base cases
+
+  if n <= 0:
+  return 0
+  if n == 1:
+  return 1
+  if n == 2:
+  return 2
+
   # Calculate using iterative approach
+
   a, b = 1, 2
   for _ in range(3, n+1):
-      a, b = b, a + b
-      
+  a, b = b, a + b
+
   return b
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
+
+  ```
+
+  ```
+
+  ```
+
   # Base cases
+
   if n <= 0:
-      return 0
+  return 0
   if n == 1:
-      return 1
-      
+  return 1
+
   # Calculate using DP array
+
   dp = [0] * (n + 1)
   dp[1] = 1
   dp[2] = 2
-  
+
   for i in range(3, n + 1):
-      dp[i] = dp[i-1] + dp[i-2]
-      
+  dp[i] = dp[i-1] + dp[i-2]
+
   return dp[n]
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
+
+  ```
+
+  ```
+
+  ```
+
   # Calculate using binomial coefficients
+
   ways = 0
   for i in range(n // 2 + 1):
-      # Choose i positions for 2-steps out of n-i total steps
-      from math import comb
-      ways += comb(n - i, i)
-      
+  # Choose i positions for 2-steps out of n-i total steps
+  from math import comb
+  ways += comb(n - i, i)
+
   return ways
+
+  ```
+
   ```
 
 <details>
@@ -2091,7 +2631,7 @@ def climbStairs(n):
 
 The correct answer is:
 
-```python
+```
 # Base cases
 if n <= 0:
     return 0
@@ -2158,69 +2698,103 @@ def subsets(nums):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   result = []
-  
+  ```
+
+  ```
+
+  ```
+
   def backtrack(start, current):
-      # Add the current subset to the result
-      result.append(current[:])
-      
-      # Generate all other subsets by adding one more element
-      for i in range(start, len(nums)):
-          current.append(nums[i])
-          backtrack(i + 1, current)
-          current.pop()
-          
+  # Add the current subset to the result
+  result.append(current[:])
+
+  # Generate all other subsets by adding one more element
+  for i in range(start, len(nums)):
+  current.append(nums[i])
+  backtrack(i + 1, current)
+  current.pop()
+
   backtrack(0, [])
   return result
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   result = [[]]
-  
-  for num in nums:
-      result += [curr + [num] for curr in result]
-      
-  return result
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  for num in nums:
+  result += [curr + [num] for curr in result]
+
+  return result
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   n = len(nums)
   result = []
-  
-  # Generate all subsets using bit manipulation
-  for i in range(1 << n):  # 2^n combinations
-      subset = []
-      for j in range(n):
-          # Check if jth bit is set in i
-          if i & (1 << j):
-              subset.append(nums[j])
-      result.append(subset)
-      
-  return result
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  # Generate all subsets using bit manipulation
+
+  for i in range(1 << n):  # 2^n combinations
+  subset = []
+  for j in range(n):
+  # Check if jth bit is set in i
+  if i & (1 << j):
+  subset.append(nums[j])
+  result.append(subset)
+
+  return result
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   def recursive_subsets(index):
-      if index == len(nums):
-          return [[]]
-          
-      # Generate all subsets without current element
-      subsets_without = recursive_subsets(index + 1)
-      
-      # Generate all subsets with current element
-      subsets_with = []
-      for subset in subsets_without:
-          subsets_with.append(subset + [nums[index]])
-          
-      # Combine them
-      return subsets_without + subsets_with
-      
+  if index == len(nums):
+  return [[]]
+  ```
+
+  ```
+
+  ```
+
+  # Generate all subsets without current element
+  subsets_without = recursive_subsets(index + 1)
+
+  # Generate all subsets with current element
+  subsets_with = []
+  for subset in subsets_without:
+  subsets_with.append(subset + [nums[index]])
+
+  # Combine them
+  return subsets_without + subsets_with
+
   return recursive_subsets(0)
+
+  ```
+
   ```
 
 <details>
@@ -2228,7 +2802,7 @@ def subsets(nums):
 
 The correct answer is:
 
-```python
+```
 result = []
 
 def backtrack(start, current):
@@ -2294,86 +2868,127 @@ def findKthLargest(nums, k):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   nums.sort()
   return nums[len(nums) - k]
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   import heapq
-  
+  ```
+
+  ```
+
+  ```
+
   # Use a min heap of size k
+
   heap = []
   for num in nums:
-      if len(heap) < k:
-          heapq.heappush(heap, num)
-      elif num > heap[0]:
-          heapq.heappop(heap)
-          heapq.heappush(heap, num)
-          
+  if len(heap) < k:
+  heapq.heappush(heap, num)
+  elif num > heap[0]:
+  heapq.heappop(heap)
+  heapq.heappush(heap, num)
+
   return heap[0]
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   import heapq
-  
+  ```
+
+  ```
+
+  ```
+
   # Build a max heap (by negating values)
+
   heap = [-num for num in nums]
   heapq.heapify(heap)
-  
+
   # Pop k-1 elements
+
   for _ in range(k - 1):
-      heapq.heappop(heap)
-      
+  heapq.heappop(heap)
+
   # Return the kth largest
+
   return -heapq.heappop(heap)
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
+
+  ```
+
+  ```
+
+  ```
+
   # Use QuickSelect algorithm
+
   def partition(left, right, pivot_index):
-      pivot = nums[pivot_index]
-      # Move pivot to the end
-      nums[pivot_index], nums[right] = nums[right], nums[pivot_index]
-      
-      # Move elements smaller than pivot to the left
-      store_index = left
-      for i in range(left, right):
-          if nums[i] < pivot:
-              nums[store_index], nums[i] = nums[i], nums[store_index]
-              store_index += 1
-              
-      # Move pivot to its final place
-      nums[store_index], nums[right] = nums[right], nums[store_index]
-      return store_index
-      
+  pivot = nums[pivot_index]
+  # Move pivot to the end
+  nums[pivot_index], nums[right] = nums[right], nums[pivot_index]
+
+  # Move elements smaller than pivot to the left
+  store_index = left
+  for i in range(left, right):
+  if nums[i] < pivot:
+  nums[store_index], nums[i] = nums[i], nums[store_index]
+  store_index += 1
+
+  # Move pivot to its final place
+  nums[store_index], nums[right] = nums[right], nums[store_index]
+  return store_index
+
   def select(left, right, k_smallest):
-      if left == right:
-          return nums[left]
-          
-      # Choose a random pivot
-      import random
-      pivot_index = random.randint(left, right)
-      
-      # Find the pivot position in a sorted array
-      pivot_index = partition(left, right, pivot_index)
-      
-      # If the pivot is in the right position
-      if k_smallest == pivot_index:
-          return nums[k_smallest]
-      # If the pivot is larger than k_smallest
-      elif k_smallest < pivot_index:
-          return select(left, pivot_index - 1, k_smallest)
-      # If the pivot is smaller than k_smallest
-      else:
-          return select(pivot_index + 1, right, k_smallest)
-          
+  if left == right:
+  return nums[left]
+
+  # Choose a random pivot
+  import random
+  pivot_index = random.randint(left, right)
+
+  # Find the pivot position in a sorted array
+  pivot_index = partition(left, right, pivot_index)
+
+  # If the pivot is in the right position
+  if k_smallest == pivot_index:
+  return nums[k_smallest]
+  # If the pivot is larger than k_smallest
+  elif k_smallest < pivot_index:
+  return select(left, pivot_index - 1, k_smallest)
+  # If the pivot is smaller than k_smallest
+  else:
+  return select(pivot_index + 1, right, k_smallest)
+
   # Find the kth largest element
+
   return select(0, len(nums) - 1, len(nums) - k)
+
+  ```
+
   ```
 
 <details>
@@ -2381,7 +2996,7 @@ def findKthLargest(nums, k):
 
 The correct answer is:
 
-```python
+```
 import heapq
 
 # Use a min heap of size k
@@ -2457,96 +3072,139 @@ def isValid(s):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   stack = []
-  
-  # Map closing brackets to their opening counterparts
-  mapping = {')': '(', '}': '{', ']': '['}
-  
-  for char in s:
-      # If it's an opening bracket, push to stack
-      if char in '({[':
-          stack.append(char)
-      # If it's a closing bracket
-      elif char in ')}]':
-          # If stack is empty or brackets don't match
-          if not stack or mapping[char] != stack.pop():
-              return False
-              
-  # Valid if stack is empty (all brackets matched)
-  return len(stack) == 0
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  # Map closing brackets to their opening counterparts
+
+  mapping = {')': '(', '}': '{', ']': '['}
+
+  for char in s:
+  # If it's an opening bracket, push to stack
+  if char in '({[':
+  stack.append(char)
+  # If it's a closing bracket
+  elif char in ')}]':
+  # If stack is empty or brackets don't match
+  if not stack or mapping[char] != stack.pop():
+  return False
+
+  # Valid if stack is empty (all brackets matched)
+
+  return len(stack) == 0
+
+  ```
+
+  ```
+- [ ]
+
+  ```
+
+  ```
+
+  ```
+
+  ```
+
   # Count opening and closing brackets
+
   count_parentheses = 0
   count_brackets = 0
   count_braces = 0
-  
+
   for char in s:
-      if char == '(':
-          count_parentheses += 1
-      elif char == ')':
-          count_parentheses -= 1
-      elif char == '[':
-          count_brackets += 1
-      elif char == ']':
-          count_brackets -= 1
-      elif char == '{':
-          count_braces += 1
-      elif char == '}':
-          count_braces -= 1
-          
-      # If any count becomes negative, brackets are not matched
-      if count_parentheses < 0 or count_brackets < 0 or count_braces < 0:
-          return False
-          
+  if char == '(':
+  count_parentheses += 1
+  elif char == ')':
+  count_parentheses -= 1
+  elif char == '[':
+  count_brackets += 1
+  elif char == ']':
+  count_brackets -= 1
+  elif char == '{':
+  count_braces += 1
+  elif char == '}':
+  count_braces -= 1
+
+  # If any count becomes negative, brackets are not matched
+  if count_parentheses < 0 or count_brackets < 0 or count_braces < 0:
+  return False
+
   # Valid if all counts are 0
+
   return count_parentheses == 0 and count_brackets == 0 and count_braces == 0
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
+
+  ```
+
+  ```
+
+  ```
+
   # Replace matched pairs until no more replacements can be made
+
   while '()' in s or '{}' in s or '[]' in s:
-      s = s.replace('()', '').replace('{}', '').replace('[]', '')
-      
+  s = s.replace('()', '').replace('{}', '').replace('[]', '')
+
   # Valid if no brackets remain
+
   return s == ''
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   def check(s, left, right):
-      if left >= right:
-          return True
-          
-      # Find matching closing bracket
-      if s[left] == '(':
-          match = ')'
-      elif s[left] == '[':
-          match = ']'
-      elif s[left] == '{':
-          match = '}'
-      else:
-          return False
-          
-      # Find matching closing bracket position
-      nested = 1
-      for i in range(left + 1, right + 1):
-          if s[i] == s[left]:
-              nested += 1
-          elif s[i] == match:
-              nested -= 1
-              if nested == 0:
-                  # Check substring validity
-                  return check(s, left + 1, i - 1) and check(s, i + 1, right)
-                  
-      return False
-      
+  if left >= right:
+  return True
+  ```
+
+  ```
+
+  ```
+
+  # Find matching closing bracket
+  if s[left] == '(':
+  match = ')'
+  elif s[left] == '[':
+  match = ']'
+  elif s[left] == '{':
+  match = '}'
+  else:
+  return False
+
+  # Find matching closing bracket position
+  nested = 1
+  for i in range(left + 1, right + 1):
+  if s[i] == s[left]:
+  nested += 1
+  elif s[i] == match:
+  nested -= 1
+  if nested == 0:
+  # Check substring validity
+  return check(s, left + 1, i - 1) and check(s, i + 1, right)
+
+  return False
+
   return check(s, 0, len(s) - 1)
+
+  ```
+
   ```
 
 <details>
@@ -2554,7 +3212,7 @@ def isValid(s):
 
 The correct answer is:
 
-```python
+```
 stack = []
 
 # Map closing brackets to their opening counterparts
@@ -2626,76 +3284,111 @@ def dailyTemperatures(temperatures):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   n = len(temperatures)
   answer = [0] * n
   stack = []  # Store indices of temperatures
-  
-  for i in range(n):
-      # Pop elements from stack while current temperature is higher
-      while stack and temperatures[i] > temperatures[stack[-1]]:
-          prev_idx = stack.pop()
-          answer[prev_idx] = i - prev_idx
-          
-      stack.append(i)
-      
-  return answer
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  for i in range(n):
+  # Pop elements from stack while current temperature is higher
+  while stack and temperatures[i] > temperatures[stack[-1]]:
+  prev_idx = stack.pop()
+  answer[prev_idx] = i - prev_idx
+
+  stack.append(i)
+
+  return answer
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   n = len(temperatures)
   answer = [0] * n
-  
-  # Brute force approach
-  for i in range(n):
-      for j in range(i + 1, n):
-          if temperatures[j] > temperatures[i]:
-              answer[i] = j - i
-              break
-              
-  return answer
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  # Brute force approach
+
+  for i in range(n):
+  for j in range(i + 1, n):
+  if temperatures[j] > temperatures[i]:
+  answer[i] = j - i
+  break
+
+  return answer
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   n = len(temperatures)
   hottest = 0
   answer = [0] * n
-  
-  # Traverse from right to left
-  for i in range(n - 1, -1, -1):
-      if temperatures[i] >= hottest:
-          hottest = temperatures[i]
-          continue
-          
-      days = 1
-      while temperatures[i + days] <= temperatures[i]:
-          days += answer[i + days]
-          
-      answer[i] = days
-      
-  return answer
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  # Traverse from right to left
+
+  for i in range(n - 1, -1, -1):
+  if temperatures[i] >= hottest:
+  hottest = temperatures[i]
+  continue
+
+  days = 1
+  while temperatures[i + days] <= temperatures[i]:
+  days += answer[i + days]
+
+  answer[i] = days
+
+  return answer
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   n = len(temperatures)
   answer = [0] * n
   stack = []  # Store indices of temperatures
-  
+  ```
+
+  ```
+
+  ```
+
   for i in range(n-1, -1, -1):
-      # Pop elements from stack while current temperature is higher or equal
-      while stack and temperatures[i] >= temperatures[stack[-1]]:
-          stack.pop()
-          
-      if stack:
-          answer[i] = stack[-1] - i
-          
-      stack.append(i)
-      
+  # Pop elements from stack while current temperature is higher or equal
+  while stack and temperatures[i] >= temperatures[stack[-1]]:
+  stack.pop()
+
+  if stack:
+  answer[i] = stack[-1] - i
+
+  stack.append(i)
+
   return answer
+
+  ```
+
   ```
 
 <details>
@@ -2703,7 +3396,7 @@ def dailyTemperatures(temperatures):
 
 The correct answer is:
 
-```python
+```
 n = len(temperatures)
 answer = [0] * n
 stack = []  # Store indices of temperatures
@@ -2777,74 +3470,109 @@ def maxVowels(s, k):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   vowels = set('aeiou')
   max_count = 0
-  
-  for i in range(len(s) - k + 1):
-      count = sum(1 for char in s[i:i+k] if char in vowels)
-      max_count = max(max_count, count)
-      
-  return max_count
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  for i in range(len(s) - k + 1):
+  count = sum(1 for char in s[i:i+k] if char in vowels)
+  max_count = max(max_count, count)
+
+  return max_count
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   vowels = set('aeiou')
   current_count = 0
-  
-  # Count vowels in the first window
-  for i in range(k):
-      if s[i] in vowels:
-          current_count += 1
-          
-  max_count = current_count
-  
-  # Slide the window
-  for i in range(k, len(s)):
-      # Remove the leftmost character
-      if s[i-k] in vowels:
-          current_count -= 1
-      # Add the rightmost character
-      if s[i] in vowels:
-          current_count += 1
-          
-      max_count = max(max_count, current_count)
-      
-  return max_count
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  # Count vowels in the first window
+
+  for i in range(k):
+  if s[i] in vowels:
+  current_count += 1
+
+  max_count = current_count
+
+  # Slide the window
+
+  for i in range(k, len(s)):
+  # Remove the leftmost character
+  if s[i-k] in vowels:
+  current_count -= 1
+  # Add the rightmost character
+  if s[i] in vowels:
+  current_count += 1
+
+  max_count = max(max_count, current_count)
+
+  return max_count
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   vowels = set('aeiou')
   max_count = 0
-  
-  for i in range(len(s)):
-      count = 0
-      for j in range(i, min(i+k, len(s))):
-          if s[j] in vowels:
-              count += 1
-      max_count = max(max_count, count)
-      
-  return max_count
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  for i in range(len(s)):
+  count = 0
+  for j in range(i, min(i+k, len(s))):
+  if s[j] in vowels:
+  count += 1
+  max_count = max(max_count, count)
+
+  return max_count
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   vowels = set('aeiou')
   count = 0
   max_count = 0
-  
+  ```
+
+  ```
+
+  ```
+
   for i in range(len(s)):
-      if i >= k and s[i-k] in vowels:
-          count -= 1
-      if s[i] in vowels:
-          count += 1
-      if i >= k-1:
-          max_count = max(max_count, count)
-          
+  if i >= k and s[i-k] in vowels:
+  count -= 1
+  if s[i] in vowels:
+  count += 1
+  if i >= k-1:
+  max_count = max(max_count, count)
+
   return max_count
+
+  ```
+
   ```
 
 <details>
@@ -2852,7 +3580,7 @@ def maxVowels(s, k):
 
 The correct answer is:
 
-```python
+```
 vowels = set('aeiou')
 current_count = 0
 
@@ -2932,104 +3660,143 @@ def longestSubarray(nums):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   max_length = 0
-  
+  ```
+
+  ```
+
+  ```
+
   for i in range(len(nums)):
-      # Create a new array with the ith element deleted
-      new_nums = nums[:i] + nums[i+1:]
-      
-      # Find the longest subarray of 1's
-      current_length = 0
-      longest = 0
-      
-      for num in new_nums:
-          if num == 1:
-              current_length += 1
-          else:
-              current_length = 0
-          longest = max(longest, current_length)
-          
-      max_length = max(max_length, longest)
-      
+  # Create a new array with the ith element deleted
+  new_nums = nums[:i] + nums[i+1:]
+
+  # Find the longest subarray of 1's
+  current_length = 0
+  longest = 0
+
+  for num in new_nums:
+  if num == 1:
+  current_length += 1
+  else:
+  current_length = 0
+  longest = max(longest, current_length)
+
+  max_length = max(max_length, longest)
+
   return max_length
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   left = 0
   zeros = 0
   max_length = 0
-  
+  ```
+
+  ```
+
+  ```
+
   for right in range(len(nums)):
-      if nums[right] == 0:
-          zeros += 1
-          
-      # If we have more than one zero, shrink the window
-      while zeros > 1:
-          if nums[left] == 0:
-              zeros -= 1
-          left += 1
-          
-      # The window size minus the zero we're allowed to delete
-      max_length = max(max_length, right - left)
-      
+  if nums[right] == 0:
+  zeros += 1
+
+  # If we have more than one zero, shrink the window
+  while zeros > 1:
+  if nums[left] == 0:
+  zeros -= 1
+  left += 1
+
+  # The window size minus the zero we're allowed to delete
+  max_length = max(max_length, right - left)
+
   # Edge case: if all elements are 1, we must delete one
+
   return min(max_length, len(nums) - 1)
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   left = 0
   zeros = 0
   max_length = 0
-  
-  for right in range(len(nums)):
-      if nums[right] == 0:
-          zeros += 1
-          
-      # If we have more than one zero, shrink the window
-      while zeros > 1:
-          if nums[left] == 0:
-              zeros -= 1
-          left += 1
-          
-      # Current window size minus the deleted zero
-      max_length = max(max_length, right - left)
-      
-  return max_length
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  for right in range(len(nums)):
+  if nums[right] == 0:
+  zeros += 1
+
+  # If we have more than one zero, shrink the window
+  while zeros > 1:
+  if nums[left] == 0:
+  zeros -= 1
+  left += 1
+
+  # Current window size minus the deleted zero
+  max_length = max(max_length, right - left)
+
+  return max_length
+
+  ```
+
+  ```
+- [ ]
+
+  ```
+
+  ```
+
+  ```
+
+  ```
+
   # Count consecutive 1's groups
+
   groups = []
   count = 0
-  
+
   for num in nums:
-      if num == 1:
-          count += 1
-      else:
-          if count > 0:
-              groups.append(count)
-              count = 0
-          groups.append(0)
-          
+  if num == 1:
+  count += 1
+  else:
   if count > 0:
-      groups.append(count)
-      
+  groups.append(count)
+  count = 0
+  groups.append(0)
+
+  if count > 0:
+  groups.append(count)
+
   # Calculate max length after removing one zero
+
   max_length = 0
   for i in range(len(groups) - 1):
-      if groups[i] == 0 or groups[i+1] == 0:
-          max_length = max(max_length, groups[i] + groups[i+1])
-          
+  if groups[i] == 0 or groups[i+1] == 0:
+  max_length = max(max_length, groups[i] + groups[i+1])
+
   # Edge case: all ones
+
   if len(groups) == 1 and groups[0] > 0:
-      return groups[0] - 1
-      
+  return groups[0] - 1
+
   return max_length
+
+  ```
+
   ```
 
 <details>
@@ -3037,7 +3804,7 @@ def longestSubarray(nums):
 
 The correct answer is:
 
-```python
+```
 left = 0
 zeros = 0
 max_length = 0
@@ -3124,78 +3891,113 @@ def mergeAlternately(word1, word2):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   result = []
   i, j = 0, 0
-  
+  ```
+
+  ```
+
+  ```
+
   while i < len(word1) and j < len(word2):
-      result.append(word1[i])
-      result.append(word2[j])
-      i += 1
-      j += 1
-      
+  result.append(word1[i])
+  result.append(word2[j])
+  i += 1
+  j += 1
+
   # Append any remaining characters
+
   result.append(word1[i:])
   result.append(word2[j:])
-  
+
   return ''.join(result)
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   result = []
   i = 0
-  
-  while i < len(word1) or i < len(word2):
-      if i < len(word1):
-          result.append(word1[i])
-      if i < len(word2):
-          result.append(word2[i])
-      i += 1
-      
-  return ''.join(result)
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  while i < len(word1) or i < len(word2):
+  if i < len(word1):
+  result.append(word1[i])
+  if i < len(word2):
+  result.append(word2[i])
+  i += 1
+
+  return ''.join(result)
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   result = []
   i, j = 0, 0
-  
-  while i < len(word1) and j < len(word2):
-      if i <= j:
-          result.append(word1[i])
-          i += 1
-      else:
-          result.append(word2[j])
-          j += 1
-          
-  # Append any remaining characters
-  while i < len(word1):
-      result.append(word1[i])
-      i += 1
-      
-  while j < len(word2):
-      result.append(word2[j])
-      j += 1
-      
-  return ''.join(result)
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  while i < len(word1) and j < len(word2):
+  if i <= j:
+  result.append(word1[i])
+  i += 1
+  else:
+  result.append(word2[j])
+  j += 1
+
+  # Append any remaining characters
+
+  while i < len(word1):
+  result.append(word1[i])
+  i += 1
+
+  while j < len(word2):
+  result.append(word2[j])
+  j += 1
+
+  return ''.join(result)
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   n = min(len(word1), len(word2))
   result = ''
-  
+  ```
+
+  ```
+
+  ```
+
   for i in range(n):
-      result += word1[i] + word2[i]
-      
+  result += word1[i] + word2[i]
+
   if len(word1) > n:
-      result += word1[n:]
+  result += word1[n:]
   if len(word2) > n:
-      result += word2[n:]
-      
+  result += word2[n:]
+
   return result
+
+  ```
+
   ```
 
 <details>
@@ -3203,7 +4005,7 @@ def mergeAlternately(word1, word2):
 
 The correct answer is:
 
-```python
+```
 result = []
 i = 0
 
@@ -3262,43 +4064,79 @@ def moveZeroes(nums):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   zeros = nums.count(0)
   nums[:] = [num for num in nums if num != 0] + [0] * zeros
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   for i in range(len(nums)):
-      if nums[i] == 0:
-          nums.append(nums.pop(i))
+  if nums[i] == 0:
+  nums.append(nums.pop(i))
   ```
 
-- [ ] 
-  ```python
-  left = 0  # Position to insert non-zero element
-  
-  # Move all non-zero elements to the front
-  for right in range(len(nums)):
-      if nums[right] != 0:
-          nums[left], nums[right] = nums[right], nums[left]
-          left += 1
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   left = 0  # Position to insert non-zero element
-  
+  ```
+
+  ```
+
+  ```
+
   # Move all non-zero elements to the front
+
   for right in range(len(nums)):
-      if nums[right] != 0:
-          nums[left] = nums[right]
-          left += 1
-          
+  if nums[right] != 0:
+  nums[left], nums[right] = nums[right], nums[left]
+  left += 1
+
+  ```
+
+  ```
+- [ ]
+
+  ```
+  left = 0  # Position to insert non-zero element
+  ```
+
+  ```
+
+  ```
+
+  # Move all non-zero elements to the front
+
+  for right in range(len(nums)):
+  if nums[right] != 0:
+  nums[left] = nums[right]
+  left += 1
+
   # Fill the rest with zeroes
+
   for i in range(left, len(nums)):
-      nums[i] = 0
+  nums[i] = 0
+
+  ```
+
   ```
 
 <details>
@@ -3306,7 +4144,7 @@ def moveZeroes(nums):
 
 The correct answer is:
 
-```python
+```
 left = 0  # Position to insert non-zero element
 
 # Move all non-zero elements to the front
@@ -3365,65 +4203,98 @@ def isSubsequence(s, t):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   i, j = 0, 0
-  
+  ```
+
+  ```
+
+  ```
+
   while i < len(s) and j < len(t):
-      if s[i] == t[j]:
-          i += 1
-      j += 1
-      
+  if s[i] == t[j]:
+  i += 1
+  j += 1
+
   return i == len(s)
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   if not s:
-      return True
-      
-  pos = 0
-  for char in t:
-      if pos < len(s) and char == s[pos]:
-          pos += 1
-      if pos == len(s):
-          return True
-          
-  return False
-  ```
-
-- [ ] 
-  ```python
-  i = 0
-  
-  for char in s:
-      i = t.find(char, i)
-      if i == -1:
-          return False
-      i += 1
-      
   return True
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  pos = 0
+  for char in t:
+  if pos < len(s) and char == s[pos]:
+  pos += 1
+  if pos == len(s):
+  return True
+
+  return False
+
+  ```
+
+  ```
+- [ ]
+
+  ```
+  i = 0
+  ```
+
+  ```
+
+  ```
+
+  for char in s:
+  i = t.find(char, i)
+  if i == -1:
+  return False
+  i += 1
+
+  return True
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   def check(i, j):
-      # Base case: we've matched all chars in s
-      if i == len(s):
-          return True
-          
-      # Base case: we've exhausted t but not s
-      if j == len(t):
-          return False
-          
-      # If current characters match, try matching the rest
-      if s[i] == t[j]:
-          return check(i+1, j+1)
-          
-      # If not, skip this character in t
-      return check(i, j+1)
-      
+  # Base case: we've matched all chars in s
+  if i == len(s):
+  return True
+  ```
+
+  ```
+
+  ```
+
+  # Base case: we've exhausted t but not s
+  if j == len(t):
+  return False
+
+  # If current characters match, try matching the rest
+  if s[i] == t[j]:
+  return check(i+1, j+1)
+
+  # If not, skip this character in t
+  return check(i, j+1)
+
   return check(0, 0)
+
+  ```
+
   ```
 
 <details>
@@ -3431,7 +4302,7 @@ def isSubsequence(s, t):
 
 The correct answer is:
 
-```python
+```
 i, j = 0, 0
 
 while i < len(s) and j < len(t):
@@ -3511,67 +4382,107 @@ def pivotIndex(nums):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   for i in range(len(nums)):
-      if sum(nums[:i]) == sum(nums[i+1:]):
-          return i
+  if sum(nums[:i]) == sum(nums[i+1:]):
+  return i
   return -1
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  ```
+
+  ```
+- [ ]
+
+  ```
+
+  ```
+
+  ```
+
+  ```
+
   # Calculate the total sum
+
   total_sum = sum(nums)
   left_sum = 0
-  
+
   for i, num in enumerate(nums):
-      # Right sum is the total sum minus the left sum and the current element
-      if left_sum == total_sum - left_sum - num:
-          return i
-          
-      left_sum += num
-      
+  # Right sum is the total sum minus the left sum and the current element
+  if left_sum == total_sum - left_sum - num:
+  return i
+
+  left_sum += num
+
   return -1
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
+
+  ```
+
+  ```
+
+  ```
+
   # Calculate prefix and suffix sums
+
   prefix = [nums[0]]
   for i in range(1, len(nums)):
-      prefix.append(prefix[-1] + nums[i])
-      
+  prefix.append(prefix[-1] + nums[i])
+
   suffix = [nums[-1]]
   for i in range(len(nums)-2, -1, -1):
-      suffix.append(suffix[-1] + nums[i])
+  suffix.append(suffix[-1] + nums[i])
   suffix.reverse()
-  
+
   # Find pivot index
+
   for i in range(len(nums)):
-      left = prefix[i-1] if i > 0 else 0
-      right = suffix[i+1] if i < len(nums)-1 else 0
-      
-      if left == right:
-          return i
-          
+  left = prefix[i-1] if i > 0 else 0
+  right = suffix[i+1] if i < len(nums)-1 else 0
+
+  if left == right:
+  return i
+
   return -1
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   left_sum = 0
   right_sum = sum(nums)
-  
+  ```
+
+  ```
+
+  ```
+
   for i, num in enumerate(nums):
-      right_sum -= num
-      
-      if left_sum == right_sum:
-          return i
-          
-      left_sum += num
-      
+  right_sum -= num
+
+  if left_sum == right_sum:
+  return i
+
+  left_sum += num
+
   return -1
+
+  ```
+
   ```
 
 <details>
@@ -3579,7 +4490,7 @@ def pivotIndex(nums):
 
 The correct answer is:
 
-```python
+```
 # Calculate the total sum
 total_sum = sum(nums)
 left_sum = 0
@@ -3643,51 +4554,90 @@ def largestAltitude(gain):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   altitudes = [0]
   for g in gain:
-      altitudes.append(altitudes[-1] + g)
-      
-  return max(altitudes)
+  altitudes.append(altitudes[-1] + g)
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  return max(altitudes)
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   current = 0
   highest = 0
-  
+  ```
+
+  ```
+
+  ```
+
   for g in gain:
-      current += g
-      highest = max(highest, current)
-      
+  current += g
+  highest = max(highest, current)
+
   return highest
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
+
+  ```
+
+  ```
+
+  ```
+
   # Calculate all altitudes
+
   altitudes = [0]
-  
+
   for i in range(len(gain)):
-      altitudes.append(altitudes[i] + gain[i])
-      
+  altitudes.append(altitudes[i] + gain[i])
+
   # Return the highest
+
   return max(altitudes)
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   prefix_sum = [0]
-  
+  ```
+
+  ```
+
+  ```
+
   for g in gain:
-      prefix_sum.append(prefix_sum[-1] + g)
-      
+  prefix_sum.append(prefix_sum[-1] + g)
+
   # Remove the initial altitude
+
   prefix_sum.pop(0)
-  
+
   # Return the highest altitude, minimum is 0
+
   return max(0, max(prefix_sum))
+
+  ```
+
   ```
 
 <details>
@@ -3695,7 +4645,7 @@ def largestAltitude(gain):
 
 The correct answer is:
 
-```python
+```
 current = 0
 highest = 0
 
@@ -3765,68 +4715,109 @@ def minCostClimbingStairs(cost):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
+
+  ```
+
+  ```
+
+  ```
+
   # Handle base cases
+
   if len(cost) <= 1:
-      return 0
-      
+  return 0
+
   # Initialize dp array
+
   dp = [0] * (len(cost) + 1)
-  
+
   # Build up solution from bottom to top
+
   for i in range(2, len(cost) + 1):
-      dp[i] = min(dp[i-1] + cost[i-1], dp[i-2] + cost[i-2])
-      
+  dp[i] = min(dp[i-1] + cost[i-1], dp[i-2] + cost[i-2])
+
   return dp[len(cost)]
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   def min_cost(i, memo={}):
-      # Base cases
-      if i <= 1:
-          return 0
-          
-      # Check if already calculated
-      if i in memo:
-          return memo[i]
-          
-      # Calculate minimum cost to reach step i
-      memo[i] = min(min_cost(i-1, memo) + cost[i-1], 
-                    min_cost(i-2, memo) + cost[i-2])
-          
-      return memo[i]
-      
-  return min_cost(len(cost))
+  # Base cases
+  if i <= 1:
+  return 0
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  # Check if already calculated
+  if i in memo:
+  return memo[i]
+
+  # Calculate minimum cost to reach step i
+  memo[i] = min(min_cost(i-1, memo) + cost[i-1],
+  min_cost(i-2, memo) + cost[i-2])
+
+  return memo[i]
+
+  return min_cost(len(cost))
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   n = len(cost)
   dp = [0] * n
-  
-  dp[0] = cost[0]
-  dp[1] = cost[1]
-  
-  for i in range(2, n):
-      dp[i] = cost[i] + min(dp[i-1], dp[i-2])
-      
-  return min(dp[n-1], dp[n-2])
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  dp[0] = cost[0]
+  dp[1] = cost[1]
+
+  for i in range(2, n):
+  dp[i] = cost[i] + min(dp[i-1], dp[i-2])
+
+  return min(dp[n-1], dp[n-2])
+
+  ```
+
+  ```
+- [ ]
+
+  ```
+
+  ```
+
+  ```
+
+  ```
+
   # We can optimize to O(1) space
+
   first = cost[0]
   second = cost[1]
-  
+
   for i in range(2, len(cost)):
-      current = cost[i] + min(first, second)
-      first = second
-      second = current
-      
+  current = cost[i] + min(first, second)
+  first = second
+  second = current
+
   return min(first, second)
+
+  ```
+
   ```
 
 <details>
@@ -3834,7 +4825,7 @@ def minCostClimbingStairs(cost):
 
 The correct answer is:
 
-```python
+```
 n = len(cost)
 dp = [0] * n
 
@@ -3898,75 +4889,110 @@ def rob(nums):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   if not nums:
-      return 0
-      
+  return 0
+  ```
+
+  ```
+
+  ```
+
   if len(nums) == 1:
-      return nums[0]
-      
+  return nums[0]
+
   dp = [0] * len(nums)
   dp[0] = nums[0]
   dp[1] = max(nums[0], nums[1])
-  
+
   for i in range(2, len(nums)):
-      dp[i] = max(dp[i-1], dp[i-2] + nums[i])
-      
+  dp[i] = max(dp[i-1], dp[i-2] + nums[i])
+
   return dp[-1]
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   if not nums:
-      return 0
-      
+  return 0
+  ```
+
+  ```
+
+  ```
+
   # Only two houses
+
   if len(nums) <= 2:
-      return max(nums)
-      
+  return max(nums)
+
   # More than two houses
+
   rob1 = nums[0]
   rob2 = max(nums[0], nums[1])
-  
+
   for i in range(2, len(nums)):
-      current = max(rob2, rob1 + nums[i])
-      rob1 = rob2
-      rob2 = current
-      
+  current = max(rob2, rob1 + nums[i])
+  rob1 = rob2
+  rob2 = current
+
   return rob2
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   def rob_helper(nums, i, memo={}):
-      if i >= len(nums):
-          return 0
-          
-      if i in memo:
-          return memo[i]
-          
-      # Either rob current house and skip next, or skip current house
-      memo[i] = max(nums[i] + rob_helper(nums, i+2, memo), 
-                    rob_helper(nums, i+1, memo))
-          
-      return memo[i]
-      
-  return rob_helper(nums, 0)
+  if i >= len(nums):
+  return 0
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  if i in memo:
+  return memo[i]
+
+  # Either rob current house and skip next, or skip current house
+  memo[i] = max(nums[i] + rob_helper(nums, i+2, memo),
+  rob_helper(nums, i+1, memo))
+
+  return memo[i]
+
+  return rob_helper(nums, 0)
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   even_sum = 0
   odd_sum = 0
-  
+  ```
+
+  ```
+
+  ```
+
   for i in range(len(nums)):
-      if i % 2 == 0:
-          even_sum += nums[i]
-      else:
-          odd_sum += nums[i]
-          
+  if i % 2 == 0:
+  even_sum += nums[i]
+  else:
+  odd_sum += nums[i]
+
   return max(even_sum, odd_sum)
+
+  ```
+
   ```
 
 <details>
@@ -3974,7 +5000,7 @@ def rob(nums):
 
 The correct answer is:
 
-```python
+```
 if not nums:
     return 0
 
@@ -4043,70 +5069,105 @@ def maxDepth(root):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   if not root:
-      return 0
-      
-  return 1 + max(maxDepth(root.left), maxDepth(root.right))
+  return 0
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  return 1 + max(maxDepth(root.left), maxDepth(root.right))
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   if not root:
-      return 0
-      
+  return 0
+  ```
+
+  ```
+
+  ```
+
   # BFS approach
+
   queue = [(root, 1)]  # (node, depth)
   max_depth = 0
-  
+
   while queue:
-      node, depth = queue.pop(0)
-      max_depth = max(max_depth, depth)
-      
-      if node.left:
-          queue.append((node.left, depth + 1))
-      if node.right:
-          queue.append((node.right, depth + 1))
-          
+  node, depth = queue.pop(0)
+  max_depth = max(max_depth, depth)
+
+  if node.left:
+  queue.append((node.left, depth + 1))
+  if node.right:
+  queue.append((node.right, depth + 1))
+
   return max_depth
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   def dfs(node, depth):
-      # Base case: leaf node
-      if not node:
-          return depth
-          
-      # Recursively check left and right subtrees
-      left_depth = dfs(node.left, depth + 1)
-      right_depth = dfs(node.right, depth + 1)
-      
-      return max(left_depth, right_depth)
-      
-  return dfs(root, 0)
+  # Base case: leaf node
+  if not node:
+  return depth
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  # Recursively check left and right subtrees
+  left_depth = dfs(node.left, depth + 1)
+  right_depth = dfs(node.right, depth + 1)
+
+  return max(left_depth, right_depth)
+
+  return dfs(root, 0)
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   if not root:
-      return 0
-      
+  return 0
+  ```
+
+  ```
+
+  ```
+
   # Iterative DFS using stack
+
   stack = [(root, 1)]  # (node, depth)
   max_depth = 0
-  
+
   while stack:
-      node, depth = stack.pop()
-      max_depth = max(max_depth, depth)
-      
-      if node.right:
-          stack.append((node.right, depth + 1))
-      if node.left:
-          stack.append((node.left, depth + 1))
-          
+  node, depth = stack.pop()
+  max_depth = max(max_depth, depth)
+
+  if node.right:
+  stack.append((node.right, depth + 1))
+  if node.left:
+  stack.append((node.left, depth + 1))
+
   return max_depth
+
+  ```
+
   ```
 
 <details>
@@ -4114,7 +5175,7 @@ def maxDepth(root):
 
 The correct answer is:
 
-```python
+```
 if not root:
     return 0
 
@@ -4179,98 +5240,132 @@ def goodNodes(root):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] 
-  ```python
+- [ ]
+
+  ```
   def dfs(node, max_so_far):
-      if not node:
-          return 0
-          
-      # Current node is good if it's >= max value seen so far
-      count = 1 if node.val >= max_so_far else 0
-      
-      # Update max value for children
-      max_so_far = max(max_so_far, node.val)
-      
-      # Count good nodes in left and right subtrees
-      count += dfs(node.left, max_so_far)
-      count += dfs(node.right, max_so_far)
-      
-      return count
-      
-  return dfs(root, float('-inf'))
+  if not node:
+  return 0
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  # Current node is good if it's >= max value seen so far
+  count = 1 if node.val >= max_so_far else 0
+
+  # Update max value for children
+  max_so_far = max(max_so_far, node.val)
+
+  # Count good nodes in left and right subtrees
+  count += dfs(node.left, max_so_far)
+  count += dfs(node.right, max_so_far)
+
+  return count
+
+  return dfs(root, float('-inf'))
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   if not root:
-      return 0
-      
+  return 0
+  ```
+
+  ```
+
+  ```
+
   # BFS
+
   queue = [(root, root.val)]  # (node, max value so far)
   good_count = 0
-  
+
   while queue:
-      node, max_val = queue.pop(0)
-      
-      # Check if current node is good
-      if node.val >= max_val:
-          good_count += 1
-      
-      # Update max value for children
-      max_val = max(max_val, node.val)
-      
-      if node.left:
-          queue.append((node.left, max_val))
-      if node.right:
-          queue.append((node.right, max_val))
-          
+  node, max_val = queue.pop(0)
+
+  # Check if current node is good
+  if node.val >= max_val:
+  good_count += 1
+
+  # Update max value for children
+  max_val = max(max_val, node.val)
+
+  if node.left:
+  queue.append((node.left, max_val))
+  if node.right:
+  queue.append((node.right, max_val))
+
   return good_count
+
   ```
 
-- [ ] 
-  ```python
+  ```
+- [ ]
+
+  ```
   def count_good(node, path):
-      if not node:
-          return 0
-          
-      # Add current node to path
-      path.append(node.val)
-      
-      # Check if current node is good
-      is_good = all(node.val >= val for val in path[:-1])
-      
-      # Recursively count good nodes in subtrees
-      count = (1 if is_good else 0) + count_good(node.left, path[:]) + count_good(node.right, path[:])
-      
-      return count
-      
-  return count_good(root, [])
+  if not node:
+  return 0
   ```
 
-- [ ] 
-  ```python
+  ```
+
+  ```
+
+  # Add current node to path
+  path.append(node.val)
+
+  # Check if current node is good
+  is_good = all(node.val >= val for val in path[:-1])
+
+  # Recursively count good nodes in subtrees
+  count = (1 if is_good else 0) + count_good(node.left, path[:]) + count_good(node.right, path[:])
+
+  return count
+
+  return count_good(root, [])
+
+  ```
+
+  ```
+- [ ]
+
+  ```
   def is_good_node(node, ancestors):
-      return all(node.val >= val for val in ancestors)
-      
+  return all(node.val >= val for val in ancestors)
+  ```
+
+  ```
+
+  ```
+
   def dfs(node, ancestors):
-      if not node:
-          return 0
-          
-      # Check if current node is good
-      count = 1 if is_good_node(node, ancestors) else 0
-      
-      # Add current node to ancestors for children
-      ancestors.append(node.val)
-      
-      # Recursively count good nodes in subtrees
-      count += dfs(node.left, ancestors) + dfs(node.right, ancestors)
-      
-      # Remove current node from ancestors before returning
-      ancestors.pop()
-      
-      return count
-      
+  if not node:
+  return 0
+
+  # Check if current node is good
+  count = 1 if is_good_node(node, ancestors) else 0
+
+  # Add current node to ancestors for children
+  ancestors.append(node.val)
+
+  # Recursively count good nodes in subtrees
+  count += dfs(node.left, ancestors) + dfs(node.right, ancestors)
+
+  # Remove current node from ancestors before returning
+  ancestors.pop()
+
+  return count
+
   return dfs(root, [])
+
+  ```
+
   ```
 
 <details>
@@ -4278,7 +5373,7 @@ def goodNodes(root):
 
 The correct answer is:
 
-```python
+```
 def dfs(node, max_so_far):
     if not node:
         return 0
