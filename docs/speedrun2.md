@@ -358,7 +358,7 @@ def trap(height):
     return water
 ```
 
-- [ ] A
+- [ ]
 
   ```python
   if height[left] < height[right]:
@@ -370,7 +370,7 @@ def trap(height):
       water += right_max - height[right]
       right -= 1
   ```
-- [ ] B
+- [ ]
 
   ```python
   left_max = max(left_max, height[left])
@@ -382,7 +382,7 @@ def trap(height):
       water += right_max - height[right]
       right -= 1
   ```
-- [ ] C
+- [ ]
 
   ```python
   if height[left] < height[right]:
@@ -392,7 +392,7 @@ def trap(height):
       water += max(0, min(left_max, right_max) - height[right])
       right -= 1
   ```
-- [ ] D
+- [ ]
 
   ```python
   water += max(0, min(height[left], height[right]) - min(height[left:right+1]))
@@ -486,7 +486,7 @@ def search(nums, target):
     return -1
 ```
 
-- [ ] A
+- [ ]
 
   ```python
   if nums[left] <= nums[mid]:  # Left portion is sorted
@@ -500,7 +500,7 @@ def search(nums, target):
       else:
           right = mid - 1
   ```
-- [ ] B
+- [ ]
 
   ```python
   if nums[left] <= nums[mid]:  # Left portion is sorted
@@ -514,7 +514,7 @@ def search(nums, target):
       else:
           right = mid - 1
   ```
-- [ ] C
+- [ ]
 
   ```python
   if nums[mid] <= nums[right]:  # Right portion is sorted
@@ -528,7 +528,7 @@ def search(nums, target):
       else:
           left = mid + 1
   ```
-- [ ] D
+- [ ]
 
   ```python
   if target > nums[mid]:
@@ -620,7 +620,7 @@ def searchRange(nums, target):
     # Implementation for finding last position and overall solution not shown
 ```
 
-- [ ] A
+- [ ]
 
   ```python
   if nums[mid] == target:
@@ -631,7 +631,7 @@ def searchRange(nums, target):
   else:
       right = mid - 1
   ```
-- [ ] B
+- [ ]
 
   ```python
   if nums[mid] == target:
@@ -642,7 +642,7 @@ def searchRange(nums, target):
   else:
       right = mid - 1
   ```
-- [ ] C
+- [ ]
 
   ```python
   if nums[mid] == target:
@@ -653,7 +653,7 @@ def searchRange(nums, target):
   else:
       right = mid - 1
   ```
-- [ ] D
+- [ ]
 
   ```python
   if nums[mid] == target:
@@ -735,7 +735,7 @@ def maxSubArray(nums):
     return max_sum
 ```
 
-- [ ] A
+- [ ]
 
   ```python
   max_sum = float('-inf')
@@ -744,7 +744,7 @@ def maxSubArray(nums):
           max_sum = max(max_sum, sum(nums[i:j+1]))
   return max_sum
   ```
-- [ ] B
+- [ ]
 
   ```python
   max_sum = current_sum = nums[0]
@@ -753,7 +753,7 @@ def maxSubArray(nums):
       max_sum = max(max_sum, current_sum)
   return max_sum
   ```
-- [ ] C
+- [ ]
 
   ```python
   max_sum = 0
@@ -765,7 +765,7 @@ def maxSubArray(nums):
       max_sum = max(max_sum, current_sum)
   return max_sum
   ```
-- [ ] D
+- [ ]
 
   ```python
   max_sum = float('-inf')
@@ -851,7 +851,7 @@ def hasCycle(head):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] A
+- [ ]
 
   ```python
   visited = set()
@@ -863,7 +863,7 @@ def hasCycle(head):
       current = current.next
   return False
   ```
-- [ ] B
+- [ ]
 
   ```python
   if not head or not head.next:
@@ -877,7 +877,7 @@ def hasCycle(head):
       fast = fast.next.next
   return True
   ```
-- [ ] C
+- [ ]
 
   ```python
   slow = fast = head
@@ -888,7 +888,7 @@ def hasCycle(head):
           return True
   return False
   ```
-- [ ] D
+- [ ]
 
   ```python
   slow = head
@@ -965,7 +965,7 @@ def middleNode(head):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] A
+- [ ]
 
   ```python
   slow = fast = head
@@ -974,7 +974,7 @@ def middleNode(head):
       fast = fast.next.next
   return slow
   ```
-- [ ] B
+- [ ]
 
   ```python
   nodes = []
@@ -984,7 +984,7 @@ def middleNode(head):
       current = current.next
   return nodes[len(nodes) // 2]
   ```
-- [ ] C
+- [ ]
 
   ```python
   slow = head
@@ -994,7 +994,7 @@ def middleNode(head):
       fast = fast.next.next
   return slow
   ```
-- [ ] D
+- [ ]
 
   ```python
   count = 0
@@ -1078,7 +1078,7 @@ def levelOrder(root):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] A
+- [ ]
 
   ```python
   if not root:
@@ -1104,7 +1104,7 @@ def levelOrder(root):
 
   return result
   ```
-- [ ] B
+- [ ]
 
   ```python
   if not root:
@@ -1126,7 +1126,7 @@ def levelOrder(root):
   dfs(root, 0)
   return result
   ```
-- [ ] C
+- [ ]
 
   ```python
   if not root:
@@ -1146,7 +1146,7 @@ def levelOrder(root):
 
   return [result]
   ```
-- [ ] D
+- [ ]
 
   ```python
   if not root:
@@ -1260,7 +1260,7 @@ def hasPathSum(root, targetSum):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] A
+- [ ]
 
   ```python
   def dfs(node, current_sum):
@@ -1278,7 +1278,7 @@ def hasPathSum(root, targetSum):
 
   return dfs(root, 0)
   ```
-- [ ] B
+- [ ]
 
   ```python
   if not root:
@@ -1293,7 +1293,7 @@ def hasPathSum(root, targetSum):
   # Check both subtrees
   return hasPathSum(root.left, targetSum) or hasPathSum(root.right, targetSum)
   ```
-- [ ] C
+- [ ]
 
   ```python
   stack = [(root, targetSum)]
@@ -1312,7 +1312,7 @@ def hasPathSum(root, targetSum):
 
   return False
   ```
-- [ ] D
+- [ ]
 
   ```python
   if not root:
@@ -1415,7 +1415,7 @@ def numIslands(grid):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] A
+- [ ]
 
   ```python
   if not grid:
@@ -1446,7 +1446,7 @@ def numIslands(grid):
 
   return count
   ```
-- [ ] B
+- [ ]
 
   ```python
   if not grid:
@@ -1476,7 +1476,7 @@ def numIslands(grid):
 
   return count
   ```
-- [ ] C
+- [ ]
 
   ```python
   def dfs(grid, i, j):
@@ -1505,7 +1505,7 @@ def numIslands(grid):
 
   return count
   ```
-- [ ] D
+- [ ]
 
   ```python
   if not grid:
@@ -1617,7 +1617,7 @@ def canFinish(numCourses, prerequisites):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] A
+- [ ]
 
   ```python
   # Build adjacency list
@@ -1656,7 +1656,7 @@ def canFinish(numCourses, prerequisites):
 
   return True
   ```
-- [ ] B
+- [ ]
 
   ```python
   # Build adjacency list
@@ -1695,7 +1695,7 @@ def canFinish(numCourses, prerequisites):
 
   return True
   ```
-- [ ] C
+- [ ]
 
   ```python
   # Count in-degrees for each course
@@ -1724,7 +1724,7 @@ def canFinish(numCourses, prerequisites):
 
   return courses_taken == numCourses
   ```
-- [ ] D
+- [ ]
 
   ```python
   # Build adjacency matrix
@@ -1838,7 +1838,7 @@ def canPartition(nums):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] A
+- [ ]
 
   ```python
   total_sum = sum(nums)
@@ -1869,7 +1869,7 @@ def canPartition(nums):
 
   return dp[n][target]
   ```
-- [ ] B
+- [ ]
 
   ```python
   total_sum = sum(nums)
@@ -1891,7 +1891,7 @@ def canPartition(nums):
 
   return dp[target]
   ```
-- [ ] C
+- [ ]
 
   ```python
   total_sum = sum(nums)
@@ -1924,7 +1924,7 @@ def canPartition(nums):
 
   return dfs(0, target)
   ```
-- [ ] D
+- [ ]
 
   ```python
   total_sum = sum(nums)
@@ -2024,7 +2024,7 @@ def climbStairs(n):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] A
+- [ ]
 
   ```python
   # Base cases
@@ -2054,7 +2054,7 @@ def climbStairs(n):
 
   return dp(n)
   ```
-- [ ] B
+- [ ]
 
   ```python
   # Base cases
@@ -2072,7 +2072,7 @@ def climbStairs(n):
 
   return b
   ```
-- [ ] C
+- [ ]
 
   ```python
   # Base cases
@@ -2091,7 +2091,7 @@ def climbStairs(n):
 
   return dp[n]
   ```
-- [ ] D
+- [ ]
 
   ```python
   # Calculate using binomial coefficients
@@ -2176,7 +2176,7 @@ def subsets(nums):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] A
+- [ ]
 
   ```python
   result = []
@@ -2194,7 +2194,7 @@ def subsets(nums):
   backtrack(0, [])
   return result
   ```
-- [ ] B
+- [ ]
 
   ```python
   result = [[]]
@@ -2204,7 +2204,7 @@ def subsets(nums):
 
   return result
   ```
-- [ ] C
+- [ ]
 
   ```python
   n = len(nums)
@@ -2221,7 +2221,7 @@ def subsets(nums):
 
   return result
   ```
-- [ ] D
+- [ ]
 
   ```python
   def recursive_subsets(index):
@@ -2313,13 +2313,13 @@ def findKthLargest(nums, k):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] A
+- [ ]
 
   ```python
   nums.sort()
   return nums[len(nums) - k]
   ```
-- [ ] B
+- [ ]
 
   ```python
   import heapq
@@ -2335,7 +2335,7 @@ def findKthLargest(nums, k):
 
   return heap[0]
   ```
-- [ ] C
+- [ ]
 
   ```python
   import heapq
@@ -2351,7 +2351,7 @@ def findKthLargest(nums, k):
   # Return the kth largest
   return -heapq.heappop(heap)
   ```
-- [ ] D
+- [ ]
 
   ```python
   # Use QuickSelect algorithm
@@ -2477,7 +2477,7 @@ def isValid(s):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] A
+- [ ]
 
   ```python
   stack = []
@@ -2498,7 +2498,7 @@ def isValid(s):
   # Valid if stack is empty (all brackets matched)
   return len(stack) == 0
   ```
-- [ ] B
+- [ ]
 
   ```python
   # Count opening and closing brackets
@@ -2527,7 +2527,7 @@ def isValid(s):
   # Valid if all counts are 0
   return count_parentheses == 0 and count_brackets == 0 and count_braces == 0
   ```
-- [ ] C
+- [ ]
 
   ```python
   # Replace matched pairs until no more replacements can be made
@@ -2537,7 +2537,7 @@ def isValid(s):
   # Valid if no brackets remain
   return s == ''
   ```
-- [ ] D
+- [ ]
 
   ```python
   def check(s, left, right):
@@ -2647,7 +2647,7 @@ def dailyTemperatures(temperatures):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] A
+- [ ]
 
   ```python
   n = len(temperatures)
@@ -2664,7 +2664,7 @@ def dailyTemperatures(temperatures):
 
   return answer
   ```
-- [ ] B
+- [ ]
 
   ```python
   n = len(temperatures)
@@ -2679,7 +2679,7 @@ def dailyTemperatures(temperatures):
 
   return answer
   ```
-- [ ] C
+- [ ]
 
   ```python
   n = len(temperatures)
@@ -2700,7 +2700,7 @@ def dailyTemperatures(temperatures):
 
   return answer
   ```
-- [ ] D
+- [ ]
 
   ```python
   n = len(temperatures)
@@ -3148,7 +3148,7 @@ def mergeAlternately(word1, word2):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] A
+- [ ]
 
   ```python
   result = []
@@ -3166,7 +3166,7 @@ def mergeAlternately(word1, word2):
 
   return ''.join(result)
   ```
-- [ ] B
+- [ ]
 
   ```python
   result = []
@@ -3181,7 +3181,7 @@ def mergeAlternately(word1, word2):
 
   return ''.join(result)
   ```
-- [ ] C
+- [ ]
 
   ```python
   result = []
@@ -3206,7 +3206,7 @@ def mergeAlternately(word1, word2):
 
   return ''.join(result)
   ```
-- [ ] D
+- [ ]
 
   ```python
   n = min(len(word1), len(word2))
@@ -3287,20 +3287,20 @@ def moveZeroes(nums):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] A
+- [ ]
 
   ```python
   zeros = nums.count(0)
   nums[:] = [num for num in nums if num != 0] + [0] * zeros
   ```
-- [ ] B
+- [ ]
 
   ```python
   for i in range(len(nums)):
       if nums[i] == 0:
           nums.append(nums.pop(i))
   ```
-- [ ] C
+- [ ]
 
   ```python
   left = 0  # Position to insert non-zero element
@@ -3311,7 +3311,7 @@ def moveZeroes(nums):
           nums[left], nums[right] = nums[right], nums[left]
           left += 1
   ```
-- [ ] D
+- [ ]
 
   ```python
   left = 0  # Position to insert non-zero element
@@ -3538,7 +3538,7 @@ def pivotIndex(nums):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] A
+- [ ]
 
   ```python
   for i in range(len(nums)):
@@ -3546,7 +3546,7 @@ def pivotIndex(nums):
           return i
   return -1
   ```
-- [ ] B
+- [ ]
 
   ```python
   # Calculate the total sum
@@ -3671,7 +3671,7 @@ def largestAltitude(gain):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] A
+- [ ]
 
   ```python
   altitudes = [0]
@@ -3680,7 +3680,7 @@ def largestAltitude(gain):
 
   return max(altitudes)
   ```
-- [ ] B
+- [ ]
 
   ```python
   current = 0
@@ -3692,7 +3692,7 @@ def largestAltitude(gain):
 
   return highest
   ```
-- [ ] C
+- [ ]
 
   ```python
   # Calculate all altitudes
@@ -3704,7 +3704,7 @@ def largestAltitude(gain):
   # Return the highest
   return max(altitudes)
   ```
-- [ ] D
+- [ ]
 
   ```python
   prefix_sum = [0]
@@ -3794,7 +3794,7 @@ def minCostClimbingStairs(cost):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] A
+- [ ]
 
   ```python
   # Handle base cases
@@ -3810,7 +3810,7 @@ def minCostClimbingStairs(cost):
 
   return dp[len(cost)]
   ```
-- [ ] B
+- [ ]
 
   ```python
   def min_cost(i, memo={}):
@@ -3830,7 +3830,7 @@ def minCostClimbingStairs(cost):
 
   return min_cost(len(cost))
   ```
-- [ ] C
+- [ ]
 
   ```python
   n = len(cost)
@@ -3844,7 +3844,7 @@ def minCostClimbingStairs(cost):
 
   return min(dp[n-1], dp[n-2])
   ```
-- [ ] D
+- [ ]
 
   ```python
   # We can optimize to O(1) space
