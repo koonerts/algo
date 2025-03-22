@@ -1270,7 +1270,7 @@ def hasPathSum(root, targetSum):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] .
+- [ ] A.
 
   ```python
   def dfs(node, current_sum):
@@ -1289,7 +1289,7 @@ def hasPathSum(root, targetSum):
   return dfs(root, 0)
   ```
 
-- [ ] .
+- [ ] B.
 
   ```python
   if not root:
@@ -1305,7 +1305,7 @@ def hasPathSum(root, targetSum):
   return hasPathSum(root.left, targetSum) or hasPathSum(root.right, targetSum)
   ```
 
-- [ ] .
+- [ ] C.
 
   ```python
   stack = [(root, targetSum)]
@@ -1325,7 +1325,7 @@ def hasPathSum(root, targetSum):
   return False
   ```
 
-- [ ] .
+- [ ] D.
 
   ```python
   if not root:
@@ -1428,7 +1428,7 @@ def numIslands(grid):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] .
+- [ ] A.
 
   ```python
   if not grid:
@@ -1460,7 +1460,7 @@ def numIslands(grid):
   return count
   ```
 
-- [ ] .
+- [ ] B.
 
   ```python
   if not grid:
@@ -1491,7 +1491,7 @@ def numIslands(grid):
   return count
   ```
 
-- [ ] .
+- [ ] C.
 
   ```python
   def dfs(grid, i, j):
@@ -1521,7 +1521,7 @@ def numIslands(grid):
   return count
   ```
 
-- [ ] .
+- [ ] D.
 
   ```python
   if not grid:
