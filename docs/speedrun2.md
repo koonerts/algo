@@ -1857,7 +1857,7 @@ def canPartition(nums):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] .
+- [ ] A.
 
   ```python
   total_sum = sum(nums)
@@ -1889,7 +1889,7 @@ def canPartition(nums):
   return dp[n][target]
   ```
 
-- [ ] .
+- [ ] B.
 
   ```python
   total_sum = sum(nums)
@@ -1912,7 +1912,7 @@ def canPartition(nums):
   return dp[target]
   ```
 
-- [ ] .
+- [ ] C.
 
   ```python
   total_sum = sum(nums)
@@ -1946,7 +1946,7 @@ def canPartition(nums):
   return dfs(0, target)
   ```
 
-- [ ] .
+- [ ] D.
 
   ```python
   total_sum = sum(nums)
@@ -2046,7 +2046,7 @@ def climbStairs(n):
     ### YOUR IMPLEMENTATION HERE ###
 ```
 
-- [ ] .
+- [ ] A.
 
   ```python
   # Base cases
