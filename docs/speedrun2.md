@@ -3599,7 +3599,7 @@ def pivotIndex(nums):
   return -1
   ```
 
-- [ ] .
+- [ ] B.
 
   ```python
   # Calculate the total sum
@@ -3616,7 +3616,7 @@ def pivotIndex(nums):
   return -1
   ```
 
-- [ ] .
+- [ ] C.
 
   ```python
   # Calculate prefix and suffix sums
@@ -3640,7 +3640,7 @@ def pivotIndex(nums):
   return -1
   ```
 
-- [ ] .
+- [ ] D.
 
   ```python
   left_sum = 0
