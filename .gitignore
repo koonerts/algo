@@ -1,3 +1,5 @@
+.trash/
+**/.trash/
 .env/
 .venv/
 .idea/

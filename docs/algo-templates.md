@@ -435,6 +435,7 @@ def heap_operations():
 ```
 
 **Time Complexity**:
+
 - Push/Pop: O(log n)
 - Peek: O(1)
 - Heapify: O(n)
@@ -443,6 +444,7 @@ def heap_operations():
 **Space Complexity**: O(n)
 
 **Example Use Cases**:
+
 - Dijkstra's algorithm
 - K closest points
 - Merge k sorted lists
@@ -708,4 +710,3 @@ class UnionFind:
 - Network connectivity
 - Image segmentation
 - Friends circles
-

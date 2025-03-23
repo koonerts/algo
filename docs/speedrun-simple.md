@@ -1,7 +1,5 @@
 # Algorithm Patterns Speedrun Quiz (Prioritized)
 
-This speedrun quiz tests your ability to quickly identify algorithm patterns and apply the correct techniques to solve problems. Questions are organized by return on investment (ROI) - starting with patterns that are easiest to learn and offer the highest return.
-
 ## Table of Contents
 
 - [High ROI Patterns](#high-roi-patterns)
