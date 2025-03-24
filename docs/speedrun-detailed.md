@@ -12,7 +12,7 @@ Given an array of integers and an integer k, find the maximum average value of a
 
 Example 1:
 
-```
+```txt
 Input: nums = [1,12,-5,-6,50,3], k = 4
 Output: 12.75
 Explanation: Maximum average is (12 - 5 - 6 + 50) / 4 = 51 / 4 = 12.75
@@ -20,7 +20,7 @@ Explanation: Maximum average is (12 - 5 - 6 + 50) / 4 = 51 / 4 = 12.75
 
 Example 2:
 
-```
+```txt
 Input: nums = [5], k = 1
 Output: 5.00
 ```
@@ -397,7 +397,7 @@ def trap(height):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: A
 
 ```python
 if height[left] < height[right]:
@@ -535,7 +535,7 @@ def search(nums, target):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: B
 
 ```python
 if nums[left] <= nums[mid]:  # Left portion is sorted
@@ -667,7 +667,7 @@ def searchRange(nums, target):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: B
 
 ```python
 if nums[mid] == target:
@@ -779,7 +779,7 @@ def maxSubArray(nums):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: B
 
 ```python
 max_sum = current_sum = nums[0]
@@ -910,7 +910,7 @@ def hasCycle(head):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: C
 
 ```python
 slow = fast = head
@@ -1020,7 +1020,7 @@ def middleNode(head):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: A
 
 ```python
 slow = fast = head
@@ -1186,7 +1186,7 @@ def levelOrder(root):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: D
 
 ```python
 if not root:
@@ -1350,7 +1350,7 @@ def hasPathSum(root, targetSum):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: B
 
 ```python
 if not root:
@@ -1547,7 +1547,7 @@ def numIslands(grid):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: A
 
 ```python
 if not grid:
@@ -1768,7 +1768,7 @@ def canFinish(numCourses, prerequisites):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: B
 
 ```python
 # Build adjacency list
@@ -2430,7 +2430,7 @@ def findKthLargest(nums, k):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: B
 
 ```python
 import heapq
@@ -2607,7 +2607,7 @@ def isValid(s):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: A
 
 ```python
 stack = []
@@ -2760,7 +2760,7 @@ def dailyTemperatures(temperatures):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: A
 
 ```python
 n = len(temperatures)
@@ -2913,7 +2913,7 @@ def maxVowels(s, k):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: B
 
 ```python
 vowels = set('aeiou')
@@ -3102,7 +3102,7 @@ def longestSubarray(nums):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: C
 
 ```python
 left = 0
@@ -3272,7 +3272,7 @@ def mergeAlternately(word1, word2):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: B
 
 ```python
 result = []
@@ -3379,7 +3379,7 @@ def moveZeroes(nums):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: D
 
 ```python
 left = 0  # Position to insert non-zero element
@@ -3508,7 +3508,7 @@ def isSubsequence(s, t):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: A
 
 ```python
 i, j = 0, 0
@@ -3660,7 +3660,7 @@ def pivotIndex(nums):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: B
 
 ```python
 # Calculate the total sum
@@ -3780,7 +3780,7 @@ def largestAltitude(gain):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: B
 
 ```python
 current = 0
@@ -3923,7 +3923,7 @@ def minCostClimbingStairs(cost):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: C
 
 ```python
 n = len(cost)
@@ -4067,7 +4067,7 @@ def rob(nums):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: A
 
 ```python
 if not nums:
@@ -4211,7 +4211,7 @@ def maxDepth(root):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: A
 
 ```python
 if not root:
@@ -4379,7 +4379,7 @@ def goodNodes(root):
 <details>
 <summary>Answer</summary>
 
-The correct answer is:
+The correct answer is: A
 
 ```python
 def dfs(node, max_so_far):
