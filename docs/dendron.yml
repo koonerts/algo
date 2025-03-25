@@ -2,6 +2,8 @@ version: 5
 dev:
     enablePreviewV2: true
     enableSelfContainedVaults: true
+    enableEngineV3: true
+    enableExportPodV2: true
 commands:
     lookup:
         note:
@@ -80,7 +82,8 @@ preview:
     enableHashesForFMTags: false
     enablePrettyRefs: true
     enableKatex: true
-    automaticallyShowPreview: false
+    automaticallyShowPreview: true
+    theme: dark
 publishing:
     enableFMTitle: true
     enableNoteTitleForLink: true
