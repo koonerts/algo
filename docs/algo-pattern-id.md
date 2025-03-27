@@ -389,6 +389,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 - Time: O(m * n) where m, n are string lengths
 - Space: O(m * n)
 
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
+
 ### Fibonacci Sequence Pattern
 
 **How to Identify:**
@@ -408,6 +411,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 - Time: O(n)
 - Space: O(n) can be optimized to O(1)
+
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
 
 ## Backtracking Patterns
 
@@ -431,6 +437,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 - Time: O(2^n) for subsets, O(n!) for permutations
 - Space: O(n) for recursion stack
 
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
+
 ### Constraint Satisfaction Pattern
 
 **How to Identify:**
@@ -450,6 +459,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 - Time: Exponential, but pruning reduces actual runtime
 - Space: O(n) for recursion stack
+
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
 
 ## Heap Patterns
 
@@ -472,6 +484,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 - Time: O(n log k) for processing n elements with heap of size k
 - Space: O(k) for the heap
+
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
 
 ### Two Heaps Pattern
 
