@@ -269,6 +269,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 - Time: O(m) for insertions and searches, where m is key length
 - Space: O(n * m) where n is number of keys, m is average key length
 
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
+
 ## Graph Patterns
 
 ### Dijkstra's Algorithm
@@ -292,6 +295,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 - Time: O((V + E) log V) with binary heap implementation
 - Space: O(V)
 
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
+
 ### Union-Find (Disjoint Set)
 
 **How to Identify:**
@@ -311,6 +317,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 - Time: O(α(n)) amortized per operation where α is inverse Ackermann function
 - Space: O(n)
+
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
 
 ## Dynamic Programming Patterns
 
@@ -334,6 +343,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 - Time: O(n * C) where n is items, C is capacity
 - Space: O(n * C), can be optimized to O(C)
 
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
+
 ### Unbounded Knapsack Pattern
 
 **How to Identify:**
@@ -353,6 +365,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 - Time: O(n * C) where n is item types, C is capacity
 - Space: O(C)
+
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
 
 ### Longest Common Subsequence (LCS) Pattern
 
