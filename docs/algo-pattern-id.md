@@ -147,6 +147,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 - Time: O(n)
 - Space: O(1) for iterative solutions, O(n) for recursive solutions
 
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
+
 ---
 
 ## Tree Patterns
@@ -171,6 +174,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 - Time: O(n) where n is number of nodes
 - Space: O(h) where h is tree height for recursion, O(n) worst case
 
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
+
 ### Depth-First Search (DFS)
 
 **How to Identify:**
@@ -191,6 +197,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 - Time: O(V + E) where V is vertices and E is edges
 - Space: O(h) for recursion stack where h is maximum depth
+
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
 
 # Breadth-First Search (BFS)
 
@@ -213,6 +222,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 - Time: O(V + E) where V is vertices and E is edges
 - Space: O(w) where w is maximum width of tree/graph
 
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
+
 ## Binary Search Tree
 
 **How to Identify:**
@@ -232,6 +244,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 - Time: O(h) where h is tree height
 - Space: O(h) for recursion stack
+
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
 
 ### Trie (Prefix Tree)
 
