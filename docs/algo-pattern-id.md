@@ -507,6 +507,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 - Time: O(log n) per element insertion
 - Space: O(n) for storing all elements
 
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
+
 ## Additional Patterns
 
 ### Binary Search Variations
@@ -530,6 +533,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 - Time: O(log n)
 - Space: O(1) iterative, O(log n) recursive
 
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
+
 ### Greedy Algorithms
 
 **How to Identify:**
@@ -549,6 +555,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 - Time: Usually O(n log n) due to sorting
 - Space: Usually O(1) or O(n)
+
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
 
 ### Bit Manipulation
 
@@ -570,6 +579,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 - Time: O(1) to O(n) depending on problem
 - Space: Usually O(1)
+
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
 
 ## Problem-to-Pattern Matching Table
 
