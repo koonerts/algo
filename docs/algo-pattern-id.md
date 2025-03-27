@@ -30,6 +30,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 - Time: O(n) where n is array length (each element processed at most twice)
 - Space: O(1) for fixed window, O(k) where k is window size for variable window
 
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
+
 ### Two Pointers
 
 **How to Identify:**
@@ -51,6 +54,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 - Time: O(n) for most implementations or O(n²) for nested two pointers
 - Space: O(1) as typically implemented in-place
 
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
+
 ### Kadane's Algorithm
 
 **How to Identify:**
@@ -70,6 +76,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 - Time: O(n)
 - Space: O(1)
 
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
+
 ### Prefix Sums
 
 **How to Identify:**
@@ -88,6 +97,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 - Time: O(n) for preprocessing, O(1) for queries
 - Space: O(n) for storing prefix sums
+
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
 
 ---
 
@@ -113,6 +125,9 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 - Time: O(n)
 - Space: O(1)
+
+#### How to Solve
+*(Describe the general steps/approach to solve problems using this pattern)*
 
 ### Linked List Reversal
 
