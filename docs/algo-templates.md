@@ -1,6 +1,6 @@
 # Algorithm Templates
 
-> A curated collection of essential algorithm patterns and templates for problem solving. Each template includes implementation, time/space complexity, and common applications.
+> A curated collection of essential algorithm patterns and templates FOR problem solving. Each template includes implementation, time/space complexity, and common applications.
 
 ## Table of Contents
 
@@ -33,7 +33,7 @@
     - [Optimized with Rank](#optimized-with-rank)
   - [13. Kadane's Algorithm](#13-kadanes-algorithm)
   - [14. Prefix Sums](#14-prefix-sums)
-  - [15. Fast \& Slow Pointers](#15-fast--slow-pointers)
+  - [15. LinkedList (Fast \& Slow Pointers)](#15-linkedlist-fast--slow-pointers)
   - [16. Linked List Reversal](#16-linked-list-reversal)
   - [17. Dijkstra's Algorithm](#17-dijkstras-algorithm)
   - [18. 0/1 Knapsack Pattern](#18-01-knapsack-pattern)
@@ -64,29 +64,33 @@ def two_pointers(arr):
     left, right = 0, len(arr) - 1
     result = []
 
-    while left < right:
-        if condition(arr[left], arr[right]):
+    WHILE left < right:
+        IF condition(arr[left], arr[right]):
             # Process result
             result.append((arr[left], arr[right]))
             left += 1
             right -= 1
         elif needs_left_increment(arr[left], arr[right]):
             left += 1
-        else:
+        ELSE:
             right -= 1
 
-    return result
+    RETURN result
 ```
 
-**Time Complexity**: O(n) for most implementations
+**Time Complexity**: O(n) FOR most implementations
 **Space Complexity**: O(1) excluding output storage
 
 **Example Use Cases**:
 
 - Two Sum problems
 
-  ```pseudo
+  ```python
   ALGORITHM TwoSum(nums, target)
+    """
+    Given a sorted array `nums` and a target `target`, find two numbers
+    such that they add up to `target`. Returns indices (or values).
+    """
     Sort array nums
     Set left pointer to beginning of array
     Set right pointer to end of array
@@ -106,8 +110,12 @@ def two_pointers(arr):
 
 - Container with most water
 
-  ```pseudo
+  ```python
   ALGORITHM MaxArea(heights)
+    """
+    Given an array `heights` representing vertical lines, find two lines
+    that, together with the x-axis, form a container holding the most water.
+    """
     Set left to 0
     Set right to length(heights) - 1
     Set maxArea to 0
@@ -116,7 +124,7 @@ def two_pointers(arr):
       Calculate height = MIN(heights[left], heights[right])
       Calculate width = right - left
       Calculate area = height × width
-      Update maxArea if area is larger
+      Update maxArea IF area is larger
 
       IF heights[left] < heights[right] THEN
         Increment left
@@ -128,8 +136,12 @@ def two_pointers(arr):
 
 - Remove duplicates from sorted array
 
-  ```pseudo
+  ```python
   ALGORITHM RemoveDuplicates(nums)
+    """
+    Given a sorted array `nums`, remove duplicates in-place such that each
+    unique element appears only once. Returns the new length.
+    """
     IF array is empty THEN
       RETURN 0
 
@@ -159,71 +171,75 @@ Efficiently processes array segments of dynamic or fixed size by sliding a windo
 
 ```python
 def fixed_window(arr, k):
+    """Template: Find the maximum sum/value in a fixed-size sliding window of size k."""
     # Process first window
     window_sum = sum(arr[:k])
     result = window_sum
 
     # Slide window
-    for i in range(k, len(arr)):
+    FOR i in range(k, len(arr)):
         window_sum += arr[i] - arr[i - k]  # Add new, remove old
         result = max(result, window_sum)
 
-    return result
+    RETURN result
 ```
 
 ### Flexible Size - Find Longest
 
 ```python
 def longest_window(arr, target):
+    """Template: Find the longest flexible-size window satisfying a condition (e.g., sum <= target)."""
     left = 0
     current_sum = 0
     max_length = 0
 
-    for right in range(len(arr)):
+    FOR right in range(len(arr)):
         # Expand window
         current_sum += arr[right]
 
         # Shrink window until valid
-        while current_sum > target:
+        WHILE current_sum > target:
             current_sum -= arr[left]
             left += 1
 
-        # Update result if valid
+        # Update result IF valid
         max_length = max(max_length, right - left + 1)
 
-    return max_length
+    RETURN max_length
 ```
 
 ### Flexible Size - Find Shortest
 
 ```python
 def shortest_window(arr, target):
+    """Template: Find the shortest flexible-size window satisfying a condition (e.g., sum >= target)."""
     left = 0
     current_sum = 0
     min_length = float('inf')
 
-    for right in range(len(arr)):
+    FOR right in range(len(arr)):
         # Expand window
         current_sum += arr[right]
 
-        # Shrink window while valid
-        while current_sum >= target:
+        # Shrink window WHILE valid
+        WHILE current_sum >= target:
             min_length = min(min_length, right - left + 1)
             current_sum -= arr[left]
             left += 1
 
-    return min_length if min_length != float('inf') else 0
+    RETURN min_length IF min_length != float('inf') ELSE 0
 ```
 
-**Time Complexity**: O(n) for most implementations
-**Space Complexity**: O(1) for numeric windows, O(k) for string/object windows
+**Time Complexity**: O(n) FOR most implementations
+**Space Complexity**: O(1) FOR numeric windows, O(k) FOR string/object windows
 
 **Example Use Cases**:
 
 - Maximum sum subarray of size k
 
-  ```pseudo
+  ```python
   ALGORITHM MaxSumSubarray(arr, k)
+    """Find the maximum sum of a contiguous subarray of size k."""
     IF length(arr) < k THEN
       RETURN error
 
@@ -232,15 +248,16 @@ def shortest_window(arr, target):
 
     FOR i FROM k TO length(arr)-1 DO
       Slide window by adding current element and removing oldest
-      Update maxSum if current sum is larger
+      Update maxSum IF current sum is larger
 
     RETURN maxSum
   ```
 
 - Longest substring with k distinct characters
 
-  ```pseudo
+  ```python
   ALGORITHM LongestSubstringKDistinct(s, k)
+    """Find the length of the longest substring in s with at most k distinct characters."""
     Set left to 0
     Set maxLength to 0
     Initialize empty character frequency map
@@ -250,34 +267,76 @@ def shortest_window(arr, target):
 
       WHILE number of distinct chars in map > k DO
         Decrease frequency of s[left] in map
-        Remove s[left] from map if frequency becomes 0
+        Remove s[left] from map IF frequency becomes 0
         Increment left
 
-      Update maxLength if current window length is larger
+      Update maxLength IF current window length is larger
 
     RETURN maxLength
   ```
 
 - Minimum window substring
 
-  ```pseudo
+  ```python
   ALGORITHM MinWindowSubstring(s, t)
-    Create frequency map for characters in t
+    """Find the minimum window substring of s which contains all characters of t."""
+    Create frequency map FOR characters in t
     Set left to 0
     Set minLength to infinity
     Track formed and required character counts
 
     FOR right FROM 0 TO length(s)-1 DO
       Add s[right] to window count
-      Update formed count if character is in t and matches required count
+      Update formed count IF character is in t and matches required count
 
       WHILE all required characters are in current window DO
-        Update result if current window is smaller
+        Update result IF current window is smaller
         Remove leftmost character from window
-        Update formed count if necessary
+        Update formed count IF necessary
         Increment left
 
     RETURN minimum window substring found
+  ```
+
+
+- Sliding Window Maximum
+
+  ```python
+  ALGORITHM SlidingWindowMaximum(nums, w)
+    """Find the maximum value in each sliding window of size w in the array nums."""
+    IF length(nums) equals 1 THEN
+      RETURN nums
+
+    Initialize result array
+    Initialize deque to store indices
+
+    // Process first window
+    FOR i FROM 0 TO w-1 DO
+      // Remove elements smaller than current element from back of deque
+      WHILE deque is not empty AND nums[i] >= nums[deque.back()] DO
+        Remove last element from deque
+
+      Add i to deque
+
+    // Add maximum of first window to result
+    Add nums[deque.front()] to result
+
+    // Process rest of the array
+    FOR i FROM w TO length(nums)-1 DO
+      // Remove elements smaller than current element from back
+      WHILE deque is not empty AND nums[i] >= nums[deque.back()] DO
+        Remove last element from deque
+
+      // Remove elements outside current window from front
+      WHILE deque is not empty AND deque.front() <= (i - w) DO
+        Remove first element from deque
+
+      Add i to deque
+
+      // Front of deque is maximum of current window
+      Add nums[deque.front()] to result
+
+    RETURN result
   ```
 
 ---
@@ -298,14 +357,15 @@ Explores all neighbors at the current depth before moving to nodes at the next d
 from collections import deque
 
 def bfs(root):
-    if not root:
-        return
+    """Template: Perform a level-order traversal of a tree using BFS."""
+    IF not root:
+        RETURN
 
     queue = deque([root])
-    while queue:
+    WHILE queue:
         node = queue.popleft()
         # Process node
-        for child in node.children:
+        FOR child in node.children:
             queue.append(child)
 ```
 
@@ -315,14 +375,15 @@ def bfs(root):
 from collections import deque
 
 def bfs(start, graph):
+    """Template: Perform a BFS traversal on a graph starting from a given node."""
     queue = deque([start])
     visited = {start}
 
-    while queue:
+    WHILE queue:
         node = queue.popleft()
         # Process node
-        for neighbor in graph[node]:
-            if neighbor not in visited:
+        FOR neighbor in graph[node]:
+            IF neighbor not in visited:
                 visited.add(neighbor)
                 queue.append(neighbor)
 ```
@@ -333,18 +394,19 @@ def bfs(start, graph):
 from collections import deque
 
 def bfs_by_level(start, graph):
+    """Template: Perform BFS traversal while tracking the level of each node."""
     queue = deque([start])
     visited = {start}
     level = 0
 
-    while queue:
+    WHILE queue:
         # Process entire level
         level_size = len(queue)
-        for _ in range(level_size):
+        FOR _ in range(level_size):
             node = queue.popleft()
             # Process node at current level
-            for neighbor in graph[node]:
-                if neighbor not in visited:
+            FOR neighbor in graph[node]:
+                IF neighbor not in visited:
                     visited.add(neighbor)
                     queue.append(neighbor)
         level += 1
@@ -357,8 +419,9 @@ def bfs_by_level(start, graph):
 
 - Shortest path in maze
 
-  ```pseudo
+  ```python
   ALGORITHM ShortestPathInMaze(maze, start, end)
+    """Find the shortest path from start to end in an unweighted maze (grid) using BFS."""
     Initialize queue with start position
     Mark start as visited
     Set distance of start to 0
@@ -380,9 +443,10 @@ def bfs_by_level(start, graph):
 
 - Word ladder
 
-  ```pseudo
+  ```python
   ALGORITHM WordLadder(beginWord, endWord, wordList)
-    Create a set from wordList for O(1) lookups
+    """Find the shortest transformation sequence from beginWord to endWord using BFS."""
+    Create a set from wordList FOR O(1) lookups
     Initialize queue with beginWord and distance 1
     Mark beginWord as visited
 
@@ -405,8 +469,9 @@ def bfs_by_level(start, graph):
 
 - Web crawler
 
-  ```pseudo
+  ```python
   ALGORITHM WebCrawler(startUrl, maxDepth)
+    """Crawl web pages starting from startUrl up to maxDepth using BFS."""
     Initialize queue with startUrl and depth 0
     Initialize visited set with startUrl
     Initialize result list with startUrl
@@ -445,8 +510,9 @@ Explores as far as possible along each branch before backtracking.
 
 ```python
 def dfs(root):
-    if not root:
-        return
+    """Template: Perform a recursive DFS traversal (pre-order shown) on a tree."""
+    IF not root:
+        RETURN
 
     # Process root
     dfs(root.left)
@@ -457,14 +523,15 @@ def dfs(root):
 
 ```python
 def dfs(node, graph, visited=None):
-    if visited is None:
+    """Template: Perform a recursive DFS traversal on a graph starting from a node."""
+    IF visited is None:
         visited = set()
 
     visited.add(node)
     # Process node
 
-    for neighbor in graph[node]:
-        if neighbor not in visited:
+    FOR neighbor in graph[node]:
+        IF neighbor not in visited:
             dfs(neighbor, graph, visited)
 ```
 
@@ -475,8 +542,9 @@ def dfs(node, graph, visited=None):
 
 - Cycle detection
 
-  ```pseudo
+  ```python
   ALGORITHM DetectCycle(graph)
+    """Detect if a cycle exists in a directed graph using DFS."""
     Initialize visited set
     Initialize recursion stack set
 
@@ -504,9 +572,10 @@ def dfs(node, graph, visited=None):
 
 - Connected components
 
-  ```pseudo
+  ```python
   ALGORITHM FindConnectedComponents(graph)
-    Initialize visited array for all nodes
+    """Find all connected components in an undirected graph using DFS."""
+    Initialize visited array FOR all nodes
     Initialize components count to 0
     Initialize component assignment array
 
@@ -528,8 +597,9 @@ def dfs(node, graph, visited=None):
 
 - Solving mazes
 
-  ```pseudo
+  ```python
   ALGORITHM SolveMazeWithDFS(maze, start, end)
+    """Find a path (not necessarily shortest) from start to end in a maze using DFS."""
     Initialize visited matrix to track visited cells
     Initialize path array to store solution
 
@@ -569,11 +639,12 @@ Backtracking is a systematic way to explore all potential solutions through recu
 
 ```python
 def backtrack(start_index, path):
-    if is_leaf(start_index):  # Base case
+    """Template: Basic backtracking structure to explore all possibilities."""
+    IF is_leaf(start_index):  # Base case
         report(path)
-        return
+        RETURN
 
-    for choice in get_choices(start_index):
+    FOR choice in get_choices(start_index):
         path.append(choice)      # Make choice
         backtrack(start_index + 1, path)  # Explore
         path.pop()               # Undo choice
@@ -583,13 +654,14 @@ def backtrack(start_index, path):
 
 ```python
 def backtrack(index, state):
+    """Template: Backtracking structure for aggregation problems (counting, optimization)."""
     # Base case
-    if is_leaf(index):
-        return 1
+    IF is_leaf(index):
+        RETURN 1
 
     result = initial_value
 
-    for choice in get_choices(index, state):
+    FOR choice in get_choices(index, state):
         # Make choice and update state
         update_state(state, choice)
 
@@ -599,26 +671,27 @@ def backtrack(index, state):
         # Undo choice
         revert_state(state, choice)
 
-    return result
+    RETURN result
 ```
 
 ### Common Aggregation Patterns
 
-| Problem Type          | Initial Value | Aggregation Function |
+| Problem Type          | Initial Value | Aggregation FUNCTION |
 | --------------------- | ------------- | -------------------- |
-| Existence/Possibility | False         | OR (∥)              |
+| Existence/Possibility | False         | OR (∥)               |
 | Count ways            | 0             | Addition (+)         |
-| Optimize (max/min)    | 0/-∞/∞      | max()/min()          |
+| Optimize (max/min)    | 0/-∞/∞        | max()/min()          |
 
 **Time Complexity**: O(k^n) where k is the branching factor and n is the depth
-**Space Complexity**: O(n) for recursion stack
+**Space Complexity**: O(n) FOR recursion stack
 
 **Example Use Cases**:
 
 - N-Queens
 
-  ```pseudo
+  ```python
   ALGORITHM SolveNQueens(n)
+    """Find all distinct solutions to the N-Queens puzzle using backtracking."""
     Initialize empty board of size n×n
     Initialize solutions array
 
@@ -645,8 +718,9 @@ def backtrack(index, state):
 
 - Subset/Combination Sum problems
 
-  ```pseudo
+  ```python
   ALGORITHM CombinationSum(candidates, target)
+    """Find all unique combinations in candidates where the numbers sum to target."""
     Sort candidates array
     Initialize results array
 
@@ -669,8 +743,9 @@ def backtrack(index, state):
 
 - Permutations
 
-  ```pseudo
+  ```python
   ALGORITHM GeneratePermutations(nums)
+    """Generate all possible permutations of the elements in the array nums."""
     Initialize results array
     Initialize used array to track used elements
 
@@ -705,18 +780,19 @@ A divide-and-conquer algorithm that finds elements in a sorted array in logarith
 
 ```python
 def binary_search(arr):
+    """Template: Binary search to find the first element satisfying a condition."""
     left, right = 0, len(arr) - 1
     result = -1
 
-    while left <= right:
+    WHILE left <= right:
         mid = (left + right) // 2
-        if condition(arr[mid]):
+        IF condition(arr[mid]):
             result = mid       # Potential answer
-            right = mid - 1    # Search left for better answer
-        else:
+            right = mid - 1    # Search left FOR better answer
+        ELSE:
             left = mid + 1     # Search right
 
-    return result
+    RETURN result
 ```
 
 **Time Complexity**: O(log n)
@@ -726,8 +802,9 @@ def binary_search(arr):
 
 - Finding element in sorted array
 
-  ```pseudo
+  ```python
   ALGORITHM BinarySearch(arr, target)
+    """Find the index of target in a sorted array arr using binary search."""
     Set left to 0
     Set right to length(arr) - 1
 
@@ -746,8 +823,9 @@ def binary_search(arr):
 
 - Finding first/last occurrence
 
-  ```pseudo
+  ```python
   ALGORITHM FindFirstOccurrence(arr, target)
+    """Find the index of the first occurrence of target in a sorted array."""
     Set left to 0
     Set right to length(arr) - 1
     Set result to -1
@@ -757,7 +835,7 @@ def binary_search(arr):
 
       IF arr[mid] equals target THEN
         Set result to mid  // Potential answer
-        Set right to mid - 1  // Continue searching left
+        Set right to mid - 1  // CONTINUE searching left
       ELSE IF arr[mid] < target THEN
         Set left to mid + 1
       ELSE
@@ -768,8 +846,9 @@ def binary_search(arr):
 
 - Search in rotated sorted array
 
-  ```pseudo
+  ```python
   ALGORITHM SearchRotatedArray(arr, target)
+    """Search for target in a rotated sorted array."""
     Set left to 0
     Set right to length(arr) - 1
 
@@ -810,6 +889,7 @@ A specialized tree-based data structure that satisfies the heap property.
 import heapq
 
 def heap_operations():
+    """Demonstrates common heap operations using Python's heapq module."""
     # Min heap (default in Python)
     min_heap = []
     heapq.heappush(min_heap, 5)
@@ -819,7 +899,7 @@ def heap_operations():
     # Get smallest element without removing
     smallest = min_heap[0]
 
-    # Remove and return smallest element
+    # Remove and RETURN smallest element
     smallest = heapq.heappop(min_heap)
 
     # Max heap (negate values)
@@ -831,7 +911,7 @@ def heap_operations():
     # Get largest element without removing
     largest = -max_heap[0]
 
-    # Remove and return largest element
+    # Remove and RETURN largest element
     largest = -heapq.heappop(max_heap)
 
     # Convert list to heap in-place
@@ -858,9 +938,10 @@ def heap_operations():
 
 - Dijkstra's algorithm
 
-  ```pseudo
+  ```python
   ALGORITHM Dijkstra(graph, start)
-    Initialize distances array with infinity for all nodes except start node
+    """Find the shortest paths from a start node to all other nodes in a weighted graph."""
+    Initialize distances array with infinity FOR all nodes except start node
     Initialize priority queue with (start, 0) as (node, distance) pair
     Initialize visited set
 
@@ -874,8 +955,8 @@ def heap_operations():
 
       FOR each neighbor of node DO
         Calculate new distance = current distance + edge weight
-        IF new distance < stored distance for neighbor THEN
-          Update distance for neighbor
+        IF new distance < stored distance FOR neighbor THEN
+          Update distance FOR neighbor
           Add (neighbor, new distance) to priority queue
 
     RETURN distances array
@@ -883,8 +964,9 @@ def heap_operations():
 
 - K closest points
 
-  ```pseudo
+  ```python
   ALGORITHM KClosestPoints(points, k, origin)
+    """Find the k points closest to the origin using a max heap."""
     Initialize max heap
 
     FOR each point in points DO
@@ -902,8 +984,9 @@ def heap_operations():
 
 - Merge k sorted lists
 
-  ```pseudo
+  ```python
   ALGORITHM MergeKLists(lists)
+    """Merge k sorted linked lists into one sorted list using a min heap."""
     Initialize min heap
     Initialize result list
 
@@ -917,7 +1000,7 @@ def heap_operations():
       Add value to result list
 
       // Advance pointer in the list that provided the min element
-      Increment pointer for list at list index
+      Increment pointer FOR list at list index
 
       IF list at list index still has elements THEN
         Add (current element, list index) to heap
@@ -939,25 +1022,27 @@ Treating a 2D grid as a graph with neighboring cells as connected nodes.
 
 ```python
 def get_neighbors(row, col, matrix):
+    """Helper function to get valid neighbors of a cell in a matrix (grid)."""
     # Four directions: Up, Right, Down, Left
     directions = [(-1, 0), (0, 1), (1, 0), (0, -1)]
     neighbors = []
 
-    for dr, dc in directions:
+    FOR dr, dc in directions:
         new_row, new_col = row + dr, col + dc
         # Check bounds
-        if 0 <= new_row < len(matrix) and 0 <= new_col < len(matrix[0]):
+        IF 0 <= new_row < len(matrix) and 0 <= new_col < len(matrix[0]):
             neighbors.append((new_row, new_col))
 
-    return neighbors
+    RETURN neighbors
 ```
 
 **Example Use Cases**:
 
 - Number of islands
 
-  ```pseudo
+  ```python
   ALGORITHM CountIslands(grid)
+    """Count the number of islands (connected groups of 1s) in a binary grid."""
     Initialize count to 0
 
     FOR each cell in grid DO
@@ -981,8 +1066,9 @@ def get_neighbors(row, col, matrix):
 
 - Flood fill
 
-  ```pseudo
+  ```python
   ALGORITHM FloodFill(image, sr, sc, newColor)
+    """Fill a connected region in an image with a new color starting from (sr, sc)."""
     Get starting color = image[sr][sc]
 
     IF starting color equals newColor THEN
@@ -1005,8 +1091,9 @@ def get_neighbors(row, col, matrix):
 
 - Shortest path in maze
 
-  ```pseudo
+  ```python
   ALGORITHM ShortestPathInMaze(maze, start, destination)
+    """Find the shortest path from start to destination in a maze (grid) using BFS."""
     Initialize queue with (start.row, start.col, 0)
     Initialize visited matrix
     Mark start as visited
@@ -1048,17 +1135,18 @@ A stack that maintains elements in either increasing or decreasing order.
 
 ```python
 def monotonic_increasing_stack(arr):
-    stack = []  # Will maintain increasing order
+    """Template: Process an array using a monotonic stack (decreasing order shown)."""
+    stack = []  # Will maintain decreasing order
 
-    for i, val in enumerate(arr):
+    FOR i, val in enumerate(arr):
         # Pop elements greater than current
-        while stack and stack[-1] > val:
+        WHILE stack and stack[-1] > val:
             popped = stack.pop()
             # Process popped element
 
         stack.append(val)
 
-    # Process remaining elements in stack if needed
+    # Process remaining elements in stack IF needed
 ```
 
 **Time Complexity**: O(n) as each element is pushed and popped at most once
@@ -1068,8 +1156,9 @@ def monotonic_increasing_stack(arr):
 
 - Next greater element
 
-  ```pseudo
+  ```python
   ALGORITHM NextGreaterElement(nums)
+    """Find the next greater element for each element in an array using a monotonic stack."""
     Initialize result array filled with -1
     Initialize empty stack
 
@@ -1085,8 +1174,9 @@ def monotonic_increasing_stack(arr):
 
 - Largest rectangle in histogram
 
-  ```pseudo
+  ```python
   ALGORITHM LargestRectangleArea(heights)
+    """Find the largest rectangle area in a histogram using a monotonic stack."""
     Initialize stack
     Initialize maxArea to 0
     Append 0 to heights array  // Sentinel value at end
@@ -1094,9 +1184,9 @@ def monotonic_increasing_stack(arr):
     FOR i FROM 0 TO length(heights)-1 DO
       WHILE stack is not empty AND heights[stack.top] > heights[i] DO
         Pop height from stack
-        Calculate width = i - stack.top - 1 if stack not empty, else i
+        Calculate width = i - stack.top - 1 IF stack not empty, ELSE i
         Calculate area = height × width
-        Update maxArea if area is larger
+        Update maxArea IF area is larger
 
       Push i onto stack
 
@@ -1105,8 +1195,9 @@ def monotonic_increasing_stack(arr):
 
 - Daily temperatures
 
-  ```pseudo
+  ```python
   ALGORITHM DailyTemperatures(temperatures)
+    """Find the number of days until a warmer temperature for each day."""
     Initialize result array with zeros
     Initialize empty stack
 
@@ -1124,7 +1215,7 @@ def monotonic_increasing_stack(arr):
 
 ## 10. Topological Sort
 
-Ordering of vertices in a directed acyclic graph where for each edge (u,v), u comes before v.
+Ordering of vertices in a directed acyclic graph where FOR each edge (u,v), u comes before v.
 
 **When to use**:
 
@@ -1136,27 +1227,28 @@ Ordering of vertices in a directed acyclic graph where for each edge (u,v), u co
 from collections import deque
 
 def topological_sort(graph):
+    """Perform a topological sort on a directed acyclic graph (DAG)."""
     # Calculate in-degrees
-    indegree = {node: 0 for node in graph}
-    for node in graph:
-        for neighbor in graph[node]:
+    indegree = {node: 0 FOR node in graph}
+    FOR node in graph:
+        FOR neighbor in graph[node]:
             indegree[neighbor] += 1
 
     # Start with nodes that have no dependencies
-    queue = deque([node for node, count in indegree.items() if count == 0])
+    queue = deque([node FOR node, count in indegree.items() IF count == 0])
     result = []
 
-    while queue:
+    WHILE queue:
         node = queue.popleft()
         result.append(node)
 
-        for neighbor in graph[node]:
+        FOR neighbor in graph[node]:
             indegree[neighbor] -= 1
-            if indegree[neighbor] == 0:
+            IF indegree[neighbor] == 0:
                 queue.append(neighbor)
 
-    # Check if cycle exists
-    return result if len(result) == len(graph) else None
+    # Check IF cycle exists
+    RETURN result IF len(result) == len(graph) ELSE None
 ```
 
 **Time Complexity**: O(V + E)
@@ -1166,8 +1258,9 @@ def topological_sort(graph):
 
 - Course prerequisites
 
-  ```pseudo
+  ```python
   ALGORITHM CourseScheduling(numCourses, prerequisites)
+    """Find a valid order to take courses given prerequisites, or detect a cycle."""
     Create adjacency list representation of graph
     Initialize indegree array of size numCourses
 
@@ -1195,10 +1288,11 @@ def topological_sort(graph):
 
 - Build systems
 
-  ```pseudo
+  ```python
   ALGORITHM BuildDependencyOrder(targets, dependencies)
+    """Determine a valid build order for targets with dependencies."""
     Create adjacency list from dependencies
-    Initialize indegree map for each target
+    Initialize indegree map FOR each target
 
     FOR each dependency (target, dependent) DO
       Add dependent to adjacency list of target
@@ -1224,17 +1318,18 @@ def topological_sort(graph):
 
 - Parallel job scheduling
 
-  ```pseudo
+  ```python
   ALGORITHM ParallelJobScheduling(jobs, dependencies, numProcessors)
+    """Schedule jobs with dependencies on multiple processors to minimize completion time."""
     Create adjacency list from dependencies
-    Initialize indegree map for each job
+    Initialize indegree map FOR each job
 
     FOR each dependency (job, dependent) DO
       Add dependent to adjacency list of job
       Increment indegree of dependent
 
     Initialize ready queue with all jobs having indegree 0
-    Initialize completion time map for each job
+    Initialize completion time map FOR each job
     Initialize current time to 0
     Initialize running jobs set
 
@@ -1265,7 +1360,7 @@ def topological_sort(graph):
 
 ## 11. Trie
 
-A tree-like data structure for efficient string search operations.
+A tree-like data structure FOR efficient string search operations.
 
 **When to use**:
 
@@ -1274,40 +1369,45 @@ A tree-like data structure for efficient string search operations.
 - Spell checkers
 
 ```python
-class TrieNode:
+CLASS TrieNode:
+    """Represents a node in a Trie."""
     def __init__(self):
         self.children = {}
         self.is_end = False
         self.count = 0
 
-class Trie:
+CLASS Trie:
+    """Implements a Trie data structure for efficient string prefix operations."""
     def __init__(self):
         self.root = TrieNode()
 
     def insert(self, word):
+        """Inserts a word into the Trie."""
         node = self.root
-        for char in word:
-            if char not in node.children:
+        FOR char in word:
+            IF char not in node.children:
                 node.children[char] = TrieNode()
             node = node.children[char]
             node.count += 1
         node.is_end = True
 
     def search(self, word):
+        """Searches for a complete word in the Trie."""
         node = self.root
-        for char in word:
-            if char not in node.children:
-                return False
+        FOR char in word:
+            IF char not in node.children:
+                RETURN False
             node = node.children[char]
-        return node.is_end
+        RETURN node.is_end
 
     def starts_with(self, prefix):
+        """Checks if there is any word in the Trie that starts with the given prefix."""
         node = self.root
-        for char in prefix:
-            if char not in node.children:
-                return 0
+        FOR char in prefix:
+            IF char not in node.children:
+                RETURN 0
             node = node.children[char]
-        return node.count
+        RETURN node.count
 ```
 
 **Time Complexity**:
@@ -1320,8 +1420,9 @@ class Trie:
 
 - Word dictionary
 
-  ```pseudo
+  ```python
   ALGORITHM ImplementDictionary()
+    """Implement a dictionary using a Trie for add, search, and delete operations."""
     Initialize Trie with root node
 
     FUNCTION AddWord(word)
@@ -1329,8 +1430,8 @@ class Trie:
 
       FOR each character c in word DO
         IF c is not in current.children THEN
-          Create new TrieNode for c
-        Set current to child node for c
+          Create new TrieNode FOR c
+        Set current to child node FOR c
 
       Mark current node as end of word
 
@@ -1340,9 +1441,9 @@ class Trie:
       FOR each character c in word DO
         IF c is not in current.children THEN
           RETURN false
-        Set current to child node for c
+        Set current to child node FOR c
 
-      RETURN true if current node is marked as end of word, false otherwise
+      RETURN true IF current node is marked as end of word, false otherwise
 
     FUNCTION DeleteWord(word)
       FUNCTION _Delete(node, word, depth)
@@ -1369,8 +1470,9 @@ class Trie:
 
 - Autocomplete
 
-  ```pseudo
+  ```python
   ALGORITHM Autocomplete(prefix)
+    """Provide autocomplete suggestions based on a given prefix using a Trie."""
     Initialize Trie with preloaded dictionary
     Initialize result list
 
@@ -1381,7 +1483,7 @@ class Trie:
       FOR each character c in prefix DO
         IF c is not in current.children THEN
           RETURN empty list  // No words with this prefix
-        Set current to child node for c
+        Set current to child node FOR c
 
       // Collect all words with this prefix
       CollectWords(current, prefix, result)
@@ -1402,8 +1504,9 @@ class Trie:
 
 - IP routing tables
 
-  ```pseudo
+  ```python
   ALGORITHM IPRoutingTable()
+    """Implement an IP routing table using a Trie for longest prefix matching."""
     Initialize Trie with root node
 
     FUNCTION InsertRoute(ipAddress, nextHop)
@@ -1412,8 +1515,8 @@ class Trie:
 
       FOR each bit b in binary string DO
         IF b is not in current.children THEN
-          Create new TrieNode for b
-        Set current to child node for b
+          Create new TrieNode FOR b
+        Set current to child node FOR b
 
       Store nextHop information in current node
 
@@ -1429,7 +1532,7 @@ class Trie:
         IF b is not in current.children THEN
           BREAK
 
-        Set current to child node for b
+        Set current to child node FOR b
 
       // Check final node
       IF current has nextHop information THEN
@@ -1442,77 +1545,84 @@ class Trie:
 
 ## 12. Union Find (Disjoint Set)
 
-Data structure for tracking elements partitioned into disjoint sets.
+Data structure FOR tracking elements partitioned into disjoint sets.
 
 **When to use**:
 
 - Finding connected components
 - Cycle detection in undirected graphs
-- Kruskal's algorithm for minimum spanning trees
+- Kruskal's algorithm FOR minimum spanning trees
 
 ### Basic Implementation
 
 ```python
-class UnionFind:
+CLASS UnionFind:
+    """Basic implementation of the Union-Find (Disjoint Set Union) data structure."""
     def __init__(self, n=0):
         self.parent = {}  # Maps element to its parent
 
     def find(self, x):
-        # If x not in set yet, add it as its own parent
-        if x not in self.parent:
+        """Finds the representative (root) of the set containing x, with path compression."""
+        # IF x not in set yet, add it as its own parent
+        IF x not in self.parent:
             self.parent[x] = x
 
         # Find root of the set containing x
-        if self.parent[x] != x:
+        IF self.parent[x] != x:
             self.parent[x] = self.find(self.parent[x])
-        return self.parent[x]
+        RETURN self.parent[x]
 
     def union(self, x, y):
+        """Merges the sets containing x and y."""
         # Connect x's set to y's set
         self.parent[self.find(x)] = self.find(y)
 
     def connected(self, x, y):
-        return self.find(x) == self.find(y)
+        """Checks if x and y belong to the same set."""
+        RETURN self.find(x) == self.find(y)
 ```
 
 ### Optimized with Rank
 
 ```python
-class UnionFind:
+CLASS UnionFind:
+    """Optimized Union-Find with path compression and union by rank."""
     def __init__(self):
         self.parent = {}
         self.rank = {}
 
     def find(self, x):
-        if x not in self.parent:
+        """Finds the representative (root) of the set containing x, with path compression."""
+        IF x not in self.parent:
             self.parent[x] = x
             self.rank[x] = 0
 
         # Path compression
-        if self.parent[x] != x:
+        IF self.parent[x] != x:
             self.parent[x] = self.find(self.parent[x])
-        return self.parent[x]
+        RETURN self.parent[x]
 
     def union(self, x, y):
+        """Merges the sets containing x and y using union by rank."""
         root_x = self.find(x)
         root_y = self.find(y)
 
-        if root_x == root_y:
-            return
+        IF root_x == root_y:
+            RETURN
 
         # Union by rank
-        if self.rank[root_x] < self.rank[root_y]:
+        IF self.rank[root_x] < self.rank[root_y]:
             self.parent[root_x] = root_y
-        else:
+        ELSE:
             self.parent[root_y] = root_x
-            if self.rank[root_x] == self.rank[root_y]:
+            IF self.rank[root_x] == self.rank[root_y]:
                 self.rank[root_x] += 1
 ```
 
 **Time Complexity**:
 
 - With path compression and union by rank:
-  - Amortized O(α(n)) per operation, where α is the inverse Ackermann function (nearly constant)
+  - Amortized O(α(n)) per operation, where α is the inverse Ackermann FUNCTION (nearly constant)
 - Without optimizations:
   - O(n) worst case per operation
 
@@ -1520,8 +1630,9 @@ class UnionFind:
 
 - Network connectivity
 
-  ```pseudo
+  ```python
   ALGORITHM NetworkConnectivity(nodes, connections)
+    """Determine connected components in a network using Union-Find."""
     Initialize UnionFind with all nodes
 
     FOR each connection (node1, node2) in connections DO
@@ -1531,14 +1642,14 @@ class UnionFind:
 
     FOR each node in nodes DO
       root = Find(node)
-      Increment count for this root in component map
+      Increment count FOR this root in component map
 
     RETURN number of distinct roots and size of each component
   ```
 
 - Image segmentation
 
-  ```pseudo
+  ```python
   ALGORITHM ImageSegmentation(image, similarityThreshold)
     Initialize UnionFind with all pixels
 
@@ -1558,7 +1669,7 @@ class UnionFind:
 
 - Friends circles
 
-  ```pseudo
+  ```python
   ALGORITHM FriendCircles(friendshipMatrix)
     Initialize UnionFind with all people
     n = number of people
@@ -1589,33 +1700,20 @@ A dynamic programming approach to find the maximum subarray sum.
 - When greedy approach with local/global optimal values works
 
 ```python
-def kadanes_algorithm(arr):
-    # Handle the case of all negative numbers
-    if all(x < 0 for x in arr):
-        return max(arr)
-
-    max_so_far = 0
-    max_ending_here = 0
-
-    for num in arr:
-        max_ending_here = max(0, max_ending_here + num)
-        max_so_far = max(max_so_far, max_ending_here)
-
-    return max_so_far
-
-# Variation that handles all negative arrays
+# Kadane's Algorithm (handles all negative arrays)
 def kadanes_general(arr):
-    if not arr:
-        return 0
+    """Finds the maximum sum of a contiguous subarray (handles all negative arrays)."""
+    IF not arr:
+        RETURN 0
 
     max_so_far = arr[0]
     max_ending_here = arr[0]
 
-    for num in arr[1:]:
+    FOR num in arr[1:]:
         max_ending_here = max(num, max_ending_here + num)
         max_so_far = max(max_so_far, max_ending_here)
 
-    return max_so_far
+    RETURN max_so_far
 ```
 
 **Time Complexity**: O(n)
@@ -1625,8 +1723,9 @@ def kadanes_general(arr):
 
 - Maximum sum subarray
 
-  ```pseudo
+  ```python
   ALGORITHM MaximumSubarraySum(nums)
+    """Find the maximum sum of a contiguous subarray using Kadane's algorithm."""
     IF array is empty THEN
       RETURN 0
 
@@ -1645,18 +1744,19 @@ def kadanes_general(arr):
 
 - Maximum product subarray
 
-  ```pseudo
+  ```python
   ALGORITHM MaximumProductSubarray(nums)
+    """Find the maximum product of a contiguous subarray."""
     IF array is empty THEN
       RETURN 0
 
-    // Track both max and min products (for handling negative numbers)
+    // Track both max and min products (FOR handling negative numbers)
     Set maxProduct = nums[0]
     Set minProduct = nums[0]
     Set result = nums[0]
 
     FOR i FROM 1 TO length(nums)-1 DO
-      // If current number is negative, swap max and min
+      // IF current number is negative, SWAP max and min
       IF nums[i] < 0 THEN
         SWAP maxProduct and minProduct
 
@@ -1672,8 +1772,9 @@ def kadanes_general(arr):
 
 - Circular array maximum sum
 
-  ```pseudo
+  ```python
   ALGORITHM CircularMaximumSum(nums)
+    """Find the maximum subarray sum in a circular array."""
     // Case 1: Maximum subarray is not circular
     Set maxStraightSum = KadaneMaxSum(nums)
 
@@ -1709,57 +1810,62 @@ def kadanes_general(arr):
 
 ## 14. Prefix Sums
 
-A preprocessing technique for efficient range sum queries.
+A preprocessing technique FOR efficient range sum queries.
 
 **When to use**:
 
 - Range sum queries
 - Cumulative operations on arrays
-- Checking for specific sum conditions over subarrays
+- Checking FOR specific sum conditions over subarrays
 
 ```python
 def prefix_sums(arr):
+    """Calculates the prefix sum array for a given array."""
     prefix = [0] * (len(arr) + 1)
 
-    for i in range(len(arr)):
+    FOR i in range(len(arr)):
         prefix[i + 1] = prefix[i] + arr[i]
 
-    return prefix
+    RETURN prefix
 
 def range_sum(prefix, left, right):
+    """Calculates the sum of elements in a range using the prefix sum array."""
     # Sum of elements from index left to right (inclusive)
-    return prefix[right + 1] - prefix[left]
+    RETURN prefix[right + 1] - prefix[left]
 
 # Example using prefix sums to find subarrays with sum equal to k
 def count_subarrays_with_sum(arr, k):
+    """Counts the number of subarrays whose sum equals k using prefix sums and a hash map."""
     prefix_sum = 0
     count = 0
     sum_counts = {0: 1}  # Empty subarray has sum 0
 
-    for num in arr:
+    FOR num in arr:
         prefix_sum += num
-        # If (prefix_sum - k) exists, there is a subarray with sum k
-        if prefix_sum - k in sum_counts:
+        # IF (prefix_sum - k) exists, there is a subarray with sum k
+        IF prefix_sum - k in sum_counts:
             count += sum_counts[prefix_sum - k]
 
         # Increment count of current prefix sum
         sum_counts[prefix_sum] = sum_counts.get(prefix_sum, 0) + 1
 
-    return count
+    RETURN count
 ```
 
 **Time Complexity**:
+
 - Preprocessing: O(n)
 - Range queries: O(1)
 
-**Space Complexity**: O(n) for storing prefix sums
+**Space Complexity**: O(n) FOR storing prefix sums
 
 **Example Use Cases**:
 
 - Range sum queries
 
-  ```pseudo
+  ```python
   ALGORITHM RangeSum(nums, queries)
+    """Efficiently answer multiple range sum queries using prefix sums."""
     // Precompute prefix sums
     Initialize prefixSum array of length len(nums)+1 with prefixSum[0] = 0
 
@@ -1779,8 +1885,9 @@ def count_subarrays_with_sum(arr, k):
 
 - Subarray sum equals K
 
-  ```pseudo
+  ```python
   ALGORITHM SubarraySumEqualsK(nums, k)
+    """Count the number of contiguous subarrays whose sum equals k."""
     Initialize count = 0
     Initialize prefixSum = 0
     Initialize hashMap with {0: 1}  // Empty subarray has sum 0
@@ -1789,7 +1896,7 @@ def count_subarrays_with_sum(arr, k):
       // Update current prefix sum
       prefixSum += nums[i]
 
-      // If (prefixSum - k) exists in map, we've found subarray(s) with sum k
+      // IF (prefixSum - k) exists in map, we've found subarray(s) with sum k
       IF prefixSum - k exists in hashMap THEN
         count += hashMap[prefixSum - k]
 
@@ -1804,8 +1911,9 @@ def count_subarrays_with_sum(arr, k):
 
 - Count number of subarrays with specific properties
 
-  ```pseudo
+  ```python
   ALGORITHM CountSubarraysWithConstraint(nums, constraint)
+    """General template to count subarrays satisfying a constraint using prefix properties."""
     Initialize count = 0
     Initialize prefixProperty = 0
     Initialize hashMap with {0: 1}  // Empty subarray base case
@@ -1817,7 +1925,7 @@ def count_subarrays_with_sum(arr, k):
       // Calculate the complementary value we need to find
       complementValue = CalculateComplementValue(prefixProperty, constraint)
 
-      // If complementValue exists, add its count to our result
+      // IF complementValue exists, add its count to our result
       IF complementValue exists in hashMap THEN
         count += hashMap[complementValue]
 
@@ -1829,17 +1937,17 @@ def count_subarrays_with_sum(arr, k):
 
     RETURN count
 
-    // Helper function depends on specific property and constraint
+    // Helper FUNCTION depends on specific property and constraint
     FUNCTION CalculateComplementValue(prefixProp, constraint)
-      // Example for sum equals K: return prefixProp - K
-      // Example for sum divisible by K: return prefixProp % K
-      // Example for XOR equals K: return prefixProp ^ K
+      // Example FOR sum equals K: RETURN prefixProp - K
+      // Example FOR sum divisible by K: RETURN prefixProp % K
+      // Example FOR XOR equals K: RETURN prefixProp ^ K
       RETURN appropriate value based on constraint
   ```
 
 ---
 
-## 15. Fast & Slow Pointers
+## 15. LinkedList (Fast & Slow Pointers)
 
 A two-pointer technique where one pointer moves faster than the other.
 
@@ -1851,68 +1959,71 @@ A two-pointer technique where one pointer moves faster than the other.
 - Detecting palindrome linked lists
 
 ```python
-class ListNode:
+CLASS ListNode:
+    """Represents a node in a singly linked list."""
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
 
 def detect_cycle(head):
-    if not head or not head.next:
-        return False
+    """Detects if a cycle exists in a linked list using fast and slow pointers."""
+    IF not head or not head.next:
+        RETURN False
 
     slow = head
     fast = head
 
-    # If there is a cycle, fast will eventually catch up to slow
-    while fast and fast.next:
+    # IF there is a cycle, fast will eventually catch up to slow
+    WHILE fast and fast.next:
         slow = slow.next
         fast = fast.next.next
 
-        if slow == fast:  # Cycle detected
-            return True
+        IF slow == fast:  # Cycle detected
+            RETURN True
 
-    return False
+    RETURN False
 
 def find_cycle_start(head):
-    if not head or not head.next:
-        return None
+    """Finds the starting node of a cycle in a linked list."""
+    IF not head or not head.next:
+        RETURN None
 
     # Phase 1: Detect cycle
     slow = head
     fast = head
 
-    while fast and fast.next:
+    WHILE fast and fast.next:
         slow = slow.next
         fast = fast.next.next
 
-        if slow == fast:  # Cycle detected
-            break
+        IF slow == fast:  # Cycle detected
+            BREAK
 
     # No cycle found
-    if not fast or not fast.next:
-        return None
+    IF not fast or not fast.next:
+        RETURN None
 
     # Phase 2: Find entrance to cycle
     slow = head
-    while slow != fast:
+    WHILE slow != fast:
         slow = slow.next
         fast = fast.next
 
-    return slow  # Cycle start node
+    RETURN slow  # Cycle start node
 
 def find_middle(head):
-    if not head:
-        return None
-
+    """Finds the middle node of a linked list using fast and slow pointers."""
+    IF not head:
+        RETURN None
     slow = head
     fast = head
 
     # When fast reaches the end, slow is at the middle
-    while fast and fast.next:
+    WHILE fast and fast.next:
         slow = slow.next
         fast = fast.next.next
 
-    return slow  # Middle node
+    RETURN slow  # Middle node
 ```
 
 **Time Complexity**: O(n)
@@ -1922,8 +2033,9 @@ def find_middle(head):
 
 - Detect cycle in linked list
 
-  ```pseudo
+  ```python
   ALGORITHM DetectCycle(head)
+    """Detects if a cycle exists in a linked list using Floyd's Tortoise and Hare."""
     IF head is null OR head.next is null THEN
       RETURN false
 
@@ -1942,8 +2054,9 @@ def find_middle(head):
 
 - Find cycle start point
 
-  ```pseudo
+  ```python
   ALGORITHM FindCycleStart(head)
+    """Finds the starting node of a cycle in a linked list (if one exists)."""
     IF head is null OR head.next is null THEN
       RETURN null
 
@@ -1975,8 +2088,9 @@ def find_middle(head):
 
 - Find middle of linked list
 
-  ```pseudo
+  ```python
   ALGORITHM FindMiddle(head)
+    """Finds the middle node of a linked list."""
     IF head is null THEN
       RETURN null
 
@@ -1992,8 +2106,9 @@ def find_middle(head):
 
 - Palindrome linked list
 
-  ```pseudo
+  ```python
   ALGORITHM IsPalindrome(head)
+    """Checks if a linked list is a palindrome."""
     IF head is null OR head.next is null THEN
       RETURN true                    // Empty list or single node is palindrome
 
@@ -2001,7 +2116,7 @@ def find_middle(head):
     Set slow = head
     Set fast = head
 
-    WHILE fast.next is not null AND fast.next.next is not null DO
+    WHILE fast is not null AND fast.next is not null DO
       Set slow = slow.next
       Set fast = fast.next.next
 
@@ -2033,7 +2148,7 @@ def find_middle(head):
 
 ## 16. Linked List Reversal
 
-A common pattern for manipulating linked list orders.
+A common pattern FOR manipulating linked list orders.
 
 **When to use**:
 
@@ -2042,74 +2157,78 @@ A common pattern for manipulating linked list orders.
 
 ```python
 def reverse_linked_list(head):
+    """Reverses a singly linked list iteratively."""
     prev = None
     current = head
 
-    while current:
+    WHILE current:
         next_temp = current.next  # Store next node
         current.next = prev       # Reverse pointer
         prev = current            # Move prev forward
         current = next_temp       # Move current forward
 
-    return prev  # New head
+    RETURN prev  # New head
 
 def reverse_sublist(head, start, end):
-    # Create a dummy node for easier handling of edge cases
+    """Reverses a sublist of a linked list from position start to end."""
+    # Create a dummy node FOR easier handling of edge cases
     dummy = ListNode(0)
     dummy.next = head
     prev = dummy
 
     # Move prev to the node just before the start position
-    for _ in range(1, start):
+    FOR _ in range(1, start):
         prev = prev.next
 
     current = prev.next  # Node at start position
 
     # Reverse nodes from start to end
-    for _ in range(end - start):
+    FOR _ in range(end - start):
         next_node = current.next
         current.next = next_node.next
         next_node.next = prev.next
         prev.next = next_node
 
-    return dummy.next  # New head
+    RETURN dummy.next  # New head
 
 def reverse_k_group(head, k):
+    """Reverses nodes of a linked list k at a time."""
     count = 0
     curr = head
 
     # Count k nodes
-    while curr and count < k:
+    WHILE curr and count < k:
         curr = curr.next
         count += 1
 
-    # If we have k nodes, reverse them
-    if count == k:
+    # IF we have k nodes, reverse them
+    IF count == k:
         # Reverse k nodes
         prev = reverse_k_group(curr, k)  # Reverse next k-group and get its head
 
         # Connect current k-group to the reversed next k-group
-        while count > 0:
+        WHILE count > 0:
             next_temp = head.next
             head.next = prev
             prev = head
             head = next_temp
             count -= 1
 
-        return prev  # New head of reversed k-group
+        RETURN prev  # New head of reversed k-group
 
-    return head  # Less than k nodes left, return as is
+    RETURN head  # Less than k nodes left, RETURN as is
 ```
 
 **Time Complexity**: O(n)
-**Space Complexity**: O(1) for iterative solutions, O(n) for recursive solutions
+**Space Complexity**: O(1) FOR iterative solutions, O(n) FOR recursive solutions
 
 **Example Use Cases**:
 
 - Reverse linked list
 
-  ```pseudo
+  ```python
   ALGORITHM ReverseLinkedList(head)
+    """Reverses a singly linked list iteratively."""
     Set prev = null
     Set current = head
 
@@ -2124,8 +2243,9 @@ def reverse_k_group(head, k):
 
 - Reverse nodes in K-group
 
-  ```pseudo
+  ```python
   ALGORITHM ReverseKGroup(head, k)
+    """Reverses nodes of a linked list k at a time recursively."""
     Set count = 0
     Set current = head
 
@@ -2134,7 +2254,7 @@ def reverse_k_group(head, k):
       Set current = current.next
       Increment count
 
-    // If we have k nodes, reverse them
+    // IF we have k nodes, reverse them
     IF count equals k THEN
       // Recursively reverse next k-group
       Set reversedNext = ReverseKGroup(current, k)
@@ -2152,12 +2272,12 @@ def reverse_k_group(head, k):
 
       RETURN prev                    // New head of reversed k-group
     ELSE
-      RETURN head                    // Less than k nodes, return as is
+      RETURN head                    // Less than k nodes, RETURN as is
   ```
 
 - Reverse alternating K elements
 
-  ```pseudo
+  ```python
   ALGORITHM ReverseAlternatingKElements(head, k)
     Set current = head
     Set prev = null
@@ -2194,7 +2314,7 @@ def reverse_k_group(head, k):
         IF prevTail is not null THEN
           Set prevTail.next = subPrev  // Connect previous tail to new head
         ELSE
-          Set head = subPrev           // Update head if this is first group
+          Set head = subPrev           // Update head IF this is first group
 
         Set prevTail = subHead         // New tail is the original head
         Set current = nextGroupHead    // Move to next group
@@ -2214,7 +2334,7 @@ def reverse_k_group(head, k):
 
 ## 17. Dijkstra's Algorithm
 
-A greedy algorithm for finding the shortest path in a weighted graph.
+A greedy algorithm FOR finding the shortest path in a weighted graph.
 
 **When to use**:
 
@@ -2227,8 +2347,9 @@ A greedy algorithm for finding the shortest path in a weighted graph.
 import heapq
 
 def dijkstra(graph, start):
-    # Initialize distances with infinity for all nodes except start
-    distances = {node: float('infinity') for node in graph}
+    """Finds the shortest paths from a start node to all other nodes in a weighted graph."""
+    # Initialize distances with infinity FOR all nodes except start
+    distances = {node: float('infinity') FOR node in graph}
     distances[start] = 0
 
     # Priority queue to process nodes by current distance
@@ -2237,31 +2358,31 @@ def dijkstra(graph, start):
     # Track visited nodes
     visited = set()
 
-    while priority_queue:
+    WHILE priority_queue:
         current_distance, current_node = heapq.heappop(priority_queue)
 
-        # Skip if we've already processed this node
-        if current_node in visited:
-            continue
+        # Skip IF we've already processed this node
+        IF current_node in visited:
+            CONTINUE
 
         # Mark as visited
         visited.add(current_node)
 
         # Process all neighbors
-        for neighbor, weight in graph[current_node].items():
+        FOR neighbor, weight in graph[current_node].items():
             # Skip visited neighbors
-            if neighbor in visited:
-                continue
+            IF neighbor in visited:
+                CONTINUE
 
             # Calculate distance to neighbor through current node
             distance = current_distance + weight
 
-            # If we found a shorter path, update distance
-            if distance < distances[neighbor]:
+            # IF we found a shorter path, update distance
+            IF distance < distances[neighbor]:
                 distances[neighbor] = distance
                 heapq.heappush(priority_queue, (distance, neighbor))
 
-    return distances
+    RETURN distances
 
 # Example graph representation (adjacency list with weights)
 # graph = {
@@ -2279,11 +2400,12 @@ def dijkstra(graph, start):
 
 - Network routing
 
-  ```pseudo
+  ```python
   ALGORITHM NetworkRouting(network, source, destination)
+    """Find the shortest path between source and destination in a network using Dijkstra's."""
     // network is a graph of nodes and weighted edges
 
-    Initialize distances map with infinity for all nodes
+    Initialize distances map with infinity FOR all nodes
     Set distances[source] = 0
     Initialize priorityQueue with (0, source)
     Initialize previous map to track path
@@ -2291,14 +2413,14 @@ def dijkstra(graph, start):
     WHILE priorityQueue is not empty DO
       currentDistance, currentNode = Remove minimum from priorityQueue
 
-      // Skip if we've processed this node already
+      // Skip IF we've processed this node already
       IF currentNode has been visited THEN
         CONTINUE
 
       // Mark as visited
       Mark currentNode as visited
 
-      // If we reached destination, we can reconstruct path and return
+      // IF we reached destination, we can reconstruct path and RETURN
       IF currentNode equals destination THEN
         RETURN ReconstructPath(previous, source, destination)
 
@@ -2311,7 +2433,7 @@ def dijkstra(graph, start):
         // Calculate new distance
         newDistance = currentDistance + weight
 
-        // If we found a better path, update
+        // IF we found a better path, update
         IF newDistance < distances[neighbor] THEN
           distances[neighbor] = newDistance
           previous[neighbor] = currentNode
@@ -2337,12 +2459,13 @@ def dijkstra(graph, start):
 
 - GPS navigation
 
-  ```pseudo
+  ```python
   ALGORITHM GPSNavigation(map, start, end, trafficData)
+    """Find the fastest route in a GPS map considering traffic, using Dijkstra's."""
     // map is a graph of locations and roads with distances
-    // trafficData provides current traffic conditions for each road segment
+    // trafficData provides current traffic conditions FOR each road segment
 
-    Initialize distances map with infinity for all locations
+    Initialize distances map with infinity FOR all locations
     Set distances[start] = 0
     Initialize priorityQueue with (0, start)
     Initialize previous map to track path
@@ -2350,14 +2473,14 @@ def dijkstra(graph, start):
     WHILE priorityQueue is not empty DO
       currentDistance, currentLocation = Remove minimum from priorityQueue
 
-      // Skip if we've processed this location already
+      // Skip IF we've processed this location already
       IF currentLocation has been visited THEN
         CONTINUE
 
       // Mark as visited
       Mark currentLocation as visited
 
-      // If we reached destination, we can return
+      // IF we reached destination, we can RETURN
       IF currentLocation equals end THEN
         BREAK
 
@@ -2371,7 +2494,7 @@ def dijkstra(graph, start):
         actualDistance = baseDistance * trafficData[currentLocation][neighbor]
         newDistance = currentDistance + actualDistance
 
-        // If we found a better path, update
+        // IF we found a better path, update
         IF newDistance < distances[neighbor] THEN
           distances[neighbor] = newDistance
           previous[neighbor] = currentLocation
@@ -2383,11 +2506,12 @@ def dijkstra(graph, start):
 
 - Flight scheduling
 
-  ```pseudo
+  ```python
   ALGORITHM FlightScheduling(flights, startAirport, endAirport, startTime)
+    """Find the cheapest flight itinerary between two airports using Dijkstra's."""
     // flights is a list of available flights with departure time, arrival time, and cost
 
-    Initialize bestCost map with infinity for all airports
+    Initialize bestCost map with infinity FOR all airports
     Set bestCost[startAirport] = 0
     Initialize priorityQueue with (0, startAirport, startTime)
     Initialize bestRoute map to track flights taken
@@ -2395,7 +2519,7 @@ def dijkstra(graph, start):
     WHILE priorityQueue is not empty DO
       currentCost, currentAirport, currentTime = Remove minimum from priorityQueue
 
-      // If we reached destination, we can return
+      // IF we reached destination, we can RETURN
       IF currentAirport equals endAirport THEN
         RETURN ReconstructFlightItinerary(bestRoute, startAirport, endAirport)
 
@@ -2409,7 +2533,7 @@ def dijkstra(graph, start):
         nextTime = flight.arrivalTime
         nextCost = currentCost + flight.cost
 
-        // If we found a cheaper route, update
+        // IF we found a cheaper route, update
         IF nextCost < bestCost[nextAirport] THEN
           bestCost[nextAirport] = nextCost
           bestRoute[nextAirport] = (currentAirport, flight)
@@ -2421,12 +2545,13 @@ def dijkstra(graph, start):
 
 - Network Delay Time
 
-  ```pseudo
+  ```python
   ALGORITHM NetworkDelayTime(network, source, n)
+    """Find the time it takes for a signal to reach all nodes from a source node."""
     // network is a graph of nodes and weighted edges representing signal delay
     // n is the number of nodes in the network
 
-    Initialize delays map with infinity for all nodes
+    Initialize delays map with infinity FOR all nodes
     Set delays[source] = 0
     Initialize priorityQueue with (0, source)
     Initialize visited set
@@ -2434,7 +2559,7 @@ def dijkstra(graph, start):
     WHILE priorityQueue is not empty DO
       currentDelay, currentNode = Remove minimum from priorityQueue
 
-      // Skip if we've processed this node already
+      // Skip IF we've processed this node already
       IF currentNode in visited THEN
         CONTINUE
 
@@ -2446,14 +2571,14 @@ def dijkstra(graph, start):
         // Calculate new delay
         newDelay = currentDelay + weight
 
-        // If we found a faster signal path, update
+        // IF we found a faster signal path, update
         IF newDelay < delays[neighbor] THEN
           delays[neighbor] = newDelay
           Add (newDelay, neighbor) to priorityQueue
 
-    // Check if all nodes are reachable
+    // Check IF all nodes are reachable
     IF size of visited equals n THEN
-      RETURN maximum value in delays  // Time for signal to reach all nodes
+      RETURN maximum value in delays  // Time FOR signal to reach all nodes
     ELSE
       RETURN -1  // Some nodes are unreachable
   ```
@@ -2462,7 +2587,7 @@ def dijkstra(graph, start):
 
 ## 18. 0/1 Knapsack Pattern
 
-A dynamic programming approach for selecting items with maximum value under a weight constraint.
+A dynamic programming approach FOR selecting items with maximum value under a weight constraint.
 
 **When to use**:
 
@@ -2472,49 +2597,52 @@ A dynamic programming approach for selecting items with maximum value under a we
 
 ```python
 def knapsack_01(values, weights, capacity):
+    """Solves the 0/1 Knapsack problem using dynamic programming (2D DP table)."""
     n = len(values)
     # Initialize DP table
-    dp = [[0 for _ in range(capacity + 1)] for _ in range(n + 1)]
+    dp = [[0 FOR _ in range(capacity + 1)] FOR _ in range(n + 1)]
 
     # Fill DP table
-    for i in range(1, n + 1):
-        for w in range(capacity + 1):
-            # If current item weight is more than capacity, skip it
-            if weights[i-1] > w:
+    FOR i in range(1, n + 1):
+        FOR w in range(capacity + 1):
+            # IF current item weight is more than capacity, skip it
+            IF weights[i-1] > w:
                 dp[i][w] = dp[i-1][w]
-            else:
+            ELSE:
                 # Max of including or excluding current item
                 dp[i][w] = max(
                     values[i-1] + dp[i-1][w - weights[i-1]],  # Include item
                     dp[i-1][w]  # Exclude item
                 )
 
-    return dp[n][capacity]
+    RETURN dp[n][capacity]
 
 # Space-optimized version
 def knapsack_01_optimized(values, weights, capacity):
+    """Solves the 0/1 Knapsack problem using space-optimized dynamic programming (1D DP table)."""
     n = len(values)
     # Use 1D array since we only need previous row
-    dp = [0 for _ in range(capacity + 1)]
+    dp = [0 FOR _ in range(capacity + 1)]
 
     # Fill DP table
-    for i in range(n):
+    FOR i in range(n):
         # Process in reverse to avoid overwriting values we still need
-        for w in range(capacity, weights[i] - 1, -1):
+        FOR w in range(capacity, weights[i] - 1, -1):
             dp[w] = max(dp[w], values[i] + dp[w - weights[i]])
 
-    return dp[capacity]
+    RETURN dp[capacity]
 ```
 
-**Time Complexity**: O(n * C) where n is items, C is capacity
-**Space Complexity**: O(n * C), can be optimized to O(C)
+**Time Complexity**: O(n *C) where n is items, C is capacity
+**Space Complexity**: O(n* C), can be optimized to O(C)
 
 **Example Use Cases**:
 
 - 0/1 Knapsack
 
-  ```pseudo
+  ```python
   ALGORITHM Knapsack01(values, weights, capacity)
+    """Maximize the value of items selected without exceeding capacity (0/1 choice)."""
     n = length of values
 
     // Initialize DP table
@@ -2523,7 +2651,7 @@ def knapsack_01_optimized(values, weights, capacity):
     FOR i FROM 1 TO n DO
       FOR w FROM 0 TO capacity DO
         IF weights[i-1] > w THEN
-          // Current item is too heavy for this capacity
+          // Current item is too heavy FOR this capacity
           dp[i][w] = dp[i-1][w]
         ELSE
           // Max of including or excluding the current item
@@ -2534,8 +2662,9 @@ def knapsack_01_optimized(values, weights, capacity):
 
 - Subset Sum
 
-  ```pseudo
+  ```python
   ALGORITHM SubsetSum(nums, targetSum)
+    """Determine if there exists a subset of nums that sums up to targetSum."""
     n = length of nums
 
     // Initialize DP table
@@ -2547,7 +2676,7 @@ def knapsack_01_optimized(values, weights, capacity):
           // Empty subset always sums to 0
           dp[i][s] = true
         ELSE IF nums[i-1] > s THEN
-          // Current number is too large for this sum
+          // Current number is too large FOR this sum
           dp[i][s] = dp[i-1][s]
         ELSE
           // Either include or exclude current number
@@ -2558,11 +2687,12 @@ def knapsack_01_optimized(values, weights, capacity):
 
 - Equal Subset Sum Partition
 
-  ```pseudo
+  ```python
   ALGORITHM CanPartition(nums)
+    """Determine if an array can be partitioned into two subsets with equal sum."""
     totalSum = sum of all elements in nums
 
-    // If total sum is odd, equal partition is impossible
+    // IF total sum is odd, equal partition is impossible
     IF totalSum is odd THEN
       RETURN false
 
@@ -2586,8 +2716,9 @@ def knapsack_01_optimized(values, weights, capacity):
 
 - Minimum Subset Sum Difference
 
-  ```pseudo
+  ```python
   ALGORITHM MinSubsetSumDifference(nums)
+    """Find the minimum absolute difference between the sums of two subsets of an array."""
     totalSum = sum of all elements in nums
     n = length of nums
 
@@ -2628,39 +2759,42 @@ A variation of the knapsack problem where items can be used multiple times.
 
 ```python
 def unbounded_knapsack(values, weights, capacity):
+    """Solves the Unbounded Knapsack problem using dynamic programming."""
     # Initialize DP table
     dp = [0] * (capacity + 1)
 
     # Fill DP table
-    for w in range(1, capacity + 1):
-        for i in range(len(values)):
-            if weights[i] <= w:
+    FOR w in range(1, capacity + 1):
+        FOR i in range(len(values)):
+            IF weights[i] <= w:
                 dp[w] = max(dp[w], dp[w - weights[i]] + values[i])
 
-    return dp[capacity]
+    RETURN dp[capacity]
 
 # Coin change problem (minimizing number of coins)
 def coin_change(coins, amount):
-    # Initialize with infinity for all amounts except 0
+    """Finds the minimum number of coins needed to make a given amount."""
+    # Initialize with infinity FOR all amounts except 0
     dp = [float('inf')] * (amount + 1)
     dp[0] = 0
 
-    for coin in coins:
-        for i in range(coin, amount + 1):
+    FOR coin in coins:
+        FOR i in range(coin, amount + 1):
             dp[i] = min(dp[i], dp[i - coin] + 1)
 
-    return dp[amount] if dp[amount] != float('inf') else -1
+    RETURN dp[amount] IF dp[amount] != float('inf') ELSE -1
 
 # Coin change (count number of ways)
 def count_ways(coins, amount):
+    """Counts the number of ways to make change for a given amount using given coins."""
     dp = [0] * (amount + 1)
     dp[0] = 1  # There is 1 way to make amount 0
 
-    for coin in coins:
-        for i in range(coin, amount + 1):
+    FOR coin in coins:
+        FOR i in range(coin, amount + 1):
             dp[i] += dp[i - coin]
 
-    return dp[amount]
+    RETURN dp[amount]
 ```
 
 **Time Complexity**: O(n * C) where n is item types, C is capacity
@@ -2670,9 +2804,10 @@ def count_ways(coins, amount):
 
 - Coin Change (min coins)
 
-  ```pseudo
+  ```python
   ALGORITHM MinimumCoins(coins, amount)
-    // Initialize DP array with infinity except for 0
+    """Find the minimum number of coins required to make a given amount."""
+    // Initialize DP array with infinity except FOR 0
     Initialize dp[amount+1] with infinity
     Set dp[0] = 0  // 0 coins needed to make amount 0
 
@@ -2690,9 +2825,10 @@ def count_ways(coins, amount):
 
 - Coin Change II (number of ways)
 
-  ```pseudo
+  ```python
   ALGORITHM CountWays(coins, amount)
-    // Initialize DP array with zeros except for 0
+    """Count the total number of ways to make change for a given amount."""
+    // Initialize DP array with zeros except FOR 0
     Initialize dp[amount+1] with 0
     Set dp[0] = 1  // 1 way to make amount 0 (use no coins)
 
@@ -2706,8 +2842,9 @@ def count_ways(coins, amount):
 
 - Rod Cutting
 
-  ```pseudo
+  ```python
   ALGORITHM RodCutting(prices, rodLength)
+    """Find the maximum obtainable value by cutting up a rod and selling the pieces."""
     // prices[i] is the price of a rod of length i+1
 
     // Initialize DP array with 0
@@ -2727,11 +2864,12 @@ def count_ways(coins, amount):
 
 - Maximum ribbon cut
 
-  ```pseudo
+  ```python
   ALGORITHM MaximumRibbonCut(ribbonLengths, totalLength)
-    // Initialize DP array with negative infinity except for 0
+    """Find the maximum number of pieces a ribbon can be cut into using given lengths."""
+    // Initialize DP array with negative infinity except FOR 0
     Initialize dp[totalLength+1] with negative infinity
-    Set dp[0] = 0  // 0 cuts needed for length 0
+    Set dp[0] = 0  // 0 cuts needed FOR length 0
 
     FOR i FROM 1 TO totalLength DO
       FOR each length in ribbonLengths DO
@@ -2749,7 +2887,7 @@ def count_ways(coins, amount):
 
 ## 20. Longest Common Subsequence (LCS) Pattern
 
-A dynamic programming approach for finding common elements between sequences.
+A dynamic programming approach FOR finding common elements between sequences.
 
 **When to use**:
 
@@ -2759,58 +2897,61 @@ A dynamic programming approach for finding common elements between sequences.
 
 ```python
 def longest_common_subsequence(text1, text2):
+    """Finds the length of the longest common subsequence between two strings."""
     m, n = len(text1), len(text2)
 
     # Create DP table
-    dp = [[0 for _ in range(n + 1)] for _ in range(m + 1)]
+    dp = [[0 FOR _ in range(n + 1)] FOR _ in range(m + 1)]
 
     # Fill DP table
-    for i in range(1, m + 1):
-        for j in range(1, n + 1):
-            if text1[i-1] == text2[j-1]:
+    FOR i in range(1, m + 1):
+        FOR j in range(1, n + 1):
+            IF text1[i-1] == text2[j-1]:
                 dp[i][j] = dp[i-1][j-1] + 1
-            else:
+            ELSE:
                 dp[i][j] = max(dp[i-1][j], dp[i][j-1])
 
-    return dp[m][n]
+    RETURN dp[m][n]
 
 # Variation: Edit distance
 def edit_distance(word1, word2):
+    """Calculates the minimum number of operations (insert, delete, replace) to transform word1 to word2."""
     m, n = len(word1), len(word2)
 
     # Create DP table
-    dp = [[0 for _ in range(n + 1)] for _ in range(m + 1)]
+    dp = [[0 FOR _ in range(n + 1)] FOR _ in range(m + 1)]
 
     # Initialize first row and column
-    for i in range(m + 1):
+    FOR i in range(m + 1):
         dp[i][0] = i
-    for j in range(n + 1):
+    FOR j in range(n + 1):
         dp[0][j] = j
 
     # Fill DP table
-    for i in range(1, m + 1):
-        for j in range(1, n + 1):
-            if word1[i-1] == word2[j-1]:
+    FOR i in range(1, m + 1):
+        FOR j in range(1, n + 1):
+            IF word1[i-1] == word2[j-1]:
                 dp[i][j] = dp[i-1][j-1]
-            else:
+            ELSE:
                 dp[i][j] = 1 + min(
                     dp[i-1][j],    # Delete
                     dp[i][j-1],    # Insert
                     dp[i-1][j-1]   # Replace
                 )
 
-    return dp[m][n]
+    RETURN dp[m][n]
 ```
 
-**Time Complexity**: O(m * n) where m, n are string lengths
-**Space Complexity**: O(m * n)
+**Time Complexity**: O(m *n) where m, n are string lengths
+**Space Complexity**: O(m* n)
 
 **Example Use Cases**:
 
 - Longest Common Subsequence
 
-  ```pseudo
+  ```python
   ALGORITHM LCS(text1, text2)
+    """Find the length of the Longest Common Subsequence between two strings."""
     m = length of text1
     n = length of text2
 
@@ -2820,10 +2961,10 @@ def edit_distance(word1, word2):
     FOR i FROM 1 TO m DO
       FOR j FROM 1 TO n DO
         IF text1[i-1] equals text2[j-1] THEN
-          // If characters match, add 1 to diagonal value
+          // IF characters match, add 1 to diagonal value
           dp[i][j] = dp[i-1][j-1] + 1
         ELSE
-          // If characters don't match, take max from left or above
+          // IF characters don't match, take max from left or above
           dp[i][j] = MAX(dp[i-1][j], dp[i][j-1])
 
     RETURN dp[m][n]
@@ -2831,8 +2972,9 @@ def edit_distance(word1, word2):
 
 - Shortest Common Supersequence
 
-  ```pseudo
+  ```python
   ALGORITHM SCS(text1, text2)
+    """Find the Shortest Common Supersequence of two strings."""
     m = length of text1
     n = length of text2
 
@@ -2880,8 +3022,9 @@ def edit_distance(word1, word2):
 
 - Edit Distance
 
-  ```pseudo
+  ```python
   ALGORITHM EditDistance(word1, word2)
+    """Calculate the minimum edit distance (Levenshtein distance) between two words."""
     m = length of word1
     n = length of word2
 
@@ -2891,7 +3034,7 @@ def edit_distance(word1, word2):
     FOR i FROM 1 TO m DO
       FOR j FROM 1 TO n DO
         IF word1[i-1] equals word2[j-1] THEN
-          // No operation needed if characters match
+          // No operation needed IF characters match
           dp[i][j] = dp[i-1][j-1]
         ELSE
           // Minimum of insert, delete, or replace
@@ -2906,8 +3049,9 @@ def edit_distance(word1, word2):
 
 - Longest Palindromic Subsequence
 
-  ```pseudo
+  ```python
   ALGORITHM LPS(text)
+    """Find the length of the Longest Palindromic Subsequence within a string."""
     n = length of text
 
     // Initialize DP table: dp[i][j] = length of LPS in text[i...j]
@@ -2919,10 +3063,10 @@ def edit_distance(word1, word2):
         j = i + len - 1
 
         IF text[i] equals text[j] THEN
-          // If outer characters match, add 2 to inner palindrome length
+          // IF outer characters match, add 2 to inner palindrome length
           dp[i][j] = dp[i+1][j-1] + 2
         ELSE
-          // If outer characters don't match, take max excluding either end
+          // IF outer characters don't match, take max excluding either end
           dp[i][j] = MAX(dp[i+1][j], dp[i][j-1])
 
     RETURN dp[0][n-1]
@@ -2943,48 +3087,52 @@ A dynamic programming pattern where the current state depends on previous states
 ```python
 # Basic Fibonacci (Top-down with memoization)
 def fibonacci(n, memo={}):
-    if n in memo:
-        return memo[n]
-    if n <= 1:
-        return n
+    """Calculates the nth Fibonacci number using recursion with memoization (top-down)."""
+    IF n in memo:
+        RETURN memo[n]
+    IF n <= 1:
+        RETURN n
 
     memo[n] = fibonacci(n-1, memo) + fibonacci(n-2, memo)
-    return memo[n]
+    RETURN memo[n]
 
 # Bottom-up approach (tabulation)
 def fibonacci_tabulation(n):
-    if n <= 1:
-        return n
+    """Calculates the nth Fibonacci number using tabulation (bottom-up DP)."""
+    IF n <= 1:
+        RETURN n
 
     dp = [0] * (n + 1)
     dp[1] = 1
 
-    for i in range(2, n + 1):
+    FOR i in range(2, n + 1):
         dp[i] = dp[i-1] + dp[i-2]
 
-    return dp[n]
+    RETURN dp[n]
 
 # Space-optimized version
 def fibonacci_optimized(n):
-    if n <= 1:
-        return n
+    """Calculates the nth Fibonacci number using space-optimized bottom-up DP."""
+    IF n <= 1:
+        RETURN n
 
     a, b = 0, 1
-    for _ in range(2, n + 1):
+    FOR _ in range(2, n + 1):
         a, b = b, a + b
 
-    return b
+    RETURN b
 
 # Example: Climbing stairs problem
 def climb_stairs(n):
-    if n <= 2:
-        return n
+    """Calculates the number of distinct ways to climb n stairs (taking 1 or 2 steps)."""
+    IF n <= 2:
+        RETURN n
 
     a, b = 1, 2
-    for _ in range(3, n + 1):
+    FOR _ in range(3, n + 1):
         a, b = b, a + b
 
-    return b
+    RETURN b
 ```
 
 **Time Complexity**: O(n)
@@ -2994,8 +3142,9 @@ def climb_stairs(n):
 
 - Fibonacci Numbers
 
-  ```pseudo
+  ```python
   ALGORITHM Fibonacci(n)
+    """Calculate the nth Fibonacci number iteratively (space-optimized)."""
     // Handle base cases
     IF n <= 1 THEN
       RETURN n
@@ -3015,8 +3164,9 @@ def climb_stairs(n):
 
 - Climbing Stairs
 
-  ```pseudo
+  ```python
   ALGORITHM ClimbStairs(n)
+    """Calculate the number of distinct ways to climb n stairs."""
     // Handle base cases
     IF n <= 2 THEN
       RETURN n
@@ -3036,8 +3186,9 @@ def climb_stairs(n):
 
 - House Thief (non-adjacent elements)
 
-  ```pseudo
+  ```python
   ALGORITHM HouseThief(houses)
+    """Find the maximum amount of money a thief can rob from houses without robbing adjacent ones."""
     n = length of houses
 
     // Handle base cases
@@ -3058,35 +3209,11 @@ def climb_stairs(n):
     RETURN dp[n-1]
   ```
 
-- Jump Game (can reach end)
-
-  ```pseudo
-  ALGORITHM CanJump(nums)
-    n = length of nums
-
-    // Initialize the farthest position we can reach
-    Initialize maxReach = 0
-
-    FOR i FROM 0 TO n-1 DO
-      // If we can't reach the current position, return false
-      IF i > maxReach THEN
-        RETURN false
-
-      // Update the farthest position we can reach
-      maxReach = MAX(maxReach, i + nums[i])
-
-      // If we can already reach the end, return true
-      IF maxReach >= n-1 THEN
-        RETURN true
-
-    RETURN false
-  ```
-
 ---
 
 ## 22. Subsets Pattern
 
-A backtracking approach for generating combinations of elements.
+A backtracking approach FOR generating combinations of elements.
 
 **When to use**:
 
@@ -3096,6 +3223,7 @@ A backtracking approach for generating combinations of elements.
 
 ```python
 def generate_subsets(nums):
+    """Generates all possible subsets (the power set) of a given set of numbers."""
     result = []
 
     def backtrack(start, current):
@@ -3103,7 +3231,7 @@ def generate_subsets(nums):
         result.append(current[:])
 
         # Try including each remaining element
-        for i in range(start, len(nums)):
+        FOR i in range(start, len(nums)):
             # Include nums[i]
             current.append(nums[i])
             # Recurse with next position
@@ -3112,20 +3240,21 @@ def generate_subsets(nums):
             current.pop()
 
     backtrack(0, [])
-    return result
+    RETURN result
 
 def generate_permutations(nums):
+    """Generates all possible permutations of a given set of numbers."""
     result = []
 
     def backtrack(start):
-        # If we've used all numbers, add permutation to result
-        if start == len(nums):
+        # IF we've used all numbers, add permutation to result
+        IF start == len(nums):
             result.append(nums[:])
-            return
+            RETURN
 
         # Try each number at the current position
-        for i in range(start, len(nums)):
-            # Swap to place nums[i] at position start
+        FOR i in range(start, len(nums)):
+            # SWAP to place nums[i] at position start
             nums[start], nums[i] = nums[i], nums[start]
             # Recurse with next position
             backtrack(start + 1)
@@ -3133,36 +3262,38 @@ def generate_permutations(nums):
             nums[start], nums[i] = nums[i], nums[start]
 
     backtrack(0)
-    return result
+    RETURN result
 
 def combination_sum(candidates, target):
+    """Finds all unique combinations in candidates where the numbers sum to target (elements can be reused)."""
     result = []
 
     def backtrack(start, current, remaining):
-        if remaining == 0:
+        IF remaining == 0:
             result.append(current[:])
-            return
-        if remaining < 0:
-            return
+            RETURN
+        IF remaining < 0:
+            RETURN
 
-        for i in range(start, len(candidates)):
+        FOR i in range(start, len(candidates)):
             current.append(candidates[i])
             backtrack(i, current, remaining - candidates[i])  # Can reuse same element
             current.pop()
 
     backtrack(0, [], target)
-    return result
+    RETURN result
 ```
 
-**Time Complexity**: O(2^n) for subsets, O(n!) for permutations
-**Space Complexity**: O(n) for recursion stack
+**Time Complexity**: O(2^n) FOR subsets, O(n!) FOR permutations
+**Space Complexity**: O(n) FOR recursion stack
 
 **Example Use Cases**:
 
 - Generate Subsets/Powerset
 
-  ```pseudo
+  ```python
   ALGORITHM GenerateSubsets(nums)
+    """Generate all possible subsets (powerset) of a given array using backtracking."""
     Initialize result as empty list
 
     FUNCTION Backtrack(start, current)
@@ -3187,26 +3318,27 @@ def combination_sum(candidates, target):
 
 - Permutations
 
-  ```pseudo
+  ```python
   ALGORITHM GeneratePermutations(nums)
+    """Generate all possible permutations of an array using backtracking with swaps."""
     Initialize result as empty list
 
     FUNCTION Backtrack(start)
-      // If we've used all numbers, add permutation to result
+      // IF we've used all numbers, add permutation to result
       IF start equals length of nums THEN
         Add a copy of nums to result
         RETURN
 
       // Try each number at the current position
       FOR i FROM start TO length of nums - 1 DO
-        // Swap to place nums[i] at position start
-        Swap nums[start] with nums[i]
+        // SWAP to place nums[i] at position start
+        SWAP nums[start] with nums[i]
 
         // Recurse with next position
         Call Backtrack(start + 1)
 
         // Backtrack (restore original order)
-        Swap nums[start] with nums[i] back
+        SWAP nums[start] with nums[i] back
 
     // Start the recursion
     Call Backtrack(0)
@@ -3215,12 +3347,13 @@ def combination_sum(candidates, target):
 
 - Combinations
 
-  ```pseudo
+  ```python
   ALGORITHM GenerateCombinations(n, k)
+    """Generate all possible combinations of k numbers chosen from 1 to n."""
     Initialize result as empty list
 
     FUNCTION Backtrack(start, current)
-      // If we have selected k elements, add to result
+      // IF we have selected k elements, add to result
       IF length of current equals k THEN
         Add a copy of current to result
         RETURN
@@ -3243,8 +3376,9 @@ def combination_sum(candidates, target):
 
 - Letter Combinations of Phone Number
 
-  ```pseudo
+  ```python
   ALGORITHM LetterCombinations(digits)
+    """Generate all possible letter combinations that a phone number could represent."""
     // Map digits to letters
     Initialize digitToLetters map:
       '2' -> "abc", '3' -> "def", '4' -> "ghi", '5' -> "jkl",
@@ -3257,12 +3391,12 @@ def combination_sum(candidates, target):
       RETURN result
 
     FUNCTION Backtrack(index, current)
-      // If we've processed all digits, add combination to result
+      // IF we've processed all digits, add combination to result
       IF index equals length of digits THEN
         Add current string to result
         RETURN
 
-      // Get all letters for current digit
+      // Get all letters FOR current digit
       Set currentDigit = digits[index]
       Set letters = digitToLetters[currentDigit]
 
@@ -3283,7 +3417,7 @@ def combination_sum(candidates, target):
 
 ## 23. Constraint Satisfaction Pattern
 
-A backtracking approach for problems with complex constraints.
+A backtracking approach FOR problems with complex constraints.
 
 **When to use**:
 
@@ -3294,101 +3428,103 @@ A backtracking approach for problems with complex constraints.
 ```python
 # Example: Sudoku Solver
 def solve_sudoku(board):
+    """Solves a Sudoku puzzle using backtracking."""
     # Find an empty cell
     def find_empty():
-        for r in range(9):
-            for c in range(9):
-                if board[r][c] == '.':
-                    return r, c
-        return None
+        FOR r in range(9):
+            FOR c in range(9):
+                IF board[r][c] == '.':
+                    RETURN r, c
+        RETURN None
 
-    # Check if num can be placed at (row, col)
+    # Check IF num can be placed at (row, col)
     def is_valid(row, col, num):
         # Check row
-        for c in range(9):
-            if board[row][c] == num:
-                return False
+        FOR c in range(9):
+            IF board[row][c] == num:
+                RETURN False
 
         # Check column
-        for r in range(9):
-            if board[r][col] == num:
-                return False
+        FOR r in range(9):
+            IF board[r][col] == num:
+                RETURN False
 
         # Check 3x3 box
         box_row, box_col = 3 * (row // 3), 3 * (col // 3)
-        for r in range(box_row, box_row + 3):
-            for c in range(box_col, box_col + 3):
-                if board[r][c] == num:
-                    return False
+        FOR r in range(box_row, box_row + 3):
+            FOR c in range(box_col, box_col + 3):
+                IF board[r][c] == num:
+                    RETURN False
 
-        return True
+        RETURN True
 
     def backtrack():
         # Find an empty cell
         empty = find_empty()
-        if not empty:
-            return True  # Solved
+        IF not empty:
+            RETURN True  # Solved
 
         row, col = empty
 
         # Try each possible number
-        for num in '123456789':
-            if is_valid(row, col, num):
+        FOR num in '123456789':
+            IF is_valid(row, col, num):
                 # Place number
                 board[row][col] = num
 
                 # Recurse
-                if backtrack():
-                    return True
+                IF backtrack():
+                    RETURN True
 
                 # Backtrack
                 board[row][col] = '.'
 
-        return False  # No solution
+        RETURN False  # No solution
 
     backtrack()
-    return board
+    RETURN board
 
 # Example: N-Queens
 def solve_n_queens(n):
+    """Finds all distinct solutions to the N-Queens puzzle using backtracking."""
     result = []
 
     # Initialize empty board
-    board = [['.' for _ in range(n)] for _ in range(n)]
+    board = [['.' FOR _ in range(n)] FOR _ in range(n)]
 
-    # Check if a queen can be placed at (row, col)
+    # Check IF a queen can be placed at (row, col)
     def is_safe(row, col):
         # Check column
-        for i in range(row):
-            if board[i][col] == 'Q':
-                return False
+        FOR i in range(row):
+            IF board[i][col] == 'Q':
+                RETURN False
 
         # Check upper-left diagonal
         i, j = row - 1, col - 1
-        while i >= 0 and j >= 0:
-            if board[i][j] == 'Q':
-                return False
+        WHILE i >= 0 and j >= 0:
+            IF board[i][j] == 'Q':
+                RETURN False
             i -= 1
             j -= 1
 
         # Check upper-right diagonal
         i, j = row - 1, col + 1
-        while i >= 0 and j < n:
-            if board[i][j] == 'Q':
-                return False
+        WHILE i >= 0 and j < n:
+            IF board[i][j] == 'Q':
+                RETURN False
             i -= 1
             j += 1
 
-        return True
+        RETURN True
 
     def backtrack(row):
-        if row == n:
+        IF row == n:
             # Add current board state to result
-            result.append([''.join(row) for row in board])
-            return
+            result.append([''.join(row) FOR row in board])
+            RETURN
 
-        for col in range(n):
-            if is_safe(row, col):
+        FOR col in range(n):
+            IF is_safe(row, col):
                 # Place queen
                 board[row][col] = 'Q'
 
@@ -3399,18 +3535,19 @@ def solve_n_queens(n):
                 board[row][col] = '.'
 
     backtrack(0)
-    return result
+    RETURN result
 ```
 
 **Time Complexity**: Exponential, but pruning reduces actual runtime
-**Space Complexity**: O(n) for recursion stack
+**Space Complexity**: O(n) FOR recursion stack
 
 **Example Use Cases**:
 
 - N-Queens
 
-  ```pseudo
+  ```python
   ALGORITHM SolveNQueens(n)
+    """Find all distinct solutions to the N-Queens puzzle using backtracking."""
     Initialize result as empty list
     Initialize board as n×n matrix filled with '.'
 
@@ -3439,7 +3576,7 @@ def solve_n_queens(n):
       RETURN true
 
     FUNCTION Backtrack(row)
-      // If all queens are placed, add solution
+      // IF all queens are placed, add solution
       IF row equals n THEN
         Add current board configuration to result
         RETURN
@@ -3463,8 +3600,9 @@ def solve_n_queens(n):
 
 - Sudoku Solver
 
-  ```pseudo
+  ```python
   ALGORITHM SolveSudoku(board)
+    """Solve a Sudoku puzzle using backtracking."""
     FUNCTION FindEmpty()
       FOR row FROM 0 TO 8 DO
         FOR col FROM 0 TO 8 DO
@@ -3498,7 +3636,7 @@ def solve_n_queens(n):
       // Find an empty cell
       Set cell = FindEmpty()
 
-      // If no empty cell, puzzle is solved
+      // IF no empty cell, puzzle is solved
       IF cell is null THEN
         RETURN true
 
@@ -3514,7 +3652,7 @@ def solve_n_queens(n):
           IF Backtrack() equals true THEN
             RETURN true
 
-          // Backtrack if solution not found
+          // Backtrack IF solution not found
           Set board[row][col] = '.'
 
       RETURN false  // Trigger backtracking
@@ -3526,13 +3664,14 @@ def solve_n_queens(n):
 
 - Word Search
 
-  ```pseudo
+  ```python
   ALGORITHM WordSearch(board, word)
+    """Determine if a word exists in a grid by searching adjacent cells."""
     m = number of rows in board
     n = number of columns in board
 
     FUNCTION DFS(row, col, index)
-      // If we've matched the entire word
+      // IF we've matched the entire word
       IF index equals length of word THEN
         RETURN true
 
@@ -3567,8 +3706,9 @@ def solve_n_queens(n):
 
 - Palindrome Partitioning
 
-  ```pseudo
+  ```python
   ALGORITHM PalindromePartition(s)
+    """Partition a string such that every substring of the partition is a palindrome."""
     Initialize result as empty list
 
     FUNCTION IsPalindrome(start, end)
@@ -3580,14 +3720,14 @@ def solve_n_queens(n):
       RETURN true
 
     FUNCTION Backtrack(start, current)
-      // If we've processed the entire string
+      // IF we've processed the entire string
       IF start equals length of s THEN
         Add a copy of current to result
         RETURN
 
-      // Try different ending positions for current substring
+      // Try different ending positions FOR current substring
       FOR end FROM start TO length of s - 1 DO
-        // If substring is palindrome, add it and continue
+        // IF substring is palindrome, add it and CONTINUE
         IF IsPalindrome(start, end) THEN
           // Add current palindrome substring to partition
           Add s[start:end+1] to current
@@ -3607,7 +3747,7 @@ def solve_n_queens(n):
 
 ## 24. Top K Elements Pattern
 
-A heap-based pattern for finding the most frequent or largest elements.
+A heap-based pattern FOR finding the most frequent or largest elements.
 
 **When to use**:
 
@@ -3619,29 +3759,31 @@ A heap-based pattern for finding the most frequent or largest elements.
 import heapq
 
 def find_k_largest(nums, k):
+    """Finds the K largest elements in an array using a min-heap."""
     # Use a min heap of size k
     min_heap = []
 
-    for num in nums:
-        if len(min_heap) < k:
+    FOR num in nums:
+        IF len(min_heap) < k:
             heapq.heappush(min_heap, num)
         elif num > min_heap[0]:
             heapq.heappop(min_heap)
             heapq.heappush(min_heap, num)
 
-    return min_heap
+    RETURN min_heap
 
 def top_k_frequent(nums, k):
+    """Finds the K most frequent elements in an array using a frequency map and a min-heap."""
     # Count frequency
     counter = {}
-    for num in nums:
+    FOR num in nums:
         counter[num] = counter.get(num, 0) + 1
 
     # Use min heap to keep track of k most frequent elements
     min_heap = []
 
-    for num, count in counter.items():
-        if len(min_heap) < k:
+    FOR num, count in counter.items():
+        IF len(min_heap) < k:
             heapq.heappush(min_heap, (count, num))
         elif count > min_heap[0][0]:
             heapq.heappop(min_heap)
@@ -3649,40 +3791,42 @@ def top_k_frequent(nums, k):
 
     # Extract result
     result = []
-    while min_heap:
+    WHILE min_heap:
         result.append(heapq.heappop(min_heap)[1])
 
     # Reverse to get highest frequency first
-    return result[::-1]
+    RETURN result[::-1]
 
 def k_closest_points(points, k):
+    """Finds the K points closest to the origin using a max-heap."""
     # Use max heap to keep k closest points
     max_heap = []
 
-    for x, y in points:
-        # Calculate distance (no need for square root)
+    FOR x, y in points:
+        # Calculate distance (no need FOR square root)
         dist = x*x + y*y
 
-        if len(max_heap) < k:
-            # Negate distance for max heap
+        IF len(max_heap) < k:
+            # Negate distance FOR max heap
             heapq.heappush(max_heap, (-dist, [x, y]))
         elif -dist > max_heap[0][0]:
             heapq.heappop(max_heap)
             heapq.heappush(max_heap, (-dist, [x, y]))
 
     # Extract result
-    return [point for _, point in max_heap]
+    RETURN [point FOR _, point in max_heap]
 ```
 
-**Time Complexity**: O(n log k) for processing n elements with heap of size k
-**Space Complexity**: O(k) for the heap
+**Time Complexity**: O(n log k) FOR processing n elements with heap of size k
+**Space Complexity**: O(k) FOR the heap
 
 **Example Use Cases**:
 
 - Kth Largest Element
 
-  ```pseudo
+  ```python
   ALGORITHM FindKthLargest(nums, k)
+    """Find the Kth largest element in an unsorted array using a min-heap."""
     // Use min heap of size k
     Initialize minHeap as empty heap
 
@@ -3699,17 +3843,18 @@ def k_closest_points(points, k):
 
 - K Closest Points to Origin
 
-  ```pseudo
+  ```python
   ALGORITHM KClosestPoints(points, k)
+    """Find the K points closest to the origin using a max-heap."""
     // Use max heap to keep k closest points
     Initialize maxHeap as empty heap
 
     FOR each point (x, y) in points DO
-      // Calculate distance (no need for square root)
+      // Calculate distance (no need FOR square root)
       distance = x² + y²
 
       IF size of maxHeap < k THEN
-        // Store negative distance for max heap behavior
+        // Store negative distance FOR max heap behavior
         Add (-distance, point) to maxHeap
       ELSE IF -distance > largest negative distance in maxHeap THEN
         Remove element with largest negative distance from maxHeap
@@ -3726,8 +3871,9 @@ def k_closest_points(points, k):
 
 - Top K Frequent Elements
 
-  ```pseudo
+  ```python
   ALGORITHM TopKFrequent(nums, k)
+    """Find the K most frequent elements in an array."""
     // Count frequencies
     Initialize frequency map
     FOR each num in nums DO
@@ -3755,8 +3901,9 @@ def k_closest_points(points, k):
 
 - Sort K-sorted Array
 
-  ```pseudo
+  ```python
   ALGORITHM SortKSortedArray(nums, k)
+    """Sort an array where each element is at most k positions away from its sorted position."""
     // Each element is at most k positions away from its sorted position
     // Use min heap of size k+1
     Initialize minHeap as empty heap
@@ -3766,7 +3913,7 @@ def k_closest_points(points, k):
       // Add current element to heap
       Add num to minHeap
 
-      // If heap size exceeds k+1, remove and add to result
+      // IF heap size exceeds k+1, remove and add to result
       IF size of minHeap > k+1 THEN
         Add smallest element from minHeap to result
         Remove smallest element from minHeap
@@ -3783,7 +3930,7 @@ def k_closest_points(points, k):
 
 ## 25. Two Heaps Pattern
 
-A pattern for problems requiring tracking of median elements.
+A pattern FOR problems requiring tracking of median elements.
 
 **When to use**:
 
@@ -3794,12 +3941,15 @@ A pattern for problems requiring tracking of median elements.
 ```python
 import heapq
 
-class MedianFinder:
+CLASS MedianFinder:
+    """Data structure to find the median from a data stream using two heaps."""
     def __init__(self):
-        self.small = []  # Max-heap for smaller half
-        self.large = []  # Min-heap for larger half
+        """Initializes the MedianFinder with two heaps."""
+        self.small = []  # Max-heap FOR smaller half
+        self.large = []  # Min-heap FOR larger half
 
     def addNum(self, num):
+        """Adds a number to the data structure and rebalances the heaps."""
         # Add to max_heap
         heapq.heappush(self.small, -num)
 
@@ -3808,38 +3958,43 @@ class MedianFinder:
         heapq.heappush(self.large, -heapq.heappop(self.small))
 
         # Ensure small has at least as many elements as large
-        if len(self.small) < len(self.large):
+        IF len(self.small) < len(self.large):
             heapq.heappush(self.small, -heapq.heappop(self.large))
 
     def findMedian(self):
-        if len(self.small) > len(self.large):
-            return -self.small[0]
-        else:
-            return (-self.small[0] + self.large[0]) / 2.0
+        """Returns the median of all elements seen so far."""
+        IF len(self.small) > len(self.large):
+            RETURN -self.small[0]
+        ELSE:
+            RETURN (-self.small[0] + self.large[0]) / 2.0
 
-class SlidingWindowMedian:
+CLASS SlidingWindowMedian:
+    """Calculates the median of a sliding window using two heaps (less optimal removal)."""
     def __init__(self):
-        self.max_heap = []  # For smaller half
-        self.min_heap = []  # For larger half
+        """Initializes the heaps for sliding window median calculation."""
+        self.max_heap = []  # FOR smaller half
+        self.min_heap = []  # FOR larger half
 
     def find_sliding_window_median(self, nums, k):
+        """Calculates the median for each sliding window of size k."""
         result = []
 
-        for i, num in enumerate(nums):
+        FOR i, num in enumerate(nums):
             # Add new element
             self.add_num(num)
 
             # Remove element outside window
-            if i >= k:
+            IF i >= k:
                 self.remove_num(nums[i - k])
 
             # Calculate median once window is full
-            if i >= k - 1:
+            IF i >= k - 1:
                 result.append(self.find_median())
 
-        return result
+        RETURN result
 
     def add_num(self, num):
+        """Adds a number to the heaps and rebalances."""
         # Add to max_heap
         heapq.heappush(self.max_heap, -num)
 
@@ -3847,46 +4002,50 @@ class SlidingWindowMedian:
         heapq.heappush(self.min_heap, -heapq.heappop(self.max_heap))
 
         # Ensure max_heap has at least as many elements as min_heap
-        if len(self.max_heap) < len(self.min_heap):
+        IF len(self.max_heap) < len(self.min_heap):
             heapq.heappush(self.max_heap, -heapq.heappop(self.min_heap))
 
     def remove_num(self, num):
+        """Removes a number from the heaps and rebalances (O(k) complexity)."""
         # Remove from proper heap
-        if num <= -self.max_heap[0]:
+        IF num <= -self.max_heap[0]:
             self.max_heap.remove(-num)
             heapq.heapify(self.max_heap)
-        else:
+        ELSE:
             self.min_heap.remove(num)
             heapq.heapify(self.min_heap)
 
-        # Rebalance if needed
-        if len(self.max_heap) < len(self.min_heap):
+        # Rebalance IF needed
+        IF len(self.max_heap) < len(self.min_heap):
             heapq.heappush(self.max_heap, -heapq.heappop(self.min_heap))
         elif len(self.max_heap) > len(self.min_heap) + 1:
             heapq.heappush(self.min_heap, -heapq.heappop(self.max_heap))
 
     def find_median(self):
-        if len(self.max_heap) > len(self.min_heap):
-            return -self.max_heap[0]
-        else:
-            return (-self.max_heap[0] + self.min_heap[0]) / 2.0
+        """Finds the median from the current state of the heaps."""
+        IF len(self.max_heap) > len(self.min_heap):
+            RETURN -self.max_heap[0]
+        ELSE:
+            RETURN (-self.max_heap[0] + self.min_heap[0]) / 2.0
 ```
 
 **Time Complexity**: O(log n) per element insertion
-**Space Complexity**: O(n) for storing all elements
+**Space Complexity**: O(n) FOR storing all elements
 
 **Example Use Cases**:
 
 - Find Median from Data Stream
 
-  ```pseudo
+  ```python
   CLASS MedianFinder
+    """Pseudocode for finding median from a data stream using two heaps."""
     CONSTRUCTOR
-      Initialize maxHeap (for smaller half) as empty heap
-      Initialize minHeap (for larger half) as empty heap
+      Initialize maxHeap (FOR smaller half) as empty heap
+      Initialize minHeap (FOR larger half) as empty heap
 
     METHOD AddNum(num)
-      // Add to max heap (for smaller half)
+      """Adds a number and rebalances the heaps."""
+      // Add to max heap (FOR smaller half)
       // Note: we use negative values since most heap implementations
       // are min heaps by default
       Add -num to maxHeap
@@ -3903,6 +4062,7 @@ class SlidingWindowMedian:
         Move minHeap.top() to maxHeap as negative value
 
     METHOD FindMedian()
+      """Calculates the median from the current heaps."""
       IF size of maxHeap > size of minHeap THEN
         RETURN -maxHeap.top()  // Odd number of elements
       ELSE
@@ -3911,11 +4071,12 @@ class SlidingWindowMedian:
 
 - Sliding Window Median
 
-  ```pseudo
+  ```python
   ALGORITHM SlidingWindowMedian(nums, k)
+    """Calculate the median of each sliding window of size k."""
     // Create heaps
-    Initialize maxHeap (for smaller half) as empty heap
-    Initialize minHeap (for larger half) as empty heap
+    Initialize maxHeap (FOR smaller half) as empty heap
+    Initialize minHeap (FOR larger half) as empty heap
     Initialize result as empty list
 
     FUNCTION AddNum(num)
@@ -3926,6 +4087,10 @@ class SlidingWindowMedian:
         Add num to minHeap
 
       // Balance heaps
+
+# Note: The remove_num implementation using list.remove() and heapify()
+# has O(k) complexity, leading to an overall O(n*k) time complexity.
+# More optimal O(n log k) solutions exist using lazy deletion or balanced BSTs.
       IF size of maxHeap > size of minHeap + 1 THEN
         Remove -maxHeap.top() and add to minHeap
       ELSE IF size of minHeap > size of maxHeap THEN
@@ -3938,7 +4103,7 @@ class SlidingWindowMedian:
       ELSE
         Remove num from minHeap
 
-      // Rebalance if needed
+      // Rebalance IF needed
       IF size of maxHeap > size of minHeap + 1 THEN
         Remove -maxHeap.top() and add to minHeap
       ELSE IF size of minHeap > size of maxHeap THEN
@@ -3968,12 +4133,13 @@ class SlidingWindowMedian:
 
 - IPO (maximize capital)
 
-  ```pseudo
+  ```python
   ALGORITHM FindMaximizedCapital(k, w, profits, capital)
+    """Maximize capital by selecting up to k projects within capital constraints."""
     // k: number of projects to select
     // w: initial capital
-    // profits: profits for each project
-    // capital: capital required for each project
+    // profits: profits FOR each project
+    // capital: capital required FOR each project
 
     // Create pairs of (capital, profit)
     Initialize projects as empty list
@@ -3994,7 +4160,7 @@ class SlidingWindowMedian:
         Add projects[i].profit to maxProfitHeap
         Increment i
 
-      // If no project is available, break
+      // IF no project is available, BREAK
       IF maxProfitHeap is empty THEN
         BREAK
 
@@ -4009,7 +4175,7 @@ class SlidingWindowMedian:
 
 ## 26. Bit Manipulation
 
-A set of techniques for manipulating individual bits in integers.
+A set of techniques FOR manipulating individual bits in integers.
 
 **When to use**:
 
@@ -4021,6 +4187,10 @@ A set of techniques for manipulating individual bits in integers.
 ```python
 # Common bit manipulation operations
 def bit_operations():
+    """Demonstrates common bitwise operations (AND, OR, XOR, NOT, shifts)."""
+# Note: WHILE IPO uses two heaps, it represents a "K-Selection with Constraints"
+# pattern rather than the typical median-finding structure of this section.
+
     # Basic operations
     a = 5   # 101 in binary
     b = 3   # 011 in binary
@@ -4043,39 +4213,46 @@ def bit_operations():
     # Right shift
     right_shift = a >> 1  # 10 = 2
 
-    return bit_and, bit_or, bit_xor, bit_not, left_shift, right_shift
+    RETURN bit_and, bit_or, bit_xor, bit_not, left_shift, right_shift
 
 # Counting bits in a number
 def count_bits(n):
+    """Counts the number of set bits (1s) in the binary representation of n."""
     count = 0
-    while n:
-        count += n & 1  # Check if least significant bit is 1
+    WHILE n:
+        count += n & 1  # Check IF least significant bit is 1
         n >>= 1         # Right shift by 1
-    return count
+    RETURN count
 
 # Power of two check
 def is_power_of_two(n):
-    return n > 0 and (n & (n - 1)) == 0
+    """Checks if a number is a power of two using bit manipulation."""
+    RETURN n > 0 and (n & (n - 1)) == 0
 
 # XOR to find single number among duplicates
 def find_single_number(nums):
+    """Finds the single number that appears only once in an array where others appear twice, using XOR."""
     result = 0
-    for num in nums:
+    FOR num in nums:
         result ^= num
-    return result
+    RETURN result
 
 # Setting, clearing, and checking bits
 def set_bit(num, i):
-    return num | (1 << i)
+    """Sets the ith bit of num to 1."""
+    RETURN num | (1 << i)
 
 def clear_bit(num, i):
-    return num & ~(1 << i)
+    """Clears the ith bit of num to 0."""
+    RETURN num & ~(1 << i)
 
 def toggle_bit(num, i):
-    return num ^ (1 << i)
+    """Toggles the ith bit of num."""
+    RETURN num ^ (1 << i)
 
 def check_bit(num, i):
-    return (num >> i) & 1
+    """Checks if the ith bit of num is set (1)."""
+    RETURN (num >> i) & 1
 ```
 
 **Time Complexity**: O(1) to O(n) depending on problem
@@ -4085,12 +4262,13 @@ def check_bit(num, i):
 
 - Counting bits
 
-  ```pseudo
+  ```python
   ALGORITHM CountBits(n)
+    """Count the number of set bits (1s) in the binary representation of n."""
     Initialize count = 0
 
     WHILE n > 0 DO
-      // Check if least significant bit is 1
+      // Check IF least significant bit is 1
       IF n & 1 equals 1 THEN
         Increment count
 
@@ -4102,8 +4280,9 @@ def check_bit(num, i):
 
 - Finding single number among duplicates
 
-  ```pseudo
+  ```python
   ALGORITHM FindSingleNumber(nums)
+    """Find the single element appearing once in an array where others appear twice."""
     // Given array where all elements appear twice except one
     Initialize result = 0
 
@@ -4116,8 +4295,9 @@ def check_bit(num, i):
 
 - Power set generation via bits
 
-  ```pseudo
+  ```python
   ALGORITHM GeneratePowerSet(nums)
+    """Generate all subsets (powerset) of an array using bit manipulation."""
     Initialize n = length of nums
     Initialize total = 2^n  // Number of subsets
     Initialize result as empty list
@@ -4128,7 +4308,7 @@ def check_bit(num, i):
 
       // Check each bit position
       FOR j FROM 0 TO n-1 DO
-        // If jth bit is set in i, include nums[j]
+        // IF jth bit is set in i, include nums[j]
         IF (i & (1 << j)) != 0 THEN
           Add nums[j] to current
 
@@ -4139,9 +4319,10 @@ def check_bit(num, i):
 
 - Bit manipulation tricks
 
-  ```pseudo
-  // Check if a number is power of 2
+  ```python
+  // Check IF a number is power of 2
   ALGORITHM IsPowerOfTwo(n)
+    """Check if a number is a power of two using bit manipulation."""
     // A power of 2 has exactly one bit set to 1
     // n & (n-1) clears the lowest set bit
     IF n <= 0 THEN
@@ -4150,22 +4331,26 @@ def check_bit(num, i):
     RETURN (n & (n-1)) equals 0
   ```
 
-  ```pseudo
+  ```python
   // Get, Set, Clear, Toggle bits
   ALGORITHM SetBit(num, i)
+    """Set the ith bit of a number to 1."""
     // Set the ith bit to 1
     RETURN num | (1 << i)
 
   ALGORITHM ClearBit(num, i)
+    """Clear the ith bit of a number to 0."""
     // Clear the ith bit to 0
     RETURN num & ~(1 << i)
 
   ALGORITHM ToggleBit(num, i)
+    """Toggle (flip) the ith bit of a number."""
     // Toggle the ith bit
     RETURN num ^ (1 << i)
 
   ALGORITHM CheckBit(num, i)
-    // Check if ith bit is 1
+    """Check if the ith bit of a number is set (1)."""
+    // Check IF ith bit is 1
     RETURN (num >> i) & 1 equals 1
   ```
 
@@ -4184,24 +4369,26 @@ A technique where local optima are chosen at each step to find a global optimum.
 ```python
 # Activity selection problem
 def activity_selection(start, finish):
+    """Selects the maximum number of non-overlapping activities using a greedy approach."""
     # Sort activities by finish time
     activities = sorted(zip(start, finish), key=lambda x: x[1])
 
     selected = [activities[0]]
     last_finish = activities[0][1]
 
-    for i in range(1, len(activities)):
-        # If current activity starts after the finish of last selected activity
-        if activities[i][0] >= last_finish:
+    FOR i in range(1, len(activities)):
+        # IF current activity starts after the finish of last selected activity
+        IF activities[i][0] >= last_finish:
             selected.append(activities[i])
             last_finish = activities[i][1]
 
-    return selected
+    RETURN selected
 
 # Minimum number of intervals to remove to make rest non-overlapping
 def erase_overlap_intervals(intervals):
-    if not intervals:
-        return 0
+    """Finds the minimum number of intervals to remove to make the rest non-overlapping."""
+    IF not intervals:
+        RETURN 0
 
     # Sort by end time
     intervals.sort(key=lambda x: x[1])
@@ -4209,32 +4396,33 @@ def erase_overlap_intervals(intervals):
     end = intervals[0][1]
     count = 1  # Count of non-overlapping intervals
 
-    for i in range(1, len(intervals)):
-        if intervals[i][0] >= end:
+    FOR i in range(1, len(intervals)):
+        IF intervals[i][0] >= end:
             # Current interval doesn't overlap with previous
             end = intervals[i][1]
             count += 1
 
-    # Return number of intervals to remove
-    return len(intervals) - count
+    # RETURN number of intervals to remove
+    RETURN len(intervals) - count
 
-# Jump Game - determine if you can reach the end
+# Jump Game - determine IF you can reach the end
 def can_jump(nums):
+    """Determines if the end of an array can be reached by jumping (greedy approach)."""
     max_reach = 0
 
-    for i in range(len(nums)):
-        # If current position is beyond max reach, we can't get here
-        if i > max_reach:
-            return False
+    FOR i in range(len(nums)):
+        # IF current position is beyond max reach, we can't get here
+        IF i > max_reach:
+            RETURN False
 
         # Update max reach from current position
         max_reach = max(max_reach, i + nums[i])
 
-        # If we can reach the end, return early
-        if max_reach >= len(nums) - 1:
-            return True
+        # IF we can reach the end, RETURN early
+        IF max_reach >= len(nums) - 1:
+            RETURN True
 
-    return max_reach >= len(nums) - 1
+    RETURN max_reach >= len(nums) - 1
 ```
 
 **Time Complexity**: Usually O(n log n) due to sorting
@@ -4244,8 +4432,9 @@ def can_jump(nums):
 
 - Activity Selection
 
-  ```pseudo
+  ```python
   ALGORITHM ActivitySelection(start, finish)
+    """Select the maximum number of non-overlapping activities."""
     // Create activities as pairs of (start, finish) times
     Initialize activities as list of pairs from start and finish arrays
 
@@ -4256,7 +4445,7 @@ def can_jump(nums):
     Set lastFinish = activities[0].finish
 
     FOR i FROM 1 TO length of activities - 1 DO
-      // If current activity starts after the finish of last selected
+      // IF current activity starts after the finish of last selected
       IF activities[i].start >= lastFinish THEN
         Add activities[i] to selected
         Set lastFinish = activities[i].finish
@@ -4266,12 +4455,13 @@ def can_jump(nums):
 
 - Huffman Coding
 
-  ```pseudo
+  ```python
   ALGORITHM HuffmanCoding(chars, frequencies)
+    """Build a Huffman Tree and generate codes for character compression."""
     // Create a priority queue (min heap) of nodes
     Initialize minHeap
 
-    // Create a leaf node for each character and add to heap
+    // Create a leaf node FOR each character and add to heap
     FOR i FROM 0 TO length of chars - 1 DO
       Create node with chars[i] and frequencies[i]
       Add node to minHeap
@@ -4302,8 +4492,9 @@ def can_jump(nums):
 
 - Fractional Knapsack
 
-  ```pseudo
+  ```python
   ALGORITHM FractionalKnapsack(weights, values, capacity)
+    """Solve the Fractional Knapsack problem using a greedy approach based on value/weight ratio."""
     // Create items as (value, weight, value/weight ratio)
     Initialize items as empty list
     FOR i FROM 0 TO length of weights - 1 DO
@@ -4334,8 +4525,9 @@ def can_jump(nums):
 
 - Interval Scheduling (Minimum Intervals to Remove)
 
-  ```pseudo
+  ```python
   ALGORITHM MinRemovalIntervals(intervals)
+    """Find the minimum number of intervals to remove to make the rest non-overlapping."""
     IF intervals is empty THEN
       RETURN 0
 
@@ -4351,6 +4543,53 @@ def can_jump(nums):
         Set end = intervals[i].end
         Increment count
 
-    // Return number of intervals to remove
+    // RETURN number of intervals to remove
     RETURN length of intervals - count
   ```
+
+- Jump Game (can reach end)
+
+  ```python
+  ALGORITHM CanJump(nums)
+    """Determine if the end of an array can be reached by jumping."""
+    n = length of nums
+
+    // Initialize the farthest position we can reach
+    Initialize maxReach = 0
+
+    FOR i FROM 0 TO n-1 DO
+      // IF we can't reach the current position, RETURN false
+      IF i > maxReach THEN
+        RETURN false
+
+      // Update the farthest position we can reach
+      maxReach = MAX(maxReach, i + nums[i])
+
+      // IF we can already reach the end, RETURN true
+      IF maxReach >= n-1 THEN
+        RETURN true
+
+    RETURN false // Only reachable IF loop completes AND maxReach >= n-1
+  ```
+
+- Best Time to Buy and Sell Stock (Max Profit)
+
+  ```python
+  ALGORITHM MaxProfit(prices)
+    """Find the maximum profit from buying and selling a stock once."""
+    IF prices is empty THEN
+      RETURN 0
+
+    Set minPrice = prices[0]
+    Set maxProfit = 0
+
+    FOR i FROM 1 TO length(prices)-1 DO
+      IF prices[i] < minPrice THEN
+        Update minPrice = prices[i]
+      ELSE
+        Calculate currentProfit = prices[i] - minPrice
+        Update maxProfit = MAX(maxProfit, currentProfit)
+
+    RETURN maxProfit
+  ```
+

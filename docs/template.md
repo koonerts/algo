@@ -72,7 +72,7 @@ def variation_2(args):
 - **Time & Space Complexity**:
   - Basic algorithm: O(?) time, O(?) space
   - Optimized version: O(?) time, O(?) space
-  
+
 - **Edge Cases**:
   - List of important edge cases to consider
   - How to handle special inputs
@@ -106,14 +106,17 @@ func algorithmName(param ParamType) ReturnType {
 ## Practice Problems
 
 ### Easy ⭐
+
 - Problem 1 (LeetCode #X) - Brief description
 - Problem 2 (LeetCode #Y) - Brief description
 
 ### Medium ⭐⭐
+
 - Problem 3 (LeetCode #Z) - Brief description
 - Problem 4 (LeetCode #W) - Brief description
 
 ### Hard ⭐⭐⭐
+
 - Problem 5 (LeetCode #V) - Brief description
 - Problem 6 (LeetCode #U) - Brief description
 

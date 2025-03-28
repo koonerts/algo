@@ -22,6 +22,7 @@ If you're new to algorithms or need a refresher:
 ## Algorithm References
 
 ### Arrays & Strings
+
 - [Kadane's Algorithm](arrays.md#kadanes-algorithm-cheatsheet-for-swe-interviews) - Maximum subarray sum
 - [Fixed Size Sliding Window](arrays.md#sliding-window-fixed-size-algorithm-cheatsheet) - Efficient subarray operations with fixed window
 - [Variable Size Sliding Window](arrays.md#sliding-window-variable-size-cheatsheet) - Dynamic window sizing for constraints
@@ -29,36 +30,43 @@ If you're new to algorithms or need a refresher:
 - [Prefix Sums](arrays.md#prefix-sums-cheatsheet) - Optimized range queries
 
 ### Linked Lists
+
 - [Fast & Slow Pointers Algorithm](linked-lists.md#fast--slow-pointers-algorithm) - Cycle detection and middle finding
 - [Iterative Linked List Reversal](linked-lists.md#iterative-linked-list-reversal-cheatsheet) - In-place linked list reversal
 
 ### Trees & Advanced Data Structures
+
 - [Trie (Prefix Tree)](trees.md#trie-data-structure) - Efficient prefix operations and string storage
 - [Union-Find (Disjoint Set)](trees.md#union-find-disjoint-set) - Dynamic connectivity and component tracking
 - [Segment Tree](trees.md#segment-tree) - Range query operations with updates
 - [Iterative DFS](trees.md#iterative-dfs-depth-first-search) - Non-recursive depth-first traversal
 
 ### Heaps
+
 - [Two Heaps Algorithm](heaps.md#two-heaps-algorithm) - Median finding and partition-based problems
 
 ### Backtracking
+
 - [Subsets Algorithm](backtracking.md#subsets-algorithm) - Generating all possible subsets
 - [Combinations Algorithm](backtracking.md#combinations-algorithm) - Generating k-sized combinations
 - [Permutations Algorithm](backtracking.md#permutations-algorithm) - Generating all possible arrangements
 
 ### Graphs
+
 - [Dijkstra's Algorithm](graphs.md#dijkstras-algorithm) - Shortest path with positive weights
 - [Prim's Algorithm](graphs.md#prims-algorithm) - Minimum spanning tree using greedy approach
 - [Kruskal's Algorithm](graphs.md#kruskals-algorithm) - Minimum spanning tree using disjoint set
 - [Topological Sort](graphs.md#topological-sort) - Ordering of directed acyclic graphs
 
 ### Dynamic Programming
+
 - [0/1 Knapsack](dynamic-programming.md#01-knapsack-problem) - Item selection with weight constraints
 - [Unbounded Knapsack](dynamic-programming.md#unbounded-knapsack) - Item selection with unlimited quantities
 - [Longest Common Subsequence (LCS)](dynamic-programming.md#longest-common-subsequence-lcs) - Sequence matching
 - [Palindrome Problems](dynamic-programming.md#palindrome-problems) - Palindromic substring identification
 
 ### Additional Patterns
+
 - [Binary Search Variations](additional-patterns.md#binary-search-variations) - Modified binary search for complex scenarios
 - [Monotonic Stack/Queue](additional-patterns.md#monotonic-stackqueue) - Next greater/smaller element problems
 - [BFS for Shortest Path](additional-patterns.md#bfs-for-shortest-path-in-unweighted-graph) - Level-order traversal for distances
@@ -75,9 +83,11 @@ If you're new to algorithms or need a refresher:
 ## Learning Resources
 
 ### Study Plans
+
 - [Algorithm Learning Acceleration Plan](lesson-plan.md) - Comprehensive 3-week plan with prioritized algorithm tiers and study strategies
 
 ### Learning Activities
+
 - [Interactive Learning Activities & Games](learning-activities.md) - Collection of engaging activities to reinforce algorithm patterns
 - [Ready-to-Use Digital Activities](ready-to-use-activities.md) - Practice resources you can use immediately:
   - Algorithm Flash Cards
@@ -89,6 +99,7 @@ If you're new to algorithms or need a refresher:
   - Memory Optimization Challenges
 
 ### Reference Materials
+
 - [Algorithm & Data Structure Glossary](glossary.md) - Comprehensive definitions of terms used throughout the documentation
 
 ## Difficulty Levels
@@ -120,6 +131,7 @@ If you're stuck on a specific algorithm or pattern:
 If you'd like to contribute to this repository, please follow these guidelines:
 
 ### Adding New Algorithms
+
 1. Use the [standard template](template.md) for consistency
 2. Include implementations in Python and Go
 3. Add difficulty indicators to all problems
@@ -127,18 +139,21 @@ If you'd like to contribute to this repository, please follow these guidelines:
 5. Follow the existing file naming and organization conventions
 
 ### Improving Documentation
+
 1. Maintain the standardized section structure
 2. Add real-world examples where applicable
 3. Ensure explanations are accessible to various skill levels
 4. Include references to scholarly sources where appropriate
 
 ### Creating Visualizations
+
 1. Use ASCII diagrams for simple visualizations that work in Markdown
 2. For complex visualizations, use SVG or PNG files in the assets directory
 3. Ensure visualizations are clear and properly labeled
 4. Consider creating animations for step-by-step algorithm execution
 
 ### Adding Language Implementations
+
 1. Follow Python or Go best practices and coding standards
 2. Include comments explaining non-obvious parts of the implementation
 3. Ensure implementations are efficient and handle edge cases

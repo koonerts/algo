@@ -79,6 +79,7 @@ This plan is designed to help you efficiently learn and internalize algorithm pa
 ### 5. Implementation Templates
 
 - **Create skeleton templates** for each pattern with well-commented sections (see examples in [arrays.md](arrays.md) and other algorithm pages):
+
   ```python
   def sliding_window_fixed(arr, k):
       # 1. Initialize window sum and result
@@ -95,6 +96,7 @@ This plan is designed to help you efficiently learn and internalize algorithm pa
 
       return max_sum
   ```
+
 - **Language-Specific Idioms**: Learn the standard library functions that simplify implementations
 - **Pattern Variations**: Create template variations for common pattern adaptations
 - **Test Cases**: Include verification tests like those added to [array implementations](arrays.md#kadanes-algorithm-cheatsheet-for-swe-interviews)

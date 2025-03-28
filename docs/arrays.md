@@ -19,6 +19,7 @@ Kadane's algorithm finds the maximum sum subarray in a one-dimensional array by 
 ### Key Insight
 
 At each position, we have two choices:
+
 1. Start a new subarray from current position
 2. Extend the previous subarray by including current element
 
@@ -57,12 +58,12 @@ if __name__ == "__main__":
     test1 = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
     # Expected: 6 (subarray [4, -1, 2, 1])
     print(f"Test 1 result: {brute_force_max_subarray(test1)}")
-    
+
     # Example 2: All negative numbers
     test2 = [-1, -2, -3, -4]
     # Expected: -1 (subarray [-1])
     print(f"Test 2 result: {brute_force_max_subarray(test2)}")
-    
+
     # Example 3: All positive numbers
     test3 = [1, 2, 3, 4]
     # Expected: 10 (entire array)
@@ -89,17 +90,17 @@ if __name__ == "__main__":
     test1 = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
     # Expected: 6 (subarray [4, -1, 2, 1])
     print(f"Test 1 result: {kadane(test1)}")
-    
+
     # Example 2: All negative numbers
     test2 = [-1, -2, -3, -4]
     # Expected: -1 (subarray [-1])
     print(f"Test 2 result: {kadane(test2)}")
-    
+
     # Example 3: All positive numbers
     test3 = [1, 2, 3, 4]
     # Expected: 10 (entire array)
     print(f"Test 3 result: {kadane(test3)}")
-    
+
     # Compare brute force vs optimized results
     for test in [test1, test2, test3]:
         bf_result = brute_force_max_subarray(test)
@@ -140,13 +141,13 @@ if __name__ == "__main__":
     max_sum, start, end = kadane_with_indices(test1)
     print(f"Max sum: {max_sum}, Subarray: {test1[start:end+1]} (indices {start}-{end})")
     # Expected: Max sum: 6, Subarray: [4, -1, 2, 1] (indices 3-6)
-    
+
     # Example 2: All positive numbers
     test2 = [1, 2, 3, 4]
     max_sum, start, end = kadane_with_indices(test2)
     print(f"Max sum: {max_sum}, Subarray: {test2[start:end+1]} (indices {start}-{end})")
     # Expected: Max sum: 10, Subarray: [1, 2, 3, 4] (indices 0-3)
-    
+
     # Example 3: Test with a different pattern
     test3 = [5, -4, 3, 4, -2, 1, 7, -8, 6]
     max_sum, start, end = kadane_with_indices(test3)
@@ -173,17 +174,17 @@ if __name__ == "__main__":
     test1 = [-1, -2, -3, -4]
     print(f"Max sum: {kadane_all_negative(test1)}")
     # Expected: -1 (the largest single element)
-    
+
     # Example 2: Mixed numbers with negative result
     test2 = [-5, -1, -8, -9]
     print(f"Max sum: {kadane_all_negative(test2)}")
     # Expected: -1
-    
+
     # Example 3: Negative and positive numbers
     test3 = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
     print(f"Max sum: {kadane_all_negative(test3)}")
     # Expected: 6
-    
+
     # Check if standard Kadane fails but all-negative version works
     test4 = [-10, -5, -2, -1, -7]
     standard_result = kadane(test4) if 'kadane' in globals() else float('-inf')
@@ -283,12 +284,12 @@ def max_product_subarray(nums):
 func maxSubArray(nums []int) int {
     maxSoFar := nums[0]
     maxEndingHere := nums[0]
-    
+
     for i := 1; i < len(nums); i++ {
         maxEndingHere = max(nums[i], maxEndingHere + nums[i])
         maxSoFar = max(maxSoFar, maxEndingHere)
     }
-    
+
     return maxSoFar
 }
 
@@ -303,14 +304,17 @@ func max(a, b int) int {
 ## Practice Problems
 
 ### Easy ⭐
+
 - Maximum Subarray (LeetCode #53) - Find the contiguous subarray with the largest sum
 - Best Time to Buy and Sell Stock (LeetCode #121) - Apply Kadane's to find maximum profit
 
 ### Medium ⭐⭐
+
 - Maximum Sum Circular Subarray (LeetCode #918) - Handle wrapping around the array
 - Maximum Product Subarray (LeetCode #152) - Adapt for multiplication instead of addition
 
 ### Hard ⭐⭐⭐
+
 - Maximum Sum Rectangle in a 2D Matrix (variant of LeetCode #363) - Apply in 2D context
 - Maximum Absolute Sum of Any Subarray (LeetCode #1749) - Find both maximum and minimum
 
@@ -344,6 +348,7 @@ The fixed-size sliding window algorithm maintains a subarray/substring of consta
 ### Key Insight
 
 Instead of recomputing the entire window contents at each step, we only:
+
 1. Add the new element entering the window
 2. Remove the oldest element leaving the window
 
@@ -518,10 +523,10 @@ public double[] findAverages(int[] arr, int k) {
     double[] result = new double[arr.length - k + 1];
     double windowSum = 0;
     int windowStart = 0;
-    
+
     for (int windowEnd = 0; windowEnd < arr.length; windowEnd++) {
         windowSum += arr[windowEnd]; // Add the next element
-        
+
         // When we hit the window size, calculate average and slide the window
         if (windowEnd >= k - 1) {
             result[windowStart] = windowSum / k;
@@ -529,7 +534,7 @@ public double[] findAverages(int[] arr, int k) {
             windowStart++; // Slide the window
         }
     }
-    
+
     return result;
 }
 ```
@@ -541,17 +546,17 @@ function findAverages(arr, k) {
     const result = [];
     let windowSum = 0;
     let windowStart = 0;
-    
+
     for (let windowEnd = 0; windowEnd < arr.length; windowEnd++) {
         windowSum += arr[windowEnd];
-        
+
         if (windowEnd >= k - 1) {
             result.push(windowSum / k);
             windowSum -= arr[windowStart];
             windowStart++;
         }
     }
-    
+
     return result;
 }
 ```
@@ -559,14 +564,17 @@ function findAverages(arr, k) {
 ## Practice Problems
 
 ### Easy ⭐
+
 - Find Maximum Average Subarray I (LeetCode #643)
 - Containing Duplicates II (LeetCode #219) - Find if duplicates are within k distance
 
 ### Medium ⭐⭐
+
 - Count Subarrays with Product Less Than K (LeetCode #713)
 - Frequency of the Most Frequent Element (LeetCode #1838)
 
 ### Hard ⭐⭐⭐
+
 - Sliding Window Maximum (LeetCode #239) - Find maximums in each window using deque
 
 ## Further Reading

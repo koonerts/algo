@@ -30,3 +30,4 @@ openrouter
 **/*.obsidian
 **/*/.obsidian
 .obsidian
+.qodo

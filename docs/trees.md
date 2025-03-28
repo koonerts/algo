@@ -44,7 +44,7 @@ class TrieNode:
 class Trie:
     def __init__(self):
         self.root = TrieNode()
-    
+
     def insert(self, word):
         node = self.root
         for char in word:
@@ -53,7 +53,7 @@ class Trie:
                 node.children[char] = TrieNode()
             node = node.children[char]
         node.is_end_of_word = True
-    
+
     def search(self, word):
         node = self.root
         for char in word:
@@ -61,7 +61,7 @@ class Trie:
                 return False
             node = node.children[char]
         return node.is_end_of_word
-    
+
     def starts_with(self, prefix):
         node = self.root
         for char in prefix:
@@ -82,22 +82,22 @@ def delete(self, word):
             if node.is_end_of_word:
                 node.is_end_of_word = False
             return len(node.children) == 0
-            
+
         char = word[depth]
         if char not in node.children:
             return False
-            
+
         # Recursive delete in subtree
         should_delete_curr = _delete(node.children[char], word, depth + 1)
-        
+
         # Delete current node's reference if child can be deleted and
         # current node is not end of another word
         if should_delete_curr:
             del node.children[char]
             return len(node.children) == 0 and not node.is_end_of_word
-            
+
         return False
-        
+
     _delete(self.root, word)
 ```
 
@@ -111,6 +111,7 @@ def delete(self, word):
 ## Union-Find (Disjoint Set)
 
 Union-Find is used to track a set of elements partitioned into disjoint subsets, with efficient operations for:
+
 1. Finding which set an element belongs to
 2. Merging two sets
 
@@ -133,21 +134,21 @@ class UnionFind:
     def __init__(self, n):
         self.parent = list(range(n))  # Each element is its own parent initially
         self.rank = [0] * n           # Rank (approximate depth) for union by rank
-        
+
     def find(self, x):
         # Find with path compression
         if self.parent[x] != x:
             self.parent[x] = self.find(self.parent[x])
         return self.parent[x]
-        
+
     def union(self, x, y):
         # Union by rank
         root_x = self.find(x)
         root_y = self.find(y)
-        
+
         if root_x == root_y:
             return False  # Already in same set
-            
+
         # Merge smaller rank tree into larger
         if self.rank[root_x] < self.rank[root_y]:
             self.parent[root_x] = root_y
@@ -156,7 +157,7 @@ class UnionFind:
         else:
             self.parent[root_y] = root_x
             self.rank[root_x] += 1
-            
+
         return True  # Union successful
 
     def connected(self, x, y):
@@ -172,19 +173,19 @@ class UnionFindSize:
         self.parent = list(range(n))
         self.size = [1] * n  # Size of each set
         self.count = n       # Number of components
-        
+
     def find(self, x):
         if self.parent[x] != x:
             self.parent[x] = self.find(self.parent[x])
         return self.parent[x]
-        
+
     def union(self, x, y):
         root_x = self.find(x)
         root_y = self.find(y)
-        
+
         if root_x == root_y:
             return False
-            
+
         # Always merge smaller set into larger
         if self.size[root_x] < self.size[root_y]:
             self.parent[root_x] = root_y
@@ -192,10 +193,10 @@ class UnionFindSize:
         else:
             self.parent[root_y] = root_x
             self.size[root_x] += self.size[root_y]
-            
+
         self.count -= 1  # One less component
         return True
-        
+
     def get_size(self, x):
         return self.size[self.find(x)]
 ```
@@ -233,59 +234,59 @@ class SegmentTree:
         # Size of segment tree: 2*2^ceil(log2(n)) - 1
         self.tree = [0] * (4 * self.n)  # 4n is a safe upper bound
         self.build(arr, 0, 0, self.n - 1)
-        
+
     def build(self, arr, node, start, end):
         if start == end:
             # Leaf node
             self.tree[node] = arr[start]
             return
-            
+
         mid = (start + end) // 2
         # Build left and right subtrees
         self.build(arr, 2 * node + 1, start, mid)
         self.build(arr, 2 * node + 2, mid + 1, end)
-        
+
         # Internal node has sum of both children
         self.tree[node] = self.tree[2 * node + 1] + self.tree[2 * node + 2]
-        
+
     def update(self, index, value, node=0, start=0, end=None):
         if end is None:
             end = self.n - 1
-            
+
         if start == end:
             # Leaf node
             self.tree[node] = value
             return
-            
+
         mid = (start + end) // 2
-        
+
         if index <= mid:
             # Update in left subtree
             self.update(index, value, 2 * node + 1, start, mid)
         else:
             # Update in right subtree
             self.update(index, value, 2 * node + 2, mid + 1, end)
-            
+
         # Update current node
         self.tree[node] = self.tree[2 * node + 1] + self.tree[2 * node + 2]
-        
+
     def query_sum(self, left, right, node=0, start=0, end=None):
         if end is None:
             end = self.n - 1
-            
+
         # No overlap
         if left > end or right < start:
             return 0
-            
+
         # Complete overlap
         if left <= start and right >= end:
             return self.tree[node]
-            
+
         # Partial overlap - query both children
         mid = (start + end) // 2
         left_sum = self.query_sum(left, right, 2 * node + 1, start, mid)
         right_sum = self.query_sum(left, right, 2 * node + 2, mid + 1, end)
-        
+
         return left_sum + right_sum
 ```
 
@@ -297,27 +298,27 @@ def build_min(self, arr, node, start, end):
     if start == end:
         self.tree[node] = arr[start]
         return
-        
+
     mid = (start + end) // 2
     self.build_min(arr, 2 * node + 1, start, mid)
     self.build_min(arr, 2 * node + 2, mid + 1, end)
-    
+
     self.tree[node] = min(self.tree[2 * node + 1], self.tree[2 * node + 2])
 
 def query_min(self, left, right, node=0, start=0, end=None):
     if end is None:
         end = self.n - 1
-        
+
     if left > end or right < start:
         return float('inf')  # Identity for min
-        
+
     if left <= start and right >= end:
         return self.tree[node]
-        
+
     mid = (start + end) // 2
     left_min = self.query_min(left, right, 2 * node + 1, start, mid)
     right_min = self.query_min(left, right, 2 * node + 2, mid + 1, end)
-    
+
     return min(left_min, right_min)
 ```
 
@@ -338,20 +339,20 @@ While recursive DFS is common for trees, iterative DFS is often preferred in int
 def preorder_iterative(root):
     if not root:
         return []
-        
+
     result = []
     stack = [root]
-    
+
     while stack:
         node = stack.pop()
         result.append(node.val)
-        
+
         # Push right first so left is processed first (LIFO)
         if node.right:
             stack.append(node.right)
         if node.left:
             stack.append(node.left)
-            
+
     return result
 ```
 
@@ -362,18 +363,18 @@ def inorder_iterative(root):
     result = []
     stack = []
     curr = root
-    
+
     while curr or stack:
         # Go left as far as possible
         while curr:
             stack.append(curr)
             curr = curr.left
-            
+
         # Process current node and go right
         curr = stack.pop()
         result.append(curr.val)
         curr = curr.right
-        
+
     return result
 ```
 
@@ -383,51 +384,51 @@ def inorder_iterative(root):
 def postorder_iterative(root):
     if not root:
         return []
-        
+
     result = []
     stack = [(root, False)]  # (node, visited_right)
-    
+
     while stack:
         node, visited_right = stack.pop()
-        
+
         if visited_right:
             # Both children processed
             result.append(node.val)
         else:
             # Push current node again with flag
             stack.append((node, True))
-            
+
             # Push right then left (LIFO)
             if node.right:
                 stack.append((node.right, False))
             if node.left:
                 stack.append((node.left, False))
-                
+
     return result
 
 # Alternative approach using two stacks
 def postorder_two_stacks(root):
     if not root:
         return []
-        
+
     result = []
     s1 = [root]
     s2 = []
-    
+
     # First stack helps us process nodes in reverse postorder
     while s1:
         node = s1.pop()
         s2.append(node)
-        
+
         if node.left:
             s1.append(node.left)
         if node.right:
             s1.append(node.right)
-            
+
     # Second stack gives us the postorder
     while s2:
         result.append(s2.pop().val)
-        
+
     return result
 ```
 

@@ -16,7 +16,7 @@ Backtracking is an algorithmic technique that builds solutions incrementally by 
 
 ## Step 1: Understanding Backtracking
 
-### Key Components:
+### Key Components
 
 1. **Choice**: What choices do we have at each step?
 2. **Constraints**: When do we stop exploring a path?
@@ -31,7 +31,7 @@ Decision tree for generating all subsets of [1,2,3]:
           /      |       \
         [1]     [2]      [3]
        /  \     / \      /
-    [1,2] [1,3] [2,3]  
+    [1,2] [1,3] [2,3]
      /
  [1,2,3]
 ```
@@ -45,22 +45,22 @@ The subsets pattern generates all possible subsets (power set) of a given set/ar
 ```python
 def subsets(nums):
     result = []
-    
+
     def backtrack(start, current):
         # Add the current subset to our results
         result.append(current[:])
-        
+
         # Explore all possible candidates
         for i in range(start, len(nums)):
             # Include nums[i] in the current subset
             current.append(nums[i])
-            
+
             # Move to the next element
             backtrack(i + 1, current)
-            
+
             # Backtrack - remove nums[i] to try the next candidate
             current.pop()
-    
+
     backtrack(0, [])
     return result
 ```
@@ -73,19 +73,19 @@ def subsets(nums):
 def subsets_with_duplicates(nums):
     result = []
     nums.sort()  # Sort to handle duplicates
-    
+
     def backtrack(start, current):
         result.append(current[:])
-        
+
         for i in range(start, len(nums)):
             # Skip duplicates
             if i > start and nums[i] == nums[i-1]:
                 continue
-                
+
             current.append(nums[i])
             backtrack(i + 1, current)
             current.pop()
-            
+
     backtrack(0, [])
     return result
 ```
@@ -95,22 +95,22 @@ def subsets_with_duplicates(nums):
 ```python
 def subsets_of_size_k(nums, k):
     result = []
-    
+
     def backtrack(start, current):
         # Base case: we have a subset of size k
         if len(current) == k:
             result.append(current[:])
             return
-            
+
         # Not enough remaining elements to form a subset of size k
         if len(current) + (len(nums) - start) < k:
             return
-            
+
         for i in range(start, len(nums)):
             current.append(nums[i])
             backtrack(i + 1, current)
             current.pop()
-            
+
     backtrack(0, [])
     return result
 ```
@@ -124,24 +124,24 @@ The combinations pattern generates all possible combinations of k elements from 
 ```python
 def combinations(n, k):
     result = []
-    
+
     def backtrack(start, current):
         # Base case: we have a combination of size k
         if len(current) == k:
             result.append(current[:])
             return
-            
+
         # Explore all possible candidates
         for i in range(start, n + 1):
             # Include i in the current combination
             current.append(i)
-            
+
             # Move to the next element
             backtrack(i + 1, current)
-            
+
             # Backtrack - remove i to try the next candidate
             current.pop()
-            
+
     backtrack(1, [])
     return result
 ```
@@ -153,26 +153,26 @@ def combinations(n, k):
 ```python
 def combination_sum(candidates, target):
     result = []
-    
+
     def backtrack(start, current, remaining):
         # Base case: we've found a valid combination
         if remaining == 0:
             result.append(current[:])
             return
-            
+
         # Base case: remaining sum is negative
         if remaining < 0:
             return
-            
+
         # Explore all possible candidates
         for i in range(start, len(candidates)):
             current.append(candidates[i])
-            
+
             # Allow reusing the same element
             backtrack(i, current, remaining - candidates[i])
-            
+
             current.pop()
-            
+
     backtrack(0, [], target)
     return result
 ```
@@ -183,27 +183,27 @@ def combination_sum(candidates, target):
 def combination_sum2(candidates, target):
     result = []
     candidates.sort()  # Sort to handle duplicates
-    
+
     def backtrack(start, current, remaining):
         if remaining == 0:
             result.append(current[:])
             return
-            
+
         if remaining < 0:
             return
-            
+
         for i in range(start, len(candidates)):
             # Skip duplicates
             if i > start and candidates[i] == candidates[i-1]:
                 continue
-                
+
             current.append(candidates[i])
-            
+
             # Each element can be used only once, so move to next index
             backtrack(i + 1, current, remaining - candidates[i])
-            
+
             current.pop()
-            
+
     backtrack(0, [], target)
     return result
 ```
@@ -218,28 +218,28 @@ The permutations pattern generates all possible arrangements of elements in a se
 def permutations(nums):
     result = []
     n = len(nums)
-    
+
     def backtrack(current):
         # Base case: we have a full permutation
         if len(current) == n:
             result.append(current[:])
             return
-            
+
         # Try all remaining elements
         for num in nums:
             # Skip if this element is already used
             if num in current:
                 continue
-                
+
             # Add the number to our current permutation
             current.append(num)
-            
+
             # Recursively build the rest of the permutation
             backtrack(current)
-            
+
             # Backtrack
             current.pop()
-            
+
     backtrack([])
     return result
 ```
@@ -249,24 +249,24 @@ def permutations(nums):
 ```python
 def permutations_swap(nums):
     result = []
-    
+
     def backtrack(index):
         # Base case: we have a full permutation
         if index == len(nums):
             result.append(nums[:])
             return
-            
+
         # Try all possibilities for the current position
         for i in range(index, len(nums)):
             # Swap characters
             nums[index], nums[i] = nums[i], nums[index]
-            
+
             # Recursively build the rest of the permutation
             backtrack(index + 1)
-            
+
             # Swap back (backtrack)
             nums[index], nums[i] = nums[i], nums[index]
-            
+
     backtrack(0)
     return result
 ```
@@ -279,29 +279,29 @@ def permutations_swap(nums):
 def permutations_with_duplicates(nums):
     result = []
     nums.sort()  # Sort to handle duplicates
-    
+
     def backtrack(current, used):
         if len(current) == len(nums):
             result.append(current[:])
             return
-            
+
         for i in range(len(nums)):
             # Skip used elements
             if used[i]:
                 continue
-                
+
             # Skip duplicates
             if i > 0 and nums[i] == nums[i-1] and not used[i-1]:
                 continue
-                
+
             used[i] = True
             current.append(nums[i])
-            
+
             backtrack(current, used)
-            
+
             used[i] = False
             current.pop()
-            
+
     backtrack([], [False] * len(nums))
     return result
 ```
@@ -311,28 +311,28 @@ def permutations_with_duplicates(nums):
 ```python
 def next_permutation(nums):
     n = len(nums)
-    
+
     # Find the first decreasing element from the right
     i = n - 2
     while i >= 0 and nums[i] >= nums[i + 1]:
         i -= 1
-        
+
     if i >= 0:
         # Find the element just larger than nums[i]
         j = n - 1
         while nums[j] <= nums[i]:
             j -= 1
-            
+
         # Swap
         nums[i], nums[j] = nums[j], nums[i]
-        
+
     # Reverse suffix starting at i+1
     left, right = i + 1, n - 1
     while left < right:
         nums[left], nums[right] = nums[right], nums[left]
         left += 1
         right -= 1
-        
+
     return nums
 ```
 

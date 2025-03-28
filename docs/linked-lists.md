@@ -19,6 +19,7 @@ The Fast & Slow pointers technique (also known as Floyd's Tortoise and Hare algo
 ### Step 1: Understanding the Pattern
 
 Two pointers traverse the linked list:
+
 - **Slow pointer**: Moves one step at a time
 - **Fast pointer**: Moves two steps at a time
 
@@ -54,17 +55,17 @@ Eventually they meet, confirming a cycle exists.
 def has_cycle(head):
     if not head or not head.next:
         return False
-        
+
     slow = head
     fast = head
-    
+
     while fast and fast.next:
         slow = slow.next          # Move one step
         fast = fast.next.next     # Move two steps
-        
+
         if slow == fast:          # Cycle detected
             return True
-            
+
     return False  # Fast pointer reached end, no cycle
 # Time: O(n), Space: O(1)
 ```
@@ -75,27 +76,27 @@ def has_cycle(head):
 def detect_cycle(head):
     if not head or not head.next:
         return None
-        
+
     # Phase 1: Detect cycle using fast & slow
     slow = fast = head
     has_cycle = False
-    
+
     while fast and fast.next:
         slow = slow.next
         fast = fast.next.next
         if slow == fast:
             has_cycle = True
             break
-            
+
     if not has_cycle:
         return None
-        
+
     # Phase 2: Find cycle start
     slow = head
     while slow != fast:
         slow = slow.next
         fast = fast.next
-        
+
     return slow  # This is the start of the cycle
 # Time: O(n), Space: O(1)
 ```
@@ -108,13 +109,13 @@ def detect_cycle(head):
 def middle_node(head):
     if not head:
         return None
-        
+
     slow = fast = head
-    
+
     while fast and fast.next:
         slow = slow.next
         fast = fast.next.next
-        
+
     return slow  # Middle node (or right middle for even length)
 # Time: O(n), Space: O(1)
 ```
@@ -125,13 +126,13 @@ def middle_node(head):
 def is_palindrome(head):
     if not head or not head.next:
         return True
-        
+
     # Find middle
     slow = fast = head
     while fast and fast.next:
         slow = slow.next
         fast = fast.next.next
-        
+
     # Reverse second half
     prev = None
     current = slow
@@ -140,7 +141,7 @@ def is_palindrome(head):
         current.next = prev
         prev = current
         current = next_temp
-        
+
     # Compare first and second half
     first = head
     second = prev
@@ -149,7 +150,7 @@ def is_palindrome(head):
             return False
         first = first.next
         second = second.next
-        
+
     return True
 # Time: O(n), Space: O(1)
 ```
@@ -160,23 +161,23 @@ def is_palindrome(head):
 def remove_nth_from_end(head, n):
     dummy = ListNode(0)
     dummy.next = head
-    
+
     fast = slow = dummy
-    
+
     # Move fast pointer n+1 steps ahead
     for _ in range(n + 1):
         if not fast:
             return head  # n is larger than list length
         fast = fast.next
-        
+
     # Move both pointers until fast reaches end
     while fast:
         slow = slow.next
         fast = fast.next
-        
+
     # Remove nth node from end
     slow.next = slow.next.next
-    
+
     return dummy.next
 # Time: O(n), Space: O(1)
 ```
@@ -220,6 +221,7 @@ def remove_nth_from_end(head, n):
 ## Step 1: Understanding Linked List Reversal
 
 Reversing a linked list means changing the direction of all pointers:
+
 - Original: `A -> B -> C -> D -> NULL`
 - Reversed: `NULL <- A <- B <- C <- D`
 
@@ -258,18 +260,18 @@ NULL <- 1 <- 2 <- 3 <- 4
 def reverse_list(head):
     prev = None
     current = head
-    
+
     while current:
         # Store next node before changing pointer
         next_temp = current.next
-        
+
         # Reverse the pointer
         current.next = prev
-        
+
         # Move prev and current forward
         prev = current
         current = next_temp
-        
+
     # prev is the new head
     return prev
 # Time: O(n), Space: O(1)
@@ -283,20 +285,20 @@ def reverse_list(head):
 def reverse_between(head, m, n):
     if not head or m == n:
         return head
-        
+
     # Create a dummy node to handle case where m=1
     dummy = ListNode(0)
     dummy.next = head
     prev = dummy
-    
+
     # Move to position m-1
     for _ in range(m - 1):
         prev = prev.next
-        
+
     # Start reversal from position m
     current = prev.next
     tail = current  # Will become the last node of reversed section
-    
+
     # Standard reversal logic for n-m+1 nodes
     for _ in range(n - m + 1):
         next_temp = current.next
@@ -304,7 +306,7 @@ def reverse_between(head, m, n):
         prev.next = current
         tail.next = next_temp
         current = next_temp
-        
+
     return dummy.next
 # Time: O(n), Space: O(1)
 ```
@@ -316,32 +318,32 @@ def reverse_k_group(head, k):
     dummy = ListNode(0)
     dummy.next = head
     prev_group_end = dummy
-    
+
     while True:
         # Check if there are k nodes left
         kth_node = get_kth(prev_group_end.next, k)
         if not kth_node:
             break
-            
+
         next_group_start = kth_node.next
-        
+
         # Reverse current k-group
         current = prev_group_end.next
         prev = kth_node.next
-        
+
         while current != next_group_start:
             next_temp = current.next
             current.next = prev
             prev = current
             current = next_temp
-            
+
         # Connect with previous group
         temp = prev_group_end.next
         prev_group_end.next = kth_node
         prev_group_end = temp
-        
+
     return dummy.next
-    
+
 def get_kth(start, k):
     """Helper function to get kth node from start"""
     while start and k > 1:

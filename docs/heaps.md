@@ -62,16 +62,16 @@ class MedianFinder:
     def __init__(self):
         self.small = []  # Max heap (negative values)
         self.large = []  # Min heap
-        
+
     def addNum(self, num):
         # Add to max heap (smaller half)
         heapq.heappush(self.small, -num)
-        
+
         # Ensure every element in small is <= every element in large
         if self.small and self.large and -self.small[0] > self.large[0]:
             val = -heapq.heappop(self.small)
             heapq.heappush(self.large, val)
-            
+
         # Balance the heaps (at most 1 element difference)
         if len(self.small) > len(self.large) + 1:
             val = -heapq.heappop(self.small)
@@ -79,7 +79,7 @@ class MedianFinder:
         elif len(self.large) > len(self.small):
             val = heapq.heappop(self.large)
             heapq.heappush(self.small, -val)
-            
+
     def findMedian(self):
         if len(self.small) > len(self.large):
             return -self.small[0]
@@ -96,7 +96,7 @@ def sliding_window_median(nums, k):
     result = []
     small = []  # Max heap (negative values)
     large = []  # Min heap
-    
+
     # Helper function to remove element from either heap
     def remove(heap, element):
         index = heap.index(element)
@@ -105,18 +105,18 @@ def sliding_window_median(nums, k):
         if index < len(heap):
             heapq._siftup(heap, index)
             heapq._siftdown(heap, 0, index)
-    
+
     for i, num in enumerate(nums):
         # Add to heaps
         heapq.heappush(small, -num)
-        
+
         # Balance step 1: Ensure small elements < large elements
         heapq.heappush(large, -heapq.heappop(small))
-        
+
         # Balance step 2: Ensure size difference is at most 1
         if len(small) < len(large):
             heapq.heappush(small, -heapq.heappop(large))
-            
+
         # If window is full size
         if i >= k - 1:
             # Calculate median
@@ -124,20 +124,20 @@ def sliding_window_median(nums, k):
                 result.append(-small[0])
             else:
                 result.append((-small[0] + large[0]) / 2)
-                
+
             # Remove the outgoing element
             outgoing = nums[i - k + 1]
             if outgoing <= -small[0]:
                 remove(small, -outgoing)
             else:
                 remove(large, outgoing)
-                
+
             # Rebalance if necessary
             if len(small) > len(large) + 1:
                 heapq.heappush(large, -heapq.heappop(small))
             elif len(large) > len(small):
                 heapq.heappush(small, -heapq.heappop(large))
-                
+
     return result
 ```
 
@@ -147,28 +147,28 @@ def sliding_window_median(nums, k):
 def find_maximum_capital(capitals, profits, num_projects, initial_capital):
     n = len(capitals)
     current_capital = initial_capital
-    
+
     # Min heap for capitals (projects we can afford)
     capital_min_heap = [(capitals[i], i) for i in range(n)]
     heapq.heapify(capital_min_heap)
-    
+
     # Max heap for profits (negate for max heap in Python)
     profit_max_heap = []
-    
+
     # Execute 'num_projects' projects
     for _ in range(num_projects):
         # Select projects we can afford
         while capital_min_heap and capital_min_heap[0][0] <= current_capital:
             capital, index = heapq.heappop(capital_min_heap)
             heapq.heappush(profit_max_heap, -profits[index])
-            
+
         # If no project can be selected, break
         if not profit_max_heap:
             break
-            
+
         # Execute the most profitable project
         current_capital += -heapq.heappop(profit_max_heap)
-        
+
     return current_capital
 ```
 
@@ -178,24 +178,24 @@ def find_maximum_capital(capitals, profits, num_projects, initial_capital):
 def find_next_interval(intervals):
     n = len(intervals)
     result = [-1] * n
-    
+
     # Create max heap for end points
     end_max_heap = [(-intervals[i][1], i) for i in range(n)]
     heapq.heapify(end_max_heap)
-    
+
     # Create max heap for start points
     start_max_heap = [(-intervals[i][0], i) for i in range(n)]
     heapq.heapify(start_max_heap)
-    
+
     while end_max_heap:
         # Get interval with the largest end
         end, end_idx = heapq.heappop(end_max_heap)
         end = -end  # Convert back to positive
-        
+
         # Save all start points that are greater than current end
         temp = []
         answer = -1
-        
+
         # Find smallest start greater than or equal to current end
         while start_max_heap and -start_max_heap[0][0] >= end:
             start, start_idx = heapq.heappop(start_max_heap)
@@ -203,13 +203,13 @@ def find_next_interval(intervals):
             if answer == -1 or -start < intervals[answer][0]:
                 answer = start_idx
             temp.append((start, start_idx))
-            
+
         # Push back all starts we popped
         for start_pair in temp:
             heapq.heappush(start_max_heap, start_pair)
-            
+
         result[end_idx] = answer
-        
+
     return result
 ```
 

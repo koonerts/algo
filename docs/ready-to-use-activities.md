@@ -6,13 +6,13 @@ These activities are ready to use right now without physical materials. Just fol
 
 Use these digital flash cards to practice identifying algorithm patterns from problem descriptions.
 
-### Instructions:
+### Instructions
 
 1. Read the problem description
 2. Try to identify the algorithm pattern before revealing the answer
 3. Track how many you get correct
 
-### Flash Cards:
+### Flash Cards
 
 **Problem 1:**
 
@@ -280,7 +280,7 @@ Output: 3 (5 + 5 + 1)
 Given two strings text1 and text2, return the length of their longest common subsequence. A subsequence is a sequence that can be derived from another sequence by deleting some or no elements without changing the order of the remaining elements.
 
 Example:
-Input: text1 = "abcde", text2 = "ace" 
+Input: text1 = "abcde", text2 = "ace"
 Output: 3 (The longest common subsequence is "ace")
 ```
 
@@ -791,13 +791,13 @@ Output: 2
 
 ## 2. Template Skeleton Exercise
 
-### Instructions:
+### Instructions
 
 1. Complete the missing parts of these algorithm templates
 2. Test with the provided example
 3. Compare your solution with the complete implementation
 
-### Sliding Window Template:
+### Sliding Window Template
 
 ```python
 def sliding_window_fixed(arr, k):
@@ -842,7 +842,7 @@ def sliding_window_fixed(arr, k):
 
 </details>
 
-### Two Pointers Template:
+### Two Pointers Template
 
 ```python
 def two_sum_sorted(arr, target):
@@ -897,7 +897,7 @@ def two_sum_sorted(arr, target):
 
 </details>
 
-### Binary Search Template:
+### Binary Search Template
 
 ```python
 def binary_search(arr, target):
@@ -958,7 +958,7 @@ def binary_search(arr, target):
 
 Use this decision tree to help identify which algorithm pattern to use for a given problem.
 
-### Instructions:
+### Instructions
 
 1. Start at the top question
 2. Follow the path based on your answers about the problem
@@ -1031,7 +1031,7 @@ Is the problem about finding a subarray/substring?
 
 ## 4. Time Attack Implementation Challenge
 
-### Instructions:
+### Instructions
 
 1. Set a timer for the specified time
 2. Implement the algorithm from memory
@@ -1160,7 +1160,7 @@ def shortest_path(graph, start, end):
 
 Test your understanding of time and space complexity for different algorithms.
 
-### Instructions:
+### Instructions
 
 1. For each algorithm, identify the time and space complexity
 2. Check your answers against the solutions
@@ -1315,7 +1315,7 @@ def partition(arr, low, high):
 
 ## 6. Algorithm Pattern Matching Game
 
-### Instructions:
+### Instructions
 
 1. For each problem description, identify the most appropriate algorithm pattern
 2. Check your answer against the solution
@@ -1550,7 +1550,7 @@ Output: true
 
 ## 7. Memory Optimization Challenge
 
-### Instructions:
+### Instructions
 
 1. Each problem below has a solution that works but uses non-optimal space
 2. Your task is to optimize it to use less memory
@@ -1691,7 +1691,7 @@ def fibonacci_optimized(n):
 
 Use these drill cards to help you quickly identify which algorithm patterns to apply based on key problem characteristics.
 
-### Instructions:
+### Instructions
 
 1. Read the problem characteristic
 2. Try to identify which algorithm pattern would be most appropriate
@@ -1700,6 +1700,7 @@ Use these drill cards to help you quickly identify which algorithm patterns to a
 **Card 1: Contiguous Subarrays**
 
 When you see problems involving:
+
 - Finding maximum/minimum subarrays of fixed or variable size
 - Finding longest substring with a condition
 - Processing a "window" of elements
@@ -1708,21 +1709,23 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Sliding Window**
-  
+
   **Examples:**
-  - Maximum sum subarray of size K
-  - Longest substring with K distinct characters
-  - Minimum size subarray with a given sum
-  - Find all anagrams in a string
-  
+
+- Maximum sum subarray of size K
+- Longest substring with K distinct characters
+- Minimum size subarray with a given sum
+- Find all anagrams in a string
+
   **Time Complexity:** O(n) where n is array length (each element processed at most twice)
-  
+
   **Space Complexity:** O(1) for fixed window, O(k) where k is window size for variable window
 </details>
 
 **Card 2: Sorted Arrays or Linked Lists**
 
 When you see problems involving:
+
 - Finding pairs in sorted arrays
 - Removing duplicates
 - Palindrome verification
@@ -1732,21 +1735,23 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Two Pointers**
-  
+
   **Examples:**
-  - Two Sum in sorted array
-  - Remove duplicates from sorted array
-  - Container with Most Water
-  - Palindrome verification
-  
+
+- Two Sum in sorted array
+- Remove duplicates from sorted array
+- Container with Most Water
+- Palindrome verification
+
   **Time Complexity:** O(n) for most implementations or O(n²) for nested two pointers
-  
+
   **Space Complexity:** O(1) as typically implemented in-place
 </details>
 
 **Card 3: Maximum/Minimum Subarray Sum**
 
 When you see problems involving:
+
 - Finding maximum sum contiguous subarray
 - Maximum product subarray
 - Local vs global optimal values
@@ -1755,20 +1760,22 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Kadane's Algorithm**
-  
+
   **Examples:**
-  - Maximum sum subarray
-  - Maximum product subarray
-  - Circular array maximum sum
-  
+
+- Maximum sum subarray
+- Maximum product subarray
+- Circular array maximum sum
+
   **Time Complexity:** O(n)
-  
+
   **Space Complexity:** O(1)
 </details>
 
 **Card 4: Range Sum Queries**
 
 When you see problems involving:
+
 - Cumulative operations on arrays
 - Checking for specific sum conditions over subarrays
 - Range-based queries
@@ -1777,20 +1784,22 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Prefix Sums**
-  
+
   **Examples:**
-  - Range sum queries
-  - Subarray sum equals K
-  - Count number of subarrays with specific properties
-  
+
+- Range sum queries
+- Subarray sum equals K
+- Count number of subarrays with specific properties
+
   **Time Complexity:** O(n) for preprocessing, O(1) for queries
-  
+
   **Space Complexity:** O(n) for storing prefix sums
 </details>
 
 **Card 5: Cycle Detection in Linked Lists**
 
 When you see problems involving:
+
 - Finding cycles in linked list
 - Finding middle element
 - Finding nth element from the end
@@ -1799,21 +1808,23 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Fast & Slow Pointers**
-  
+
   **Examples:**
-  - Detect cycle in linked list
-  - Find cycle start point
-  - Find middle of linked list
-  - Palindrome linked list
-  
+
+- Detect cycle in linked list
+- Find cycle start point
+- Find middle of linked list
+- Palindrome linked list
+
   **Time Complexity:** O(n)
-  
+
   **Space Complexity:** O(1)
 </details>
 
 **Card 6: Linked List Reversal**
 
 When you see problems involving:
+
 - Reversing all or part of a linked list
 - Problems with K-groups or alternative operations
 
@@ -1821,20 +1832,22 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Linked List Reversal**
-  
+
   **Examples:**
-  - Reverse linked list
-  - Reverse nodes in K-group
-  - Reverse alternating K elements
-  
+
+- Reverse linked list
+- Reverse nodes in K-group
+- Reverse alternating K elements
+
   **Time Complexity:** O(n)
-  
+
   **Space Complexity:** O(1) for iterative solutions, O(n) for recursive solutions
 </details>
 
 **Card 7: Tree Traversal**
 
 When you see problems involving:
+
 - Visiting all nodes in a tree
 - Node relationship problems
 - Collecting data from all nodes
@@ -1843,21 +1856,23 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Tree Traversal**
-  
+
   **Examples:**
-  - Preorder, inorder, postorder traversal
-  - Level order traversal
-  - Path sum problems
-  - Tree serialization/deserialization
-  
+
+- Preorder, inorder, postorder traversal
+- Level order traversal
+- Path sum problems
+- Tree serialization/deserialization
+
   **Time Complexity:** O(n) where n is number of nodes
-  
+
   **Space Complexity:** O(h) where h is tree height for recursion, O(n) worst case
 </details>
 
 **Card 8: Path Finding**
 
 When you see problems involving:
+
 - Finding shortest path in unweighted graph/tree
 - Level-order traversal
 - Finding nodes at k distance
@@ -1866,21 +1881,23 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Breadth-First Search (BFS)**
-  
+
   **Examples:**
-  - Shortest path in unweighted graph
-  - Level order traversal
-  - Word ladder problems
-  - Connected components
-  
+
+- Shortest path in unweighted graph
+- Level order traversal
+- Word ladder problems
+- Connected components
+
   **Time Complexity:** O(V + E) where V is vertices and E is edges
-  
+
   **Space Complexity:** O(w) where w is maximum width of tree/graph
 </details>
 
 **Card 9: Exhaustive Exploration**
 
 When you see problems involving:
+
 - Exhaustive tree/graph exploration
 - Path finding problems
 - Problems requiring backtracking
@@ -1889,21 +1906,23 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Depth-First Search (DFS)**
-  
+
   **Examples:**
-  - Path existence between nodes
-  - Connected components
-  - Topological sorting
-  - Cycle detection
-  
+
+- Path existence between nodes
+- Connected components
+- Topological sorting
+- Cycle detection
+
   **Time Complexity:** O(V + E) where V is vertices and E is edges
-  
+
   **Space Complexity:** O(h) for recursion stack where h is maximum depth
 </details>
 
 **Card 10: Binary Search Applications**
 
 When you see problems involving:
+
 - Sorted arrays or matrices
 - Search space that can be halved each time
 - Minimize maximum value problems
@@ -1912,21 +1931,23 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Binary Search Variations**
-  
+
   **Examples:**
-  - Search in rotated sorted array
-  - Find peak element
-  - Find minimum in rotated sorted array
-  - Search for a range
-  
+
+- Search in rotated sorted array
+- Find peak element
+- Find minimum in rotated sorted array
+- Search for a range
+
   **Time Complexity:** O(log n)
-  
+
   **Space Complexity:** O(1) iterative, O(log n) recursive
 </details>
 
 **Card 11: Knapsack Problems**
 
 When you see problems involving:
+
 - Items with values/weights and capacity constraints
 - Including/excluding items to maximize value
 - Subset sum problems
@@ -1935,21 +1956,23 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: 0/1 Knapsack**
-  
+
   **Examples:**
-  - 0/1 Knapsack problem
-  - Subset Sum
-  - Partition Equal Subset Sum
-  - Minimum Subset Sum Difference
-  
+
+- 0/1 Knapsack problem
+- Subset Sum
+- Partition Equal Subset Sum
+- Minimum Subset Sum Difference
+
   **Time Complexity:** O(n*W) where n is number of items and W is capacity
-  
+
   **Space Complexity:** O(n*W), can be optimized to O(W)
 </details>
 
 **Card 12: Problems with Reusable Items**
 
 When you see problems involving:
+
 - Items that can be used multiple times
 - Combinations to achieve a target sum
 - Coin change problems
@@ -1958,21 +1981,23 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Unbounded Knapsack**
-  
+
   **Examples:**
-  - Coin Change (minimum coins)
-  - Coin Change II (number of ways)
-  - Rod Cutting
-  - Maximum Ribbon Cut
-  
+
+- Coin Change (minimum coins)
+- Coin Change II (number of ways)
+- Rod Cutting
+- Maximum Ribbon Cut
+
   **Time Complexity:** O(n*W) where n is item types and W is capacity
-  
+
   **Space Complexity:** O(W)
 </details>
 
 **Card 13: String Comparison**
 
 When you see problems involving:
+
 - Finding common elements between strings
 - Edit distance variations
 - String transformations
@@ -1981,21 +2006,23 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Longest Common Subsequence (LCS)**
-  
+
   **Examples:**
-  - Longest Common Subsequence
-  - Shortest Common Supersequence
-  - Edit Distance
-  - Longest Palindromic Subsequence
-  
+
+- Longest Common Subsequence
+- Shortest Common Supersequence
+- Edit Distance
+- Longest Palindromic Subsequence
+
   **Time Complexity:** O(m*n) where m and n are string lengths
-  
+
   **Space Complexity:** O(m*n)
 </details>
 
 **Card 14: Sequence with Recursive Relation**
 
 When you see problems involving:
+
 - Current state depends on previous states
 - Pattern like f(n) = f(n-1) + f(n-2)
 - Counting ways to reach a target
@@ -2004,21 +2031,23 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Fibonacci Sequence**
-  
+
   **Examples:**
-  - Fibonacci Numbers
-  - Climbing Stairs
-  - House Robber
-  - Jump Game variations
-  
+
+- Fibonacci Numbers
+- Climbing Stairs
+- House Robber
+- Jump Game variations
+
   **Time Complexity:** O(n)
-  
+
   **Space Complexity:** O(n), can be optimized to O(1)
 </details>
 
 **Card 15: Generating Combinations**
 
 When you see problems involving:
+
 - Generate all possible subsets/combinations
 - Permutations of elements
 - Building combinations with specific constraints
@@ -2027,21 +2056,23 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Subsets/Backtracking**
-  
+
   **Examples:**
-  - Generate All Subsets
-  - Letter Combinations of Phone Number
-  - Permutations
-  - Combinations
-  
+
+- Generate All Subsets
+- Letter Combinations of Phone Number
+- Permutations
+- Combinations
+
   **Time Complexity:** O(2^n) for subsets, O(n!) for permutations
-  
+
   **Space Complexity:** O(n) for recursion stack
 </details>
 
 **Card 16: Complex Constraints**
 
 When you see problems involving:
+
 - Complex rule-based constraints
 - Need to explore all valid solutions
 - Search space can be pruned early
@@ -2050,21 +2081,23 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Constraint Satisfaction**
-  
+
   **Examples:**
-  - N-Queens
-  - Sudoku Solver
-  - Word Search
-  - Palindrome Partitioning
-  
+
+- N-Queens
+- Sudoku Solver
+- Word Search
+- Palindrome Partitioning
+
   **Time Complexity:** Exponential, but pruning reduces actual runtime
-  
+
   **Space Complexity:** O(n) for recursion stack
 </details>
 
 **Card 17: Finding Top/Smallest K Elements**
 
 When you see problems involving:
+
 - Finding top/smallest K elements
 - Processing stream with limited memory
 - K frequent elements
@@ -2073,21 +2106,23 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Top K Elements**
-  
+
   **Examples:**
-  - Kth Largest Element
-  - K Closest Points to Origin
-  - Top K Frequent Elements
-  - Sort K-sorted Array
-  
+
+- Kth Largest Element
+- K Closest Points to Origin
+- Top K Frequent Elements
+- Sort K-sorted Array
+
   **Time Complexity:** O(n log k) for processing n elements with heap of size k
-  
+
   **Space Complexity:** O(k) for the heap
 </details>
 
 **Card 18: Median Calculation Problems**
 
 When you see problems involving:
+
 - Finding median from data stream
 - Maintaining statistics on both sides of a midpoint
 - Balancing elements
@@ -2096,20 +2131,22 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Two Heaps**
-  
+
   **Examples:**
-  - Find Median from Data Stream
-  - Sliding Window Median
-  - IPO (maximize capital)
-  
+
+- Find Median from Data Stream
+- Sliding Window Median
+- IPO (maximize capital)
+
   **Time Complexity:** O(log n) per insertion
-  
+
   **Space Complexity:** O(n) for storing all elements
 </details>
 
 **Card 19: Shortest Path in Weighted Graphs**
 
 When you see problems involving:
+
 - Finding shortest path in weighted graph
 - Path finding with cost considerations
 - Network routing problems
@@ -2118,20 +2155,22 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Dijkstra's Algorithm**
-  
+
   **Examples:**
-  - Network Delay Time
-  - Cheapest Flights Within K Stops
-  - Path With Maximum Probability
-  
+
+- Network Delay Time
+- Cheapest Flights Within K Stops
+- Path With Maximum Probability
+
   **Time Complexity:** O((V+E) log V) with binary heap
-  
+
   **Space Complexity:** O(V)
 </details>
 
 **Card 20: Connected Components**
 
 When you see problems involving:
+
 - Grouping connected elements
 - Dynamic connectivity
 - Component membership queries
@@ -2140,21 +2179,23 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Union-Find (Disjoint Set)**
-  
+
   **Examples:**
-  - Number of Connected Components
-  - Redundant Connection
-  - Account Merge
-  - Graph Valid Tree
-  
+
+- Number of Connected Components
+- Redundant Connection
+- Account Merge
+- Graph Valid Tree
+
   **Time Complexity:** O(α(n)) amortized per operation (α is inverse Ackermann function)
-  
+
   **Space Complexity:** O(n)
 </details>
 
 **Card 21: Prefix Tree Operations**
 
 When you see problems involving:
+
 - Dictionary operations on strings
 - Prefix matching
 - Autocomplete functionality
@@ -2163,21 +2204,23 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Trie (Prefix Tree)**
-  
+
   **Examples:**
-  - Implement Trie
-  - Word Search II
-  - Replace Words
-  - Design Search Autocomplete System
-  
+
+- Implement Trie
+- Word Search II
+- Replace Words
+- Design Search Autocomplete System
+
   **Time Complexity:** O(m) for operations, where m is key length
-  
+
   **Space Complexity:** O(n*m) where n is number of keys and m is average key length
 </details>
 
 **Card 22: Locally Optimal Choices**
 
 When you see problems involving:
+
 - Local optimal choice leads to global optimum
 - Optimization with "obvious" next steps
 - Activity selection problems
@@ -2186,21 +2229,23 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Greedy Algorithms**
-  
+
   **Examples:**
-  - Activity Selection
-  - Minimum Number of Arrows
-  - Task Scheduler
-  - Gas Station
-  
+
+- Activity Selection
+- Minimum Number of Arrows
+- Task Scheduler
+- Gas Station
+
   **Time Complexity:** Often O(n log n) due to sorting
-  
+
   **Space Complexity:** Usually O(1) or O(n)
 </details>
 
 **Card 23: Binary Representation**
 
 When you see problems involving:
+
 - Binary operations (AND, OR, XOR)
 - Bit counting or manipulation
 - Space optimization with bits
@@ -2209,21 +2254,23 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Bit Manipulation**
-  
+
   **Examples:**
-  - Single Number
-  - Counting Bits
-  - Number of 1 Bits
-  - Power of Two
-  
+
+- Single Number
+- Counting Bits
+- Number of 1 Bits
+- Power of Two
+
   **Time Complexity:** O(1) to O(n) depending on problem
-  
+
   **Space Complexity:** Usually O(1)
 </details>
 
 **Card 24: Overlapping Intervals**
 
 When you see problems involving:
+
 - Merging intervals
 - Finding non-overlapping intervals
 - Minimum rooms/resources needed
@@ -2232,21 +2279,23 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Interval Merging/Sorting**
-  
+
   **Examples:**
-  - Merge Intervals
-  - Insert Interval
-  - Meeting Rooms
-  - Non-overlapping Intervals
-  
+
+- Merge Intervals
+- Insert Interval
+- Meeting Rooms
+- Non-overlapping Intervals
+
   **Time Complexity:** O(n log n) due to sorting
-  
+
   **Space Complexity:** O(n) or O(1) depending on in-place operation
 </details>
 
 **Card 25: Dependency Ordering**
 
 When you see problems involving:
+
 - Task scheduling with prerequisites
 - Detecting cycles in directed graphs
 - Finding valid processing order
@@ -2255,15 +2304,16 @@ When you see problems involving:
   <summary>Recommended Pattern</summary>
 
   **Pattern: Topological Sort**
-  
+
   **Examples:**
-  - Course Schedule
-  - Course Schedule II
-  - Alien Dictionary
-  - Reconstruct Itinerary
-  
+
+- Course Schedule
+- Course Schedule II
+- Alien Dictionary
+- Reconstruct Itinerary
+
   **Time Complexity:** O(V+E)
-  
+
   **Space Complexity:** O(V+E)
 </details>
 
@@ -2271,7 +2321,7 @@ When you see problems involving:
 
 This exercise will help you develop the skill of identifying which algorithm pattern to use when faced with different problem types.
 
-### Instructions:
+### Instructions
 
 1. For each problem statement, analyze the key characteristics
 2. Match it to the most appropriate algorithm pattern
@@ -2292,20 +2342,22 @@ Output: [[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]
   <summary>Analysis & Pattern Match</summary>
 
   **Pattern: Two Pointers (with nested loops)**
-  
+
   **Reasoning:**
-  - We're looking for combinations of values that sum to a target
-  - The problem involves finding elements that satisfy a condition
-  - Since we need all combinations, we'll need nested loops, but two pointers pattern can optimize the inner loop
-  
+
+- We're looking for combinations of values that sum to a target
+- The problem involves finding elements that satisfy a condition
+- Since we need all combinations, we'll need nested loops, but two pointers pattern can optimize the inner loop
+
   **Approach:**
+
   1. Sort the array
   2. Use two nested loops to fix the first two elements
   3. Use two pointers for the remaining elements
   4. Skip duplicates to ensure unique quadruplets
-  
+
   **Time Complexity:** O(n³)
-  
+
   **Space Complexity:** O(1) excluding output space
 </details>
 
@@ -2324,21 +2376,23 @@ Explanation: The substring is "ece" with length 3.
   <summary>Analysis & Pattern Match</summary>
 
   **Pattern: Sliding Window (Variable Size)**
-  
+
   **Reasoning:**
-  - We're looking for a contiguous substring
-  - The constraint is a maximum number of distinct characters
-  - The window size needs to be adjusted dynamically based on this constraint
-  
+
+- We're looking for a contiguous substring
+- The constraint is a maximum number of distinct characters
+- The window size needs to be adjusted dynamically based on this constraint
+
   **Approach:**
+
   1. Use a sliding window approach with two pointers (start and end)
   2. Use a hash map to track character frequencies within the window
   3. Expand window until constraint is violated (more than k distinct characters)
   4. Shrink window from left until constraint is satisfied again
   5. Track maximum valid window size
-  
+
   **Time Complexity:** O(n)
-  
+
   **Space Complexity:** O(k) for the character frequency map
 </details>
 
@@ -2348,7 +2402,7 @@ Explanation: The substring is "ece" with length 3.
 Given a matrix of 0s and 1s, count the number of islands. An island is a connected group of 1s (horizontally or vertically) surrounded by 0s.
 
 Example:
-Input: 
+Input:
 [
   [1,1,0,0,0],
   [1,1,0,0,0],
@@ -2362,20 +2416,22 @@ Output: 3
   <summary>Analysis & Pattern Match</summary>
 
   **Pattern: Depth-First Search (DFS) or Breadth-First Search (BFS) on Matrix**
-  
+
   **Reasoning:**
-  - We need to identify connected components in a graph
-  - Each cell is connected to its four adjacent cells
-  - Once we find a '1', we need to explore and mark all connected '1's as visited
-  
+
+- We need to identify connected components in a graph
+- Each cell is connected to its four adjacent cells
+- Once we find a '1', we need to explore and mark all connected '1's as visited
+
   **Approach:**
+
   1. Iterate through each cell in the matrix
   2. When we find a '1', increment our island count
   3. Use DFS or BFS to explore all connected '1's and mark them as visited (change to '0')
   4. Continue until all cells are checked
-  
+
   **Time Complexity:** O(m*n) where m is number of rows and n is number of columns
-  
+
   **Space Complexity:** O(m*n) in worst case for recursion stack
 </details>
 
@@ -2393,30 +2449,33 @@ Output: 5
   <summary>Analysis & Pattern Match</summary>
 
   **Pattern: Heap (Priority Queue) / QuickSelect**
-  
+
   **Reasoning:**
-  - We need to find an element based on its order statistic
-  - Sorting would work but is not optimal
-  - Heap or QuickSelect are more efficient
-  
+
+- We need to find an element based on its order statistic
+- Sorting would work but is not optimal
+- Heap or QuickSelect are more efficient
+
   **Approach 1 (Heap):**
+
   1. Build a min-heap of size k
   2. Insert the first k elements from the array
   3. For remaining elements, if larger than the root, replace root and heapify
   4. The root of the heap will be the kth largest element
-  
+
   **Time Complexity:** O(n log k)
-  
+
   **Space Complexity:** O(k)
-  
+
   **Approach 2 (QuickSelect):**
+
   1. Use a variation of quicksort where we only recurse into the half that contains our target
   2. Partition the array around a pivot
   3. If the pivot index is our target, return it
   4. Otherwise, recurse into the appropriate half
-  
+
   **Time Complexity:** O(n) average case, O(n²) worst case
-  
+
   **Space Complexity:** O(1)
 </details>
 
@@ -2434,25 +2493,26 @@ Output: [[1,5],[6,9]]
   <summary>Analysis & Pattern Match</summary>
 
   **Pattern: Interval Merging/Sorting**
-  
+
   **Reasoning:**
-  - We're working with intervals that may need to be merged
-  - We need to handle overlapping intervals
-  - The intervals are already sorted
-  
+
+- We're working with intervals that may need to be merged
+- We need to handle overlapping intervals
+- The intervals are already sorted
+
   **Approach:**
+
   1. Initialize result list
   2. Add all intervals that come before newInterval (end < newInterval.start)
   3. Merge overlapping intervals with newInterval (update newInterval boundaries)
   4. Add the merged newInterval to result
   5. Add all remaining intervals
-  
+
   **Time Complexity:** O(n)
-  
+
   **Space Complexity:** O(n) for the result list
 </details>
 
 ---
 
 These ready-to-use activities provide immediate practice opportunities for various algorithm learning strategies. Use them to test your current knowledge, reinforce pattern recognition, and improve implementation skills. As you get comfortable with these exercises, you can create your own variations or move on to more complex challenges.
-

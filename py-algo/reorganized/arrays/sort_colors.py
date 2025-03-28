@@ -5,7 +5,7 @@ Do not return anything, modify nums in-place instead.
 """
 
 
-def sortColors(nums: list[int]) -> None:
+def sort_colors(nums: list[int]) -> None:
     """
     Do not return anything, modify nums in-place instead.
     """
@@ -13,7 +13,7 @@ def sortColors(nums: list[int]) -> None:
         return
 
     i, left, right = 0, 0, len(nums) - 1
-    while i < right:
+    while i <= right:
         if nums[i] == 0:
             nums[left], nums[i] = nums[i], nums[left]
             left += 1
@@ -29,4 +29,4 @@ def sortColors(nums: list[int]) -> None:
 # Example usage
 if __name__ == "__main__":
     # TODO: Add example calls to sortColors
-    print(sortColors([]))
+    sort_colors([0,1,0])
