@@ -1,10 +1,24 @@
 {
 	"folders": [
 		{
-			"path": "."
+			"path": "/Users/koonerts/.proj/algo"
 		}
 	],
 	"settings": {
-		"codium.codeCompletion.enable": false
+		"python.languageServer": "Default",
+		"files.exclude": {
+			"**/.git": true,
+			"**/.svn": true,
+			"**/.hg": true,
+			"**/CVS": true,
+			"**/.DS_Store": true,
+			"**/Thumbs.db": true,
+			"**/.history": true,
+			"**/.idea": true
+		},
+		"explorerExclude.backup": {},
+		"explorer.excludeGitIgnore": true,
+		"github.copilot.chat.generateTests.codeLens": true,
+		"github.copilot.chat.editor.temporalContext.enabled": true
 	}
 }

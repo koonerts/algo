@@ -53,6 +53,9 @@ Median: 5
 ...and so on, constantly rebalancing the heaps.
 ```
 
+```result
+```
+
 ### Step 3: Basic Implementation - Median Finder
 
 ```python

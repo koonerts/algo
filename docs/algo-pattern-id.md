@@ -30,13 +30,13 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve:**
 
-1.  **Initialize Window:** Set `left` and `right` pointers to the start (usually 0). Initialize necessary data structures (e.g., hash map for counts, current sum).
-2.  **Expand Window:** Move the `right` pointer one step to include a new element in the window. Update data structures/variables based on the new element.
-3.  **Check Condition:** Evaluate if the current window satisfies the problem's constraints or properties.
-4.  **Update Result:** If the condition is met, update the overall result (e.g., maximum sum, minimum length).
-5.  **Shrink Window (If Necessary):** If the window violates constraints (e.g., size exceeds K, too many distinct characters), move the `left` pointer inward, removing elements from the window's start. Update data structures accordingly until the window is valid again.
-6.  **Repeat:** Continue expanding (`right++`) and shrinking (`left++`) until the `right` pointer reaches the end of the input.
-7.  **Return Result:** Return the final computed result.
+1. **Initialize Window:** Set `left` and `right` pointers to the start (usually 0). Initialize necessary data structures (e.g., hash map for counts, current sum).
+2. **Expand Window:** Move the `right` pointer one step to include a new element in the window. Update data structures/variables based on the new element.
+3. **Check Condition:** Evaluate if the current window satisfies the problem's constraints or properties.
+4. **Update Result:** If the condition is met, update the overall result (e.g., maximum sum, minimum length).
+5. **Shrink Window (If Necessary):** If the window violates constraints (e.g., size exceeds K, too many distinct characters), move the `left` pointer inward, removing elements from the window's start. Update data structures accordingly until the window is valid again.
+6. **Repeat:** Continue expanding (`right++`) and shrinking (`left++`) until the `right` pointer reaches the end of the input.
+7. **Return Result:** Return the final computed result.
 
 # Array Patterns
 
@@ -63,13 +63,13 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve:**
 
-1.  **Initialize Pointers:** Determine the starting positions for your pointers based on the problem (e.g., `left = 0`, `right = n-1` for opposite ends; `slow = 0`, `fast = 0` for same end).
-2.  **Define Movement Logic:** Decide how pointers should move based on comparisons or conditions (e.g., if `sum < target`, `left++`; if `sum > target`, `right--`).
-3.  **Loop Condition:** Establish the condition for the loop to continue (e.g., `while left < right`, `while fast < n`).
-4.  **Process Elements:** Inside the loop, perform comparisons or calculations using the elements at the pointer positions. Update results or modify the array/list as needed.
-5.  **Move Pointers:** Apply the movement logic defined in step 2.
-6.  **Termination:** Ensure the loop terminates correctly and handle any remaining edge cases after the loop.
-7.  **Return Result:** Return the computed value or the modified data structure.
+1. **Initialize Pointers:** Determine the starting positions for your pointers based on the problem (e.g., `left = 0`, `right = n-1` for opposite ends; `slow = 0`, `fast = 0` for same end).
+2. **Define Movement Logic:** Decide how pointers should move based on comparisons or conditions (e.g., if `sum < target`, `left++`; if `sum > target`, `right--`).
+3. **Loop Condition:** Establish the condition for the loop to continue (e.g., `while left < right`, `while fast < n`).
+4. **Process Elements:** Inside the loop, perform comparisons or calculations using the elements at the pointer positions. Update results or modify the array/list as needed.
+5. **Move Pointers:** Apply the movement logic defined in step 2.
+6. **Termination:** Ensure the loop terminates correctly and handle any remaining edge cases after the loop.
+7. **Return Result:** Return the computed value or the modified data structure.
 
 ### Kadane's Algorithm
 
@@ -92,11 +92,11 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve:**
 
-1.  **Initialize:** Set `current_max` and `global_max` to the value of the first element in the array.
-2.  **Iterate:** Loop through the array starting from the second element (`i = 1` to `n-1`).
-3.  **Update `current_max`:** For each element `arr[i]`, decide whether to extend the current subarray or start a new one: `current_max = max(arr[i], current_max + arr[i])`.
-4.  **Update `global_max`:** Update the overall maximum sum found so far: `global_max = max(global_max, current_max)`.
-5.  **Return:** After the loop finishes, `global_max` holds the maximum subarray sum.
+1. **Initialize:** Set `current_max` and `global_max` to the value of the first element in the array.
+2. **Iterate:** Loop through the array starting from the second element (`i = 1` to `n-1`).
+3. **Update `current_max`:** For each element `arr[i]`, decide whether to extend the current subarray or start a new one: `current_max = max(arr[i], current_max + arr[i])`.
+4. **Update `global_max`:** Update the overall maximum sum found so far: `global_max = max(global_max, current_max)`.
+5. **Return:** After the loop finishes, `global_max` holds the maximum subarray sum.
 
 ### Prefix Sums
 
@@ -119,16 +119,16 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve:**
 
-1.  **Preprocessing:**
-    *   Create a prefix sum array `prefix_sum` of size `n+1`. Initialize `prefix_sum[0] = 0`.
-    *   Iterate from `i = 1` to `n`: `prefix_sum[i] = prefix_sum[i-1] + array[i-1]`.
-2.  **Range Sum Query (index `i` to `j` inclusive):**
-    *   The sum is `prefix_sum[j+1] - prefix_sum[i]`.
-3.  **Subarray Sum Equals K:**
-    *   Use a hash map `counts` to store frequencies of prefix sums encountered so far (`counts[0] = 1`).
-    *   Iterate through the array, calculating the current `current_sum`.
-    *   Check if `current_sum - K` exists in the `counts` map. If yes, add `counts[current_sum - K]` to the total count of valid subarrays.
-    *   Increment the frequency of `current_sum` in the `counts` map.
+1. **Preprocessing:**
+   * Create a prefix sum array `prefix_sum` of size `n+1`. Initialize `prefix_sum[0] = 0`.
+   * Iterate from `i = 1` to `n`: `prefix_sum[i] = prefix_sum[i-1] + array[i-1]`.
+2. **Range Sum Query (index `i` to `j` inclusive):**
+   * The sum is `prefix_sum[j+1] - prefix_sum[i]`.
+3. **Subarray Sum Equals K:**
+   * Use a hash map `counts` to store frequencies of prefix sums encountered so far (`counts[0] = 1`).
+   * Iterate through the array, calculating the current `current_sum`.
+   * Check if `current_sum - K` exists in the `counts` map. If yes, add `counts[current_sum - K]` to the total count of valid subarrays.
+   * Increment the frequency of `current_sum` in the `counts` map.
 
 ---
 
@@ -157,13 +157,13 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve:**
 
-1.  **Initialize:** Set `slow` and `fast` pointers to the head of the linked list.
-2.  **Movement:** Inside a loop, advance `slow` by one node (`slow = slow.next`) and `fast` by two nodes (`fast = fast.next.next`).
-3.  **Termination/Check:**
-    *   **Cycle Detection:** The loop condition should check for `fast` and `fast.next` not being null. If `slow == fast` at any point, a cycle exists.
-    *   **Finding Middle:** The loop condition is `while fast and fast.next`. When the loop terminates, `slow` will be at the middle (or the first of two middle nodes for even length).
-    *   **Nth from End:** Initialize `fast` `n` steps ahead of `slow`. Then move both one step at a time until `fast` reaches the end. `slow` will be at the Nth node from the end.
-4.  **Return:** Return the result based on the specific problem (boolean for cycle, the `slow` node, etc.).
+1. **Initialize:** Set `slow` and `fast` pointers to the head of the linked list.
+2. **Movement:** Inside a loop, advance `slow` by one node (`slow = slow.next`) and `fast` by two nodes (`fast = fast.next.next`).
+3. **Termination/Check:**
+   * **Cycle Detection:** The loop condition should check for `fast` and `fast.next` not being null. If `slow == fast` at any point, a cycle exists.
+   * **Finding Middle:** The loop condition is `while fast and fast.next`. When the loop terminates, `slow` will be at the middle (or the first of two middle nodes for even length).
+   * **Nth from End:** Initialize `fast` `n` steps ahead of `slow`. Then move both one step at a time until `fast` reaches the end. `slow` will be at the Nth node from the end.
+4. **Return:** Return the result based on the specific problem (boolean for cycle, the `slow` node, etc.).
 
 ### Linked List Reversal
 
@@ -185,21 +185,21 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve (Iterative):**
 
-1.  **Initialize:** Set `prev = null`, `current = head`.
-2.  **Iterate:** While `current` is not null:
-    *   Store the next node: `next_node = current.next`.
-    *   Reverse the current node's pointer: `current.next = prev`.
-    *   Move `prev` one step forward: `prev = current`.
-    *   Move `current` one step forward: `current = next_node`.
-3.  **Return:** The new head of the reversed list is `prev`.
+1. **Initialize:** Set `prev = null`, `current = head`.
+2. **Iterate:** While `current` is not null:
+   * Store the next node: `next_node = current.next`.
+   * Reverse the current node's pointer: `current.next = prev`.
+   * Move `prev` one step forward: `prev = current`.
+   * Move `current` one step forward: `current = next_node`.
+3. **Return:** The new head of the reversed list is `prev`.
 
 **How to Solve (Recursive):**
 
-1.  **Base Case:** If `head` is null or `head.next` is null, return `head`.
-2.  **Recursive Call:** `new_head = reverseList(head.next)`.
-3.  **Reverse Link:** Make the next node point back to the current node: `head.next.next = head`.
-4.  **Break Original Link:** Set the current node's next to null: `head.next = null`.
-5.  **Return:** Return `new_head`.
+1. **Base Case:** If `head` is null or `head.next` is null, return `head`.
+2. **Recursive Call:** `new_head = reverseList(head.next)`.
+3. **Reverse Link:** Make the next node point back to the current node: `head.next.next = head`.
+4. **Break Original Link:** Set the current node's next to null: `head.next = null`.
+5. **Return:** Return `new_head`.
 
 ---
 
@@ -227,27 +227,27 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve (General - Recursive):**
 
-1.  **Define Helper Function:** Create a recursive function `traverse(node, ...)` that takes the current node and any necessary state (e.g., current path sum, level).
-2.  **Base Case:** If `node` is null, return appropriate base value (e.g., 0, null, empty list).
-3.  **Process Node (Preorder):** Perform actions on the `node` *before* visiting children.
-4.  **Recursive Calls:** Call `traverse(node.left, ...)` and `traverse(node.right, ...)`.
-5.  **Process Node (Inorder):** Perform actions on the `node` *between* visiting left and right children.
-6.  **Process Node (Postorder):** Perform actions on the `node` *after* visiting children. Combine results from children if needed.
-7.  **Return Value:** Return computed value for the subtree rooted at `node`.
+1. **Define Helper Function:** Create a recursive function `traverse(node, ...)` that takes the current node and any necessary state (e.g., current path sum, level).
+2. **Base Case:** If `node` is null, return appropriate base value (e.g., 0, null, empty list).
+3. **Process Node (Preorder):** Perform actions on the `node` *before* visiting children.
+4. **Recursive Calls:** Call `traverse(node.left, ...)` and `traverse(node.right, ...)`.
+5. **Process Node (Inorder):** Perform actions on the `node` *between* visiting left and right children.
+6. **Process Node (Postorder):** Perform actions on the `node` *after* visiting children. Combine results from children if needed.
+7. **Return Value:** Return computed value for the subtree rooted at `node`.
 
 **How to Solve (Level Order - Iterative):**
 
-1.  **Initialize:** Use a queue and add the `root` node. Initialize result list.
-2.  **Loop:** While the queue is not empty:
-    *   Get the current level size (`level_size = queue.size()`).
-    *   Create a list for the current level's nodes/values.
-    *   Loop `level_size` times:
-        *   Dequeue a `node`.
-        *   Process `node` (e.g., add its value to the level list).
-        *   Enqueue `node.left` if it exists.
-        *   Enqueue `node.right` if it exists.
-    *   Add the level list to the overall result list.
-3.  **Return:** Return the result list.
+1. **Initialize:** Use a queue and add the `root` node. Initialize result list.
+2. **Loop:** While the queue is not empty:
+   * Get the current level size (`level_size = queue.size()`).
+   * Create a list for the current level's nodes/values.
+   * Loop `level_size` times:
+     * Dequeue a `node`.
+     * Process `node` (e.g., add its value to the level list).
+     * Enqueue `node.left` if it exists.
+     * Enqueue `node.right` if it exists.
+   * Add the level list to the overall result list.
+3. **Return:** Return the result list.
 
 ### Depth-First Search (DFS)
 
@@ -272,23 +272,23 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve (Recursive):**
 
-1.  **Initialization:** Create a `visited` set/array.
-2.  **Define Helper Function:** `dfs(node, visited, ...)`
-3.  **Base Case/Mark Visited:** If `node` is null or already in `visited`, return. Add `node` to `visited`.
-4.  **Process Node:** Perform necessary actions for the current `node` (e.g., add to path, check condition).
-5.  **Explore Neighbors:** For each `neighbor` of `node`:
-    *   Recursively call `dfs(neighbor, visited, ...)`.
-6.  **Backtrack (If Necessary):** If tracking paths or states, undo the changes made for the current `node` before returning (e.g., remove from path).
+1. **Initialization:** Create a `visited` set/array.
+2. **Define Helper Function:** `dfs(node, visited, ...)`
+3. **Base Case/Mark Visited:** If `node` is null or already in `visited`, return. Add `node` to `visited`.
+4. **Process Node:** Perform necessary actions for the current `node` (e.g., add to path, check condition).
+5. **Explore Neighbors:** For each `neighbor` of `node`:
+   * Recursively call `dfs(neighbor, visited, ...)`.
+6. **Backtrack (If Necessary):** If tracking paths or states, undo the changes made for the current `node` before returning (e.g., remove from path).
 
 **How to Solve (Iterative):**
 
-1.  **Initialization:** Create a `visited` set/array. Create a `stack` and push the starting `node`.
-2.  **Loop:** While `stack` is not empty:
-    *   Pop a `node` from the stack.
-    *   If `node` is already in `visited`, continue.
-    *   Add `node` to `visited`.
-    *   **Process Node:** Perform necessary actions.
-    *   **Push Neighbors:** Push all unvisited `neighbors` of `node` onto the stack. (Order might matter depending on the problem).
+1. **Initialization:** Create a `visited` set/array. Create a `stack` and push the starting `node`.
+2. **Loop:** While `stack` is not empty:
+   * Pop a `node` from the stack.
+   * If `node` is already in `visited`, continue.
+   * Add `node` to `visited`.
+   * **Process Node:** Perform necessary actions.
+   * **Push Neighbors:** Push all unvisited `neighbors` of `node` onto the stack. (Order might matter depending on the problem).
 
 # Breadth-First Search (BFS)
 
@@ -313,18 +313,18 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve:**
 
-1.  **Initialization:** Create a `visited` set/array. Create a `queue` and enqueue the starting `node`. Add starting `node` to `visited`. Initialize distance/level if needed (e.g., `distance = 0`).
-2.  **Loop:** While `queue` is not empty:
-    *   (Optional: Level-by-level processing) Get `level_size = queue.size()`. Loop `level_size` times for current level processing.
-    *   Dequeue a `node`.
-    *   **Process Node:** Perform necessary actions (e.g., check if target, add to result).
-    *   **Enqueue Neighbors:** For each `neighbor` of `node`:
-        *   If `neighbor` has not been visited:
-            *   Add `neighbor` to `visited`.
-            *   Enqueue `neighbor`.
-            *   (Optional: Update distance/level for `neighbor`).
-    *   (Optional: Increment distance/level after processing a level).
-3.  **Return:** Return result (e.g., shortest distance, level order list, boolean found).
+1. **Initialization:** Create a `visited` set/array. Create a `queue` and enqueue the starting `node`. Add starting `node` to `visited`. Initialize distance/level if needed (e.g., `distance = 0`).
+2. **Loop:** While `queue` is not empty:
+   * (Optional: Level-by-level processing) Get `level_size = queue.size()`. Loop `level_size` times for current level processing.
+   * Dequeue a `node`.
+   * **Process Node:** Perform necessary actions (e.g., check if target, add to result).
+   * **Enqueue Neighbors:** For each `neighbor` of `node`:
+     * If `neighbor` has not been visited:
+       * Add `neighbor` to `visited`.
+       * Enqueue `neighbor`.
+       * (Optional: Update distance/level for `neighbor`).
+   * (Optional: Increment distance/level after processing a level).
+3. **Return:** Return result (e.g., shortest distance, level order list, boolean found).
 
 ## Binary Search Tree
 
@@ -348,24 +348,24 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve:**
 
-1.  **Leverage BST Property:** Always remember that `node.left.val < node.val < node.right.val`.
-2.  **Search:**
-    *   Start at the root. Compare the target value with the current node's value.
-    *   If equal, found.
-    *   If target < node value, go left (`node = node.left`).
-    *   If target > node value, go right (`node = node.right`).
-    *   Repeat until found or node becomes null.
-3.  **Insertion:**
-    *   Search for the position where the new value should be inserted.
-    *   Create a new node and attach it as the left or right child of the parent node found during the search.
-4.  **Deletion:**
-    *   Find the node to delete.
-    *   Handle cases: Node is a leaf, node has one child, node has two children (replace with inorder successor/predecessor and delete that).
-5.  **Validation:**
-    *   Use recursion `isValidBST(node, min_val, max_val)`.
-    *   Check if `node.val` is within the `(min_val, max_val)` range.
-    *   Recursively call for left child with `(min_val, node.val)` and right child with `(node.val, max_val)`.
-6.  **Inorder Traversal:** Performing an inorder traversal (Left -> Node -> Right) visits nodes in ascending order.
+1. **Leverage BST Property:** Always remember that `node.left.val < node.val < node.right.val`.
+2. **Search:**
+   * Start at the root. Compare the target value with the current node's value.
+   * If equal, found.
+   * If target < node value, go left (`node = node.left`).
+   * If target > node value, go right (`node = node.right`).
+   * Repeat until found or node becomes null.
+3. **Insertion:**
+   * Search for the position where the new value should be inserted.
+   * Create a new node and attach it as the left or right child of the parent node found during the search.
+4. **Deletion:**
+   * Find the node to delete.
+   * Handle cases: Node is a leaf, node has one child, node has two children (replace with inorder successor/predecessor and delete that).
+5. **Validation:**
+   * Use recursion `isValidBST(node, min_val, max_val)`.
+   * Check if `node.val` is within the `(min_val, max_val)` range.
+   * Recursively call for left child with `(min_val, node.val)` and right child with `(node.val, max_val)`.
+6. **Inorder Traversal:** Performing an inorder traversal (Left -> Node -> Right) visits nodes in ascending order.
 
 ### Trie (Prefix Tree)
 
@@ -390,30 +390,109 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve:**
 
-1.  **Node Structure:** Define a TrieNode class containing:
-    *   A dictionary/map `children` mapping characters to child TrieNodes.
-    *   A boolean flag `isEndOfWord` to mark the end of a complete word.
-2.  **Initialization:** Create a `root` TrieNode.
-3.  **Insertion:**
-    *   Start from the `root`.
-    *   For each character `c` in the word:
-        *   If `c` is not in the current node's `children`, create a new TrieNode and add it.
-        *   Move to the child node: `current = current.children[c]`.
-    *   Mark the final node's `isEndOfWord = true`.
-4.  **Search (Exact Word):**
-    *   Start from the `root`.
-    *   For each character `c` in the word:
-        *   If `c` is not in the current node's `children`, the word doesn't exist, return `false`.
-        *   Move to the child node.
-    *   Return `true` if the final node's `isEndOfWord` is true, `false` otherwise.
-5.  **Prefix Search (Starts With):**
-    *   Start from the `root`.
-    *   For each character `c` in the prefix:
-        *   If `c` is not in the current node's `children`, the prefix doesn't exist, return `false`.
-        *   Move to the child node.
-    *   Return `true` (the prefix exists).
+1. **Node Structure:** Define a TrieNode class containing:
+   * A dictionary/map `children` mapping characters to child TrieNodes.
+   * A boolean flag `isEndOfWord` to mark the end of a complete word.
+2. **Initialization:** Create a `root` TrieNode.
+3. **Insertion:**
+   * Start from the `root`.
+   * For each character `c` in the word:
+     * If `c` is not in the current node's `children`, create a new TrieNode and add it.
+     * Move to the child node: `current = current.children[c]`.
+   * Mark the final node's `isEndOfWord = true`.
+4. **Search (Exact Word):**
+   * Start from the `root`.
+   * For each character `c` in the word:
+     * If `c` is not in the current node's `children`, the word doesn't exist, return `false`.
+     * Move to the child node.
+   * Return `true` if the final node's `isEndOfWord` is true, `false` otherwise.
+5. **Prefix Search (Starts With):**
+   * Start from the `root`.
+   * For each character `c` in the prefix:
+     * If `c` is not in the current node's `children`, the prefix doesn't exist, return `false`.
+     * Move to the child node.
+   * Return `true` (the prefix exists).
 
 ## Graph Patterns
+
+### Breadth-First Search (BFS)
+
+**How to Identify:**
+
+- Finding shortest path in **unweighted** graph
+- Problems requiring exploration in layers or levels from a source
+- Finding nodes at a specific distance `k`
+
+**Example Problem Types:**
+
+- Shortest path in unweighted graph
+- Word ladder problems
+- Connected components
+- Rotting Oranges (LC#994)
+- 01 Matrix (LC#542)
+
+**Time & Space Complexity:**
+
+- Time: O(V + E) where V is vertices and E is edges
+- Space: O(V) or O(w) where w is maximum width of graph
+
+**How to Solve:**
+
+1. **Initialization:** Create a `visited` set/array. Create a `queue` and enqueue the starting `node` (or multiple source nodes). Add starting node(s) to `visited`. Initialize distance/level if needed (e.g., `distance = 0`).
+2. **Loop:** While `queue` is not empty:
+   * (Optional: Level-by-level processing) Get `level_size = queue.size()`. Loop `level_size` times for current level processing.
+   * Dequeue a `node`.
+   * **Process Node:** Perform necessary actions (e.g., check if target, update result).
+   * **Enqueue Neighbors:** For each `neighbor` of `node`:
+     * If `neighbor` has not been visited:
+       * Add `neighbor` to `visited`.
+       * Enqueue `neighbor`.
+       * (Optional: Update distance/level for `neighbor`).
+   * (Optional: Increment distance/level after processing a level).
+3. **Return:** Return result (e.g., shortest distance, target found boolean).
+
+### Depth-First Search (DFS)
+
+**How to Identify:**
+
+- Problems requiring exhaustive graph exploration
+- Path finding problems (existence, not necessarily shortest)
+- Problems requiring backtracking within the graph structure
+- Cycle detection in directed/undirected graphs
+- Identifying connected components
+
+**Example Problem Types:**
+
+- Path existence between nodes
+- Connected components / Number of Islands (LC#200)
+- Topological sorting (for DAGs)
+- Cycle detection
+- Word Search (LC#79)
+
+**Time & Space Complexity:**
+
+- Time: O(V + E) where V is vertices and E is edges
+- Space: O(V) or O(h) for recursion stack where h is maximum depth
+
+**How to Solve (Recursive):**
+
+1. **Initialization:** Create a `visited` set/array.
+2. **Define Helper Function:** `dfs(node, visited, ...)`
+3. **Base Case/Mark Visited:** If `node` is null or already in `visited`, return. Add `node` to `visited`.
+4. **Process Node:** Perform necessary actions for the current `node`.
+5. **Explore Neighbors:** For each `neighbor` of `node`:
+   * Recursively call `dfs(neighbor, visited, ...)` if not visited.
+6. **Backtrack (If Necessary):** If tracking paths or states, undo changes before returning.
+
+**How to Solve (Iterative):**
+
+1. **Initialization:** Create a `visited` set/array. Create a `stack` and push the starting `node`.
+2. **Loop:** While `stack` is not empty:
+   * Pop a `node` from the stack.
+   * If `node` is already in `visited`, continue.
+   * Add `node` to `visited`.
+   * **Process Node:** Perform necessary actions.
+   * **Push Neighbors:** Push all unvisited `neighbors` of `node` onto the stack.
 
 ### Dijkstra's Algorithm
 
@@ -438,19 +517,19 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve:**
 
-1.  **Initialization:**
-    *   Create a `distances` dictionary/array to store the shortest distance found so far from the `source` to every other node. Initialize all distances to infinity, except `distances[source] = 0`.
-    *   Create a priority queue (min-heap) to store tuples `(distance, node)`. Add `(0, source)` to the heap.
-    *   (Optional: A `visited` set to track nodes for which the shortest path is finalized).
-2.  **Loop:** While the priority queue is not empty:
-    *   Extract the node `u` with the smallest distance `d` from the heap: `(d, u) = heap.pop()`.
-    *   If `d > distances[u]` (or if `u` is in `visited`), continue (found a shorter path already or node finalized).
-    *   (Optional: Add `u` to `visited`).
-    *   **Relax Edges:** For each neighbor `v` of `u` with edge weight `w`:
-        *   If `distances[u] + w < distances[v]`:
-            *   Update the shortest distance: `distances[v] = distances[u] + w`.
-            *   Add `(distances[v], v)` to the priority queue.
-3.  **Return:** The `distances` dictionary contains the shortest paths from the `source` to all reachable nodes.
+1. **Initialization:**
+   * Create a `distances` dictionary/array to store the shortest distance found so far from the `source` to every other node. Initialize all distances to infinity, except `distances[source] = 0`.
+   * Create a priority queue (min-heap) to store tuples `(distance, node)`. Add `(0, source)` to the heap.
+   * (Optional: A `visited` set to track nodes for which the shortest path is finalized).
+2. **Loop:** While the priority queue is not empty:
+   * Extract the node `u` with the smallest distance `d` from the heap: `(d, u) = heap.pop()`.
+   * If `d > distances[u]` (or if `u` is in `visited`), continue (found a shorter path already or node finalized).
+   * (Optional: Add `u` to `visited`).
+   * **Relax Edges:** For each neighbor `v` of `u` with edge weight `w`:
+     * If `distances[u] + w < distances[v]`:
+       * Update the shortest distance: `distances[v] = distances[u] + w`.
+       * Add `(distances[v], v)` to the priority queue.
+3. **Return:** The `distances` dictionary contains the shortest paths from the `source` to all reachable nodes.
 
 ### Union-Find (Disjoint Set)
 
@@ -474,23 +553,23 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve:**
 
-1.  **Initialization:**
-    *   Create a `parent` array/map of size `n`, where `parent[i] = i` initially (each element is its own parent/set).
-    *   (Optional: Create a `rank` or `size` array initialized to 0 or 1 for union optimization).
-2.  **`find(i)` Operation (with Path Compression):**
-    *   If `parent[i] == i`, return `i` (it's the root).
-    *   Otherwise, recursively find the root: `root = find(parent[i])`.
-    *   Set `parent[i] = root` (path compression).
-    *   Return `root`.
-3.  **`union(i, j)` Operation (with Union by Rank/Size):**
-    *   Find the roots of the sets containing `i` and `j`: `root_i = find(i)`, `root_j = find(j)`.
-    *   If `root_i != root_j` (they are in different sets):
-        *   (Optional: Union by Rank/Size) Compare ranks/sizes of `root_i` and `root_j`. Attach the smaller tree under the larger tree by setting the parent of the smaller root to the larger root. Update rank/size if necessary.
-        *   If not using rank/size, simply set `parent[root_i] = root_j` (or vice versa).
-        *   Return `true` (union performed).
-    *   Else (they are already in the same set):
-        *   Return `false` (union not needed, indicates a cycle if adding an edge).
-4.  **Application:** Use `find` to check connectivity and `union` to merge components based on problem logic (e.g., iterating through edges).
+1. **Initialization:**
+   * Create a `parent` array/map of size `n`, where `parent[i] = i` initially (each element is its own parent/set).
+   * (Optional: Create a `rank` or `size` array initialized to 0 or 1 for union optimization).
+2. **`find(i)` Operation (with Path Compression):**
+   * If `parent[i] == i`, return `i` (it's the root).
+   * Otherwise, recursively find the root: `root = find(parent[i])`.
+   * Set `parent[i] = root` (path compression).
+   * Return `root`.
+3. **`union(i, j)` Operation (with Union by Rank/Size):**
+   * Find the roots of the sets containing `i` and `j`: `root_i = find(i)`, `root_j = find(j)`.
+   * If `root_i != root_j` (they are in different sets):
+     * (Optional: Union by Rank/Size) Compare ranks/sizes of `root_i` and `root_j`. Attach the smaller tree under the larger tree by setting the parent of the smaller root to the larger root. Update rank/size if necessary.
+     * If not using rank/size, simply set `parent[root_i] = root_j` (or vice versa).
+     * Return `true` (union performed).
+   * Else (they are already in the same set):
+     * Return `false` (union not needed, indicates a cycle if adding an edge).
+4. **Application:** Use `find` to check connectivity and `union` to merge components based on problem logic (e.g., iterating through edges).
 
 ## Dynamic Programming Patterns
 
@@ -516,22 +595,22 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve (2D DP):**
 
-1.  **Initialization:** Create a DP table `dp[n+1][C+1]`. `dp[i][c]` represents the max value using first `i` items with capacity `c`. Initialize all to 0.
-2.  **Iteration:** Loop through items `i` from 1 to `n`. Loop through capacities `c` from 1 to `C`.
-3.  **Decision:**
-    *   If `weight[i-1] <= c` (current item `i-1` fits):
-        *   `dp[i][c] = max(dp[i-1][c], value[i-1] + dp[i-1][c - weight[i-1]])`
-        *   (Max of not including item `i-1` vs. including item `i-1`)
-    *   Else (current item `i-1` doesn't fit):
-        *   `dp[i][c] = dp[i-1][c]` (must not include item `i-1`)
-4.  **Result:** `dp[n][C]` contains the maximum value.
+1. **Initialization:** Create a DP table `dp[n+1][C+1]`. `dp[i][c]` represents the max value using first `i` items with capacity `c`. Initialize all to 0.
+2. **Iteration:** Loop through items `i` from 1 to `n`. Loop through capacities `c` from 1 to `C`.
+3. **Decision:**
+   * If `weight[i-1] <= c` (current item `i-1` fits):
+     * `dp[i][c] = max(dp[i-1][c], value[i-1] + dp[i-1][c - weight[i-1]])`
+     * (Max of not including item `i-1` vs. including item `i-1`)
+   * Else (current item `i-1` doesn't fit):
+     * `dp[i][c] = dp[i-1][c]` (must not include item `i-1`)
+4. **Result:** `dp[n][C]` contains the maximum value.
 
 **How to Solve (1D DP - Space Optimized):**
 
-1.  **Initialization:** Create a DP array `dp[C+1]`. Initialize all to 0.
-2.  **Iteration:** Loop through items `i` from 0 to `n-1`. Loop through capacities `c` from `C` down to `weight[i]`.
-3.  **Decision:** `dp[c] = max(dp[c], value[i] + dp[c - weight[i]])`.
-4.  **Result:** `dp[C]` contains the maximum value. (Iterating `c` downwards prevents using the same item multiple times within the same outer loop iteration).
+1. **Initialization:** Create a DP array `dp[C+1]`. Initialize all to 0.
+2. **Iteration:** Loop through items `i` from 0 to `n-1`. Loop through capacities `c` from `C` down to `weight[i]`.
+3. **Decision:** `dp[c] = max(dp[c], value[i] + dp[c - weight[i]])`.
+4. **Result:** `dp[C]` contains the maximum value. (Iterating `c` downwards prevents using the same item multiple times within the same outer loop iteration).
 
 ### Unbounded Knapsack Pattern
 
@@ -555,14 +634,14 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve (1D DP):**
 
-1.  **Initialization:** Create a DP array `dp[C+1]`. Initialize `dp[0] = 0` and others to a value indicating impossibility (e.g., infinity for min coins, 0 for max value/ways). For counting ways, `dp[0] = 1`.
-2.  **Iteration (Order 1 - Item Outer Loop):** Loop through items `i` from 0 to `n-1`. Loop through capacities `c` from `weight[i]` up to `C`.
-    *   **Decision (Max Value):** `dp[c] = max(dp[c], value[i] + dp[c - weight[i]])`.
-    *   **Decision (Min Coins):** `dp[c] = min(dp[c], 1 + dp[c - weight[i]])`.
-    *   **Decision (Count Ways):** `dp[c] = dp[c] + dp[c - weight[i]]`.
-3.  **Iteration (Order 2 - Capacity Outer Loop - Use if item order matters or for specific problems):** Loop through capacities `c` from 1 to `C`. Loop through items `i` from 0 to `n-1`.
-    *   If `c >= weight[i]`: Apply the decision logic as above.
-4.  **Result:** `dp[C]` contains the answer. Check for the initial impossibility value if necessary. (Iterating `c` upwards allows using the same item multiple times).
+1. **Initialization:** Create a DP array `dp[C+1]`. Initialize `dp[0] = 0` and others to a value indicating impossibility (e.g., infinity for min coins, 0 for max value/ways). For counting ways, `dp[0] = 1`.
+2. **Iteration (Order 1 - Item Outer Loop):** Loop through items `i` from 0 to `n-1`. Loop through capacities `c` from `weight[i]` up to `C`.
+   * **Decision (Max Value):** `dp[c] = max(dp[c], value[i] + dp[c - weight[i]])`.
+   * **Decision (Min Coins):** `dp[c] = min(dp[c], 1 + dp[c - weight[i]])`.
+   * **Decision (Count Ways):** `dp[c] = dp[c] + dp[c - weight[i]]`.
+3. **Iteration (Order 2 - Capacity Outer Loop - Use if item order matters or for specific problems):** Loop through capacities `c` from 1 to `C`. Loop through items `i` from 0 to `n-1`.
+   * If `c >= weight[i]`: Apply the decision logic as above.
+4. **Result:** `dp[C]` contains the answer. Check for the initial impossibility value if necessary. (Iterating `c` upwards allows using the same item multiple times).
 
 ### Longest Common Subsequence (LCS) Pattern
 
@@ -586,18 +665,18 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve (2D DP):**
 
-1.  **Initialization:** Create a DP table `dp[m+1][n+1]`. `dp[i][j]` represents the LCS length for `text1[0...i-1]` and `text2[0...j-1]`. Initialize first row and column to 0.
-2.  **Iteration:** Loop through `i` from 1 to `m`. Loop through `j` from 1 to `n`.
-3.  **Decision:**
-    *   If `text1[i-1] == text2[j-1]`:
-        *   `dp[i][j] = 1 + dp[i-1][j-1]` (Characters match, extend LCS from previous diagonal).
-    *   Else (Characters don't match):
-        *   `dp[i][j] = max(dp[i-1][j], dp[i][j-1])` (Take the max LCS length from excluding char `i` or excluding char `j`).
-4.  **Result:** `dp[m][n]` contains the length of the LCS. (To reconstruct the LCS string, backtrack from `dp[m][n]`).
+1. **Initialization:** Create a DP table `dp[m+1][n+1]`. `dp[i][j]` represents the LCS length for `text1[0...i-1]` and `text2[0...j-1]`. Initialize first row and column to 0.
+2. **Iteration:** Loop through `i` from 1 to `m`. Loop through `j` from 1 to `n`.
+3. **Decision:**
+   * If `text1[i-1] == text2[j-1]`:
+     * `dp[i][j] = 1 + dp[i-1][j-1]` (Characters match, extend LCS from previous diagonal).
+   * Else (Characters don't match):
+     * `dp[i][j] = max(dp[i-1][j], dp[i][j-1])` (Take the max LCS length from excluding char `i` or excluding char `j`).
+4. **Result:** `dp[m][n]` contains the length of the LCS. (To reconstruct the LCS string, backtrack from `dp[m][n]`).
 
 **How to Solve (Space Optimized):**
 
-1.  Use two rows (or `min(m, n)` columns) of the DP table to store only the current and previous row's results, reducing space. Update iteratively.
+1. Use two rows (or `min(m, n)` columns) of the DP table to store only the current and previous row's results, reducing space. Update iteratively.
 
 ### Fibonacci Sequence Pattern
 
@@ -621,19 +700,19 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve (Tabulation - O(n) Space):**
 
-1.  **Initialization:** Create a DP array `dp` of size `n+1` (or appropriate size based on the problem).
-2.  **Base Cases:** Initialize the first few values of `dp` based on the problem's base conditions (e.g., `dp[0] = 0`, `dp[1] = 1` for Fibonacci; `dp[0]=1`, `dp[1]=1` for climbing stairs).
-3.  **Iteration:** Loop from the first non-base case index up to `n`.
-4.  **Recurrence:** Calculate `dp[i]` using the identified recurrence relation involving previous `dp` values (e.g., `dp[i] = dp[i-1] + dp[i-2]`).
-5.  **Result:** `dp[n]` contains the answer.
+1. **Initialization:** Create a DP array `dp` of size `n+1` (or appropriate size based on the problem).
+2. **Base Cases:** Initialize the first few values of `dp` based on the problem's base conditions (e.g., `dp[0] = 0`, `dp[1] = 1` for Fibonacci; `dp[0]=1`, `dp[1]=1` for climbing stairs).
+3. **Iteration:** Loop from the first non-base case index up to `n`.
+4. **Recurrence:** Calculate `dp[i]` using the identified recurrence relation involving previous `dp` values (e.g., `dp[i] = dp[i-1] + dp[i-2]`).
+5. **Result:** `dp[n]` contains the answer.
 
 **How to Solve (Space Optimized - O(1) Space):**
 
-1.  **Initialization:** Initialize variables to store the necessary previous states (e.g., `prev2 = base_case_0`, `prev1 = base_case_1`).
-2.  **Iteration:** Loop from the first non-base case index up to `n`.
-3.  **Recurrence:** Calculate the `current` state using the recurrence relation involving `prev1` and `prev2`.
-4.  **Update:** Shift the previous states: `prev2 = prev1`, `prev1 = current`.
-5.  **Result:** After the loop, `prev1` (or `current`) holds the answer for `n`.
+1. **Initialization:** Initialize variables to store the necessary previous states (e.g., `prev2 = base_case_0`, `prev1 = base_case_1`).
+2. **Iteration:** Loop from the first non-base case index up to `n`.
+3. **Recurrence:** Calculate the `current` state using the recurrence relation involving `prev1` and `prev2`.
+4. **Update:** Shift the previous states: `prev2 = prev1`, `prev1 = current`.
+5. **Result:** After the loop, `prev1` (or `current`) holds the answer for `n`.
 
 ## Backtracking Patterns
 
@@ -659,17 +738,17 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve (General Backtracking Template):**
 
-1.  **Initialization:** Create a list `results` to store valid combinations/permutations.
-2.  **Define Helper Function:** `backtrack(start_index, current_combination, ...)`
-    *   `start_index`: The index in the input array/string to start considering elements from (prevents duplicate combinations). For permutations, this might not be needed or used differently.
-    *   `current_combination`: The subset/permutation being built.
-3.  **Base Case / Add to Results:** Determine when a valid combination is formed (e.g., reached desired size, processed all elements). If valid, add a copy of `current_combination` to `results`.
-4.  **Recursive Step / Exploration:** Iterate through possible choices starting from `start_index` (for combinations) or all elements (for permutations, managing used elements).
-    *   **Choose:** Add the chosen element to `current_combination`. Mark as used if necessary (for permutations).
-    *   **Explore:** Recursively call `backtrack` with updated parameters (e.g., `backtrack(i + 1, current_combination, ...)` for combinations; `backtrack(current_combination, ...)` for permutations).
-    *   **Unchoose (Backtrack):** Remove the chosen element from `current_combination`. Unmark as used if necessary.
-5.  **Initial Call:** Start the process by calling `backtrack(0, [], ...)`.
-6.  **Return:** Return `results`.
+1. **Initialization:** Create a list `results` to store valid combinations/permutations.
+2. **Define Helper Function:** `backtrack(start_index, current_combination, ...)`
+   * `start_index`: The index in the input array/string to start considering elements from (prevents duplicate combinations). For permutations, this might not be needed or used differently.
+   * `current_combination`: The subset/permutation being built.
+3. **Base Case / Add to Results:** Determine when a valid combination is formed (e.g., reached desired size, processed all elements). If valid, add a copy of `current_combination` to `results`.
+4. **Recursive Step / Exploration:** Iterate through possible choices starting from `start_index` (for combinations) or all elements (for permutations, managing used elements).
+   * **Choose:** Add the chosen element to `current_combination`. Mark as used if necessary (for permutations).
+   * **Explore:** Recursively call `backtrack` with updated parameters (e.g., `backtrack(i + 1, current_combination, ...)` for combinations; `backtrack(current_combination, ...)` for permutations).
+   * **Unchoose (Backtrack):** Remove the chosen element from `current_combination`. Unmark as used if necessary.
+5. **Initial Call:** Start the process by calling `backtrack(0, [], ...)`.
+6. **Return:** Return `results`.
 
 ### Constraint Satisfaction Pattern
 
@@ -693,18 +772,18 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve:**
 
-1.  **Represent State:** Define how to represent the current state of the problem (e.g., the Sudoku board, the positions of N-Queens, the current path in a grid).
-2.  **Define Helper Function:** `backtrack(current_state)`
-3.  **Base Case (Goal Reached):** Check if `current_state` represents a complete and valid solution. If yes, add it to results or return `true`.
-4.  **Find Next Decision Point:** Identify the next choice to make (e.g., the next empty cell in Sudoku, the next column for N-Queens).
-5.  **Iterate Through Choices:** Loop through all possible valid choices for the current decision point.
-    *   **Check Validity:** Before making a choice, verify if it satisfies all problem constraints given the `current_state`.
-    *   **Choose:** If valid, apply the choice to update the state (`new_state`).
-    *   **Explore:** Recursively call `backtrack(new_state)`.
-        *   If the recursive call returns `true` (found a solution), propagate `true` upwards.
-    *   **Unchoose (Backtrack):** Revert the state back to `current_state` (undo the choice).
-6.  **Base Case (Dead End):** If no choice leads to a solution from the `current_state`, return `false`.
-7.  **Initial Call:** Start with the initial state of the problem.
+1. **Represent State:** Define how to represent the current state of the problem (e.g., the Sudoku board, the positions of N-Queens, the current path in a grid).
+2. **Define Helper Function:** `backtrack(current_state)`
+3. **Base Case (Goal Reached):** Check if `current_state` represents a complete and valid solution. If yes, add it to results or return `true`.
+4. **Find Next Decision Point:** Identify the next choice to make (e.g., the next empty cell in Sudoku, the next column for N-Queens).
+5. **Iterate Through Choices:** Loop through all possible valid choices for the current decision point.
+   * **Check Validity:** Before making a choice, verify if it satisfies all problem constraints given the `current_state`.
+   * **Choose:** If valid, apply the choice to update the state (`new_state`).
+   * **Explore:** Recursively call `backtrack(new_state)`.
+     * If the recursive call returns `true` (found a solution), propagate `true` upwards.
+   * **Unchoose (Backtrack):** Revert the state back to `current_state` (undo the choice).
+6. **Base Case (Dead End):** If no choice leads to a solution from the `current_state`, return `false`.
+7. **Initial Call:** Start with the initial state of the problem.
 
 ## Heap Patterns
 
@@ -730,19 +809,19 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve (Top K Largest):**
 
-1.  **Initialization:** Create a min-heap of size `k`.
-2.  **Iteration:** Loop through the input elements `num`.
-    *   Push `num` onto the heap.
-    *   If the heap size exceeds `k`, pop the smallest element (`heap.pop()`).
-3.  **Result:** After iterating through all elements, the heap contains the `k` largest elements. The root (`heap.peek()`) is the Kth largest element.
+1. **Initialization:** Create a min-heap of size `k`.
+2. **Iteration:** Loop through the input elements `num`.
+   * Push `num` onto the heap.
+   * If the heap size exceeds `k`, pop the smallest element (`heap.pop()`).
+3. **Result:** After iterating through all elements, the heap contains the `k` largest elements. The root (`heap.peek()`) is the Kth largest element.
 
 **How to Solve (Top K Smallest):**
 
-1.  **Initialization:** Create a max-heap of size `k`.
-2.  **Iteration:** Loop through the input elements `num`.
-    *   Push `num` onto the heap.
-    *   If the heap size exceeds `k`, pop the largest element (`heap.pop()`).
-3.  **Result:** After iterating through all elements, the heap contains the `k` smallest elements. The root (`heap.peek()`) is the Kth smallest element.
+1. **Initialization:** Create a max-heap of size `k`.
+2. **Iteration:** Loop through the input elements `num`.
+   * Push `num` onto the heap.
+   * If the heap size exceeds `k`, pop the largest element (`heap.pop()`).
+3. **Result:** After iterating through all elements, the heap contains the `k` smallest elements. The root (`heap.peek()`) is the Kth smallest element.
 
 **Note:** For frequency problems, first count frequencies using a hash map, then use the heap on the (frequency, element) pairs or just the frequencies/elements depending on the goal.
 
@@ -767,19 +846,19 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve (Find Median):**
 
-1.  **Initialization:**
-    *   Create a max-heap `small_half` (stores the smaller half of numbers).
-    *   Create a min-heap `large_half` (stores the larger half of numbers).
-2.  **`addNum(num)` Function:**
-    *   Add `num` to `small_half`.
-    *   **Balance Step 1:** Ensure every number in `small_half` is <= every number in `large_half`. If `small_half.peek() > large_half.peek()` (and both heaps are non-empty), pop from `small_half` and push to `large_half`.
-    *   **Balance Step 2:** Ensure heap sizes differ by at most 1.
-        *   If `small_half.size() > large_half.size() + 1`, pop from `small_half` and push to `large_half`.
-        *   If `large_half.size() > small_half.size() + 1`, pop from `large_half` and push to `small_half`.
-3.  **`findMedian()` Function:**
-    *   If `small_half.size() > large_half.size()`, median is `small_half.peek()`.
-    *   If `large_half.size() > small_half.size()`, median is `large_half.peek()`.
-    *   If `small_half.size() == large_half.size()`, median is `(small_half.peek() + large_half.peek()) / 2.0`.
+1. **Initialization:**
+   * Create a max-heap `small_half` (stores the smaller half of numbers).
+   * Create a min-heap `large_half` (stores the larger half of numbers).
+2. **`addNum(num)` Function:**
+   * Add `num` to `small_half`.
+   * **Balance Step 1:** Ensure every number in `small_half` is <= every number in `large_half`. If `small_half.peek() > large_half.peek()` (and both heaps are non-empty), pop from `small_half` and push to `large_half`.
+   * **Balance Step 2:** Ensure heap sizes differ by at most 1.
+     * If `small_half.size() > large_half.size() + 1`, pop from `small_half` and push to `large_half`.
+     * If `large_half.size() > small_half.size() + 1`, pop from `large_half` and push to `small_half`.
+3. **`findMedian()` Function:**
+   * If `small_half.size() > large_half.size()`, median is `small_half.peek()`.
+   * If `large_half.size() > small_half.size()`, median is `large_half.peek()`.
+   * If `small_half.size() == large_half.size()`, median is `(small_half.peek() + large_half.peek()) / 2.0`.
 
 ## Additional Patterns
 
@@ -806,23 +885,23 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve (Standard):**
 
-1.  **Initialization:** Set `low = 0`, `high = n - 1` (or appropriate bounds for the search space).
-2.  **Loop:** While `low <= high`:
-    *   Calculate `mid = low + (high - low) // 2` (prevents overflow).
-    *   **Comparison:**
-        *   If `array[mid] == target`, return `mid` (or `true`).
-        *   If `array[mid] < target`, the target must be in the right half: `low = mid + 1`.
-        *   If `array[mid] > target`, the target must be in the left half: `high = mid - 1`.
-3.  **Not Found:** If the loop finishes, the target was not found. Return `-1` (or `false`).
+1. **Initialization:** Set `low = 0`, `high = n - 1` (or appropriate bounds for the search space).
+2. **Loop:** While `low <= high`:
+   * Calculate `mid = low + (high - low) // 2` (prevents overflow).
+   * **Comparison:**
+     * If `array[mid] == target`, return `mid` (or `true`).
+     * If `array[mid] < target`, the target must be in the right half: `low = mid + 1`.
+     * If `array[mid] > target`, the target must be in the left half: `high = mid - 1`.
+3. **Not Found:** If the loop finishes, the target was not found. Return `-1` (or `false`).
 
 **How to Solve (Variations - e.g., Rotated Array, Find Boundary):**
 
-1.  **Initialization:** Set `low`, `high` bounds.
-2.  **Loop:** While `low <= high` (or sometimes `low < high` for boundary finding).
-3.  **Calculate `mid`.**
-4.  **Condition Check:** Instead of direct comparison with `target`, check conditions based on the problem's properties (e.g., `array[mid] >= array[low]` to find the sorted half in a rotated array, or `isBadVersion(mid)` for first bad version).
-5.  **Adjust Bounds:** Based on the condition check, decide whether to discard the left half (`low = mid + 1`) or the right half (`high = mid - 1` or `high = mid`). The exact adjustment depends heavily on the specific problem and whether you are looking for the first/last occurrence or any occurrence.
-6.  **Return:** Return `low` or `high` (often the boundary) or the result found during the loop. Carefully consider the loop termination condition and which pointer holds the answer.
+1. **Initialization:** Set `low`, `high` bounds.
+2. **Loop:** While `low <= high` (or sometimes `low < high` for boundary finding).
+3. **Calculate `mid`.**
+4. **Condition Check:** Instead of direct comparison with `target`, check conditions based on the problem's properties (e.g., `array[mid] >= array[low]` to find the sorted half in a rotated array, or `isBadVersion(mid)` for first bad version).
+5. **Adjust Bounds:** Based on the condition check, decide whether to discard the left half (`low = mid + 1`) or the right half (`high = mid - 1` or `high = mid`). The exact adjustment depends heavily on the specific problem and whether you are looking for the first/last occurrence or any occurrence.
+6. **Return:** Return `low` or `high` (often the boundary) or the result found during the loop. Carefully consider the loop termination condition and which pointer holds the answer.
 
 ### Greedy Algorithms
 
@@ -846,11 +925,11 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve:**
 
-1.  **Identify Greedy Choice:** Determine a rule for making the best local choice at each step. This often involves sorting the input based on some criteria (e.g., end times for interval scheduling, value/weight ratio for fractional knapsack).
-2.  **Prove Correctness (Optional but Recommended):** Try to argue why the greedy choice always leads to a globally optimal solution (e.g., "stays ahead" argument, exchange argument).
-3.  **Sort (If Necessary):** Sort the input data according to the chosen greedy criterion.
-4.  **Iterate and Choose:** Loop through the sorted data, making the greedy choice at each step and building the solution incrementally. Maintain any necessary state (e.g., current time, available capacity).
-5.  **Return Result:** Return the constructed solution or the optimal value found.
+1. **Identify Greedy Choice:** Determine a rule for making the best local choice at each step. This often involves sorting the input based on some criteria (e.g., end times for interval scheduling, value/weight ratio for fractional knapsack).
+2. **Prove Correctness (Optional but Recommended):** Try to argue why the greedy choice always leads to a globally optimal solution (e.g., "stays ahead" argument, exchange argument).
+3. **Sort (If Necessary):** Sort the input data according to the chosen greedy criterion.
+4. **Iterate and Choose:** Loop through the sorted data, making the greedy choice at each step and building the solution incrementally. Maintain any necessary state (e.g., current time, available capacity).
+5. **Return Result:** Return the constructed solution or the optimal value found.
 
 ### Bit Manipulation
 
@@ -875,43 +954,44 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 **How to Solve:**
 
-1.  **Understand Operators:** Know the function of `&` (AND), `|` (OR), `^` (XOR), `~` (NOT), `<<` (Left Shift), `>>` (Right Shift).
-2.  **Identify Goal:** Determine what needs to be achieved (e.g., find unique number, count set bits, check power of 2, set/clear/toggle a bit).
-3.  **Choose Operator(s):** Select the appropriate bitwise operator(s) for the task.
-    *   `^` (XOR): Useful for finding differences, toggling bits, finding unique elements (since `x ^ x = 0` and `x ^ 0 = x`).
-    *   `&` (AND): Useful for checking if a bit is set (`num & (1 << k)`), clearing bits (`num & ~(1 << k)`), masking.
-    *   `|` (OR): Useful for setting bits (`num | (1 << k)`).
-    *   `<<`, `>>`: Useful for multiplying/dividing by powers of 2, iterating through bits.
-    *   `~` (NOT): Useful for inverting bits, often used with AND for clearing.
-4.  **Apply Logic:** Implement the solution using the chosen operators, often within loops or conditional statements.
-5.  **Handle Edge Cases:** Consider negative numbers (two's complement representation) and potential overflows if applicable.
+1. **Understand Operators:** Know the function of `&` (AND), `|` (OR), `^` (XOR), `~` (NOT), `<<` (Left Shift), `>>` (Right Shift).
+2. **Identify Goal:** Determine what needs to be achieved (e.g., find unique number, count set bits, check power of 2, set/clear/toggle a bit).
+3. **Choose Operator(s):** Select the appropriate bitwise operator(s) for the task.
+   * `^` (XOR): Useful for finding differences, toggling bits, finding unique elements (since `x ^ x = 0` and `x ^ 0 = x`).
+   * `&` (AND): Useful for checking if a bit is set (`num & (1 << k)`), clearing bits (`num & ~(1 << k)`), masking.
+   * `|` (OR): Useful for setting bits (`num | (1 << k)`).
+   * `<<`, `>>`: Useful for multiplying/dividing by powers of 2, iterating through bits.
+   * `~` (NOT): Useful for inverting bits, often used with AND for clearing.
+4. **Apply Logic:** Implement the solution using the chosen operators, often within loops or conditional statements.
+5. **Handle Edge Cases:** Consider negative numbers (two's complement representation) and potential overflows if applicable.
 
 ## Problem-to-Pattern Matching Table
 
 ### Array & String Problems
 
-| If you see this...                            | Consider this pattern... | Example problems                                                                                                                    | Key characteristics                                             |
-| --------------------------------------------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| Contiguous subarrays/substrings               | Sliding Window           | Max sum subarray of size K, Longest substring with K distinct chars, LC#3, LC#76, LC#438, LC#2251 (Number of Flowers in Full Bloom) | Fixed or variable size window that "slides" through array       |
-| Need max/min/sum over window of elements      | Sliding Window           | Minimum size subarray with given sum, Fruit into baskets, LC#1358                                                                   | Often involves expanding/contracting window based on conditions |
-| String pattern matching within another string | Sliding Window           | Find all anagrams in a string (LC#438), Permutation in string, Minimum window substring (LC#76)                                     | Track character frequencies within current window               |
-| Repeated characters in window                 | Sliding Window           | Longest substring without repeating characters (LC#3), Longest repeating character replacement                                      | Use hash map/set to track seen characters                       |
-| Paired elements in sorted array               | Two Pointers             | Two Sum (LC#1), Container with most water (LC#11), Trapping rain water (LC#42)                                                      | Start pointers at opposite ends, move based on comparison       |
-| Remove duplicates                             | Two Pointers             | Remove duplicates from sorted array (LC#26), Remove element                                                                         | Fast/slow pointers tracking write position                      |
-| Palindrome verification                       | Two Pointers             | Valid palindrome, Valid palindrome with removal allowance (LC#680)                                                                  | Pointers start at opposite ends, move inward                    |
-| Triplets/quadruplets with constraints         | Two Pointers             | 3Sum (LC#15), 4Sum (LC#18), 3Sum closest, 3Sum smaller                                                                              | Sort array first, then use two pointers inside loop             |
-| Merging sorted arrays                         | Two Pointers             | Merge sorted array (LC#88), Intersection of arrays                                                                                  | Maintain position in each array with separate pointers          |
-| Max/min subarray sum                          | Kadane's Algorithm       | Maximum subarray (LC#53), Maximum product subarray (LC#152)                                                                         | Track current sum and max sum seen so far                       |
-| Circular array max/min                        | Kadane's Algorithm       | Maximum circular subarray sum, Maximum absolute sum of any subarray (LC#1749)                                                       | Compare regular max sum vs total - min sum                      |
-| Local vs global maxima                        | Kadane's Algorithm       | Best time to buy/sell stock (LC#121)                                                                                                | Reset when subarray becomes negative                            |
-| Range queries                                 | Prefix Sums              | Range sum queries, Subarray sum equals K (LC#560), Continuous subarray sum                                                          | Precompute cumulative sums to make queries O(1)                 |
-| Count subarrays with property                 | Prefix Sums              | Subarrays with sum divisible by K, Count nice subarrays, Contiguous array (LC#525)                                                  | Use (prefix_sum % k) frequency dictionary                       |
-| Product of array except self                  | Prefix Products          | Product of array except self, Maximum product subarray (LC#152)                                                                     | Calculate prefix and suffix products, combine results           |
-| Equilibrium index                             | Prefix Sums              | Find equilibrium index where left sum equals right sum, Find pivot index                                                            | Compare prefix sum with total sum                               |
-| Minimum/maximum subsequence                   | Greedy + Array           | Increasing triplet subsequence, Longest increasing subsequence (LC#300)                                                             | Maintain minimum values seen so far                             |
-| Array rotation problems                       | Array Manipulation       | Rotate array (LC#189), Search in rotated sorted array (LC#33)                                                                       | Identify pattern after rotation                                 |
-| Majority element                              | Boyer-Moore Voting       | Majority element (LC#169), Majority element II                                                                                      | Cancel out non-majority elements                                |
-| Cyclic sort                                   | In-place Sorting         | Missing number, Find all disappeared numbers (LC#448), LC#41 (First Missing Positive)                                               | Place each number in its correct position                       |
+| If you see this...                            | Consider this pattern... | Example problems                                                                                                                    | Key characteristics                                              |
+| --------------------------------------------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| Contiguous subarrays/substrings               | Sliding Window           | Max sum subarray of size K, Longest substring with K distinct chars, LC#3, LC#76, LC#438, LC#2251 (Number of Flowers in Full Bloom) | Fixed or variable size window that "slides" through array        |
+| Need max/min/sum over window of elements      | Sliding Window           | Minimum size subarray with given sum, Fruit into baskets, LC#1358                                                                   | Often involves expanding/contracting window based on conditions  |
+| String pattern matching within another string | Sliding Window           | Find all anagrams in a string (LC#438), Permutation in string, Minimum window substring (LC#76)                                     | Track character frequencies within current window                |
+| Repeated characters in window                 | Sliding Window           | Longest substring without repeating characters (LC#3), Longest repeating character replacement                                      | Use hash map/set to track seen characters                        |
+| Paired elements in sorted array               | Two Pointers             | Two Sum (LC#1), Container with most water (LC#11), Trapping rain water (LC#42)                                                      | Start pointers at opposite ends, move based on comparison        |
+| Remove duplicates                             | Two Pointers             | Remove duplicates from sorted array (LC#26), Remove element                                                                         | Fast/slow pointers tracking write position                       |
+| Palindrome verification                       | Two Pointers             | Valid palindrome, Valid palindrome with removal allowance (LC#680)                                                                  | Pointers start at opposite ends, move inward                     |
+| Triplets/quadruplets with constraints         | Two Pointers             | 3Sum (LC#15), 4Sum (LC#18), 3Sum closest, 3Sum smaller                                                                              | Sort array first, then use two pointers inside loop              |
+| Merging sorted arrays                         | Two Pointers             | Merge sorted array (LC#88), Intersection of arrays                                                                                  | Maintain position in each array with separate pointers           |
+| Max/min subarray sum                          | Kadane's Algorithm       | Maximum subarray (LC#53), Maximum product subarray (LC#152)                                                                         | Track current sum and max sum seen so far                        |
+| Circular array max/min                        | Kadane's Algorithm       | Maximum circular subarray sum, Maximum absolute sum of any subarray (LC#1749)                                                       | Compare regular max sum vs total - min sum                       |
+| Local vs global maxima                        | Kadane's Algorithm       | Best time to buy/sell stock (LC#121)                                                                                                | Track current max profit, update overall max profit              |
+| Range queries                                 | Prefix Sums              | Range sum queries, Subarray sum equals K (LC#560), Continuous subarray sum, LC#2251 (Number of Flowers in Full Bloom) - ADD 2251    | Precompute cumulative sums to make queries O(1)                  |
+| Count subarrays with property                 | Prefix Sums              | Subarrays with sum divisible by K, Count nice subarrays, Contiguous array (LC#525)                                                  | Use (prefix_sum % k) frequency dictionary                        |
+| Product of array except self                  | Prefix Products          | Product of array except self, Maximum product subarray (LC#152)                                                                     | Calculate prefix and suffix products, combine results            |
+| Equilibrium index                             | Prefix Sums              | Find equilibrium index where left sum equals right sum, Find pivot index                                                            | Compare prefix sum with total sum                                |
+| Minimum/maximum subsequence                   | Greedy + Array           | Increasing triplet subsequence, Longest increasing subsequence (LC#300)                                                             | Maintain minimum values seen so far                              |
+| Array rotation problems                       | Array Manipulation       | Rotate array (LC#189), Search in rotated sorted array (LC#33)                                                                       | Identify pattern after rotation                                  |
+| Majority element                              | Boyer-Moore Voting       | Majority element (LC#169), Majority element II                                                                                      | Cancel out non-majority elements                                 |
+| Cyclic sort                                   | In-place Sorting         | Missing number, Find all disappeared numbers (LC#448), LC#41 (First Missing Positive)                                               | Place each number in its correct position                        |
+| Find element/boundary in sorted               | Binary Search            | LC#33, LC#34, LC#153, LC#162, LC#875, LC#2251 (Number of Flowers in Full Bloom) - ADD 2251                                          | Search space halving, applicable to rotated/modified sort orders |
 
 ### Linked List Problems
 
@@ -957,24 +1037,24 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 ### Graph Problems
 
-| If you see this...                  | Consider this pattern...    | Example problems                                                                            | Key characteristics                                      |
-| ----------------------------------- | --------------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| Tree/graph path finding             | DFS                         | Path sum, All paths from source to target (LC#797), Word search (LC#79)                     | Recursive exploration with backtracking                  |
-| Exhaustive exploration              | DFS                         | Word search (LC#79), Islands count (LC#200), Max area of island (LC#695)                    | Mark visited nodes, explore all directions               |
-| Topological sorting                 | DFS                         | Course schedule (LC#207), Course schedule II (LC#210), Task scheduling                      | Track visited nodes and process in post-order            |
-| Shortest path (unweighted)          | BFS                         | Word ladder (LC#127), Shortest path in binary matrix, Rotting oranges (LC#994)              | Use queue to process nodes level by level                |
-| Level-wise tree traversal           | BFS                         | Level order traversal (LC#102), Average of levels, Right side view (LC#199)                 | Process nodes level by level, track depth                |
-| Minimum distance queries            | BFS                         | Distance from all buildings, Rot oranges (LC#994), 01 Matrix                                | Start BFS from multiple source points                    |
-| Shortest path (weighted)            | Dijkstra's                  | Network delay time, Cheapest flights within K stops (LC#787), Path with maximum probability | Use priority queue to process nodes by distance          |
-| Minimum spanning tree               | Prim's/Kruskal's            | Connecting cities with minimum cost, Min cost to connect all points                         | Build connected graph with minimum edge weight sum       |
-| Connected components                | Union-Find                  | Number of islands II, Redundant connection, Accounts merge                                  | Track sets of connected components                       |
-| Cycle detection in undirected graph | Union-Find                  | Graph valid tree, Detect cycle, Redundant connection                                        | Check if new edge connects already connected components  |
-| Strongly connected components       | Kosaraju's/Tarjan's         | Critical connections, Find all critical edges                                               | Find components that remain connected after edge removal |
-| Bipartite graph checking            | Graph Coloring              | Is graph bipartite, Possible bipartition                                                    | Color nodes with alternating colors                      |
-| Graph representation                | Adjacency List/Matrix       | Clone graph, Find the town judge, Course schedule (LC#207)                                  | Choose representation based on graph density             |
-| All pairs shortest path             | Floyd-Warshall              | Find city with smallest number of neighbors, Network delay time                             | Consider paths through intermediate vertices             |
-| Maximum flow                        | Ford-Fulkerson/Edmonds-Karp | Maximum flow problems, Maximum bipartite matching                                           | Find augmenting paths to increase flow                   |
-| Eulerian path                       | Eulerian Path Algorithm     | Reconstruct itinerary (LC#332), Valid arrangement of pairs                                  | Find path that uses each edge exactly once               |
+| If you see this...                  | Consider this pattern...    | Example problems                                                                                   | Key characteristics                                      |
+| ----------------------------------- | --------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| Tree/graph path finding             | DFS                         | Path sum, All paths from source to target (LC#797), Word search (LC#79)                            | Recursive exploration with backtracking                  |
+| Exhaustive exploration              | DFS                         | Word search (LC#79), Islands count (LC#200), Max area of island (LC#695)                           | Mark visited nodes, explore all directions               |
+| Topological sorting                 | DFS                         | Course schedule (LC#207), Course schedule II (LC#210), Task scheduling                             | Track visited nodes and process in post-order            |
+| Shortest path (unweighted)          | BFS                         | Word ladder (LC#127), Shortest path in binary matrix, Rotting oranges (LC#994)                     | Use queue to process nodes level by level                |
+| Level-wise tree traversal           | BFS                         | Level order traversal (LC#102), Average of levels, Right side view (LC#199)                        | Process nodes level by level, track depth                |
+| Minimum distance queries            | BFS                         | Distance from all buildings, Rot oranges (LC#994), 01 Matrix, LC#399 (Evaluate Division) - ADD 399 | Start BFS from multiple source points                    |
+| Shortest path (weighted)            | Dijkstra's                  | Network delay time, Cheapest flights within K stops (LC#787), Path with maximum probability        | Use priority queue to process nodes by distance          |
+| Minimum spanning tree               | Prim's/Kruskal's            | Connecting cities with minimum cost, Min cost to connect all points                                | Build connected graph with minimum edge weight sum       |
+| Connected components                | Union-Find / DFS / BFS      | Number of islands II, Redundant connection, Accounts merge, LC#200, LC#547                         | Track sets of connected components                       |
+| Cycle detection in undirected graph | Union-Find / DFS            | Graph valid tree, Detect cycle, Redundant connection                                               | Check if new edge connects already connected components  |
+| Strongly connected components       | Kosaraju's/Tarjan's         | Critical connections, Find all critical edges                                                      | Find components that remain connected after edge removal |
+| Bipartite graph checking            | Graph Coloring (BFS/DFS)    | Is graph bipartite, Possible bipartition                                                           | Color nodes with alternating colors                      |
+| Graph representation                | Adjacency List/Matrix       | Clone graph, Find the town judge, Course schedule (LC#207)                                         | Choose representation based on graph density             |
+| All pairs shortest path             | Floyd-Warshall              | Find city with smallest number of neighbors, Network delay time                                    | Consider paths through intermediate vertices             |
+| Maximum flow                        | Ford-Fulkerson/Edmonds-Karp | Maximum flow problems, Maximum bipartite matching                                                  | Find augmenting paths to increase flow                   |
+| Eulerian path                       | Eulerian Path Algorithm     | Reconstruct itinerary (LC#332), Valid arrangement of pairs                                         | Find path that uses each edge exactly once               |
 
 ### Dynamic Programming Problems
 
@@ -987,8 +1067,8 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 | String comparison                 | Longest Common Subsequence | Edit distance (LC#72), Shortest common supersequence, Minimum ASCII delete sum                         | Build solution by comparing characters         |
 | String transformations            | Longest Common Subsequence | Delete operations for two strings, Distinct subsequences                                               | Compare characters and build solution matrix   |
 | Palindromic subsequence           | Longest Common Subsequence | Longest palindromic subsequence (LC#516), Palindromic substrings, Longest palindromic substring (LC#5) | Compare string with its reverse                |
-| State depends on previous states  | Fibonacci Pattern          | Climbing stairs (LC#70), House robber (LC#198), Min cost climbing stairs                               | Current state depends on 1-2 previous states   |
-| Jump game variations              | Fibonacci Pattern          | Jump game (LC#55), Min jumps to reach end (LC#45), Frog jump (LC#403)                                  | Current position depends on previous positions |
+| State depends on previous states  | Fibonacci Pattern          | Climbing stairs (LC#70), House robber (LC#198), Min cost climbing stairs, LC#403 (Frog Jump) - ADD 403 | Current state depends on 1-2 previous states   |
+| Jump game variations              | Fibonacci Pattern / Greedy | Jump game (LC#55), Min jumps to reach end (LC#45)                                                      | Current position depends on previous positions |
 | Grid traversal                    | 2D DP                      | Unique paths (LC#62), Minimum path sum (LC#64), Dungeon game                                           | Build solution cell by cell                    |
 | Stock buying problems             | State Machine DP           | Best time to buy/sell stock (LC#121) with cooldown/transaction limit                                   | Define states based on holding stock or not    |
 | Longest increasing subsequence    | LIS Pattern                | Longest increasing subsequence (LC#300), Russian doll envelopes (LC#354)                               | Track longest sequence ending at each position |
@@ -1025,29 +1105,31 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 
 ### Searching Problems
 
-| If you see this...           | Consider this pattern... | Example problems                                                                   | Key characteristics                                         |
-| ---------------------------- | ------------------------ | ---------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| Sorted array search          | Binary Search            | Search in rotated array (LC#33), Find peak element (LC#162), Search range (LC#34)  | Repeatedly divide search space in half                      |
-| Search space halving         | Binary Search            | Sqrt(x), Search 2D sorted matrix, Find minimum in rotated sorted array (LC#153)    | Identify which half contains answer                         |
-| Minimize maximum value       | Binary Search            | Split array largest sum, Capacity to ship packages, Koko eating bananas (LC#875)   | Binary search on possible answers                           |
-| Matrix search                | Binary Search            | Search 2D matrix, Search 2D matrix II, LC#48 (Rotate Image)                        | Use binary search on rows/columns                           |
-| Rotated array search         | Binary Search            | Search in rotated sorted array I and II (LC#33), LC#189 (Rotate Array)             | Identify sorted half, search accordingly                    |
-| Finding boundary             | Binary Search            | First bad version, H-index, Find the duplicate number                              | Find first/last occurrence of condition                     |
-| Floating point binary search | Binary Search            | Find median of two sorted arrays (LC#4), Sqrt(x), LC#528 (Random Pick with Weight) | Similar to integer binary search but with decimal precision |
+| If you see this...           | Consider this pattern... | Example problems                                                                                  | Key characteristics                                         |
+| ---------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| Sorted array search          | Binary Search            | Search in rotated array (LC#33), Find peak element (LC#162), Search range (LC#34)                 | Repeatedly divide search space in half                      |
+| Search space halving         | Binary Search            | Sqrt(x), Search 2D sorted matrix, Find minimum in rotated sorted array (LC#153)                   | Identify which half contains answer                         |
+| Minimize maximum value       | Binary Search            | Split array largest sum, Capacity to ship packages, Koko eating bananas (LC#875)                  | Binary search on possible answers                           |
+| Matrix search                | Binary Search            | Search 2D matrix, Search 2D matrix II, LC#48 (Rotate Image)                                       | Use binary search on rows/columns                           |
+| Rotated array search         | Binary Search            | Search in rotated sorted array I and II (LC#33), LC#189 (Rotate Array) - REMOVE 189               | Identify sorted half, search accordingly                    |
+| Finding boundary             | Binary Search            | First bad version, H-index, Find the duplicate number                                             | Find first/last occurrence of condition                     |
+| Floating point binary search | Binary Search            | Find median of two sorted arrays (LC#4), Sqrt(x), LC#528 (Random Pick with Weight)                | Similar to integer binary search but with decimal precision |
+| Array/Sorted Problems        | Binary Search            | LC#215 (Kth Largest - via QuickSelect), LC#2251 (Number of Flowers in Full Bloom) - ADD 215, 2251 | Can apply to problems reducible to searching sorted space   |
 
 ### Stack & Queue Problems
 
-| If you see this...       | Consider this pattern... | Example problems                                                                                                                              | Key characteristics                           |
-| ------------------------ | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| Monotonic stack problems | Stack                    | Next greater element, Daily temperatures (LC#739), Largest rectangle in histogram                                                             | Maintain decreasing/increasing order in stack |
-| Expression evaluation    | Stack                    | Calculator (LC#224, LC#227), Evaluate reverse polish notation (LC#150), Basic calculator                                                      | Process operators based on precedence         |
-| Parenthesis matching     | Stack                    | Valid parentheses (LC#20), Remove invalid parentheses, Minimum add to make valid (LC#921), LC#1249 (Minimum Remove to Make Valid Parentheses) | Use stack to track opening brackets           |
-| String parsing           | Stack                    | Decode string, Remove duplicate letters, Simplify path (LC#71), LC#341 (Flatten Nested List Iterator)                                         | Process characters sequentially with stack    |
-| Min/max stack            | Stack                    | Min stack (LC#155), Max stack, Largest rectangle in histogram                                                                                 | Track minimum/maximum at each position        |
-| Queue implementation     | Queue                    | Implement queue using stacks (LC#232), Design circular queue                                                                                  | FIFO data structure                           |
-| BFS implementation       | Queue                    | Level order traversal (LC#102), Word ladder (LC#127)                                                                                          | Process elements in order they're found       |
-| Sliding window maximum   | Deque                    | Sliding window maximum (LC#239), Sliding window minimum                                                                                       | Maintain relevant elements in window          |
-| Browser history/stack    | Deque                    | Design browser history (LC#1472), Max sliding window, LC#228 (Summary Ranges)                                                                 | Support operations from both ends             |
+| If you see this...       | Consider this pattern... | Example problems                                                                                                                              | Key characteristics                                |
+| ------------------------ | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| Monotonic stack problems | Stack                    | Next greater element, Daily temperatures (LC#739), Largest rectangle in histogram                                                             | Maintain decreasing/increasing order in stack      |
+| Expression evaluation    | Stack                    | Calculator (LC#224, LC#227), Evaluate reverse polish notation (LC#150), Basic calculator                                                      | Process operators based on precedence              |
+| Parenthesis matching     | Stack                    | Valid parentheses (LC#20), Remove invalid parentheses, Minimum add to make valid (LC#921), LC#1249 (Minimum Remove to Make Valid Parentheses) | Use stack to track opening brackets                |
+| String parsing           | Stack                    | Decode string, Remove duplicate letters, Simplify path (LC#71), LC#341 (Flatten Nested List Iterator)                                         | Process characters sequentially with stack         |
+| Min/max stack            | Stack                    | Min stack (LC#155), Max stack, Largest rectangle in histogram                                                                                 | Track minimum/maximum at each position             |
+| Queue implementation     | Queue / Stacks           | Implement queue using stacks (LC#232), Design circular queue                                                                                  | FIFO data structure                                |
+| BFS implementation       | Queue                    | Level order traversal (LC#102), Word ladder (LC#127)                                                                                          | Process elements in order they're found            |
+| Sliding window maximum   | Deque                    | Sliding window maximum (LC#239), Sliding window minimum                                                                                       | Maintain relevant elements in window               |
+| Browser history/stack    | Deque / List / Stack     | Design browser history (LC#1472), Max sliding window, LC#228 (Summary Ranges)                                                                 | Support operations from both ends or track history |
+| Complex Stack Design     | Stack / Heap / List      | LC#1172 (Dinner Plate Stacks) - ADD 1172                                                                                                      | Often combines multiple data structures            |
 
 ### Additional Pattern Categories
 
@@ -1056,7 +1138,7 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 | Local -> global optimization | Greedy                   | Jump game (LC#55), Gas station (LC#134), Task scheduler (LC#621)                                                                                                               | Make locally optimal choice at each step              |
 | Activity scheduling          | Greedy                   | Meeting rooms (LC#253), Non-overlapping intervals (LC#435), Minimum number of arrows                                                                                           | Sort by end time and select non-overlapping intervals |
 | Optimal ordering             | Greedy                   | Queue reconstruction by height, Create maximum number, Reorganize string (LC#767)                                                                                              | Sort by specific criteria                             |
-| Binary operations            | Bit Manipulation         | Single number, Counting bits, Sum of two integers, LC#3191 (Minimum Operations to Make Binary Array Elements Equal to One I)                                                   | Use logical operations (&,                            |
+| Binary operations            | Bit Manipulation         | Single number, Counting bits, Sum of two integers, LC#3191 (Minimum Operations to Make Binary Array Elements Equal to One I) - REMOVE 3191                                     | Use logical operations (&,                            |
 | XOR properties               | Bit Manipulation         | Maximum XOR of two numbers, Find the duplicate, Single number II                                                                                                               | Exploit XOR characteristics (a^a=0, a^0=a)            |
 | Bit counting                 | Bit Manipulation         | Hamming distance, Number of 1 bits, Power of two                                                                                                                               | Count or check specific bits                          |
 | Interval problems            | Interval Merging/Sorting | Merge intervals (LC#56), Insert interval, Meeting rooms (LC#253), Non-overlapping intervals (LC#435)                                                                           | Sort intervals, then process in order                 |
@@ -1073,7 +1155,7 @@ This guide helps you identify which algorithm pattern to use based on problem ch
 | Randomized algorithms        | Shuffle/Fisher-Yates     | Shuffle an array, Random pick with weight (LC#528)                                                                                                                             | Generate permutations with equal probability          |
 | Strings with constraints     | State Machines           | Valid number, Regular expression matching, LC#68 (Text Justification)                                                                                                          | Process input character by character                  |
 | Design problems              | Object-Oriented Design   | Design HashMap (LC#706), Design Twitter, Design browser history (LC#1472), LC#380 (Insert Delete GetRandom O(1)), LC#981 (Time Based Key-Value Store)                          | Combine appropriate data structures                   |
-| Circular array               | Circular Array           | Circular array loop, Maximum sum circular subarray                                                                                                                             | Handle wrapping around array bounds                   |
+| Circular array               | Circular Array / Modulo  | Circular array loop, Maximum sum circular subarray                                                                                                                             | Handle wrapping around array bounds                   |
 | Boyer-Moore Voting           | Majority Element         | Majority element (LC#169), Majority element II                                                                                                                                 | Find elements appearing more than n/k times           |
 | Topological sort             | Directed Acyclic Graph   | Course schedule (LC#207), Course schedule II (LC#210), Alien dictionary                                                                                                        | Process nodes with no incoming edges first            |
 | Sliding window maximum       | Monotonic Queue          | Sliding window maximum (LC#239), Sliding window minimum                                                                                                                        | Maintain queue with decreasing/increasing elements    |
@@ -1308,6 +1390,7 @@ This section categorizes common Amazon interview problems from LeetCode by their
 - 763: Partition Labels
 - 767: Reorganize String
 - 881: Boats to Save People
+- 121: Best Time to Buy and Sell Stock
 
 ### String Manipulation
 
@@ -1419,7 +1502,7 @@ This section categorizes common Netflix interview problems from LeetCode by thei
 #### Graph Algorithms
 
 - 210: Course Schedule II (Topological Sort)
-- 332: Reconstruct Itinerary (Eulerian Path)
+- 332: Reconstruct Itinerary (Eulerian Path / Hierholzer's Algorithm / DFS Backtracking) - UPDATED
 - 743: Network Delay Time (Dijkstra's Algorithm)
 
 ### Backtracking
@@ -1447,9 +1530,15 @@ This section categorizes common Netflix interview problems from LeetCode by thei
 
 #### Array Manipulation
 
-- 41: First Missing Positive (partially greedy)
-- 189: Rotate Array
-- 1249: Minimum Remove to Make Valid Parentheses
+- 41: First Missing Positive (partially greedy, Cyclic Sort better fit) - MOVED TO CYCLIC SORT/ARRAY
+- 189: Rotate Array - MOVED TO ARRAY MANIPULATION
+- 1249: Minimum Remove to Make Valid Parentheses - MOVED TO STACK
+- 121: Best Time to Buy and Sell Stock - ADDED (Simple Greedy)
+
+#### Array / Sorting Based
+
+- 41: First Missing Positive (Cyclic Sort) - ADDED
+- 189: Rotate Array - ADDED
 
 ### String Manipulation
 
@@ -1466,6 +1555,10 @@ This section categorizes common Netflix interview problems from LeetCode by thei
 
 ### Bit Manipulation
 
-- 3191: Minimum Operations to Make Binary Array Elements Equal to One I
+- 3191: Minimum Operations to Make Binary Array Elements Equal to One I - ADDED
+
+### Array / Greedy
+
+- 3191: Minimum Operations to Make Binary Array Elements Equal to One I - ADDED
 
 ## Problem-to-Pattern Matching Table
